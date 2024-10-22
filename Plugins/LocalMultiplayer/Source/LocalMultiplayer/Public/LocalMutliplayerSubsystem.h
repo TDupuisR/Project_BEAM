@@ -8,7 +8,7 @@
 
 
 UCLASS()
-class LOCALMULTIPLAYER_API ULocalMutliplayerSubsystem : public UGameInstanceSubsystem
+class LOCALMULTIPLAYER_API ULocalMultiplayerSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 
@@ -38,4 +38,4 @@ protected:
 	UPROPERTY()
 	TMap<int, int> PlayerIndexFromGamepadProfileIndex;
 };
-};
+
