@@ -26,6 +26,7 @@ public class LocalMultiplayer : ModuleRules
 			new string[]
 			{
 				"Core",
+				"EnhancedInput",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -38,6 +39,7 @@ public class LocalMultiplayer : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"DeveloperSettings",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
