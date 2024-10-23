@@ -21,6 +21,7 @@ ABeamCharacter::ABeamCharacter()
 void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	InitCharacterSettings();
 	CreateStateMachine();
 	InitStateMachine();
 

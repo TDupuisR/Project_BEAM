@@ -28,8 +28,8 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 		FString::Printf(TEXT("Enter State %d"), GetStateID())
 	);
 
-	Character->GetCharacterMovement()->JumpZVelocity = GetDefault<UBeamCharacterSettings>()->Jump_Force;
-	Character->GetCharacterMovement()->MaxWalkSpeed = GetDefault<UBeamCharacterSettings>()->Jump_VelocityMax;
+	Character->GetCharacterMovement()->JumpZVelocity = Character->GetCharacterSettings()->Jump_Force;
+	Character->GetCharacterMovement()->MaxWalkSpeed = Character->GetCharacterSettings()->Jump_VelocityMax;
 
 	Character->Jump();
 

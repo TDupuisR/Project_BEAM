@@ -26,7 +26,7 @@ void UBeamCharacterStateWalk::StateEnter(EBeamCharacterStateID PreviousStateID)
 		FString::Printf(TEXT("Enter State %d"), GetStateID())
 	);
 
-	Character->GetCharacterMovement()->MaxWalkSpeed = GetDefault<UBeamCharacterSettings>()->Walk_VelocityMax;
+	Character->GetCharacterMovement()->MaxWalkSpeed = Character->GetCharacterSettings()->Walk_VelocityMax;
 
 }
 
