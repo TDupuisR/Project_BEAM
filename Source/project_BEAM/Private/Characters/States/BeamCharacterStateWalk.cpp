@@ -8,6 +8,8 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 
+#include "Characters/BeamCharacterSettings.h"
+
 EBeamCharacterStateID UBeamCharacterStateWalk::GetStateID()
 {
 	return EBeamCharacterStateID::Walk;
@@ -23,6 +25,9 @@ void UBeamCharacterStateWalk::StateEnter(EBeamCharacterStateID PreviousStateID)
 		FColor::Red,
 		FString::Printf(TEXT("Enter State %d"), GetStateID())
 	);
+
+	Character->GetCharacterMovement()->MaxWalkSpeed = GetDefault<UBeamCharacterSettings>()->Walk_VelocityMax;
+
 }
 
 void UBeamCharacterStateWalk::StateExit(EBeamCharacterStateID NextStateID)
@@ -48,7 +53,6 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);
 
-	Character->GetCharacterMovement()->MaxWalkSpeed = 200;
 
 	if (IsKeyDown(EKeys::SpaceBar)) {
 
