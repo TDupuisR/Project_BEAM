@@ -3,7 +3,11 @@
 
 #include "Characters/BeamCharacter.h"
 
+#include "Kismet/GameplayStatics.h"
 #include "Characters/BeamCharacterStateMachine.h"
+
+#include "Characters/BeamCharacterSettings.h"
+
 
 // Sets default values
 ABeamCharacter::ABeamCharacter()
@@ -19,6 +23,7 @@ void ABeamCharacter::BeginPlay()
 	Super::BeginPlay();
 	CreateStateMachine();
 	InitStateMachine();
+
 	
 }
 
@@ -72,5 +77,15 @@ void ABeamCharacter::TickStateMachine(float DeltaTime) const
 {
 	if (StateMachine == nullptr) return;
 	StateMachine->Tick(DeltaTime);
+}
+
+void ABeamCharacter::InitCharacterSettings()
+{
+	CharacterSettings = GetDefault<UBeamCharacterSettings>();
+}
+
+const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
+{
+	return CharacterSettings;
 }
 

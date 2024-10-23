@@ -7,6 +7,7 @@
 #include "BeamCharacter.generated.h"
 
 class UBeamCharacterStateMachine;
+class UBeamCharacterSettings;
 
 UCLASS()
 class PROJECT_BEAM_API ABeamCharacter : public ACharacter
@@ -60,5 +61,19 @@ protected:
 
 # pragma endregion
 
+# pragma region Character Settings
+
+public:
+	void InitCharacterSettings();
+
+	const UBeamCharacterSettings* GetCharacterSettings() const;
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	const UBeamCharacterSettings* CharacterSettings;
+
+
+
+# pragma endregion
 
 };

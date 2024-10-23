@@ -8,6 +8,8 @@
 #include "Characters/BeamCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+#include "Characters/BeamCharacterSettings.h"
+
 
 
 EBeamCharacterStateID UBeamCharacterStateJump::GetStateID()
@@ -25,6 +27,9 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 		FColor::Blue,
 		FString::Printf(TEXT("Enter State %d"), GetStateID())
 	);
+
+	Character->GetCharacterMovement()->JumpZVelocity = GetDefault<UBeamCharacterSettings>()->Jump_Force;
+	Character->GetCharacterMovement()->MaxWalkSpeed = GetDefault<UBeamCharacterSettings>()->Jump_VelocityMax;
 
 	Character->Jump();
 
@@ -54,7 +59,8 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 		FString::Printf(TEXT("STATE TICK JUMP"))
 	);
 
-	Character->GetCharacterMovement()->MaxWalkSpeed = 400;
+
+	
 
 
 	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D)) 
