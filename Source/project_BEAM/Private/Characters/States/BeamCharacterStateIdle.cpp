@@ -3,6 +3,9 @@
 
 #include "Characters/States/BeamCharacterStateIdle.h"
 
+#include "Characters/BeamCharacter.h"	
+#include "Characters/BeamCharacterStateMachine.h"
+
 EBeamCharacterStateID UBeamCharacterStateIdle::GetStateID()
 {
 	return EBeamCharacterStateID::Idle;
@@ -38,9 +41,27 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
-		3.f,
+		0.1f,
 		FColor::Red,
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);
+
+	if (IsKeyDown(EKeys::SpaceBar)) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
+		return;
+	}
+	
+	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D))
+	{
+
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			0.1f,
+			FColor::Red,
+			FString::Printf(TEXT("Pressed"), GetStateID())
+		);
+
+		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
+	}
 
 }

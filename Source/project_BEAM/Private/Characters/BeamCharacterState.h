@@ -31,6 +31,8 @@ public:
 
 	virtual void StateTick(float DeltaTime);
 
+	bool const IsKeyDown(FKey key) const;
+
 protected:
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;

@@ -27,6 +27,7 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	TickStateMachine(DeltaTime);
+	RotateMeshUsingOrientX();
 
 
 }
@@ -36,6 +37,24 @@ void ABeamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+float ABeamCharacter::GetOrientX() const
+{
+	return OrientX;
+}
+
+void ABeamCharacter::SetOrientX(float NewOrientX)
+{
+	OrientX = NewOrientX;
+}
+
+void ABeamCharacter::RotateMeshUsingOrientX() const
+{
+	FRotator Rotation = GetMesh()->GetRelativeRotation();
+
+	Rotation.Yaw = -90.f * OrientX;
+	GetMesh()->SetRelativeRotation(Rotation);
 }
 
 void ABeamCharacter::CreateStateMachine()

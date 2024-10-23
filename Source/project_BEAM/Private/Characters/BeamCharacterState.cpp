@@ -4,6 +4,8 @@
 #include "Characters/BeamCharacterState.h"
 #include "Characters/BeamCharacterStateMachine.h"
 
+#include "Characters/BeamCharacter.h"
+
 // Sets default values for this component's properties
 UBeamCharacterState::UBeamCharacterState()
 {
@@ -45,3 +47,7 @@ void UBeamCharacterState::StateTick(float DeltaTime)
 {
 }
 
+bool const UBeamCharacterState::IsKeyDown(FKey key) const {
+	if (Character == nullptr) return false;
+	return Character->GetLocalViewingPlayerController()->IsInputKeyDown(key);
+}
