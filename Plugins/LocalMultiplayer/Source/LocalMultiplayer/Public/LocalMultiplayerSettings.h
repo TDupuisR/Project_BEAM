@@ -29,13 +29,6 @@ class LOCALMULTIPLAYER_API ULocalMultiplayerSettings : public UDeveloperSettings
 
 public:
 	UPROPERTY(Config, EditAnywhere, Category="LocalMultiplayer")
-	TArray<FLocalMultiplayerProfileData> KeyboardProfilesData;
-
-	int GetNbKeyboardProfiles() const;
-
-	int FindKeyboardProfileIndexFromKey(const FKey& Key) const;
-
-	UPROPERTY(Config, EditAnywhere, Category="LocalMultiplayer")
 	FLocalMultiplayerProfileData GamepadProfileData;
 
 	UPROPERTY(Config, EditAnywhere, Category="LocalMultiplayer")

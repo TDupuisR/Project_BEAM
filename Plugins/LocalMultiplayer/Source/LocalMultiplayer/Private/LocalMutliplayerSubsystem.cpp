@@ -3,44 +3,50 @@
 
 #include "LocalMutliplayerSubsystem.h"
 #include "LocalMultiplayerSettings.h"
+#include "Kismet/GameplayStatics.h"
+#include "EnhancedInputSubsystems.h"
 
 void ULocalMultiplayerSubsystem::CreateAndInitPlayers()
 {
-	ULocalMultiplayerSettings LocalMultiplayerSettings;
+	const ULocalMultiplayerSettings* LocalMultiplayerSettings = GetDefault<ULocalMultiplayerSettings>();
+	int NumberOfControllers = LocalMultiplayerSettings->NbMaxGamepads;
 	
-}
-
-int ULocalMultiplayerSubsystem::GetAssignedPlayerIndexFromKeyboardProfileIndex(int KeyboardProfileIndex)
-{
-	if(PlayerIndexFromKeyboardProfileIndex.Contains(KeyboardProfileIndex))
+	//Création des PC gamepad
+	for(int i=0; i < LocalMultiplayerSettings->NbMaxGamepads; i++)
 	{
-		return PlayerIndexFromKeyboardProfileIndex.FindRef(KeyboardProfileIndex);
+		UGameplayStatics::CreatePlayer(GetWorld(),-1);
 	}
-	return -1;
-}
-
-int ULocalMultiplayerSubsystem::AssignNewPlayerToKeyboardProfile(int KeyboardProfileIndex)
-{
-	PlayerIndexFromKeyboardProfileIndex.Add(KeyboardProfileIndex, LastAssignedPlayerIndex);
-	return LastAssignedPlayerIndex;
-}
-
-void ULocalMultiplayerSubsystem::AssignKeyboardMapping(int playerIndex, int KeyboardProfileIndex) const
-{
-	
 }
 
 int ULocalMultiplayerSubsystem::GetAssignedPlayerIndexFromGamepadDeviceID(int DeviceID)
 {
+	if(PlayerIndexFromGamepadProfileIndex.Contains(DeviceID))
+	{
+		return PlayerIndexFromGamepadProfileIndex[DeviceID];
+	}
 	return -1;
 }
 
 int ULocalMultiplayerSubsystem::AssignNewPlayerToGamepadDeviceID(int DeviceID)
 {
-	return -1;
+	LastAssignedPlayerIndex++;
+	PlayerIndexFromGamepadProfileIndex.Add(DeviceID, LastAssignedPlayerIndex);
+	
+	return LastAssignedPlayerIndex;
 }
 
 void ULocalMultiplayerSubsystem::AssignGamepadInputMapping(int PlayerIndex) const
 {
+	const ULocalMultiplayerSettings* LocalMultiplayerSettings = GetDefault<ULocalMultiplayerSettings>();
+
+	APlayerController* LocalPlayer = UGameplayStatics::GetPlayerController(GetWorld(), PlayerIndex);
+	UEnhancedInputLocalPlayerSubsystem* PlayerSubsystem = LocalPlayer->GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+	if(PlayerSubsystem == nullptr) return;
 	
+	UInputMappingContext* IMC = LocalMultiplayerSettings->GamepadProfileData.IMCGames;
+	if(IMC == nullptr) return;
+	
+	FModifyContextOptions FModify;
+	FModify.bForceImmediately = true;
+	PlayerSubsystem->AddMappingContext(IMC, 1, FModify);
 }

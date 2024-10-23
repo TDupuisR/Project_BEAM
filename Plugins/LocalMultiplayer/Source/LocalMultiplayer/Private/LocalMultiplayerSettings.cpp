@@ -16,19 +16,3 @@ bool FLocalMultiplayerProfileData::ContainsKey(const FKey& Key) const
 
 	return false;
 }
-
-int ULocalMultiplayerSettings::GetNbKeyboardProfiles() const
-{
-	return KeyboardProfilesData.Num();
-}
-
-int ULocalMultiplayerSettings::FindKeyboardProfileIndexFromKey(const FKey& Key) const
-{
-	for (int16 i = 0; i < KeyboardProfilesData.Num(); i++)
-	{
-		if(KeyboardProfilesData[i].ContainsKey(Key))
-			return i;
-	}
-	
-	return -1;
-}
