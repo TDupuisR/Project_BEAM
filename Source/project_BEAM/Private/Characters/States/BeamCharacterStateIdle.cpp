@@ -64,4 +64,8 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
 
+	if (IsKeyDown(EKeys::E)) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
+	}
+
 }

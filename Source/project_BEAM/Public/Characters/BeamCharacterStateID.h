@@ -14,5 +14,6 @@ enum class EBeamCharacterStateID : uint8
 	Fall,
 	Land,
 	Attack,
+	Fly,
 	Dead
 };
