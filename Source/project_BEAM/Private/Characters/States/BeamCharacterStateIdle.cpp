@@ -5,6 +5,8 @@
 
 #include "Characters/BeamCharacter.h"	
 #include "Characters/BeamCharacterStateMachine.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 EBeamCharacterStateID UBeamCharacterStateIdle::GetStateID()
 {

@@ -6,6 +6,8 @@
 #include "Characters/BeamCharacter.h"	
 #include "Characters/BeamCharacterStateMachine.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
+
 
 EBeamCharacterStateID UBeamCharacterStateFlying::GetStateID()
 {
@@ -23,7 +25,7 @@ void UBeamCharacterStateFlying::StateEnter(EBeamCharacterStateID PreviousStateID
 		FString::Printf(TEXT("Enter State %d"), GetStateID())
 	);
 
-	Character->GetCharacterMovement()->DefaultLandMovementMode = EMovementMode::MOVE_Flying;
+	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
 }
 
 void UBeamCharacterStateFlying::StateExit(EBeamCharacterStateID NextStateID)
@@ -41,6 +43,24 @@ void UBeamCharacterStateFlying::StateExit(EBeamCharacterStateID NextStateID)
 void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		0.1f,
+		FColor::Red,
+		FString::Printf(TEXT("Tick State %d"), GetStateID())
+	);
+
+
+	if (IsKeyDown(EKeys::SpaceBar)) {
+		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+		//Character->GetCapsuleComponent()->SetSimulatePhysics(true);
+		//Character->GetCharacterMovement()->Gravity = true;
+
+		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
+		return;
+	}
+
 
 	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D))
 	{
