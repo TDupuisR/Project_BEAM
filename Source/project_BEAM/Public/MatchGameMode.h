@@ -15,8 +15,16 @@ class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
-protected:
-
 private:
+	//UBeamharacterInputData* LoadInputDataFromConfig();
+
+	UInputMappingContext* LoadInputMappingContextFromConfig();
 	
+	void FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors);
+
+	void SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints);
+	
+	TSubclassOf<ABeamCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
+	
+	void CreateAndInitPlayers() const;
 };

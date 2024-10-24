@@ -72,8 +72,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	const UBeamCharacterSettings* CharacterSettings;
 
-
-
 # pragma endregion
 
 };
