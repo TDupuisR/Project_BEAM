@@ -8,6 +8,8 @@
 
 #include "Characters/BeamCharacterSettings.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 // Sets default values
 ABeamCharacter::ABeamCharacter()
@@ -83,6 +85,18 @@ void ABeamCharacter::TickStateMachine(float DeltaTime) const
 void ABeamCharacter::InitCharacterSettings()
 {
 	CharacterSettings = GetDefault<UBeamCharacterSettings>();
+
+	if (CharacterSettings == nullptr) return;
+
+	GetCharacterMovement()->MaxAcceleration = CharacterSettings->MaxAcceleration;
+	GetCharacterMovement()->GroundFriction = CharacterSettings->GroundFriction;
+	GetCharacterMovement()->GravityScale = CharacterSettings->GravityScale;
+	GetCharacterMovement()->Mass = CharacterSettings->Mass;
+	GetCharacterMovement()->BrakingDecelerationWalking = CharacterSettings->BreakingDecelerationWalking;
+	GetCharacterMovement()->JumpZVelocity = CharacterSettings->Jump_Force;
+	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
+	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
+	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->MaxFlySpeed;
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
