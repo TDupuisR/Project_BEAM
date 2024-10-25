@@ -66,6 +66,10 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
 
+	if (!Character->GetMovementComponent()->IsMovingOnGround()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
+	}
+
 	if (IsKeyDown(EKeys::E)) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
 	}

@@ -27,6 +27,8 @@ void ABeamCharacter::BeginPlay()
 	CreateStateMachine();
 	InitStateMachine();
 
+	StartLocation = this->GetActorLocation();
+
 	
 }
 
@@ -34,9 +36,14 @@ void ABeamCharacter::BeginPlay()
 void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
+	if (GetActorLocation().Y != StartLocation.Y)
+	{
+		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
+	}
 
 }
 
@@ -102,5 +109,10 @@ void ABeamCharacter::InitCharacterSettings()
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;
+}
+
+void ABeamCharacter::KnockBack(FVector Direction, float Force)
+{
+	this->GetCharacterMovement()->Launch(Direction * Force);
 }
 
