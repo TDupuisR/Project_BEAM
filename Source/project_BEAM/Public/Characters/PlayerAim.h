@@ -11,6 +11,8 @@
 
 #include "PlayerAim.generated.h"
 
+class AProjectile;
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UPlayerAim : public UActorComponent
 {
@@ -32,8 +34,15 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
 	UFUNCTION(BlueprintCallable)
-	FVector3f AimDir(const FVector2f& Dir, const FVector3f& PlayerPos);
+	FVector3f AimDir(const FVector2f& dir, const FVector3f& playerPos);
+
+	UPROPERTY()
+	void Shoot(FVector3d spawnLocation, FVector direction, AActor* playerActor, int power);
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AProjectile> ProjectileActor;
 
 public:
 	// Called every frame

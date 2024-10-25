@@ -2,6 +2,7 @@
 
 
 #include "Characters/PlayerAim.h"
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -18,15 +19,30 @@ UPlayerAim::UPlayerAim()
 void UPlayerAim::BeginPlay()
 {
 	Super::BeginPlay();
-
 	// ...
 	
 }
 
-FVector3f UPlayerAim::AimDir(const FVector2f& Dir, const FVector3f& PlayerPos)
+FVector3f UPlayerAim::AimDir(const FVector2f& dir, const FVector3f& playerPos)
 {	
-	FVector2f DirNormal = Dir.GetSafeNormal();
-	return FVector3f(PlayerPos.X + DirNormal.X * Radius, PlayerPos.Y, PlayerPos.Z + DirNormal.Y * Radius );
+	FVector2f DirNormal = dir.GetSafeNormal();
+	return FVector3f(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius );
+}
+
+void UPlayerAim::Shoot(FVector3d spawnLocation, FVector direction, AActor* playerActor, int power)
+{
+	if(ProjectileActor)
+	{
+		FActorSpawnParameters spawnParams;
+		spawnParams.Owner = playerActor;
+		spawnParams.Instigator = playerActor->GetInstigator();
+		
+		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, direction.ToOrientationRotator(), spawnParams);
+		if(projectile)
+		{
+			projectile->InitialisePower(power);
+		}
+	}
 }
 
 // Called every frame
