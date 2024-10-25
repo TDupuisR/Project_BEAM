@@ -51,3 +51,9 @@ bool const UBeamCharacterState::IsKeyDown(FKey key) const {
 	if (Character == nullptr) return false;
 	return Character->GetLocalViewingPlayerController()->IsInputKeyDown(key);
 }
+
+bool const UBeamCharacterState::IsKeyWasPressed(FKey key) const
+{
+	if (Character == nullptr) return false;
+	return Character->GetLocalViewingPlayerController()->WasInputKeyJustPressed(key);
+}

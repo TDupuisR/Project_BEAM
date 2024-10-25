@@ -33,6 +33,8 @@ public:
 
 	bool const IsKeyDown(FKey key) const;
 
+	bool const IsKeyWasPressed(FKey key) const;	
+
 protected:
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;

@@ -96,7 +96,7 @@ void ABeamCharacter::InitCharacterSettings()
 	GetCharacterMovement()->JumpZVelocity = CharacterSettings->Jump_Force;
 	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
-	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->MaxFlySpeed;
+	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
