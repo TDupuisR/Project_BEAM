@@ -38,8 +38,8 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	FVector3f AimDir(const FVector2f& dir, const FVector3f& playerPos);
 
-	UPROPERTY()
-	void Shoot(FVector3d spawnLocation, FVector direction, AActor* playerActor, int power);
+	UFUNCTION(BlueprintCallable)
+	void Shoot(FVector spawnLocation, FVector direction, AActor* playerActor, int power);
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AProjectile> ProjectileActor;
