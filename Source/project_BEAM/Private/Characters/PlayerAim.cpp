@@ -29,7 +29,7 @@ FVector3f UPlayerAim::AimDir(const FVector2f& dir, const FVector3f& playerPos)
 	return FVector3f(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius );
 }
 
-void UPlayerAim::Shoot(FVector3d spawnLocation, FVector direction, AActor* playerActor, int power)
+void UPlayerAim::Shoot(FVector spawnLocation, FVector direction, AActor* playerActor, int power)
 {
 	if(ProjectileActor)
 	{
