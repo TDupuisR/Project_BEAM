@@ -7,10 +7,8 @@
 #include "BeamCharacterSettings.generated.h"
 
 class ABeamCharacter;
+class UBeamCharacterInputData;
 
-/**
- * 
- */
 UCLASS(Config=Game, DefaultConfig, meta =(DisplayName = "Beam Character Settings"))
 class PROJECT_BEAM_API UBeamCharacterSettings : public UDeveloperSettings
 {
@@ -18,9 +16,15 @@ class PROJECT_BEAM_API UBeamCharacterSettings : public UDeveloperSettings
 	
 public:
 
+	UPROPERTY(Config, EditAnywhere, Category="Inputs")
+	TSoftClassPtr<UBeamCharacterInputData> InputData;
+
+	UPROPERTY(Config, EditAnywhere, Category="Inputs")
+	TSoftObjectPtr<UInputMappingContext> InputMappingContext;
+
 #pragma region General 
 
-	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va très vite à sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller à la vitesse max"))
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va trï¿½s vite ï¿½ sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller ï¿½ la vitesse max"))
 	double MaxAcceleration;
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Permet de rendre comme une patinoire ou l'inverse"))
@@ -38,7 +42,7 @@ public:
 
 #pragma region Walk
 
-	UPROPERTY(Config, EditAnywhere, Category="Walk", meta = (ToolTip = "La vitesse maximale que le character peut avoir en état de marche"))
+	UPROPERTY(Config, EditAnywhere, Category="Walk", meta = (ToolTip = "La vitesse maximale que le character peut avoir en ï¿½tat de marche"))
 	double Walk_VelocityMax;
 
 	UPROPERTY(Config, EditAnywhere, Category = "Walk", meta = (ToolTip = "Permet de stopper net avec une grande valeur"))
@@ -49,13 +53,13 @@ public:
 
 #pragma region Jump
 
-	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Pour le déplacement dans les airs"))
+	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Pour le dï¿½placement dans les airs"))
 	double Jump_VelocityMax;
 
-	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Force à laquelle le joueur est projeté"))
+	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Force ï¿½ laquelle le joueur est projetï¿½"))
 	double Jump_Force;
 
-	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Bas -> Pas beaucoup bouger, Haut -> Bouge comme si il était au sol mais dans les airs"))
+	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Bas -> Pas beaucoup bouger, Haut -> Bouge comme si il ï¿½tait au sol mais dans les airs"))
 	double AirControl;
 
 #pragma endregion
@@ -69,7 +73,7 @@ public:
 
 #pragma region Flying
 
-	UPROPERTY(Config, EditAnywhere, Category = "Flying", meta = (ToolTip = "Vitesse à laquelle il se déplace en flying"))
+	UPROPERTY(Config, EditAnywhere, Category = "Flying", meta = (ToolTip = "Vitesse ï¿½ laquelle il se dï¿½place en flying"))
 	double MaxFlySpeed;
 
 #pragma endregion

@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BeamCharacterInputdata.h"
+#include "InputMappingContext.h"
 #include "GameFramework/Character.h"
 #include "BeamCharacter.generated.h"
 
@@ -74,4 +76,23 @@ protected:
 
 # pragma endregion
 
+# pragma region Character Input
+
+public:
+	UPROPERTY()
+	TObjectPtr<UInputMappingContext> InputMappingContext;
+
+	UPROPERTY()
+	TObjectPtr<UBeamCharacterInputdata> InputData;
+	
+protected:
+	void SetupMappingContextIntoController() const;
+
+private:
+	void BindInputActions(UEnhancedInputComponent* EnhancedInputComponent);
+
+	
+	
+# pragma endregion
+	
 };

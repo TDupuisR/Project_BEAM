@@ -3,11 +3,10 @@
 
 #include "Characters/BeamCharacter.h"
 
-#include "Kismet/GameplayStatics.h"
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
-
 #include "Characters/BeamCharacterSettings.h"
-
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -45,6 +44,12 @@ void ABeamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	SetupMappingContextIntoController();
+
+	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	if(EnhancedInputComponent == nullptr) return;
+
+	
 }
 
 float ABeamCharacter::GetOrientX() const
@@ -102,5 +107,19 @@ void ABeamCharacter::InitCharacterSettings()
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;
+}
+
+void ABeamCharacter::SetupMappingContextIntoController() const
+{
+	APlayerController* playerController = Cast<APlayerController>(Controller);
+	if (playerController == nullptr) return;
+
+	ULocalPlayer* player = playerController->GetLocalPlayer();
+	if (player == nullptr) return;
+
+	UEnhancedInputLocalPlayerSubsystem* InputSystem = player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+	if (InputSystem == nullptr) return;
+
+	InputSystem->AddMappingContext(InputMappingContext, 0);
 }
 
