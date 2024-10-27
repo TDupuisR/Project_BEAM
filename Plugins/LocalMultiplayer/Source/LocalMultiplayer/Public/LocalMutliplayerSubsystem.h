@@ -24,7 +24,7 @@ public:
 
 protected:
 	UPROPERTY()
-	uint8 LastAssignedPlayerIndex = 0;
+	uint8 LastAssignedPlayerIndex = -1;
 
 	UPROPERTY()
 	TMap<int, int> PlayerIndexFromGamepadProfileIndex;

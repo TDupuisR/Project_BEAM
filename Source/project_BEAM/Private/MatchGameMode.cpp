@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MatchGameMode.h"
+
+#include "LocalMutliplayerSubsystem.h"
 #include "Arena/ArenaPlayerStart.h"
 #include "Characters/BeamCharacter.h"
 #include "Kismet/GameplayStatics.h"
@@ -10,6 +12,7 @@
 void AMatchGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	CreateAndInitPlayers();
 
 	TArray<AArenaPlayerStart*> PlayerStartsPoints;
 	FindPlayerStartActorsInArena(PlayerStartsPoints);
@@ -45,6 +48,17 @@ TSubclassOf<ABeamCharacter> AMatchGameMode::GetSmashCharacterClassFromInputType(
 	default:
 		return nullptr;
 	}
+}
+
+void AMatchGameMode::CreateAndInitPlayers() const
+{
+	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+	if (GameInstance == nullptr) return;
+
+	ULocalMultiplayerSubsystem* LocalMultiplayerSubsystem = GameInstance->GetSubsystem<ULocalMultiplayerSubsystem>();
+	if (LocalMultiplayerSubsystem == nullptr) return;
+
+	LocalMultiplayerSubsystem->CreateAndInitPlayers();
 }
 
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)

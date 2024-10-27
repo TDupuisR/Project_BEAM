@@ -5,11 +5,11 @@
 #include "CoreMinimal.h"
 #include "Characters/BeamCharacterInputdata.h"
 #include "Arena/ArenaPlayerStart.h"
-#include "Characters/BeamCharacter.h"
 #include "GameFramework/GameModeBase.h"
 #include "MatchGameMode.generated.h"
 
 class UInputMappingContext;
+class ABeamCharacter;
 
 UCLASS()
 class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
@@ -34,5 +34,5 @@ private:
 	
 	TSubclassOf<ABeamCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
 	
-	//void CreateAndInitPlayers() const;
+	void CreateAndInitPlayers() const;
 };

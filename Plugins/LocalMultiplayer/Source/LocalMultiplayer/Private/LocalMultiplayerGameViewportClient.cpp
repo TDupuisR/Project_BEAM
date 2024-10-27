@@ -21,7 +21,7 @@ bool ULocalMultiplayerGameViewportClient::InputKey(const FInputKeyEventArgs& Eve
 	int PlayerIndex = LocalMultiplayerSubsystem->GetAssignedPlayerIndexFromGamepadDeviceID(GamepadID);
 	if(PlayerIndex < 0)
 	{
-		LocalMultiplayerSubsystem->AssignNewPlayerToGamepadDeviceID(GamepadID);
+		PlayerIndex = LocalMultiplayerSubsystem->AssignNewPlayerToGamepadDeviceID(GamepadID);
 		LocalMultiplayerSubsystem->AssignGamepadInputMapping(PlayerIndex);
 	}
 	else

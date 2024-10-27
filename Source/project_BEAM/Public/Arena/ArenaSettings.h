@@ -8,7 +8,7 @@
 
 class ABeamCharacter;
 
-UCLASS(Config=Game, DefaultConfig, meta = (DisplayName = "Arena Settings"))
+UCLASS(Config=Game, DefaultConfig, meta = (DisplayName = "Beam Arena Settings"))
 class PROJECT_BEAM_API UArenaSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()

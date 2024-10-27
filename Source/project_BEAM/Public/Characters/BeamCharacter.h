@@ -86,14 +86,42 @@ public:
 
 	UPROPERTY()
 	TObjectPtr<UBeamCharacterInputData> InputData;
+
+	FVector2D GetInputMove() const;
+	bool GetInputJump() const;
+	bool GetInputDash() const;
+
+	bool GetInputCharge() const;
+	FVector2D GetInputAim() const;
+	bool GetInputShoot() const;
+
+	bool GetInputPunch() const;
 	
 protected:
 	void SetupMappingContextIntoController() const;
 
+	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
+	UPROPERTY() bool InputJump = false;
+	UPROPERTY() bool InputDash = false;
+
+	UPROPERTY() bool InputCharge = false;
+	UPROPERTY() FVector2D InputAim = FVector2D::ZeroVector;
+	UPROPERTY() bool InputShoot = false;
+
+	UPROPERTY() bool InputPunch = false;
+
 private:
 	void BindInputActions(UEnhancedInputComponent* EnhancedInputComponent);
 
+	void OnInputMove(const FInputActionValue& InputActionValue);
+	void OnInputJump(const FInputActionValue& InputActionValue);
+	void OnInputDash(const FInputActionValue& InputActionValue);
 	
+	void OnInputCharge(const FInputActionValue& InputActionValue);
+	void OnInputAim(const FInputActionValue& InputActionValue);
+	void OnInputShoot(const FInputActionValue& InputActionValue);
+	
+	void OnInputPunch(const FInputActionValue& InputActionValue);
 	
 # pragma endregion
 

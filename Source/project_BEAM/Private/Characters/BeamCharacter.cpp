@@ -109,6 +109,11 @@ void ABeamCharacter::InitCharacterSettings()
 	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
 }
 
+void ABeamCharacter::KnockBack(FVector Direction, float Force)
+{
+	this->GetCharacterMovement()->Launch(Direction * Force);
+}
+
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;
@@ -131,10 +136,176 @@ void ABeamCharacter::SetupMappingContextIntoController() const
 void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComponent)
 {
 	if (InputData == nullptr) return;
+
+	if(InputData->InputActionMoveVector2D)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionMoveVector2D,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputMove
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionMoveVector2D,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputMove
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionMoveVector2D,
+			ETriggerEvent::Triggered,
+			this,
+			&ABeamCharacter::OnInputMove
+			);
+	}
+	if(InputData->InputActionJump)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionJump,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputJump
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionJump,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputJump
+			);
+	}
+	if(InputData->InputActionDash)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionDash,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputDash
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionDash,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputDash
+			);
+	}
+
+	if(InputData->InputActionCharge)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionCharge,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputCharge
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionCharge,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputCharge
+			);
+	}
+	if(InputData->InputActionAimVector2D)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionAimVector2D,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputAim
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionAimVector2D,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputAim
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionAimVector2D,
+			ETriggerEvent::Triggered,
+			this,
+			&ABeamCharacter::OnInputAim
+			);
+	}
+	if(InputData->InputActionShoot)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionShoot,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputShoot
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionShoot,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputShoot
+			);
+	}
+
+	if(InputData->InputActionPunch)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionPunch,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputPunch
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionPunch,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputPunch
+			);
+	}
 }
 
-void ABeamCharacter::KnockBack(FVector Direction, float Force)
+
+void ABeamCharacter::OnInputMove(const FInputActionValue& InputActionValue)
 {
-	this->GetCharacterMovement()->Launch(Direction * Force);
+	InputMove = InputActionValue.Get<FVector2D>();
+}
+void ABeamCharacter::OnInputJump(const FInputActionValue& InputActionValue)
+{
+	InputJump = InputActionValue.Get<bool>();
+}
+void ABeamCharacter::OnInputDash(const FInputActionValue& InputActionValue)
+{
+	InputDash = InputActionValue.Get<bool>();
 }
 
+void ABeamCharacter::OnInputCharge(const FInputActionValue& InputActionValue)
+{
+	InputCharge = InputActionValue.Get<bool>();
+}
+void ABeamCharacter::OnInputAim(const FInputActionValue& InputActionValue)
+{
+	InputAim = InputActionValue.Get<FVector2D>();
+}
+void ABeamCharacter::OnInputShoot(const FInputActionValue& InputActionValue)
+{
+	InputShoot = InputActionValue.Get<bool>();
+}
+
+void ABeamCharacter::OnInputPunch(const FInputActionValue& InputActionValue)
+{
+	InputPunch = InputActionValue.Get<bool>();
+}
+
+
+FVector2D ABeamCharacter::GetInputMove() const{ return InputMove; }
+bool ABeamCharacter::GetInputJump() const{ return InputJump; }
+bool ABeamCharacter::GetInputDash() const{ return InputDash; }
+
+bool ABeamCharacter::GetInputCharge() const{ return InputCharge; }
+FVector2D ABeamCharacter::GetInputAim() const{ return InputAim; }
+bool ABeamCharacter::GetInputShoot() const{ return InputShoot; }
+
+bool ABeamCharacter::GetInputPunch() const{ return InputPunch; }

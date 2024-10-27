@@ -18,17 +18,16 @@ public:
 	TObjectPtr<UInputAction> InputActionMoveVector2D;
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionJump;
-	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionDash;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionCharge;
-	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionAimVector2D;
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionShoot;
+
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionPunch;
 };
