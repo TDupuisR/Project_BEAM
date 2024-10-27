@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Characters/BeamCharacterInputdata.h"
+#include "Arena/ArenaPlayerStart.h"
+#include "Characters/BeamCharacter.h"
 #include "GameFramework/GameModeBase.h"
 #include "MatchGameMode.generated.h"
 
+class UInputMappingContext;
 
 UCLASS()
 class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
@@ -15,8 +19,12 @@ class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
+protected:
+	UPROPERTY()
+	TArray<ABeamCharacter*> CharactersInArena;
+	
 private:
-	//UBeamharacterInputData* LoadInputDataFromConfig();
+	UBeamCharacterInputData* LoadInputDataFromConfig();
 
 	UInputMappingContext* LoadInputMappingContextFromConfig();
 	
@@ -26,5 +34,5 @@ private:
 	
 	TSubclassOf<ABeamCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
 	
-	void CreateAndInitPlayers() const;
+	//void CreateAndInitPlayers() const;
 };

@@ -8,7 +8,7 @@
 #include "ArenaPlayerStart.generated.h"
 
 UCLASS()
-class SMASHUE_API AArenaPlayerStart : public APlayerStart
+class PROJECT_BEAM_API AArenaPlayerStart : public APlayerStart
 {
 	GENERATED_BODY()
 

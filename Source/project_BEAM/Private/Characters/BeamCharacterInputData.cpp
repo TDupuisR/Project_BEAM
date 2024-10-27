@@ -1,4 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Characters/BeamCharacterInputdata.h"
+#include "Characters/BeamCharacterInputData.h"

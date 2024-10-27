@@ -83,7 +83,7 @@ public:
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 
 	UPROPERTY()
-	TObjectPtr<UBeamCharacterInputdata> InputData;
+	TObjectPtr<UBeamCharacterInputData> InputData;
 	
 protected:
 	void SetupMappingContextIntoController() const;

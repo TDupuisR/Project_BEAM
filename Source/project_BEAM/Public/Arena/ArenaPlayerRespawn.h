@@ -8,7 +8,7 @@
 #include "ArenaPlayerRespawn.generated.h"
 
 UCLASS()
-class SMASHUE_API AArenaPlayerRespawn : public APlayerStart
+class PROJECT_BEAM_API AArenaPlayerRespawn : public APlayerStart
 {
 	GENERATED_BODY()
 

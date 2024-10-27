@@ -6,8 +6,8 @@
 #include "Engine/DeveloperSettings.h"
 #include "BeamCharacterSettings.generated.h"
 
-class ABeamCharacter;
 class UBeamCharacterInputData;
+class UInputMappingContext;
 
 UCLASS(Config=Game, DefaultConfig, meta =(DisplayName = "Beam Character Settings"))
 class PROJECT_BEAM_API UBeamCharacterSettings : public UDeveloperSettings
@@ -17,7 +17,7 @@ class PROJECT_BEAM_API UBeamCharacterSettings : public UDeveloperSettings
 public:
 
 	UPROPERTY(Config, EditAnywhere, Category="Inputs")
-	TSoftClassPtr<UBeamCharacterInputData> InputData;
+	TSoftObjectPtr<UBeamCharacterInputData> InputData;
 
 	UPROPERTY(Config, EditAnywhere, Category="Inputs")
 	TSoftObjectPtr<UInputMappingContext> InputMappingContext;

@@ -49,7 +49,7 @@ TSubclassOf<ABeamCharacter> AMatchGameMode::GetSmashCharacterClassFromInputType(
 
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
 {
-	//UBeamCharacterInput* InputData = LoadInputDataFromConfig();
+	UBeamCharacterInputData* InputData = LoadInputDataFromConfig();
 	UInputMappingContext* InputMappingContext = LoadInputMappingContextFromConfig();
 	
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
@@ -64,30 +64,30 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 			);
 
 		if (NewCharacter == nullptr) continue;
-		//NewCharacter->InputData = InputData;
-		//NewCharacter->InputMappingContext = InputMappingContext;
+		NewCharacter->InputData = InputData;
+		NewCharacter->InputMappingContext = InputMappingContext;
 		NewCharacter->AutoPossessPlayer = SpawnPoint->AutoReceiveInput;
 		NewCharacter->SetOrientX(SpawnPoint->GetStartOrientX());
 		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
 
-		//CharactersInsideArena.Add(NewCharacter);
+		CharactersInArena.Add(NewCharacter);
 	}
 }
 
-/*
-USmashCharacterInputData* AMatchGameMode::LoadInputDataFromConfig()
+
+UBeamCharacterInputData* AMatchGameMode::LoadInputDataFromConfig()
 {
-	const USmashCharacterSettings* CharacterSettings = GetDefault<USmashCharacterSettings>();
+	const UBeamCharacterSettings* CharacterSettings = GetDefault<UBeamCharacterSettings>();
 	if (CharacterSettings == nullptr) return nullptr;
 	return CharacterSettings->InputData.LoadSynchronous();
 }
-*/
 
-/*
+
+
 UInputMappingContext* AMatchGameMode::LoadInputMappingContextFromConfig()
 {
 	const UBeamCharacterSettings* CharacterSettings = GetDefault<UBeamCharacterSettings>();
 	if (CharacterSettings == nullptr) return nullptr;
 	return CharacterSettings->InputMappingContext.LoadSynchronous();
 }
-*/
+

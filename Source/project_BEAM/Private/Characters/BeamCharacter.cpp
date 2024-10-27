@@ -48,8 +48,6 @@ void ABeamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	if(EnhancedInputComponent == nullptr) return;
-
-	
 }
 
 float ABeamCharacter::GetOrientX() const
@@ -121,5 +119,12 @@ void ABeamCharacter::SetupMappingContextIntoController() const
 	if (InputSystem == nullptr) return;
 
 	InputSystem->AddMappingContext(InputMappingContext, 0);
+}
+
+void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComponent)
+{
+	if (InputData == nullptr) return;
+
+	
 }
 

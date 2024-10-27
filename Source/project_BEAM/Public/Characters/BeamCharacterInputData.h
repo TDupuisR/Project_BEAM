@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "BeamCharacterInputdata.generated.h"
+#include "BeamCharacterInputData.generated.h"
 
 class UInputAction;
 
 UCLASS()
-class PROJECT_BEAM_API UBeamCharacterInputdata : public UDataAsset
+class PROJECT_BEAM_API UBeamCharacterInputData : public UDataAsset
 {
 	GENERATED_BODY()
 
@@ -31,7 +31,4 @@ public:
 	TObjectPtr<UInputAction> InputActionShoot;
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionPunch;
-
-	
-	
 };
