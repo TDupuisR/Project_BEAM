@@ -26,6 +26,8 @@ void ABeamCharacter::BeginPlay()
 	CreateStateMachine();
 	InitStateMachine();
 
+	StartLocation = this->GetActorLocation();
+
 	
 }
 
@@ -33,9 +35,14 @@ void ABeamCharacter::BeginPlay()
 void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
+	if (GetActorLocation().Y != StartLocation.Y)
+	{
+		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
+	}
 
 }
 
@@ -99,7 +106,7 @@ void ABeamCharacter::InitCharacterSettings()
 	GetCharacterMovement()->JumpZVelocity = CharacterSettings->Jump_Force;
 	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
-	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->MaxFlySpeed;
+	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
@@ -124,7 +131,10 @@ void ABeamCharacter::SetupMappingContextIntoController() const
 void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComponent)
 {
 	if (InputData == nullptr) return;
+}
 
-	
+void ABeamCharacter::KnockBack(FVector Direction, float Force)
+{
+	this->GetCharacterMovement()->Launch(Direction * Force);
 }
 

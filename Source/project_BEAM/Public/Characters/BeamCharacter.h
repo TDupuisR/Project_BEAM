@@ -24,6 +24,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	FVector StartLocation;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -94,5 +96,13 @@ private:
 	
 	
 # pragma endregion
-	
+
+# pragma region Fight
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void KnockBack(FVector Direction, float Force);
+
+
+# pragma endregion
 };

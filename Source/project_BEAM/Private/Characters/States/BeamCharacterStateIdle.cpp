@@ -5,6 +5,8 @@
 
 #include "Characters/BeamCharacter.h"	
 #include "Characters/BeamCharacterStateMachine.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 EBeamCharacterStateID UBeamCharacterStateIdle::GetStateID()
 {
@@ -62,6 +64,10 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		);
 
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
+	}
+
+	if (!Character->GetMovementComponent()->IsMovingOnGround()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
 	}
 
 	if (IsKeyDown(EKeys::E)) {

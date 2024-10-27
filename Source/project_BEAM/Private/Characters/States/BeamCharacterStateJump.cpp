@@ -75,6 +75,6 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 	}
 
 	if (Character->GetMovementComponent()->Velocity.Y <= 0) {
-		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
+		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
 	}
 }

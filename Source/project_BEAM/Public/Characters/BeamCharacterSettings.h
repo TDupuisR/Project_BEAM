@@ -24,6 +24,10 @@ public:
 
 #pragma region General 
 
+
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Permet de ralentir les d�placements, valeur haute -> ralenti enorm�ment, valeur petite -> ralenti un peu"))
+	double BrakingFrictionFactor;
+
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va tr�s vite � sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller � la vitesse max"))
 	double MaxAcceleration;
 
@@ -66,15 +70,21 @@ public:
 
 #pragma region Falling
 	
-	UPROPERTY(Config, EditAnywhere, Category = "Falling", meta = (ToolTip = "Friction pour quand il tombe (ralentir la chute)"))
+	UPROPERTY(Config, EditAnywhere, Category = "Fall", meta = (ToolTip = "Friction pour quand il tombe (ralentir la chute)"))
 	double FallingLateralFriction;
 
 #pragma endregion
 
 #pragma region Flying
 
-	UPROPERTY(Config, EditAnywhere, Category = "Flying", meta = (ToolTip = "Vitesse � laquelle il se d�place en flying"))
-	double MaxFlySpeed;
+	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Vitesse � laquelle il se d�place en flying"))
+	double Fly_MaxSpeed;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Permet de ralentir les d�placements, valeur haute -> ralenti enorm�ment, valeur petite -> ralenti un peu"))
+	double Fly_BrakingFrictionFactor;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Force du dash (faut mettre une tr�s grande force, genre 100000)"))
+	double Fly_DashForce;
 
 #pragma endregion
 
