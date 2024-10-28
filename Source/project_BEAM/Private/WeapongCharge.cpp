@@ -30,27 +30,37 @@ void UWeapongCharge::BeginPlay()
 void UWeapongCharge::onWayponCharge()
 {
 	int power = 0;
-	while(!isQteActive) // remplace par le timer
+	qteTimeLeft = qteMaxTime;
+	while(qteTimeLeft > .0f) // remplace par le timer
 	{
-		if( && power < 3)
+		isQteActive = true;
+		if(!isQteActive && chargeFail && power < 3)
 		{
 			power++;
-			qteTimeLeft = qteReset;
+			qteTimeLeft = qteMaxTime;
 		}
-		else if(power <= 3)
+		else if(!isQteActive && power >= 3)
 		{
-			//wait for x sec
-			//shoot();
+			qteTimeLeft = qteFinaleTime;
+			isQteActive = false;
 			return;
 		}
-		if(chargeFail == true)
+		if( && chargeFail == true) //ecoute linput 
 		{
 			//shoot();
+			isQteActive = false;
 			return;
 		}
 		qteTimeLeft -= GetWorld()->DeltaTimeSeconds;
-		//whait for delta time
+		//wait for delta time
 	}
+	//shoot()
+}
+
+void UWeapongCharge::coroutineQteTime()
+{
+	//
+	delayTime -= GetWorld()->DeltaTimeSeconds;
 }
 
 
@@ -59,6 +69,8 @@ void UWeapongCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+
+	
 	// ...
 }
 

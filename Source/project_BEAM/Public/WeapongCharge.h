@@ -20,10 +20,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	bool chargeFail;
 	UPROPERTY(EditAnywhere)
-	float qteTimeLeft = 5.f;
+	float qteTimeLeft;
 	UPROPERTY(EditAnywhere)
-	float qteReset = qteTimeLeft;
-
+	float qteMaxTime = 5.f;
+	UPROPERTY(EditAnywhere)
+	float delayTime = 2.f;
+	UPROPERTY(EditAnywhere)
+	float qteFinaleTime = 3.f;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
