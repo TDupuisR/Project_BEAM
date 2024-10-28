@@ -38,10 +38,11 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector direction, AActor* playerA
 		spawnParams.Instigator = playerActor->GetInstigator();
 		
 		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, direction.ToOrientationRotator(), spawnParams);
-		if(projectile)
-		{
-			projectile->InitialisePower(power);
-		}
+		if(projectile == nullptr) return;
+
+		if (power > 3) power = 3;
+		if (power < 0) power = 0;
+		projectile->InitialisePower(power);
 	}
 }
 

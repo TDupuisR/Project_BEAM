@@ -27,6 +27,7 @@ void AProjectile::BeginPlay()
 
 void AProjectile::InitialisePower(int power)
 {
+	ownPower = power;
 	projectileCurrentParam = powerParameters[power];
 }
 
@@ -34,5 +35,15 @@ void AProjectile::InitialisePower(int power)
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+EProjectileType AProjectile::ProjectileGetType()
+{
+	return objType;
+}
+AProjectile& AProjectile::GetProjectile()
+{
+	canAccess = false;
+	return *this;
 }
 
