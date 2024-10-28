@@ -4,39 +4,43 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "WeapongCharge.generated.h"
+#include "WeaponCharge.generated.h"
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class PROJECT_BEAM_API UWeapongCharge : public UActorComponent
+class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UWeapongCharge();
-	UPROPERTY(EditAnywhere)
+	UWeaponCharge();
+
+	UFUNCTION(BlueprintCallable)
+	void StartWeaponCharge();
+	UFUNCTION(BlueprintCallable)
+	void CancelWeaponCharge();
+	
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY()
 	bool isQteActive = false;
-	UPROPERTY(EditAnywhere)
-	bool chargeFail;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
+	bool chargeWasPushed = false;
+	UPROPERTY()
 	float qteTimeLeft;
 	UPROPERTY(EditAnywhere)
 	float qteMaxTime = 5.f;
 	UPROPERTY(EditAnywhere)
-	float delayTime = 2.f;
+	int power = 0;
 	UPROPERTY(EditAnywhere)
-	float qteFinaleTime = 3.f;
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	float qteFinaleDelay = 3.f;
+	UPROPERTY(EditAnywhere)
+	TArray<float> qteTimeStamp = {2.f, 1.5f, 1.f};
 	
-	UPROPERTY()
-	void onWayponCharge();
-    
-    UPROPERTY()
-    void coroutineQteTime();
-    
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
