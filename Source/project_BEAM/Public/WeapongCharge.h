@@ -27,9 +27,13 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
 	UPROPERTY()
 	void onWayponCharge();
-
+    
+    UPROPERTY()
+    void coroutineQteTime();
+    
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
