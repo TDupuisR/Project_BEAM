@@ -40,13 +40,12 @@ void UWeapongCharge::onWayponCharge()
 		else if(power <= 3)
 		{
 			//wait for x sec
-			//then shoot
+			//shoot();
 			return;
 		}
 		if(chargeFail == true)
 		{
-			power = 0;
-			shoot();
+			//shoot();
 			return;
 		}
 		qteTimeLeft -= GetWorld()->DeltaTimeSeconds;
