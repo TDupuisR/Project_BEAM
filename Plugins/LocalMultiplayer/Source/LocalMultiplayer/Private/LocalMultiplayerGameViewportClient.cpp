@@ -10,7 +10,7 @@
 void ULocalMultiplayerGameViewportClient::PostInitProperties()
 {
 	Super::PostInitProperties();
-	MaxSplitscreenPlayers = 4;
+	MaxSplitscreenPlayers = 2;
 }
 
 bool ULocalMultiplayerGameViewportClient::InputKey(const FInputKeyEventArgs& EventArgs)

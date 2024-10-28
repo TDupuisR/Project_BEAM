@@ -37,6 +37,27 @@ TSubclassOf<ABeamCharacter> AMatchGameMode::GetSmashCharacterClassFromInputType(
 {
 	const UArenaSettings* ArenaSettings = GetDefault<UArenaSettings>();
 
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		10.0f,
+		FColor::Red,
+		FString::Printf(TEXT("WOW OMG : %d"), InputType)
+		);
+	
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		10.0f,
+		FColor::Red,
+		FString::Printf(TEXT("PAS : %d"), EAutoReceiveInput::Player0)
+		);
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		10.0f,
+		FColor::Red,
+		FString::Printf(TEXT("PAS : %d"), EAutoReceiveInput::Player1)
+		);
+	
 	switch (InputType)
 	{
 	case EAutoReceiveInput::Player0:
