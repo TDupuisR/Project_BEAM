@@ -61,14 +61,14 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 	
 	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D) || Character->GetInputMove().X != 0) 
 	{
-		if ((IsKeyDown(EKeys::Q) || Character->GetInputMove().X < 0) && Character->GetOrientX() == 1)
+	/*	if ((IsKeyDown(EKeys::Q) || Character->GetInputMove().X < 0) && Character->GetOrientX() == 1)
 		{
 			Character->SetOrientX(-1);
 		}
 		else if ((IsKeyDown(EKeys::D) || Character->GetInputMove().X > 0) && Character->GetOrientX() == -1)
 		{
 			Character->SetOrientX(1);
-		}
+		}*/
 
 		float appliedForce = .0f;
 		if (Character->GetInputMove().X != 0)

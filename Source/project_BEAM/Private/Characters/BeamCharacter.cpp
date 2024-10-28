@@ -39,6 +39,10 @@ void ABeamCharacter::Tick(float DeltaTime)
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
+
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
+
 	if (GetActorLocation().Y != StartLocation.Y)
 	{
 		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
@@ -55,6 +59,8 @@ void ABeamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	if(EnhancedInputComponent == nullptr) return;
+
+	BindInputActions(EnhancedInputComponent);
 }
 
 float ABeamCharacter::GetOrientX() const
@@ -271,6 +277,7 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 void ABeamCharacter::OnInputMove(const FInputActionValue& InputActionValue)
 {
 	InputMove = InputActionValue.Get<FVector2D>();
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %s"), *InputMove.ToString()));
 }
 void ABeamCharacter::OnInputJump(const FInputActionValue& InputActionValue)
 {
