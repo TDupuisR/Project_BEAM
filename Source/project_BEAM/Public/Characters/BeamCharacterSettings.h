@@ -114,6 +114,12 @@ public:
 
 #pragma endregion
 
+#pragma region Coyote
+	UPROPERTY(Config, EditAnywhere, Category = "Coyote", meta = (ToolTip = "Temps pour le coyote jump"))
+	float CoyoteTime;
+
+#pragma endregion
+
 
 
 };

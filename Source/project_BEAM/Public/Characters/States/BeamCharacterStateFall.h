@@ -23,4 +23,20 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
+# pragma region Timer
+
+private:
+	float timerCoyote = 0.0f;
+	float timerCoyoteMax = 0.2f;
+
+	bool canCoyote = true;
+
+	void OnCoyoteTimerEnd();
+
+	void ResetCoyoteTimer();
+
+
+
+# pragma endregion
+
 };
