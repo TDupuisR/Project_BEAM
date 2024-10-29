@@ -9,6 +9,7 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Characters/BeamCharacterStateID.h"
+#include "Components/BoxComponent.h"
 
 
 // Sets default values
@@ -24,9 +25,8 @@ void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Life = MaxLife;
-
 	InitCharacterSettings();
+	SetupCollision();
 	CreateStateMachine();
 	InitStateMachine();
 
@@ -108,6 +108,7 @@ void ABeamCharacter::InitCharacterSettings()
 
 	if (CharacterSettings == nullptr) return;
 
+	// CHARACTER COMPONENT SETTINGS
 	GetCharacterMovement()->MaxAcceleration = CharacterSettings->MaxAcceleration;
 	GetCharacterMovement()->GroundFriction = CharacterSettings->GroundFriction;
 	GetCharacterMovement()->GravityScale = CharacterSettings->GravityScale;
@@ -117,6 +118,11 @@ void ABeamCharacter::InitCharacterSettings()
 	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
 	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
+	
+	// CHARACTER STATS SETTINGS
+	MaxLife = CharacterSettings->MaxLife;
+	Life = MaxLife;
+	LifeToFly = CharacterSettings->LifeToFly;
 }
 
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
@@ -183,6 +189,48 @@ void ABeamCharacter::CheckLife()
 	else {
 		StateMachine->ChangeState(EBeamCharacterStateID::Dead);
 	}
+}
+
+void ABeamCharacter::Punch()
+{
+	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
+
+	for (ABeamCharacter* player : PlayersInZone) {
+		//GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW : %s"), player->GetName()));
+		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+		player->KnockBack(direction, CharacterSettings->Punch_Force);
+	}
+}
+
+void ABeamCharacter::SetupCollision()
+{
+	boxCollision = GetComponentByClass<UBoxComponent>();
+
+	if (boxCollision == nullptr || CharacterSettings == nullptr) return;
+
+	boxCollision->SetBoxExtent(FVector(CharacterSettings->ZoneKnockback_Size.X, 40.f, CharacterSettings->ZoneKnockback_Size.Y));
+
+	GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW : %s"), *boxCollision->GetName()));
+
+	boxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABeamCharacter::OnBeginOverlapZone);
+	boxCollision->OnComponentEndOverlap.AddDynamic(this, &ABeamCharacter::OnEndOverlapZone);
+
+}
+
+void ABeamCharacter::OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	ABeamCharacter* player = Cast<ABeamCharacter>(OtherActor);
+	if (player == nullptr) return;
+
+	PlayersInZone.Add(player);
+}
+
+void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	ABeamCharacter* player = Cast<ABeamCharacter>(OtherActor);
+	if (player == nullptr) return;
+
+	PlayersInZone.Remove(player);
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const

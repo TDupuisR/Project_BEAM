@@ -101,7 +101,18 @@ public:
 
 #pragma endregion
 
+#pragma region KnockBack
 
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
+	float Punch_Force;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
+	TArray<float> ChargesKnockbacks;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Taille de la zone"))
+	FVector2D ZoneKnockback_Size;
+
+#pragma endregion
 
 
 

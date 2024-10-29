@@ -2,14 +2,18 @@
 
 #pragma once
 
+//#include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "BeamCharacterInputdata.h"
 #include "InputMappingContext.h"
 #include "GameFramework/Character.h"
+
+
 #include "BeamCharacter.generated.h"
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
+class UBoxComponent;
 
 UCLASS()
 class PROJECT_BEAM_API ABeamCharacter : public ACharacter
@@ -175,6 +179,30 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	int LifeToFly;
+
+# pragma endregion
+
+# pragma region Punch
+
+public:
+	void Punch();
+
+private:
+	UPROPERTY()
+	UBoxComponent* boxCollision;
+
+	UPROPERTY()
+	TArray<ABeamCharacter*> PlayersInZone;
+
+	void SetupCollision();
+
+
+	UFUNCTION()
+	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 
 # pragma endregion
 
