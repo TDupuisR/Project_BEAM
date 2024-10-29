@@ -7,6 +7,7 @@
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
+#include "Characters/PlayerAim.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -118,6 +119,17 @@ void ABeamCharacter::InitCharacterSettings()
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
 {
 	this->GetCharacterMovement()->Launch(Direction * Force);
+}
+
+void ABeamCharacter::creatAim()
+{
+	localPlayerAim = NewObject<UPlayerAim>(this);
+}
+
+void ABeamCharacter::playerAimInit()
+{
+	if(localPlayerAim == nullptr) return;
+	localPlayerAim->Init(this);
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const

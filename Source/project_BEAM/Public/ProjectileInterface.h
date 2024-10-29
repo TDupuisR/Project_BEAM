@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Projectile.h"
+
 #include "UObject/Interface.h"
 #include "ProjectileInterface.generated.h"
+
+class AProjectile;
 
 UENUM(BlueprintType)
 enum class EProjectileType : uint8

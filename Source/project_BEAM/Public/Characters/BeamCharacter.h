@@ -10,6 +10,7 @@
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
+class UPlayerAim;
 
 UCLASS()
 class PROJECT_BEAM_API ABeamCharacter : public ACharacter
@@ -133,4 +134,20 @@ public:
 
 
 # pragma endregion
+
+#pragma region playerAim
+
+public:
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UPlayerAim> localPlayerAim;
+	
+private:
+	UFUNCTION()
+	void creatAim();
+	
+	UFUNCTION()
+	void playerAimInit();
+
+	
+#pragma endregion
 };

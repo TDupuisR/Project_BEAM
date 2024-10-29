@@ -11,6 +11,7 @@
 
 #include "PlayerAim.generated.h"
 
+class ABeamCharacter;
 class AProjectile;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -21,15 +22,15 @@ class PROJECT_BEAM_API UPlayerAim : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UPlayerAim();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UInputMappingContext* IMCPlayer;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UInputAction* InputActionPlayer;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UInputAction* AimRotation;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Radius = 100.f;
+
+	UFUNCTION()
+	void Init(ABeamCharacter* Character);
 	
+	UPROPERTY()
+	TObjectPtr<ABeamCharacter> Character;
 	
 protected:
 	// Called when the game starts
@@ -47,4 +48,11 @@ protected:
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
+private:
+	UPROPERTY(EditAnywhere)
+	float shootDelay = 2.f;
+	UPROPERTY(EditAnywhere)
+	float shootDelayInit = 2.f;
+	
 };

@@ -15,6 +15,11 @@ UPlayerAim::UPlayerAim()
 }
 
 
+void UPlayerAim::Init(ABeamCharacter* playerCharacter)
+{
+	Character = playerCharacter;
+}
+
 // Called when the game starts
 void UPlayerAim::BeginPlay()
 {
@@ -31,19 +36,32 @@ FVector3f UPlayerAim::AimDir(const FVector2f& dir, const FVector3f& playerPos)
 
 void UPlayerAim::Shoot(FVector spawnLocation, FVector direction, AActor* playerActor, int power)
 {
-	if(ProjectileActor)
+	
+	if(shootDelay >= 0.f)
 	{
-		FActorSpawnParameters spawnParams;
-		spawnParams.Owner = playerActor;
-		spawnParams.Instigator = playerActor->GetInstigator();
+		if(ProjectileActor)
+		{
+			FActorSpawnParameters spawnParams;
+			spawnParams.Owner = playerActor;
+			spawnParams.Instigator = playerActor->GetInstigator();
 		
-		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, direction.ToOrientationRotator(), spawnParams);
-		if(projectile == nullptr) return;
+			AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, direction.ToOrientationRotator(), spawnParams);
+			if(projectile == nullptr) return;
 
-		if (power > 3) power = 3;
-		if (power < 0) power = 0;
-		projectile->InitialisePower(power);
+			if (power > 3) power = 3;
+			if (power < 0) power = 0;
+			projectile->InitialisePower(power);
+			shootDelay -= GetWorld()->GetDeltaSeconds();
+
+			GEngine->AddOnScreenDebugMessage(
+				-1,
+				5.f,
+				FColor::Blue,
+				FString::Printf(TEXT("shhot"))
+				);
+		}
 	}
+	shootDelay = shootDelayInit;
 }
 
 // Called every frame
