@@ -103,8 +103,14 @@ public:
 
 #pragma region KnockBack
 
-	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
-	float Punch_Force;
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le push"))
+	float Push_Force;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Temps pour freeze le joueur"))
+	float Push_WaitTime;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Temps de cooldown pour le push"))
+	float Push_Cooldown;
 
 	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
 	TArray<float> ChargesKnockbacks;

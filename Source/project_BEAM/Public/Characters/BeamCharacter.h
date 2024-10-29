@@ -167,9 +167,13 @@ public:
 
 	void const ResetLife();
 
+	bool IsPhaseTwo() const;
+
 protected:
 
 	void CheckLife();
+
+	
 
 	UPROPERTY(BlueprintReadOnly)
 	int Life;
@@ -185,7 +189,11 @@ protected:
 # pragma region Punch
 
 public:
-	void Punch();
+	void Push();
+
+	bool CanPush() const;
+
+	void SetCanPush(bool NewCanPush);
 
 private:
 	UPROPERTY()
@@ -194,8 +202,18 @@ private:
 	UPROPERTY()
 	TArray<ABeamCharacter*> PlayersInZone;
 
-	void SetupCollision();
+	UPROPERTY()
+	bool canPush = true;
 
+	UPROPERTY()
+	float timerPush = 0.0f;
+
+	UPROPERTY()
+	float timeToWaitPush = 2.0f;
+
+	void TickPush(float DeltaTime);
+
+	void SetupCollision();
 
 	UFUNCTION()
 	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

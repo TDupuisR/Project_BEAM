@@ -21,6 +21,7 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
 
+
 	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
@@ -84,5 +85,9 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 
 	if (Character->GetMovementComponent()->Velocity.Y <= 0) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
+	}
+
+	if (Character->GetInputPunch() && Character->CanPush()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 }

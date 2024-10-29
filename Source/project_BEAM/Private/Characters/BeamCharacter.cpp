@@ -43,9 +43,11 @@ void ABeamCharacter::Tick(float DeltaTime)
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
+	TickPush(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
+	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
+
+	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
 
 	if (GetActorLocation().Y != StartLocation.Y)
 	{
@@ -123,6 +125,7 @@ void ABeamCharacter::InitCharacterSettings()
 	MaxLife = CharacterSettings->MaxLife;
 	Life = MaxLife;
 	LifeToFly = CharacterSettings->LifeToFly;
+	timeToWaitPush = CharacterSettings->Push_Cooldown;
 }
 
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
@@ -174,6 +177,11 @@ void const ABeamCharacter::ResetLife()
 	Life = MaxLife;
 }
 
+bool ABeamCharacter::IsPhaseTwo() const
+{
+	return Life <= LifeToFly;
+}
+
 void ABeamCharacter::CheckLife()
 {
 	if (Life > 0 && Life <= LifeToFly) {
@@ -191,14 +199,35 @@ void ABeamCharacter::CheckLife()
 	}
 }
 
-void ABeamCharacter::Punch()
+void ABeamCharacter::Push()
 {
 	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
 
 	for (ABeamCharacter* player : PlayersInZone) {
-		//GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW : %s"), player->GetName()));
+		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW")));
 		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-		player->KnockBack(direction, CharacterSettings->Punch_Force);
+		player->KnockBack(direction, CharacterSettings->Push_Force);
+	}
+}
+
+bool ABeamCharacter::CanPush() const
+{
+	return canPush;
+}
+
+void ABeamCharacter::SetCanPush(bool NewCanPush)
+{
+	canPush = NewCanPush;
+}
+
+void ABeamCharacter::TickPush(float DeltaTime)
+{
+	if (!canPush) {
+		timerPush += DeltaTime;
+		if (timerPush >= timeToWaitPush) {
+			canPush = true;
+			timerPush = 0;
+		}
 	}
 }
 
