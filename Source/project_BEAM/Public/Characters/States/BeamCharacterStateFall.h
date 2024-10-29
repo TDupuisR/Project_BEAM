@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Characters/BeamCharacterState.h"
-#include "BeamCharacterStateFlying.generated.h"
+#include "BeamCharacterStateFall.generated.h"
 
 /**
  * 
  */
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
-class PROJECT_BEAM_API UBeamCharacterStateFlying : public UBeamCharacterState
+class PROJECT_BEAM_API UBeamCharacterStateFall : public UBeamCharacterState
 {
 	GENERATED_BODY()
 
@@ -22,18 +22,5 @@ public:
 	virtual void StateExit(EBeamCharacterStateID NextStateID) override;
 
 	virtual void StateTick(float DeltaTime) override;
-
-private:
-	bool dashIsStillActive = false;
-
-	bool canDash = true;
-	bool canMove = true;
-
-	float timerDash = 0.0f;
-	float timerInputs = 0.0f;
-
-	bool firstFrame = true;
-
-	void AfterDash();
 
 };

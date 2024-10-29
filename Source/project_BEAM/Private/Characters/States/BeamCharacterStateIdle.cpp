@@ -48,12 +48,12 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);
 
-	if (IsKeyDown(EKeys::SpaceBar)) {
+	if (Character->GetInputJump()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
 	
-	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D))
+	if (Character->GetInputMove() != FVector2D::ZeroVector)
 	{
 
 		GEngine->AddOnScreenDebugMessage(
@@ -66,7 +66,11 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
 
-	if (IsKeyDown(EKeys::E)) {
+	if (!Character->GetMovementComponent()->IsMovingOnGround()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
+	}
+
+	if (Character->GetInputFly()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
 	}
 

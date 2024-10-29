@@ -6,8 +6,8 @@
 #include "Characters/BeamCharacter.h"	
 #include "Characters/BeamCharacterStateMachine.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "Characters/BeamCharacterSettings.h"
+
 
 
 EBeamCharacterStateID UBeamCharacterStateFlying::GetStateID()
@@ -18,6 +18,8 @@ EBeamCharacterStateID UBeamCharacterStateFlying::GetStateID()
 void UBeamCharacterStateFlying::StateEnter(EBeamCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
+
+	firstFrame = true;
 
 	Character->GetCharacterMovement()->BrakingFrictionFactor = Character->GetCharacterSettings()->Fly_BrakingFrictionFactor;
 
@@ -43,6 +45,8 @@ void UBeamCharacterStateFlying::StateExit(EBeamCharacterStateID NextStateID)
 		FColor::Red,
 		FString::Printf(TEXT("Exit State %d"), GetStateID())
 	);
+
+	firstFrame = true;
 }
 
 void UBeamCharacterStateFlying::StateTick(float DeltaTime)
@@ -56,8 +60,23 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);
 
+	if (!canDash) {
+		timerDash += DeltaTime;
+		if (timerDash >= Character->GetCharacterSettings()->Fly_DashTimer) {
+			canDash = true;
+			timerDash = 0;
+		}
+	}
 
-	if (IsKeyDown(EKeys::SpaceBar)) {
+	if (!canMove) {
+		timerInputs += DeltaTime;
+		if (timerInputs >= Character->GetCharacterSettings()->Fly_InputsTimer) {
+			canMove = true;
+			timerInputs = 0;
+		}
+	}
+
+	if (Character->GetInputFly() && !firstFrame) {
 		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 		//Character->GetCapsuleComponent()->SetSimulatePhysics(true);
 		//Character->GetCharacterMovement()->Gravity = true;
@@ -67,7 +86,11 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	}
 
 	// Dash
-	if (IsKeyWasPressed(EKeys::J)) {
+	if (Character->GetInputDash() && !dashIsStillActive && canDash) {
+
+		dashIsStillActive = true;
+		canDash = false;
+		canMove = false;
 
 		GEngine->AddOnScreenDebugMessage(
 			-1,
@@ -75,46 +98,39 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			FColor::Blue,
 			FString::Printf(TEXT("Dash %d"), GetStateID())
 		);
-
-		FVector Vector = FVector(0,0,0);
-
-		if (IsKeyDown(EKeys::Q)) {
-			Vector += -FVector::ForwardVector;
-		}
-		if (IsKeyDown(EKeys::D)) {
-			Vector += FVector::ForwardVector;
-		}
-		if (IsKeyDown(EKeys::S)) {
-			Vector += -FVector::UpVector;
-		}
-		if (IsKeyDown(EKeys::Z)) {
-			Vector += FVector::UpVector;
+		
+		FVector dashVector = FVector::ZeroVector;
+		if (Character->GetInputMove() != FVector2D::ZeroVector)
+		{
+			dashVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
 		}
 
-		Character->GetCharacterMovement()->AddImpulse(Vector * Character->GetCharacterSettings()->Fly_DashForce);
+
+		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce);
+	}
+	else if (!Character->GetInputDash())
+	{
+		dashIsStillActive = false;
 	}
 
-	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D))
-	{
-		if (IsKeyDown(EKeys::Q)) {
-			Character->SetOrientX(-1);
+	if (canMove) {
+		Character->SetOrientX(Character->GetInputMove().X);
+	
+		if (Character->GetInputMove() != FVector2D::ZeroVector)
+		{
+			FVector moveVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
+			moveVector.Normalize();
+			Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
 		}
-		else if (IsKeyDown(EKeys::D)) {
-			Character->SetOrientX(1);
-		}
-		Character->AddMovementInput(FVector::ForwardVector, Character->GetOrientX());
-
 	}
 
-	// BrakingFrictionFactor (base : 40, fly : 10 pour movement moins arrétés)
-
-	if (IsKeyDown(EKeys::S) || IsKeyDown(EKeys::Z))
-	{
-		if (IsKeyDown(EKeys::S)) {
-			Character->AddMovementInput(FVector::DownVector);
-		}
-		else if (IsKeyDown(EKeys::Z)) {
-			Character->AddMovementInput(FVector::UpVector);
-		}
+	if (firstFrame) {
+		firstFrame = false;
 	}
 }
+
+//void UBeamCharacterStateFlying::AfterDash()
+//{
+//	canDash = true;
+//	canMove = true;
+//}
