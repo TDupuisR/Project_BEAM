@@ -64,8 +64,6 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 			if (power > 3) power = 3;
 			if (power < 0) power = 0;
 			projectile->InitialisePower(power);
-			shootDelay -= GetWorld()->GetDeltaSeconds();
-
 			GEngine->AddOnScreenDebugMessage(
 				-1,
 				5.f,
@@ -95,5 +93,6 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	}
 
 	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());
+	shootDelay --;
 }
 

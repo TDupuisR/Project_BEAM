@@ -33,12 +33,13 @@ void UWeaponCharge::StartWeaponCharge()
 {
 	power = 0;
 	qteTimeLeft = qteMaxTime;
-	isQteActive = true;
 	chargeWasPushed = false;
+	isQteActive = true;
 }
 void UWeaponCharge::CancelWeaponCharge()
 {
 	isQteActive = false;
+	pointAim->ShotCall(power);
 }
 
 void UWeaponCharge::InitCharacter(ABeamCharacter* playerCharacter)
@@ -79,7 +80,6 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				else // if QTE Fail
 				{
 					CancelWeaponCharge();
-					pointAim->ShotCall(power);
 				}
 			}
 			else if (!Character->GetInputCharge() && chargeWasPushed && power < 3) // Is Charge button == false
@@ -98,7 +98,6 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		else
 		{
 			CancelWeaponCharge();
-			pointAim->ShotCall(power);
 		}
 	}
 }
