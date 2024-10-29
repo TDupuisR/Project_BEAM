@@ -3,6 +3,8 @@
 
 #include "WeaponCharge.h"
 #include "Engine/World.h"
+#include "Characters/BeamCharacter.h"
+#include "Characters/PlayerAim.h"
 
 #include "MaterialHLSLTree.h"
 
@@ -39,6 +41,20 @@ void UWeaponCharge::CancelWeaponCharge()
 	isQteActive = false;
 }
 
+void UWeaponCharge::InitCharacter(ABeamCharacter* playerCharacter)
+{
+	Character = playerCharacter;
+}
+
+void UWeaponCharge::InitAim(UPlayerAim* playerAim)
+{
+	pointAim = playerAim;
+}
+
+bool UWeaponCharge::GetIsQteActive() const
+{
+	return isQteActive;
+}
 
 
 // Called every frame
@@ -50,7 +66,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	{
 		if(qteTimeLeft > .0f) // remplace par le timer
 		{
-			if (true && !chargeWasPushed && power < 3) // Is Charge button == true
+			if (Character->GetInputCharge() && !chargeWasPushed && power < 3) // Is Charge button == true
 			{
 				chargeWasPushed = true;
 				
@@ -63,10 +79,10 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				else // if QTE Fail
 				{
 					CancelWeaponCharge();
-					//shoot(power)
+					pointAim->ShotCall(power);
 				}
 			}
-			else if (!false && chargeWasPushed && power < 3) // Is Charge button == false
+			else if (!Character->GetInputCharge() && chargeWasPushed && power < 3) // Is Charge button == false
 			{
 				chargeWasPushed = false;
 			}
@@ -82,7 +98,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		else
 		{
 			CancelWeaponCharge();
-			//shoot(power)
+			pointAim->ShotCall(power);
 		}
 	}
 }

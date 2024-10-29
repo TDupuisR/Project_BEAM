@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "WeaponCharge.generated.h"
 
+class ABeamCharacter;
+class UPlayerAim;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
@@ -20,6 +22,17 @@ public:
 	void StartWeaponCharge();
 	UFUNCTION(BlueprintCallable)
 	void CancelWeaponCharge();
+	UFUNCTION()
+	void InitCharacter(ABeamCharacter* playerCharacter);
+	UFUNCTION()
+	void InitAim(UPlayerAim* playerAim);
+
+	bool GetIsQteActive() const;
+
+	UPROPERTY()
+	TObjectPtr<ABeamCharacter> Character;
+	UPROPERTY()
+	TObjectPtr<UPlayerAim> pointAim;
 	
 protected:
 	// Called when the game starts

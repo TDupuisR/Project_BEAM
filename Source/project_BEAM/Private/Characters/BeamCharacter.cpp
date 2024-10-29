@@ -129,7 +129,7 @@ void ABeamCharacter::creatAim()
 void ABeamCharacter::playerAimInit()
 {
 	if(localPlayerAim == nullptr) return;
-	localPlayerAim->Init(this);
+	localPlayerAim->InitCharacter(this);
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const

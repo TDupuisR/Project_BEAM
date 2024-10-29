@@ -3,6 +3,8 @@
 
 #include "Characters/PlayerAim.h"
 #include "Projectile.h"
+#include "Characters/BeamCharacter.h"
+#include "WeaponCharge.h"
 
 
 // Sets default values for this component's properties
@@ -15,9 +17,19 @@ UPlayerAim::UPlayerAim()
 }
 
 
-void UPlayerAim::Init(ABeamCharacter* playerCharacter)
+void UPlayerAim::InitCharacter(ABeamCharacter* playerCharacter)
 {
 	Character = playerCharacter;
+}
+
+void UPlayerAim::initWeapon(UWeaponCharge* playerweapon)
+{
+	Weapon = playerweapon;
+}
+
+void UPlayerAim::ShotCall(int power)
+{
+	Shoot(aimPos, Character->GetInputAim().GetSafeNormal(), Character, power);
 }
 
 // Called when the game starts
@@ -28,24 +40,25 @@ void UPlayerAim::BeginPlay()
 	
 }
 
-FVector3f UPlayerAim::AimDir(const FVector2f& dir, const FVector3f& playerPos)
+FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos)
 {	
-	FVector2f DirNormal = dir.GetSafeNormal();
-	return FVector3f(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius );
+	FVector2D DirNormal = dir.GetSafeNormal();
+	return FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius );
 }
 
-void UPlayerAim::Shoot(FVector spawnLocation, FVector direction, AActor* playerActor, int power)
+void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power)
 {
 	
 	if(shootDelay >= 0.f)
 	{
 		if(ProjectileActor)
 		{
+			FVector newDir = FVector(direction.X, .0f, direction.Y);
 			FActorSpawnParameters spawnParams;
 			spawnParams.Owner = playerActor;
 			spawnParams.Instigator = playerActor->GetInstigator();
 		
-			AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, direction.ToOrientationRotator(), spawnParams);
+			AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
 			if(projectile == nullptr) return;
 
 			if (power > 3) power = 3;
@@ -69,5 +82,18 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	// ...
+	if(Character->GetInputShoot() && !wasShootTriggered) //check input and if it was recently pressed
+	{
+		wasShootTriggered = true;
+		Weapon->StartWeaponCharge(); //active qte
+		
+	}
+	if(!Character->GetInputShoot() && wasShootTriggered && Weapon->GetIsQteActive()) //no input enter and no recent action and qte active
+	{
+		wasShootTriggered = false;
+		Weapon->CancelWeaponCharge(); //deactive Qte
+	}
+
+	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());
 }
 

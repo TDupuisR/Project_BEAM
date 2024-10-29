@@ -3,9 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "WeaponCharge.h"
 #include "Components/ActorComponent.h"
-
-#include "EnhancedInputSubsystems.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/Controller.h"
 
@@ -27,23 +26,31 @@ public:
 	float Radius = 100.f;
 
 	UFUNCTION()
-	void Init(ABeamCharacter* Character);
+	void InitCharacter(ABeamCharacter* playerCharacter);
+	UFUNCTION()
+	void initWeapon(UWeaponCharge* playerweapon);
 	
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;
+	UPROPERTY()
+	TObjectPtr<UWeaponCharge> Weapon;
+	
+	void ShotCall(int power);
+	
 	
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
 	UFUNCTION(BlueprintCallable)
-	FVector3f AimDir(const FVector2f& dir, const FVector3f& playerPos);
-
+	FVector AimCursorPos(const FVector2D& dir, const FVector& playerPos);
 	UFUNCTION(BlueprintCallable)
-	void Shoot(FVector spawnLocation, FVector direction, AActor* playerActor, int power);
+	void Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power);
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AProjectile> ProjectileActor;
+	UPROPERTY()
+	FVector aimPos;
 
 public:
 	// Called every frame
@@ -54,5 +61,8 @@ private:
 	float shootDelay = 2.f;
 	UPROPERTY(EditAnywhere)
 	float shootDelayInit = 2.f;
+
+	UPROPERTY()
+	bool wasShootTriggered = false;
 	
 };
