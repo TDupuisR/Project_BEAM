@@ -54,7 +54,7 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 	);
 
 
-	if (IsKeyDown(EKeys::SpaceBar)) {
+	if (IsKeyDown(EKeys::SpaceBar) || Character->GetInputJump()) {
 
 		GEngine->AddOnScreenDebugMessage(
 			-1,
@@ -63,25 +63,35 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 			FString::Printf(TEXT("Change STATE Jump"), GetStateID())
 		);
 
-
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
 
-	if (!IsKeyDown(EKeys::Q) && !IsKeyDown(EKeys::D))
+	if (Character->GetInputMove().X == 0)
 	{
 		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
 	}
 	else {
-
-		if (IsKeyDown(EKeys::Q)) {
+		/*if ((IsKeyDown(EKeys::Q) || Character->GetInputMove().X < 0) && Character->GetOrientX() == 1)
+		{
 			Character->SetOrientX(-1);
 		}
-		else {
+		else if ((IsKeyDown(EKeys::D) || Character->GetInputMove().X > 0) && Character->GetOrientX() == -1)
+		{
 			Character->SetOrientX(1);
-		}
-		Character->AddMovementInput(FVector::ForwardVector, Character->GetOrientX());
+		}*/
 
+		float appliedForce = .0f;
+		if (Character->GetInputMove().X != 0)
+		{
+			appliedForce = Character->GetInputMove().X;
+		}
+		else
+		{
+			appliedForce = Character->GetOrientX();
+		}
+		
+		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
 	}
 
 

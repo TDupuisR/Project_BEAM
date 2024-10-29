@@ -6,7 +6,6 @@
 #include "Characters/BeamCharacter.h"	
 #include "Characters/BeamCharacterStateMachine.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "Characters/BeamCharacterSettings.h"
 
 
@@ -57,7 +56,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	);
 
 
-	if (IsKeyDown(EKeys::SpaceBar)) {
+	if (IsKeyDown(EKeys::SpaceBar) || Character->GetInputJump()) {
 		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 		//Character->GetCapsuleComponent()->SetSimulatePhysics(true);
 		//Character->GetCharacterMovement()->Gravity = true;
@@ -67,51 +66,74 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	}
 
 	// Dash
-	if (IsKeyWasPressed(EKeys::J)) {
+	if ((IsKeyWasPressed(EKeys::J) || Character->GetInputDash()) && !dashIsStillActive) {
 
+		dashIsStillActive = true;
+		
 		GEngine->AddOnScreenDebugMessage(
 			-1,
 			2.0f,
 			FColor::Blue,
 			FString::Printf(TEXT("Dash %d"), GetStateID())
 		);
+		
+		FVector dashVector = FVector::ZeroVector;
+		if (Character->GetInputMove() != FVector2D::ZeroVector)
+		{
+			dashVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
+		}
+		else
+		{
+			if (IsKeyDown(EKeys::Q)) {
+				dashVector += -FVector::ForwardVector;
+			}
+			if (IsKeyDown(EKeys::D)) {
+				dashVector += FVector::ForwardVector;
+			}
+			if (IsKeyDown(EKeys::S)) {
+				dashVector += -FVector::UpVector;
+			}
+			if (IsKeyDown(EKeys::Z)) {
+				dashVector += FVector::UpVector;
+			}
+		}
 
-		FVector Vector = FVector(0,0,0);
-
-		if (IsKeyDown(EKeys::Q)) {
-			Vector += -FVector::ForwardVector;
-		}
-		if (IsKeyDown(EKeys::D)) {
-			Vector += FVector::ForwardVector;
-		}
-		if (IsKeyDown(EKeys::S)) {
-			Vector += -FVector::UpVector;
-		}
-		if (IsKeyDown(EKeys::Z)) {
-			Vector += FVector::UpVector;
-		}
-
-		Character->GetCharacterMovement()->AddImpulse(Vector * Character->GetCharacterSettings()->Fly_DashForce);
+		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce);
+	}
+	else if (!Character->GetInputDash())
+	{
+		dashIsStillActive = false;
 	}
 
-	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D))
+	// Set Orientation
+	if ((IsKeyDown(EKeys::Q) || Character->GetInputMove().X < 0) && Character->GetOrientX() == 1)
 	{
-		if (IsKeyDown(EKeys::Q)) {
-			Character->SetOrientX(-1);
-		}
-		else if (IsKeyDown(EKeys::D)) {
-			Character->SetOrientX(1);
-		}
-		Character->AddMovementInput(FVector::ForwardVector, Character->GetOrientX());
-
+		Character->SetOrientX(-1);
 	}
-
-	// BrakingFrictionFactor (base : 40, fly : 10 pour movement moins arrétés)
-
-	if (IsKeyDown(EKeys::S) || IsKeyDown(EKeys::Z))
+	else if ((IsKeyDown(EKeys::D) || Character->GetInputMove().X > 0) && Character->GetOrientX() == -1)
 	{
+		Character->SetOrientX(1);
+	}
+	
+	// Apply Movement
+	if (Character->GetInputMove() != FVector2D::ZeroVector)
+	{
+		FVector moveVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
+		moveVector.Normalize();
+		Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
+	}
+	// BrakingFrictionFactor (base : 40, fly : 10 pour movement moins arrï¿½tï¿½s)
+	else
+	{
+		if (IsKeyDown(EKeys::Q)){
+			Character->AddMovementInput(-FVector::ForwardVector);
+		}
+		else if (IsKeyDown(EKeys::D)){
+			Character->AddMovementInput(FVector::ForwardVector);
+		}
+		
 		if (IsKeyDown(EKeys::S)) {
-			Character->AddMovementInput(FVector::DownVector);
+			Character->AddMovementInput(-FVector::UpVector);
 		}
 		else if (IsKeyDown(EKeys::Z)) {
 			Character->AddMovementInput(FVector::UpVector);
