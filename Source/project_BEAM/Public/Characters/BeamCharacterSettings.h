@@ -20,6 +20,13 @@ public:
 
 #pragma region General 
 
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Vie max du personnage"))
+	int MaxLife;
+
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Vie pour aller à la phase 2"))
+	int LifeToFly;
+
+
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Permet de ralentir les déplacements, valeur haute -> ralenti enormément, valeur petite -> ralenti un peu"))
 	double BrakingFrictionFactor;
@@ -83,6 +90,7 @@ public:
 	double Fly_DashForce;
 
 #pragma endregion
+
 
 
 

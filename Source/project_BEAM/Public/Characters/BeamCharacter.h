@@ -87,4 +87,43 @@ public:
 
 # pragma endregion
 
+# pragma region Life
+
+	// GETTERS
+	int const GetLife() const;
+
+	int const GetMaxLife() const;
+
+	int const GetLifeToFly() const;
+
+
+	// SETTERS
+	void SetLife(const int NewLife);
+
+	void const SetMaxLife(const int NewMaxLife);
+
+	void const SetLifeToFly(const int NewLifeToFly);
+
+
+	// OTHERS
+	void TakeDamage(const int Damage = 1);
+
+	void const ResetLife();
+
+protected:
+
+	void CheckLife();
+
+	UPROPERTY(BlueprintReadOnly)
+	int Life;
+
+	UPROPERTY(BlueprintReadOnly)
+	int MaxLife;
+
+	UPROPERTY(BlueprintReadOnly)
+	int LifeToFly;
+
+# pragma endregion
+
+
 };

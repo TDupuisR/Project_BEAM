@@ -9,6 +9,7 @@
 #include "Characters/BeamCharacterSettings.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Characters/BeamCharacterStateID.h"
 
 
 // Sets default values
@@ -23,6 +24,9 @@ ABeamCharacter::ABeamCharacter()
 void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Life = MaxLife;
+
 	InitCharacterSettings();
 	CreateStateMachine();
 	InitStateMachine();
@@ -114,5 +118,66 @@ const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
 {
 	this->GetCharacterMovement()->Launch(Direction * Force);
+}
+
+int const ABeamCharacter::GetLife() const
+{
+	return Life;
+}
+
+int const ABeamCharacter::GetMaxLife() const
+{
+	return MaxLife;
+}
+
+int const ABeamCharacter::GetLifeToFly() const
+{
+	return LifeToFly;
+}
+
+void ABeamCharacter::SetLife(const int NewLife)
+{
+	Life = NewLife;
+}
+
+void const ABeamCharacter::SetMaxLife(const int NewMaxLife)
+{
+	MaxLife = NewMaxLife;
+}
+
+void const ABeamCharacter::SetLifeToFly(const int NewLifeToFly)
+{
+	LifeToFly = NewLifeToFly;
+}
+
+void ABeamCharacter::TakeDamage(const int Damage)
+{
+	Life -= Damage;
+	if (Life <= 0) {
+		Life = 0;
+	}
+	CheckLife();
+}
+
+void const ABeamCharacter::ResetLife()
+{
+	Life = MaxLife;
+}
+
+void ABeamCharacter::CheckLife()
+{
+	if (Life > 0 && Life <= LifeToFly) {
+		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) {
+			StateMachine->ChangeState(EBeamCharacterStateID::Fly);
+		}
+	}
+	else if (Life > LifeToFly) {
+		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Idle) {
+			StateMachine->ChangeState(EBeamCharacterStateID::Idle);
+		}
+	}
+	else {
+		StateMachine->ChangeState(EBeamCharacterStateID::Dead);
+	}
 }
 
