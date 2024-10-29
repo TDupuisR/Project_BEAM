@@ -59,16 +59,8 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 		FString::Printf(TEXT("STATE TICK JUMP"))
 	);
 	
-	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D) || Character->GetInputMove().X != 0) 
+	if (Character->GetInputMove().X != 0) 
 	{
-	/*	if ((IsKeyDown(EKeys::Q) || Character->GetInputMove().X < 0) && Character->GetOrientX() == 1)
-		{
-			Character->SetOrientX(-1);
-		}
-		else if ((IsKeyDown(EKeys::D) || Character->GetInputMove().X > 0) && Character->GetOrientX() == -1)
-		{
-			Character->SetOrientX(1);
-		}*/
 
 		float appliedForce = .0f;
 		if (Character->GetInputMove().X != 0)
@@ -79,8 +71,9 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 		{
 			appliedForce = Character->GetOrientX();
 		}
-		
+
 		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
+
 	}
 
 	if (Character->GetMovementComponent()->Velocity.Y <= 0) {

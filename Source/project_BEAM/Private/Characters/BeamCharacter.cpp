@@ -336,6 +336,25 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 			&ABeamCharacter::OnInputPunch
 			);
 	}
+
+	if (InputData->InputActionFly) 
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionFly,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputFly
+		);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionFly,
+			ETriggerEvent::Completed,
+			this,
+			&ABeamCharacter::OnInputFly
+		);
+
+
+	}
 }
 
 
@@ -371,6 +390,11 @@ void ABeamCharacter::OnInputPunch(const FInputActionValue& InputActionValue)
 	InputPunch = InputActionValue.Get<bool>();
 }
 
+void ABeamCharacter::OnInputFly(const FInputActionValue& InputActionValue)
+{
+	InputFly = InputActionValue.Get<bool>();
+}
+
 
 FVector2D ABeamCharacter::GetInputMove() const{ return InputMove; }
 bool ABeamCharacter::GetInputJump() const{ return InputJump; }
@@ -381,3 +405,5 @@ FVector2D ABeamCharacter::GetInputAim() const{ return InputAim; }
 bool ABeamCharacter::GetInputShoot() const{ return InputShoot; }
 
 bool ABeamCharacter::GetInputPunch() const{ return InputPunch; }
+
+bool ABeamCharacter::GetInputFly() const { return InputFly; }

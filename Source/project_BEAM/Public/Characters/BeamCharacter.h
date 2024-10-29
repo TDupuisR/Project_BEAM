@@ -96,6 +96,8 @@ public:
 	bool GetInputShoot() const;
 
 	bool GetInputPunch() const;
+
+	bool GetInputFly() const;
 	
 protected:
 	void SetupMappingContextIntoController() const;
@@ -110,6 +112,8 @@ protected:
 
 	UPROPERTY() bool InputPunch = false;
 
+	UPROPERTY() bool InputFly = false;
+
 private:
 	void BindInputActions(UEnhancedInputComponent* EnhancedInputComponent);
 
@@ -122,6 +126,8 @@ private:
 	void OnInputShoot(const FInputActionValue& InputActionValue);
 	
 	void OnInputPunch(const FInputActionValue& InputActionValue);
+
+	void OnInputFly(const FInputActionValue& InputActionValue);
 	
 # pragma endregion
 

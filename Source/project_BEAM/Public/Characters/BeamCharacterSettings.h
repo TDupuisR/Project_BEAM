@@ -93,6 +93,12 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Force du dash (faut mettre une tr�s grande force, genre 100000)"))
 	double Fly_DashForce;
 
+	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Timer du dash"))
+	float Fly_DashTimer;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Timer pour remettre les inputs"))
+	float Fly_InputsTimer;
+
 #pragma endregion
 
 

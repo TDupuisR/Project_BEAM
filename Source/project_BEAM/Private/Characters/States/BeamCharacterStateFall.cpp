@@ -48,18 +48,19 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 		FString::Printf(TEXT("TICK FALL"), GetStateID())
 	);
 
+	if (Character->GetInputMove().X != 0) {
+		float appliedForce = .0f;
+		if (Character->GetInputMove().X != 0)
+		{
+			appliedForce = Character->GetInputMove().X;
+		}
+		else
+		{
+			appliedForce = Character->GetOrientX();
+		}
 
-	float appliedForce = .0f;
-	if (Character->GetInputMove().X != 0)
-	{
-		appliedForce = Character->GetInputMove().X;
+		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
 	}
-	else
-	{
-		appliedForce = Character->GetOrientX();
-	}
-
-	Character->AddMovementInput(FVector::ForwardVector, appliedForce);
 
 	if (Character->GetMovementComponent()->IsMovingOnGround()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
