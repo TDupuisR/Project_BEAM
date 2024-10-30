@@ -64,7 +64,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 				-1,
 				5.f,
 				FColor::Blue,
-				FString::Printf(TEXT("shhot"))
+				FString::Printf(TEXT("shoot"))
 				);
 			Character->KnockBack(-newDir, 1000.f);
 		}
@@ -83,10 +83,14 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 		Weapon->StartWeaponCharge(); //active qte
 		
 	}
-	if(!Character->GetInputShoot() && wasShootTriggered && Weapon->GetIsQteActive()) //no input enter and no recent action and qte active
+	if(!Character->GetInputShoot() && wasShootTriggered) //no input enter and no recent action and qte active
 	{
 		wasShootTriggered = false;
-		Weapon->CancelWeaponCharge(); //deactive Qte
+		
+		if (Weapon->GetIsQteActive())
+		{
+			Weapon->CancelWeaponCharge(); //deactive Qte
+		}
 	}
 
 	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());
