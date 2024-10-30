@@ -2,14 +2,18 @@
 
 #pragma once
 
+//#include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "BeamCharacterInputdata.h"
 #include "InputMappingContext.h"
 #include "GameFramework/Character.h"
+
+
 #include "BeamCharacter.generated.h"
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
+class UBoxComponent;
 
 UCLASS()
 class PROJECT_BEAM_API ABeamCharacter : public ACharacter
@@ -83,9 +87,11 @@ protected:
 public:
 	UPROPERTY()
 	TObjectPtr<UInputMappingContext> InputMappingContext;
-
 	UPROPERTY()
 	TObjectPtr<UBeamCharacterInputData> InputData;
+
+	UPROPERTY()
+	APlayerController* playerController;
 
 	FVector2D GetInputMove() const;
 	bool GetInputJump() const;
@@ -100,7 +106,7 @@ public:
 	bool GetInputFly() const;
 	
 protected:
-	void SetupMappingContextIntoController() const;
+	void SetupMappingContextIntoController();
 
 	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
 	UPROPERTY() bool InputJump = false;
@@ -163,9 +169,13 @@ public:
 
 	void const ResetLife();
 
+	bool IsPhaseTwo() const;
+
 protected:
 
 	void CheckLife();
+
+	
 
 	UPROPERTY(BlueprintReadOnly)
 	int Life;
@@ -175,6 +185,44 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	int LifeToFly;
+
+# pragma endregion
+
+# pragma region Punch
+
+public:
+	void Push();
+
+	bool CanPush() const;
+
+	void SetCanPush(bool NewCanPush);
+
+private:
+	UPROPERTY()
+	UBoxComponent* boxCollision;
+
+	UPROPERTY()
+	TArray<ABeamCharacter*> PlayersInZone;
+
+	UPROPERTY()
+	bool canPush = true;
+
+	UPROPERTY()
+	float timerPush = 0.0f;
+
+	UPROPERTY()
+	float timeToWaitPush = 2.0f;
+
+	void TickPush(float DeltaTime);
+
+	void SetupCollision();
+
+	UFUNCTION()
+	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 
 # pragma endregion
 

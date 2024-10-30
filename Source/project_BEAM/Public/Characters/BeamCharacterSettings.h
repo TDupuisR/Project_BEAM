@@ -101,7 +101,30 @@ public:
 
 #pragma endregion
 
+#pragma region KnockBack
 
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le push"))
+	float Push_Force;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Temps pour freeze le joueur"))
+	float Push_WaitTime;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Temps de cooldown pour le push"))
+	float Push_Cooldown;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
+	TArray<float> ChargesKnockbacks;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Taille de la zone"))
+	FVector2D ZoneKnockback_Size;
+
+#pragma endregion
+
+#pragma region Coyote
+	UPROPERTY(Config, EditAnywhere, Category = "Coyote", meta = (ToolTip = "Temps pour le coyote jump"))
+	float CoyoteTime;
+
+#pragma endregion
 
 
 
