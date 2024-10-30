@@ -162,6 +162,7 @@ private:
 #pragma endregion
 # pragma region Life
 
+public:
 	// GETTERS
 	int const GetLife() const;
 
