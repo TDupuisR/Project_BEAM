@@ -33,6 +33,11 @@ void ABeamCharacter::ProjectileContext(int power, FVector position)
 	//do things
 }
 
+AProjectile* ABeamCharacter::GetProjectile()
+{
+	return nullptr;
+}
+
 // Called when the game starts or when spawned
 void ABeamCharacter::BeginPlay()
 {
@@ -274,6 +279,7 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 	if (player == nullptr) return;
 
 	PlayersInZone.Remove(player);
+}
 void ABeamCharacter::creatAim()
 {
 	localPlayerAim = NewObject<UPlayerAim>(this);

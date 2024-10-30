@@ -40,7 +40,8 @@ public:
 	float radius;
 	
 	virtual EProjectileType ProjectileGetType() override;
-	virtual AProjectile& GetProjectile() override;
+	virtual AProjectile* GetProjectile() override;
+	virtual void ProjectileContext(int power, FVector position) override;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UCapsuleComponent* Capsule;

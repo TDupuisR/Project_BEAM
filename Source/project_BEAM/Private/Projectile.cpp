@@ -47,7 +47,7 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
 		params.AddIgnoredActor(this); // disable collider to detected self
-		if(OtherActor->Implements<IProjectileInterface>())
+		if(OtherActor->Implements<UProjectileInterface>())
 		{
 			IProjectileInterface* interface = Cast<IProjectileInterface>(OtherActor);
 			EProjectileType type = interface->ProjectileGetType();
@@ -77,9 +77,14 @@ EProjectileType AProjectile::ProjectileGetType()
 {
 	return EProjectileType::Bullet;
 }
-AProjectile& AProjectile::GetProjectile()
+AProjectile* AProjectile::GetProjectile()
 {
 	canAccess = false;
-	return *this;
+	return this;
+}
+
+void AProjectile::ProjectileContext(int power, FVector position)
+{
+	return;
 }
 

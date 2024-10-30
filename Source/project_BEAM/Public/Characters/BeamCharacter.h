@@ -27,6 +27,7 @@ public:
 	ABeamCharacter();
 	virtual EProjectileType ProjectileGetType() override;
 	virtual void ProjectileContext(int power, FVector position) override;
+	virtual AProjectile* GetProjectile() override;
 
 protected:
 	// Called when the game starts or when spawned

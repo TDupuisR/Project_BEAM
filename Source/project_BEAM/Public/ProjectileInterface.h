@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
 #include "UObject/Interface.h"
 #include "ProjectileInterface.generated.h"
 
@@ -19,7 +18,7 @@ enum class EProjectileType : uint8
 
 // This class does not need to be modified.
 UINTERFACE(BlueprintType)
-class UProjectileInterface : public UInterface
+class PROJECT_BEAM_API UProjectileInterface : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -32,5 +31,5 @@ public:
 	/** */
 	virtual EProjectileType ProjectileGetType() = 0;
 	virtual void ProjectileContext(int power, FVector position) = 0;
-	virtual AProjectile& GetProjectile() = 0;
+	virtual AProjectile* GetProjectile() = 0;
 };
