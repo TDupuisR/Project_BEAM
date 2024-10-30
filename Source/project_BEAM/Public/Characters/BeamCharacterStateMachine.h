@@ -30,6 +30,8 @@ public:
 
 	UBeamCharacterState* GetState(EBeamCharacterStateID StateID);
 
+	EBeamCharacterStateID const GetCurrentStateID() const;
+
 protected: 
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;

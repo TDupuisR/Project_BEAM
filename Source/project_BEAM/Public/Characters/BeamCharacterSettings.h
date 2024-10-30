@@ -24,6 +24,13 @@ public:
 
 #pragma region General 
 
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Vie max du personnage"))
+	int MaxLife;
+
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Vie pour aller à la phase 2"))
+	int LifeToFly;
+
+
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Permet de ralentir les dï¿½placements, valeur haute -> ralenti enormï¿½ment, valeur petite -> ralenti un peu"))
 	double BrakingFrictionFactor;
@@ -86,8 +93,38 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Force du dash (faut mettre une trï¿½s grande force, genre 100000)"))
 	double Fly_DashForce;
 
+	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Timer du dash"))
+	float Fly_DashTimer;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Timer pour remettre les inputs"))
+	float Fly_InputsTimer;
+
 #pragma endregion
 
+#pragma region KnockBack
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le push"))
+	float Push_Force;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Temps pour freeze le joueur"))
+	float Push_WaitTime;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Temps de cooldown pour le push"))
+	float Push_Cooldown;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
+	TArray<float> ChargesKnockbacks;
+
+	UPROPERTY(Config, EditAnywhere, Category = "KnockBack", meta = (ToolTip = "Taille de la zone"))
+	FVector2D ZoneKnockback_Size;
+
+#pragma endregion
+
+#pragma region Coyote
+	UPROPERTY(Config, EditAnywhere, Category = "Coyote", meta = (ToolTip = "Temps pour le coyote jump"))
+	float CoyoteTime;
+
+#pragma endregion
 
 
 

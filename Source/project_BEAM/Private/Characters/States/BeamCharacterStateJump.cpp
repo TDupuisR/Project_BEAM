@@ -21,17 +21,24 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
 
-	GEngine->AddOnScreenDebugMessage(
+
+	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
 		FColor::Blue,
 		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);
+	);*/
 
 	Character->GetCharacterMovement()->JumpZVelocity = Character->GetCharacterSettings()->Jump_Force;
 	Character->GetCharacterMovement()->MaxWalkSpeed = Character->GetCharacterSettings()->Jump_VelocityMax;
 
-	Character->Jump();
+	if (PreviousStateID == EBeamCharacterStateID::Fall) {
+		Character->LaunchCharacter(FVector(0,0,600), false, false);
+	}
+	else {
+		Character->Jump();
+	}
+
 
 
 }
@@ -40,35 +47,27 @@ void UBeamCharacterStateJump::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
-	GEngine->AddOnScreenDebugMessage(
+	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
 		FColor::Blue,
 		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);
+	);*/
 }
 
 void UBeamCharacterStateJump::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(
+	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
 		FColor::Blue,
 		FString::Printf(TEXT("STATE TICK JUMP"))
-	);
+	);*/
 	
-	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D) || Character->GetInputMove().X != 0) 
+	if (Character->GetInputMove().X != 0) 
 	{
-	/*	if ((IsKeyDown(EKeys::Q) || Character->GetInputMove().X < 0) && Character->GetOrientX() == 1)
-		{
-			Character->SetOrientX(-1);
-		}
-		else if ((IsKeyDown(EKeys::D) || Character->GetInputMove().X > 0) && Character->GetOrientX() == -1)
-		{
-			Character->SetOrientX(1);
-		}*/
 
 		float appliedForce = .0f;
 		if (Character->GetInputMove().X != 0)
@@ -79,11 +78,16 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 		{
 			appliedForce = Character->GetOrientX();
 		}
-		
+
 		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
+
 	}
 
 	if (Character->GetMovementComponent()->Velocity.Y <= 0) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
+	}
+
+	if (Character->GetInputPunch() && Character->CanPush()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 }

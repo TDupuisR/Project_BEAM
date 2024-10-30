@@ -30,4 +30,8 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UInputAction> InputActionPunch;
+
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UInputAction> InputActionFly;
 };

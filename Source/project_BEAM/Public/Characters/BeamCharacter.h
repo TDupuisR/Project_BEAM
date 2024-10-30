@@ -2,14 +2,18 @@
 
 #pragma once
 
+//#include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "BeamCharacterInputdata.h"
 #include "InputMappingContext.h"
 #include "GameFramework/Character.h"
+
+
 #include "BeamCharacter.generated.h"
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
+class UBoxComponent;
 
 UCLASS()
 class PROJECT_BEAM_API ABeamCharacter : public ACharacter
@@ -98,6 +102,8 @@ public:
 	bool GetInputShoot() const;
 
 	bool GetInputPunch() const;
+
+	bool GetInputFly() const;
 	
 protected:
 	void SetupMappingContextIntoController();
@@ -112,6 +118,8 @@ protected:
 
 	UPROPERTY() bool InputPunch = false;
 
+	UPROPERTY() bool InputFly = false;
+
 private:
 	void BindInputActions(UEnhancedInputComponent* EnhancedInputComponent);
 
@@ -124,6 +132,8 @@ private:
 	void OnInputShoot(const FInputActionValue& InputActionValue);
 	
 	void OnInputPunch(const FInputActionValue& InputActionValue);
+
+	void OnInputFly(const FInputActionValue& InputActionValue);
 	
 # pragma endregion
 
@@ -135,4 +145,86 @@ public:
 
 
 # pragma endregion
+
+# pragma region Life
+
+	// GETTERS
+	int const GetLife() const;
+
+	int const GetMaxLife() const;
+
+	int const GetLifeToFly() const;
+
+
+	// SETTERS
+	void SetLife(const int NewLife);
+
+	void const SetMaxLife(const int NewMaxLife);
+
+	void const SetLifeToFly(const int NewLifeToFly);
+
+
+	// OTHERS
+	void TakeDamage(const int Damage = 1);
+
+	void const ResetLife();
+
+	bool IsPhaseTwo() const;
+
+protected:
+
+	void CheckLife();
+
+	
+
+	UPROPERTY(BlueprintReadOnly)
+	int Life;
+
+	UPROPERTY(BlueprintReadOnly)
+	int MaxLife;
+
+	UPROPERTY(BlueprintReadOnly)
+	int LifeToFly;
+
+# pragma endregion
+
+# pragma region Punch
+
+public:
+	void Push();
+
+	bool CanPush() const;
+
+	void SetCanPush(bool NewCanPush);
+
+private:
+	UPROPERTY()
+	UBoxComponent* boxCollision;
+
+	UPROPERTY()
+	TArray<ABeamCharacter*> PlayersInZone;
+
+	UPROPERTY()
+	bool canPush = true;
+
+	UPROPERTY()
+	float timerPush = 0.0f;
+
+	UPROPERTY()
+	float timeToWaitPush = 2.0f;
+
+	void TickPush(float DeltaTime);
+
+	void SetupCollision();
+
+	UFUNCTION()
+	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
+# pragma endregion
+
+
 };

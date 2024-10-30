@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Characters/BeamCharacterState.h"
-#include "BeamCharacterStateFall.generated.h"
+#include "BeamCharacterStatePush.generated.h"
 
 /**
  * 
  */
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
-class PROJECT_BEAM_API UBeamCharacterStateFall : public UBeamCharacterState
+class PROJECT_BEAM_API UBeamCharacterStatePush : public UBeamCharacterState
 {
 	GENERATED_BODY()
-
+	
 public:
 	virtual EBeamCharacterStateID GetStateID() override;
 
@@ -23,20 +23,11 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
-# pragma region Timer
-
 private:
-	float timerCoyote = 0.0f;
-	float timerCoyoteMax = 0.2f;
 
-	bool canCoyote = true;
+	float timerPush = 0.0f;
 
-	void OnCoyoteTimerEnd();
+	float timeToWait = 0.2f;
 
-	void ResetCoyoteTimer();
-
-
-
-# pragma endregion
 
 };
