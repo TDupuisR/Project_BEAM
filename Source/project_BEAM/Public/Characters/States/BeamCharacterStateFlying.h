@@ -26,4 +26,14 @@ public:
 private:
 	bool dashIsStillActive = false;
 
+	bool canDash = true;
+	bool canMove = true;
+
+	float timerDash = 0.0f;
+	float timerInputs = 0.0f;
+
+	bool firstFrame = true;
+
+	void AfterDash();
+
 };

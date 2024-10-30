@@ -41,19 +41,23 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(
+	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
 		FColor::Red,
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
-	);
+	);*/
 
-	if (IsKeyDown(EKeys::SpaceBar) || Character->GetInputJump()) {
+	if (Character->GetInputPunch() && Character->CanPush()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Push);
+	}
+
+	if (Character->GetInputJump()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
 	
-	if (IsKeyDown(EKeys::Q) || IsKeyDown(EKeys::D) || Character->GetInputMove() != FVector2D::ZeroVector)
+	if (Character->GetInputMove() != FVector2D::ZeroVector)
 	{
 
 		GEngine->AddOnScreenDebugMessage(
@@ -70,7 +74,7 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
 	}
 
-	if (IsKeyDown(EKeys::E)) {
+	if (Character->GetInputFly()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
 	}
 
