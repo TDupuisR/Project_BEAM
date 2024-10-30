@@ -30,9 +30,7 @@ class PROJECT_BEAM_API AProjectile : public AActor, public IProjectileInterface
 public:
 	// Sets default values for this actor's properties
 	AProjectile();
-	int ownPower;
 	void InitialisePower(int power);
-	void ProjectileCollisionCheck();
 
 	UPROPERTY(EditAnywhere)
 	float height;
@@ -41,10 +39,15 @@ public:
 	
 	virtual EProjectileType ProjectileGetType() override;
 	virtual AProjectile* GetProjectile() override;
-	virtual void ProjectileContext(int power, FVector position) override;
+	virtual bool ProjectileContext(int power, FVector position) override;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UCapsuleComponent* Capsule;
+
+	UFUNCTION(BlueprintCallable)
+	void GetDestroyed();
+	UFUNCTION(BlueprintCallable)
+	void FakeDestroye(int power);
 
 protected:
 	// Called when the game starts or when spawned
@@ -67,7 +70,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UStaticMesh* ProjectileMesh;
 
+	UFUNCTION(BlueprintCallable)
+	int GetPower();
+
 private:
 	bool canAccess = true;
+	int ownPower;
 	
 };

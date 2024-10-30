@@ -26,7 +26,7 @@ public:
 	// Sets default values for this character's properties
 	ABeamCharacter();
 	virtual EProjectileType ProjectileGetType() override;
-	virtual void ProjectileContext(int power, FVector position) override;
+	virtual bool ProjectileContext(int power, FVector position) override;
 	virtual AProjectile* GetProjectile() override;
 
 protected:
@@ -154,6 +154,7 @@ public:
 # pragma region Life
 
 	// GETTERS
+	UFUNCTION(BlueprintCallable)
 	int const GetLife() const;
 
 	int const GetMaxLife() const;

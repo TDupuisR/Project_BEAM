@@ -2,15 +2,12 @@
 
 
 #include "Characters/BeamCharacter.h"
-#include "Arena/ArenaCamera.h"
-
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "Characters/PlayerAim.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
 
@@ -28,9 +25,16 @@ EProjectileType ABeamCharacter::ProjectileGetType()
 	return EProjectileType::Player;
 }
 
-void ABeamCharacter::ProjectileContext(int power, FVector position)
+bool ABeamCharacter::ProjectileContext(int power, FVector position)
 {
-	//do things
+	TakeDamage(power+1);
+
+	FVector direction = GetActorLocation() - position;
+	direction.Normalize();
+	
+	KnockBack(direction, (power+1)*500.f); // Magic Number for the force, to dertemine how to tweak it
+	
+	return true;
 }
 
 AProjectile* ABeamCharacter::GetProjectile()
@@ -51,7 +55,6 @@ void ABeamCharacter::BeginPlay()
 	InitStateMachine();
 
 	StartLocation = this->GetActorLocation();
-	
 }
 
 // Called every frame

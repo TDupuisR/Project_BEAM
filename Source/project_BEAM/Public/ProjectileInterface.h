@@ -28,8 +28,12 @@ class PROJECT_BEAM_API IProjectileInterface
 	GENERATED_BODY()
 
 public:
-	/** */
+	/** Return the type of the interactable Actor found */
 	virtual EProjectileType ProjectileGetType() = 0;
-	virtual void ProjectileContext(int power, FVector position) = 0;
+
+	/** Contextual action depending on the Actor, returns if the Bullet must destroy itself */
+	virtual bool ProjectileContext(int power, FVector position) = 0;
+	
+	/** If the actor found is a projectile, returns itself */
 	virtual AProjectile* GetProjectile() = 0;
 };

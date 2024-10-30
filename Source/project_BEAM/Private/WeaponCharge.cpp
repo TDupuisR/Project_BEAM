@@ -6,8 +6,6 @@
 #include "Characters/BeamCharacter.h"
 #include "Characters/PlayerAim.h"
 
-#include "MaterialHLSLTree.h"
-
 
 // Sets default values for this component's properties
 UWeaponCharge::UWeaponCharge()
@@ -35,6 +33,8 @@ void UWeaponCharge::StartWeaponCharge()
 	qteTimeLeft = 5.0f;
 	chargeWasPushed = false;
 	isQteActive = true;
+
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
 void UWeaponCharge::CancelWeaponCharge()
 {
@@ -75,6 +75,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				{
 					power++;
 					qteTimeLeft = qteMaxTime;
+					GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("QTE success to power: %d "), power));
 					//PlayAnimQTE()
 				}
 				else // if QTE Fail

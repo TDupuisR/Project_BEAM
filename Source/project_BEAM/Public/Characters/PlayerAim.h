@@ -23,7 +23,7 @@ public:
 	UPlayerAim();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Radius = 100.f;
+	float Radius = 150.f;
 
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
