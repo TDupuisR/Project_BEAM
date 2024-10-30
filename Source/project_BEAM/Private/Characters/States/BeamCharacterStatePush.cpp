@@ -38,6 +38,9 @@ void UBeamCharacterStatePush::StateExit(EBeamCharacterStateID NextStateID)
 	if (!Character->IsPhaseTwo()) {
 		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 	}
+	else {
+		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
+	}
 
 
 }
