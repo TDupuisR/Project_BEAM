@@ -8,6 +8,7 @@
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
+#include "Characters/PlayerAim.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Characters/BeamCharacterStateID.h"
@@ -22,11 +23,23 @@ ABeamCharacter::ABeamCharacter()
 
 }
 
+EProjectileType ABeamCharacter::ProjectileGetType()
+{
+	return EProjectileType::Player;
+}
+
+void ABeamCharacter::ProjectileContext(int power, FVector position)
+{
+	//do things
+}
+
 // Called when the game starts or when spawned
 void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
+	//GetComponentByClass<UPlayerAim>()->Character = this;
+	
 	InitCharacterSettings();
 	SetupCollision();
 	CreateStateMachine();
@@ -261,6 +274,15 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 	if (player == nullptr) return;
 
 	PlayersInZone.Remove(player);
+void ABeamCharacter::creatAim()
+{
+	localPlayerAim = NewObject<UPlayerAim>(this);
+}
+
+void ABeamCharacter::playerAimInit()
+{
+	if(localPlayerAim == nullptr) return;
+	localPlayerAim->InitCharacter(this);
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const

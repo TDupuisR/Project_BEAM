@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "BeamCharacterInputdata.h"
 #include "InputMappingContext.h"
+#include "ProjectileInterface.h"
 #include "GameFramework/Character.h"
 
 
@@ -14,15 +15,18 @@
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
 class UBoxComponent;
+class UPlayerAim;
 
 UCLASS()
-class PROJECT_BEAM_API ABeamCharacter : public ACharacter
+class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ABeamCharacter();
+	virtual EProjectileType ProjectileGetType() override;
+	virtual void ProjectileContext(int power, FVector position) override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -227,4 +231,19 @@ private:
 # pragma endregion
 
 
+#pragma region playerAim
+
+public:
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UPlayerAim> localPlayerAim;
+	
+private:
+	UFUNCTION()
+	void creatAim();
+	
+	UFUNCTION()
+	void playerAimInit();
+
+	
+#pragma endregion
 };
