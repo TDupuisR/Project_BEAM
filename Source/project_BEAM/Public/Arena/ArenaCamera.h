@@ -27,5 +27,5 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	UCameraComponent* CameraComp;
 
-	TArray<TSoftObjectPtr<AActor>> players;
+	TArray<AActor*> players;
 };
