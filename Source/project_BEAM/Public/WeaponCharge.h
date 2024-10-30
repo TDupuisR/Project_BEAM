@@ -29,9 +29,9 @@ public:
 
 	bool GetIsQteActive() const;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<ABeamCharacter> Character;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UPlayerAim> pointAim;
 	
 protected:

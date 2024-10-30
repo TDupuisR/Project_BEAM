@@ -32,7 +32,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ABeamCharacter* Character;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UWeaponCharge> Weapon;
 	
 	void ShotCall(int power);

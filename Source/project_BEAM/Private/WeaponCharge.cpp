@@ -32,7 +32,7 @@ void UWeaponCharge::BeginPlay()
 void UWeaponCharge::StartWeaponCharge()
 {
 	power = 0;
-	qteTimeLeft = qteMaxTime;
+	qteTimeLeft = 5.0f;
 	chargeWasPushed = false;
 	isQteActive = true;
 }

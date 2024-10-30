@@ -49,7 +49,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 	{
 		if(ProjectileActor)
 		{
-			FVector newDir = FVector(direction.X, .0f, -direction.Y);
+			FVector newDir = FVector(direction.X, .0f, direction.Y);
 			FActorSpawnParameters spawnParams;
 			spawnParams.Owner = Character->GetOwner();
 			spawnParams.Instigator = Character->GetInstigator();
