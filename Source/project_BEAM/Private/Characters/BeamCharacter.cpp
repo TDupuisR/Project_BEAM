@@ -23,6 +23,9 @@ ABeamCharacter::ABeamCharacter()
 void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//GetComponentByClass<UPlayerAim>()->Character = this;
+	
 	InitCharacterSettings();
 	CreateStateMachine();
 	InitStateMachine();

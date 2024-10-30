@@ -35,7 +35,7 @@ protected:
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere)
 	class UProjectileMovementComponent* projectileComponent;
-	UPROPERTY(Config, EditAnywhere, Category="Power Parameters")
+	UPROPERTY(Config, EditAnywhere, Category="Power Parameters") 
 	TMap<int, FProjectileParameters> powerParameters;
 	FProjectileParameters projectileCurrentParam;
 

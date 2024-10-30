@@ -30,8 +30,8 @@ public:
 	UFUNCTION()
 	void initWeapon(UWeaponCharge* playerweapon);
 	
-	UPROPERTY()
-	TObjectPtr<ABeamCharacter> Character;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ABeamCharacter* Character;
 	UPROPERTY()
 	TObjectPtr<UWeaponCharge> Weapon;
 	
@@ -40,7 +40,6 @@ public:
 	
 protected:
 	// Called when the game starts
-	virtual void BeginPlay() override;
 	
 	UFUNCTION(BlueprintCallable)
 	FVector AimCursorPos(const FVector2D& dir, const FVector& playerPos);
@@ -53,6 +52,8 @@ protected:
 	FVector aimPos;
 
 public:
+
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	

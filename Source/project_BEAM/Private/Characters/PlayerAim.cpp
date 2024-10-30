@@ -2,6 +2,9 @@
 
 
 #include "Characters/PlayerAim.h"
+
+#include <filesystem>
+
 #include "Projectile.h"
 #include "Characters/BeamCharacter.h"
 #include "WeaponCharge.h"
@@ -32,13 +35,6 @@ void UPlayerAim::ShotCall(int power)
 	Shoot(aimPos, Character->GetInputAim().GetSafeNormal(), Character, power);
 }
 
-// Called when the game starts
-void UPlayerAim::BeginPlay()
-{
-	Super::BeginPlay();
-	// ...
-	
-}
 
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos)
 {	
@@ -48,15 +44,15 @@ FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos)
 
 void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power)
 {
-	
-	if(shootDelay >= 0.f)
+	if(true)
+	//if(shootDelay >= 0.f)
 	{
 		if(ProjectileActor)
 		{
 			FVector newDir = FVector(direction.X, .0f, direction.Y);
 			FActorSpawnParameters spawnParams;
-			spawnParams.Owner = playerActor;
-			spawnParams.Instigator = playerActor->GetInstigator();
+			spawnParams.Owner = Character->GetOwner();
+			spawnParams.Instigator = Character->GetInstigator();
 		
 			AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
 			if(projectile == nullptr) return;

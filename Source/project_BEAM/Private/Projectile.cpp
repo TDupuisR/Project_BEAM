@@ -23,6 +23,11 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	powerParameters.Add( 0, FProjectileParameters(500.f, 50.f, 50.f, 5.f ));
+	powerParameters.Add( 1, FProjectileParameters(500.f, 100.f, 100.f, 5.f ));
+	powerParameters.Add( 2, FProjectileParameters(500.f, 150.f, 150.f, 5.f ));
+	powerParameters.Add( 3, FProjectileParameters(500.f, 200.f, 200.f, 5.f ));
+	
 }
 
 void AProjectile::InitialisePower(int power)
