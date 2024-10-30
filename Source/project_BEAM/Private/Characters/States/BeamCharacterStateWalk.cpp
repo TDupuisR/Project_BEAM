@@ -54,7 +54,11 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 	);
 
 
-	if (IsKeyDown(EKeys::SpaceBar) || Character->GetInputJump()) {
+	if (Character->GetInputPunch() && Character->CanPush()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Push);
+	}
+
+	if (Character->GetInputJump()) {
 
 		GEngine->AddOnScreenDebugMessage(
 			-1,

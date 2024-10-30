@@ -2,13 +2,16 @@
 
 
 #include "Characters/BeamCharacter.h"
+#include "Arena/ArenaCamera.h"
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Characters/BeamCharacterStateID.h"
+#include "Components/BoxComponent.h"
 
 
 // Sets default values
@@ -24,14 +27,12 @@ void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Life = MaxLife;
-
 	InitCharacterSettings();
+	SetupCollision();
 	CreateStateMachine();
 	InitStateMachine();
 
 	StartLocation = this->GetActorLocation();
-
 	
 }
 
@@ -43,9 +44,11 @@ void ABeamCharacter::Tick(float DeltaTime)
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
+	TickPush(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
+	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
+
+	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
 
 	if (GetActorLocation().Y != StartLocation.Y)
 	{
@@ -108,6 +111,7 @@ void ABeamCharacter::InitCharacterSettings()
 
 	if (CharacterSettings == nullptr) return;
 
+	// CHARACTER COMPONENT SETTINGS
 	GetCharacterMovement()->MaxAcceleration = CharacterSettings->MaxAcceleration;
 	GetCharacterMovement()->GroundFriction = CharacterSettings->GroundFriction;
 	GetCharacterMovement()->GravityScale = CharacterSettings->GravityScale;
@@ -117,6 +121,12 @@ void ABeamCharacter::InitCharacterSettings()
 	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
 	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
+	
+	// CHARACTER STATS SETTINGS
+	MaxLife = CharacterSettings->MaxLife;
+	Life = MaxLife;
+	LifeToFly = CharacterSettings->LifeToFly;
+	timeToWaitPush = CharacterSettings->Push_Cooldown;
 }
 
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
@@ -168,6 +178,11 @@ void const ABeamCharacter::ResetLife()
 	Life = MaxLife;
 }
 
+bool ABeamCharacter::IsPhaseTwo() const
+{
+	return Life <= LifeToFly;
+}
+
 void ABeamCharacter::CheckLife()
 {
 	if (Life > 0 && Life <= LifeToFly) {
@@ -185,14 +200,77 @@ void ABeamCharacter::CheckLife()
 	}
 }
 
+void ABeamCharacter::Push()
+{
+	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
+
+	for (ABeamCharacter* player : PlayersInZone) {
+		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW")));
+		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+		player->KnockBack(direction, CharacterSettings->Push_Force);
+	}
+}
+
+bool ABeamCharacter::CanPush() const
+{
+	return canPush;
+}
+
+void ABeamCharacter::SetCanPush(bool NewCanPush)
+{
+	canPush = NewCanPush;
+}
+
+void ABeamCharacter::TickPush(float DeltaTime)
+{
+	if (!canPush) {
+		timerPush += DeltaTime;
+		if (timerPush >= timeToWaitPush) {
+			canPush = true;
+			timerPush = 0;
+		}
+	}
+}
+
+void ABeamCharacter::SetupCollision()
+{
+	boxCollision = GetComponentByClass<UBoxComponent>();
+
+	if (boxCollision == nullptr || CharacterSettings == nullptr) return;
+
+	boxCollision->SetBoxExtent(FVector(CharacterSettings->ZoneKnockback_Size.X, 40.f, CharacterSettings->ZoneKnockback_Size.Y));
+
+	GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW : %s"), *boxCollision->GetName()));
+
+	boxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABeamCharacter::OnBeginOverlapZone);
+	boxCollision->OnComponentEndOverlap.AddDynamic(this, &ABeamCharacter::OnEndOverlapZone);
+
+}
+
+void ABeamCharacter::OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	ABeamCharacter* player = Cast<ABeamCharacter>(OtherActor);
+	if (player == nullptr) return;
+
+	PlayersInZone.Add(player);
+}
+
+void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	ABeamCharacter* player = Cast<ABeamCharacter>(OtherActor);
+	if (player == nullptr) return;
+
+	PlayersInZone.Remove(player);
+}
+
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;
 }
 
-void ABeamCharacter::SetupMappingContextIntoController() const
+void ABeamCharacter::SetupMappingContextIntoController()
 {
-	APlayerController* playerController = Cast<APlayerController>(Controller);
+	playerController = Cast<APlayerController>(Controller);
 	if (playerController == nullptr) return;
 
 	ULocalPlayer* player = playerController->GetLocalPlayer();

@@ -41,12 +41,16 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(
+	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
 		FColor::Red,
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
-	);
+	);*/
+
+	if (Character->GetInputPunch() && Character->CanPush()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Push);
+	}
 
 	if (Character->GetInputJump()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);

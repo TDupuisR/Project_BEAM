@@ -53,6 +53,10 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
+	if (Character->GetInputPunch() && Character->CanPush()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Push);
+	}
+
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
