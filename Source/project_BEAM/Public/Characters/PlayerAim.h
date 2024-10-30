@@ -59,9 +59,9 @@ public:
 	
 private:
 	UPROPERTY(EditAnywhere)
-	float shootDelay = 2.f;
+	float shootDelay = 10.f;
 	UPROPERTY(EditAnywhere)
-	float shootDelayInit = 2.f;
+	float shootDelayInit = 10.f;
 
 	UPROPERTY()
 	bool wasShootTriggered = false;

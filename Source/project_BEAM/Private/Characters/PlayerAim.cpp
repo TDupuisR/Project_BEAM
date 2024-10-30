@@ -39,13 +39,12 @@ void UPlayerAim::ShotCall(int power)
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos)
 {	
 	FVector2D DirNormal = dir.GetSafeNormal();
-	return FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius );
+	return FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z - DirNormal.Y * Radius );
 }
 
 void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power)
 {
-	if(true)
-	//if(shootDelay >= 0.f)
+	if(shootDelay <= 0.f)
 	{
 		if(ProjectileActor)
 		{
@@ -60,12 +59,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 			if (power > 3) power = 3;
 			if (power < 0) power = 0;
 			projectile->InitialisePower(power);
-			GEngine->AddOnScreenDebugMessage(
-				-1,
-				5.f,
-				FColor::Blue,
-				FString::Printf(TEXT("shhot"))
-				);
+			GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
 			Character->KnockBack(-newDir, 1000.f);
 		}
 	}

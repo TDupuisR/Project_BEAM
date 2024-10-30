@@ -19,6 +19,16 @@ ABeamCharacter::ABeamCharacter()
 
 }
 
+EProjectileType ABeamCharacter::ProjectileGetType()
+{
+	return EProjectileType::Player;
+}
+
+void ABeamCharacter::ProjectileContext(int power, FVector position)
+{
+	//do things
+}
+
 // Called when the game starts or when spawned
 void ABeamCharacter::BeginPlay()
 {

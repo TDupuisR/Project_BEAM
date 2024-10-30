@@ -17,6 +17,10 @@ AProjectile::AProjectile()
 	projectileComponent-> InitialSpeed = 50.f;
 	projectileComponent-> MaxSpeed = 50.f;
 	projectileComponent->ProjectileGravityScale = 0.f;
+
+	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
+	Capsule->SetCollisionProfileName(TEXT("OverlapAll"));
+	Capsule->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -36,6 +40,33 @@ void AProjectile::InitialisePower(int power)
 	projectileCurrentParam = powerParameters[power];
 }
 
+
+void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(OtherActor && OtherActor != this) //check if actor is not null
+	{
+		params.AddIgnoredActor(this); // disable collider to detected self
+		if(OtherActor->Implements<IProjectileInterface>())
+		{
+			IProjectileInterface* interface = Cast<IProjectileInterface>(OtherActor);
+			EProjectileType type = interface->ProjectileGetType();
+			switch (type)
+			{
+			case EProjectileType::Player:
+				//case player
+					return;
+			case EProjectileType::Bullet:
+				//case bullet
+					return;
+			case EProjectileType::DestructWall:
+				//case block
+				return;
+			}
+		}
+	}
+}
+
 // Called every frame
 void AProjectile::Tick(float DeltaTime)
 {
@@ -44,7 +75,7 @@ void AProjectile::Tick(float DeltaTime)
 
 EProjectileType AProjectile::ProjectileGetType()
 {
-	return objType;
+	return EProjectileType::Bullet;
 }
 AProjectile& AProjectile::GetProjectile()
 {

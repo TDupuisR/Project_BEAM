@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BeamCharacterInputdata.h"
 #include "InputMappingContext.h"
+#include "ProjectileInterface.h"
 #include "GameFramework/Character.h"
 #include "BeamCharacter.generated.h"
 
@@ -13,13 +14,15 @@ class UBeamCharacterSettings;
 class UPlayerAim;
 
 UCLASS()
-class PROJECT_BEAM_API ABeamCharacter : public ACharacter
+class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ABeamCharacter();
+	virtual EProjectileType ProjectileGetType() override;
+	virtual void ProjectileContext(int power, FVector position) override;
 
 protected:
 	// Called when the game starts or when spawned

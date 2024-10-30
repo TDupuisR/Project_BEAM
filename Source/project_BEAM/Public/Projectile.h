@@ -4,6 +4,9 @@
 #include "ProjectileInterface.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CollisionQueryParams.h"
+#include "Engine/World.h"
+#include "Components/CapsuleComponent.h"
 #include "Projectile.generated.h"
 
 USTRUCT(BlueprintType)
@@ -20,15 +23,27 @@ struct FProjectileParameters
 
 
 UCLASS(Config=Game, DefaultConfig, meta=(DisplayName="Projectile"))
-class PROJECT_BEAM_API AProjectile : public AActor
+class PROJECT_BEAM_API AProjectile : public AActor, public IProjectileInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
 	AProjectile();
-	void InitialisePower(int power);
 	int ownPower;
+	void InitialisePower(int power);
+	void ProjectileCollisionCheck();
+
+	UPROPERTY(EditAnywhere)
+	float height;
+	UPROPERTY(EditAnywhere)
+	float radius;
+	
+	virtual EProjectileType ProjectileGetType() override;
+	virtual AProjectile& GetProjectile() override;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	UCapsuleComponent* Capsule;
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,6 +53,12 @@ protected:
 	UPROPERTY(Config, EditAnywhere, Category="Power Parameters") 
 	TMap<int, FProjectileParameters> powerParameters;
 	FProjectileParameters projectileCurrentParam;
+	UPROPERTY(EditAnywhere)
+	FHitResult projectileHitResult;
+	FCollisionQueryParams params;
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 public:
 	// Called every frame
@@ -46,9 +67,6 @@ public:
 	class UStaticMesh* ProjectileMesh;
 
 private:
-	EProjectileType objType = EProjectileType::Bullet;
 	bool canAccess = true;
 	
-	virtual EProjectileType ProjectileGetType();
-	virtual AProjectile& GetProjectile();
 };
