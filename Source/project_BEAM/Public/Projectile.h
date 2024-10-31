@@ -9,8 +9,11 @@
 #include "Components/CapsuleComponent.h"
 #include "Projectile.generated.h"
 
+class AActor;
+
 USTRUCT(BlueprintType)
 struct FProjectileParameters
+
 {
 	GENERATED_BODY()
 
@@ -72,6 +75,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int GetPower();
+
+	AActor* actorParent;
 
 private:
 	bool canAccess = true;

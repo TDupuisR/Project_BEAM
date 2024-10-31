@@ -56,6 +56,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 			if (power > 3) power = 3;
 			if (power < 0) power = 0;
 			projectile->InitialisePower(power);
+			projectile->actorParent = playerActor;
 			GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
 			Character->KnockBack(-newDir, 1000.f);
 		}

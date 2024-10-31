@@ -53,11 +53,14 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	if (actorParent == OverlappedComp->GetAttachParentActor()) {
 		return;
 	}
-	
-	if (!OtherComp->ComponentTags.Contains("Player")) {
+
+	if (Cast<APlayerStart>(OverlappedComp->GetAttachParentActor()) != nullptr) {
 		return;
 	}
-	
+
+	if (OverlappedComp->GetAttachParentActor() == nullptr) {
+		return;
+	}
 
 	FString i = OverlappedComp->GetName();
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, i);
