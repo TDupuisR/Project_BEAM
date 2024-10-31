@@ -45,7 +45,7 @@ void AProjectile::InitialisePower(int power)
 void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(OtherActor && OtherActor != this) //check if actor is not null
+	if(OtherActor && OtherActor != this && !OverlappedComp->ComponentTags.Contains("Push")) //check if actor is not null
 	{
 		params.AddIgnoredActor(this); // disable collider to detected self
 		if(OtherActor->Implements<UProjectileInterface>())

@@ -2,9 +2,6 @@
 
 
 #include "Characters/PlayerAim.h"
-
-#include <filesystem>
-
 #include "Projectile.h"
 #include "Characters/BeamCharacter.h"
 #include "WeaponCharge.h"
@@ -89,5 +86,7 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());
 	shootDelay --;
+
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("Aim Tick")));
 }
 

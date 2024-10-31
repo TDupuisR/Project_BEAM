@@ -34,12 +34,14 @@ void UWeaponCharge::StartWeaponCharge()
 	chargeWasPushed = false;
 	isQteActive = true;
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
 void UWeaponCharge::CancelWeaponCharge()
 {
 	isQteActive = false;
 	pointAim->ShotCall(power);
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
 }
 
 void UWeaponCharge::InitCharacter(ABeamCharacter* playerCharacter)
