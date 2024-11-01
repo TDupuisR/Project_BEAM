@@ -106,7 +106,10 @@ void ABeamCharacter::TickStateMachine(float DeltaTime) const
 
 void ABeamCharacter::InitCharacterSettings()
 {
+	
 	CharacterSettings = GetDefault<UBeamCharacterSettings>();
+	
+
 
 	if (CharacterSettings == nullptr) return;
 
@@ -126,6 +129,22 @@ void ABeamCharacter::InitCharacterSettings()
 	Life = MaxLife;
 	LifeToFly = CharacterSettings->LifeToFly;
 	timeToWaitPush = CharacterSettings->Push_Cooldown;
+}
+
+void ABeamCharacter::ReattributeCharacterSettings()
+{
+	if (CharacterSettings == nullptr) return;
+
+	GetCharacterMovement()->MaxAcceleration = CharacterSettings->MaxAcceleration;
+	GetCharacterMovement()->GroundFriction = CharacterSettings->GroundFriction;
+	GetCharacterMovement()->GravityScale = CharacterSettings->GravityScale;
+	GetCharacterMovement()->Mass = CharacterSettings->Mass;
+	GetCharacterMovement()->BrakingDecelerationWalking = CharacterSettings->BreakingDecelerationWalking;
+	GetCharacterMovement()->JumpZVelocity = CharacterSettings->Jump_Force;
+	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
+	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
+	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
+
 }
 
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
