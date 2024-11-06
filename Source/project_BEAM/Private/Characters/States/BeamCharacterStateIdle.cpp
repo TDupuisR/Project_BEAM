@@ -48,7 +48,7 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);*/
 
-	if (Character->GetInputPunch() && Character->CanPush()) {
+	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -59,12 +59,11 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 	
 	if (Character->GetInputMove() != FVector2D::ZeroVector)
 	{
-
 		GEngine->AddOnScreenDebugMessage(
 			-1,
 			0.1f,
 			FColor::Red,
-			FString::Printf(TEXT("Pressed"), GetStateID())
+			FString::Printf(TEXT("Pressed : %d"), GetStateID())
 		);
 
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);

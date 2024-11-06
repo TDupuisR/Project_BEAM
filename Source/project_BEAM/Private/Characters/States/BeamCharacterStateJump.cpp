@@ -87,7 +87,7 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
 	}
 
-	if (Character->GetInputPunch() && Character->CanPush()) {
+	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 }

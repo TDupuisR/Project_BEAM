@@ -26,24 +26,19 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Vie max du personnage"))
 	int MaxLife;
-
-	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Vie pour aller à la phase 2"))
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Vie pour aller ï¿½ la phase 2"))
 	int LifeToFly;
 
 
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Permet de ralentir les dï¿½placements, valeur haute -> ralenti enormï¿½ment, valeur petite -> ralenti un peu"))
 	double BrakingFrictionFactor;
-
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va trï¿½s vite ï¿½ sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller ï¿½ la vitesse max"))
 	double MaxAcceleration;
-
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Permet de rendre comme une patinoire ou l'inverse"))
 	double GroundFriction;
-
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Pour jouer sur le fait de retomber plus vite"))
 	double GravityScale;
-
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "La masse du character :O"))
 	double Mass;
 
@@ -55,7 +50,6 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category="Walk", meta = (ToolTip = "La vitesse maximale que le character peut avoir en ï¿½tat de marche"))
 	double Walk_VelocityMax;
-
 	UPROPERTY(Config, EditAnywhere, Category = "Walk", meta = (ToolTip = "Permet de stopper net avec une grande valeur"))
 	double BreakingDecelerationWalking;
 
@@ -66,10 +60,9 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Pour le dï¿½placement dans les airs"))
 	double Jump_VelocityMax;
-
 	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Force ï¿½ laquelle le joueur est projetï¿½"))
 	double Jump_Force;
-
+	
 	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Bas -> Pas beaucoup bouger, Haut -> Bouge comme si il ï¿½tait au sol mais dans les airs"))
 	double AirControl;
 
@@ -86,13 +79,11 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Vitesse ï¿½ laquelle il se dï¿½place en flying"))
 	double Fly_MaxSpeed;
-
 	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Permet de ralentir les dï¿½placements, valeur haute -> ralenti enormï¿½ment, valeur petite -> ralenti un peu"))
 	double Fly_BrakingFrictionFactor;
 
 	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Force du dash (faut mettre une trï¿½s grande force, genre 100000)"))
 	double Fly_DashForce;
-
 	UPROPERTY(Config, EditAnywhere, Category = "Fly", meta = (ToolTip = "Timer du dash"))
 	float Fly_DashTimer;
 

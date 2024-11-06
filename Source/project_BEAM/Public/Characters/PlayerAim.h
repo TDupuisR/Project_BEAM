@@ -21,20 +21,23 @@ class PROJECT_BEAM_API UPlayerAim : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UPlayerAim();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Radius = 200.f;
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
 	void initWeapon(UWeaponCharge* playerweapon);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float Radius = 200.f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ABeamCharacter* Character;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UWeaponCharge> Weapon;
-	
+
+	UFUNCTION()
 	void ShotCall(int power);
 	
 	
@@ -50,12 +53,6 @@ protected:
 	TSubclassOf<class AProjectile> ProjectileActor;
 	UPROPERTY()
 	FVector aimPos;
-
-public:
-
-
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 private:
 	UPROPERTY(EditAnywhere)

@@ -31,7 +31,7 @@ void UBeamCharacterStateFall::StateEnter(EBeamCharacterStateID PreviousStateID)
 	else {
 		canCoyote = true;
 	}
-
+	
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		5.0f,
@@ -57,7 +57,7 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	if (Character->GetInputPunch() && Character->CanPush()) {
+	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -82,16 +82,8 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 	);*/
 
 	if (Character->GetInputMove().X != 0) {
-		float appliedForce = .0f;
-		if (Character->GetInputMove().X != 0)
-		{
-			appliedForce = Character->GetInputMove().X;
-		}
-		else
-		{
-			appliedForce = Character->GetOrientX();
-		}
 
+		float appliedForce = Character->GetInputMove().X;
 		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
 	}
 

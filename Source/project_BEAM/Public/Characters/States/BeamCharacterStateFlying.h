@@ -6,9 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateFlying.generated.h"
 
-/**
- * 
- */
+
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateFlying : public UBeamCharacterState
 {
@@ -24,16 +22,16 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 
 private:
-	bool dashIsStillActive = false;
+	UPROPERTY() bool dashIsStillActive = false;
 
-	bool canDash = true;
-	bool canMove = true;
+	UPROPERTY() bool canDash = true;
+	UPROPERTY() bool canMove = true;
 
-	float timerDash = 0.0f;
-	float timerInputs = 0.0f;
+	UPROPERTY() float timerDash = 0.0f;
+	UPROPERTY() float timerInputs = 0.0f;
 
-	bool firstFrame = true;
+	UPROPERTY() bool firstFrame = true;
 
-	void AfterDash();
+	//UFUNCTION() void AfterDash();
 
 };

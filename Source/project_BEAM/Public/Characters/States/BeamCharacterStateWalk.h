@@ -6,9 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateWalk.generated.h"
 
-/**
- * 
- */
+
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateWalk : public UBeamCharacterState
 {

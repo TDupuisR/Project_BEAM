@@ -6,9 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateFall.generated.h"
 
-/**
- * 
- */
+
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateFall : public UBeamCharacterState
 {
@@ -26,17 +24,14 @@ public:
 # pragma region Timer
 
 private:
-	float timerCoyote = 0.0f;
-	float timerCoyoteMax = 0.2f;
+	UPROPERTY() float timerCoyote = 0.0f;
+	UPROPERTY() float timerCoyoteMax = 0.2f;
 
-	bool canCoyote = true;
+	UPROPERTY() bool canCoyote = true;
 
-	void OnCoyoteTimerEnd();
-
-	void ResetCoyoteTimer();
-
-
-
+	UFUNCTION() void OnCoyoteTimerEnd();
+	UFUNCTION() void ResetCoyoteTimer();
+	
 # pragma endregion
 
 };

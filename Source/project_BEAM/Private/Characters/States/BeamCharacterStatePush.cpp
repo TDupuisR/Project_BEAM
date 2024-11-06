@@ -26,8 +26,6 @@ void UBeamCharacterStatePush::StateEnter(EBeamCharacterStateID PreviousStateID)
 	Character->SetCanPush(false);
 
 	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
-
-	
 }
 
 void UBeamCharacterStatePush::StateExit(EBeamCharacterStateID NextStateID)

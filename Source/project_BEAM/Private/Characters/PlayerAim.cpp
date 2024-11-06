@@ -68,25 +68,22 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	// ...
+	
 	if(Character->GetInputShoot() && !wasShootTriggered) //check input and if it was recently pressed
 	{
 		wasShootTriggered = true;
-		Weapon->StartWeaponCharge(); //active qte
+		Weapon->StartWeaponCharge(); //activate qte
 		
 	}
-	if(!Character->GetInputShoot() && wasShootTriggered) //no input enter and no recent action and qte active
+	if(!Character->GetInputShoot() && wasShootTriggered) //no input enter and no recent action
 	{
 		wasShootTriggered = false;
 		
-		if (Weapon->GetIsQteActive())
-		{
-			Weapon->CancelWeaponCharge(); //deactive Qte
-		}
+		if (Weapon->GetIsQteActive()) Weapon->CancelWeaponCharge(); //if qte still active -> deactivate Qte
 	}
 
 	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());
-	shootDelay --;
+	shootDelay -= GetWorld()->GetDeltaSeconds();
 
 	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("Aim Tick")));
 }

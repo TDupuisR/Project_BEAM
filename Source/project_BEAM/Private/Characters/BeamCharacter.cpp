@@ -17,7 +17,6 @@ ABeamCharacter::ABeamCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 EProjectileType ABeamCharacter::ProjectileGetType()
@@ -75,7 +74,6 @@ void ABeamCharacter::Tick(float DeltaTime)
 	{
 		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
 	}
-
 }
 
 // Called to bind functionality to input
@@ -226,7 +224,7 @@ void ABeamCharacter::Push()
 	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
 
 	for (ABeamCharacter* player : PlayersInZone) {
-		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW")));
+		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("Push Zone Detect")));
 		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 		player->KnockBack(direction, CharacterSettings->Push_Force);
 	}
@@ -435,14 +433,14 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 			InputData->InputActionPunch,
 			ETriggerEvent::Started,
 			this,
-			&ABeamCharacter::OnInputPunch
+			&ABeamCharacter::OnInputPush
 			);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionPunch,
 			ETriggerEvent::Completed,
 			this,
-			&ABeamCharacter::OnInputPunch
+			&ABeamCharacter::OnInputPush
 			);
 	}
 
@@ -494,9 +492,9 @@ void ABeamCharacter::OnInputShoot(const FInputActionValue& InputActionValue)
 	InputShoot = InputActionValue.Get<bool>();
 }
 
-void ABeamCharacter::OnInputPunch(const FInputActionValue& InputActionValue)
+void ABeamCharacter::OnInputPush(const FInputActionValue& InputActionValue)
 {
-	InputPunch = InputActionValue.Get<bool>();
+	InputPush = InputActionValue.Get<bool>();
 }
 
 void ABeamCharacter::OnInputFly(const FInputActionValue& InputActionValue)
@@ -513,6 +511,6 @@ bool ABeamCharacter::GetInputCharge() const{ return InputCharge; }
 FVector2D ABeamCharacter::GetInputAim() const{ return InputAim; }
 bool ABeamCharacter::GetInputShoot() const{ return InputShoot; }
 
-bool ABeamCharacter::GetInputPunch() const{ return InputPunch; }
+bool ABeamCharacter::GetInputPush() const{ return InputPush; }
 
 bool ABeamCharacter::GetInputFly() const { return InputFly; }

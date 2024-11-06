@@ -47,7 +47,7 @@ private:
 	float qteTimeLeft;
 	UPROPERTY(EditAnywhere)
 	float qteMaxTime = 5.f;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	int power = 0;
 	UPROPERTY(EditAnywhere)
 	float qteFinaleDelay = 3.f;

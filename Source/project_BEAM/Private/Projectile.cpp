@@ -2,11 +2,8 @@
 
 
 #include "Projectile.h"
-
 #include "GameFramework/ProjectileMovementComponent.h"
-
 #include "Characters/BeamCharacter.h"
-#include "Arena/ArenaPlayerStart.h"
 
 
 // Sets default values
@@ -15,7 +12,7 @@ AProjectile::AProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	ProjectileMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("Projectile Mesh"));
+	projectileMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("Projectile Mesh"));
 	projectileComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Component"));
 	projectileComponent-> InitialSpeed = 50.f;
 	projectileComponent-> MaxSpeed = 50.f;
@@ -50,13 +47,9 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
-	if (actorParent == OverlappedComp->GetAttachParentActor()) {
-		return;
-	}
+	if (actorParent == OverlappedComp->GetAttachParentActor()) return;
 	
-	if (!OtherComp->ComponentTags.Contains("Player")) {
-		return;
-	}
+	if (!OtherComp->ComponentTags.Contains("Player")) return;
 	
 
 	FString i = OverlappedComp->GetName();
@@ -87,12 +80,13 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 					if (otherBullet == nullptr) return;
 					
 					int otherPower = otherBullet->GetPower();
+					
 					if (otherPower > ownPower)
 					{
 						int newPower = ((otherPower +1) - (ownPower +1)) -1;
 						if (newPower < 0) newPower = 0;
 						
-						if (otherBullet != nullptr) otherBullet->FakeDestroye(newPower);
+						if (otherBullet != nullptr) otherBullet->FakeDestroy(newPower);
 						GetDestroyed();
 					}
 					else if (otherPower < ownPower)
@@ -101,7 +95,7 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 						if (newPower < 0) newPower = 0;
 
 						if (otherBullet != nullptr) otherBullet->GetDestroyed();
-						FakeDestroye(newPower);
+						FakeDestroy(newPower);
 					}
 					else
 					{
@@ -133,6 +127,7 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+
 int AProjectile::GetPower()
 {
 	return ownPower;
@@ -147,19 +142,17 @@ AProjectile* AProjectile::GetProjectile()
 	canAccess = false;
 	return this;
 }
-
-bool AProjectile::ProjectileContext(int power, FVector position)
+bool AProjectile::ProjectileContext(int power, FVector position) // Should not be called in any circumstances
 {
 	return false;
 }
 
-void AProjectile::GetDestroyed()
+void AProjectile::GetDestroyed() // Destroy the projectile
 {
 	// Call an Explosion effect
 	this->Destroy();
 }
-
-void AProjectile::FakeDestroye(int power)
+void AProjectile::FakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {
 	// Call an Explosion effect
 	InitialisePower(power);

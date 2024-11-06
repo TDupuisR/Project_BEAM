@@ -6,9 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateIdle.generated.h"
 
-/**
- * 
- */
+
 UCLASS(ClassGroup=(BeamCharacterState), meta=(BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateIdle : public UBeamCharacterState
 {

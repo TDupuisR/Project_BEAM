@@ -65,11 +65,11 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (isQteActive)
+	if (isQteActive) // enter the QTE condition
 	{
-		if(qteTimeLeft > .0f) // remplace par le timer
+		if(qteTimeLeft >= .0f)
 		{
-			if (Character->GetInputCharge() && !chargeWasPushed && power < 3) // Is Charge button == true
+			if (Character->GetInputCharge() && !chargeWasPushed && power < 3)
 			{
 				chargeWasPushed = true;
 				
@@ -77,6 +77,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				{
 					power++;
 					qteTimeLeft = qteMaxTime;
+					
 					GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("QTE success to power: %d "), power));
 					//PlayAnimQTE()
 				}
@@ -85,12 +86,12 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 					CancelWeaponCharge();
 				}
 			}
-			else if (!Character->GetInputCharge() && chargeWasPushed && power < 3) // Is Charge button == false
+			else if (!Character->GetInputCharge() && chargeWasPushed && power < 3)
 			{
 				chargeWasPushed = false;
 			}
 
-			if(power >= 3 && chargeWasPushed) // if Niv3 wait for x sec and shoot
+			if(power >= 3 && chargeWasPushed)
 			{
 				qteTimeLeft = qteFinaleDelay;
 				chargeWasPushed = false;
@@ -98,7 +99,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			
 			qteTimeLeft -= GetWorld()->DeltaTimeSeconds;
 		}
-		else
+		else // Time over
 		{
 			CancelWeaponCharge();
 		}

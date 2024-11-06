@@ -10,9 +10,6 @@ enum class EBeamCharacterStateID : uint8;
 class UBeamCharacterState;
 class ABeamCharacter;
 
-/**
- * 
- */
 UCLASS()
 class PROJECT_BEAM_API UBeamCharacterStateMachine : public UObject
 {
@@ -20,35 +17,31 @@ class PROJECT_BEAM_API UBeamCharacterStateMachine : public UObject
 	
 public:
 	void Init(ABeamCharacter* Character);
-
 	void Tick(float DeltaTime);
 
+	UFUNCTION()
 	ABeamCharacter* GetCharacter() const;
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeState(EBeamCharacterStateID NewStateID);
-
+	UFUNCTION()
 	UBeamCharacterState* GetState(EBeamCharacterStateID StateID);
-
+	UFUNCTION()
 	EBeamCharacterStateID const GetCurrentStateID() const;
 
 protected: 
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;
-
+	
 	UPROPERTY()
 	TArray<UBeamCharacterState*> AllStates;
-
 	UPROPERTY(BlueprintReadOnly)
 	EBeamCharacterStateID CurrentStateID;
-
 	UPROPERTY()
 	TObjectPtr<UBeamCharacterState> CurrentState;
 
-
+	UFUNCTION()
 	void FindStates();
-
+	UFUNCTION()
 	void InitStates();
-
-
 };

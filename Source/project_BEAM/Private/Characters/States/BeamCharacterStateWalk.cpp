@@ -54,7 +54,7 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 	);
 
 
-	if (Character->GetInputPunch() && Character->CanPush()) {
+	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 

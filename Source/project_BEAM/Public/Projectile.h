@@ -19,8 +19,11 @@ struct FProjectileParameters
 
 	UPROPERTY(EditAnywhere)
 	float speed = 100.f;
+	UPROPERTY(EditAnywhere)
 	float width = 100.f;
+	UPROPERTY(EditAnywhere)
 	float height = 100.f;
+	UPROPERTY(EditAnywhere)
 	float lifeSpan = 100000.f;
 };
 
@@ -33,53 +36,57 @@ class PROJECT_BEAM_API AProjectile : public AActor, public IProjectileInterface
 public:
 	// Sets default values for this actor's properties
 	AProjectile();
+	UFUNCTION()
 	void InitialisePower(int power);
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
 	float height;
 	UPROPERTY(EditAnywhere)
 	float radius;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	UCapsuleComponent* Capsule;
+	UPROPERTY(EditAnywhere)
+	UStaticMesh* projectileMesh;
+
+	UPROPERTY()
+	AActor* actorParent;
 	
 	virtual EProjectileType ProjectileGetType() override;
 	virtual AProjectile* GetProjectile() override;
 	virtual bool ProjectileContext(int power, FVector position) override;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
-	UCapsuleComponent* Capsule;
-
+	UFUNCTION(BlueprintCallable)
+	int GetPower();
 	UFUNCTION(BlueprintCallable)
 	void GetDestroyed();
 	UFUNCTION(BlueprintCallable)
-	void FakeDestroye(int power);
+	void FakeDestroy(int power);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	UPROPERTY(EditAnywhere)
-	class UProjectileMovementComponent* projectileComponent;
-	UPROPERTY(Config, EditAnywhere, Category="Power Parameters") 
-	TMap<int, FProjectileParameters> powerParameters;
-	FProjectileParameters projectileCurrentParam;
-	UPROPERTY(EditAnywhere)
-	FHitResult projectileHitResult;
-	FCollisionQueryParams params;
-
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	FCollisionQueryParams params;
+	
 	UPROPERTY(EditAnywhere)
-	class UStaticMesh* ProjectileMesh;
-
-	UFUNCTION(BlueprintCallable)
-	int GetPower();
-
-	AActor* actorParent;
+	class UProjectileMovementComponent* projectileComponent;
+	
+	UPROPERTY(Config, EditAnywhere, Category="Power Parameters") 
+	TMap<int, FProjectileParameters> powerParameters;
+	UPROPERTY()
+	FProjectileParameters projectileCurrentParam;
+	
+	UPROPERTY(EditAnywhere)
+	FHitResult projectileHitResult;
 
 private:
+	UPROPERTY()
 	bool canAccess = true;
+	UPROPERTY()
 	int ownPower;
 	
 };
