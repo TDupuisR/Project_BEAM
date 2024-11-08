@@ -47,17 +47,9 @@ void AProjectile::InitialisePower(int power)
 void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(OtherActor->IsA(AStaticMeshActor::StaticClass()))
-	{
-		GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Yellow,FString::Printf(TEXT("Static")));
-	}
-	
 	if (actorParent == OverlappedComp->GetAttachParentActor()) return;
-	if (!OtherComp->ComponentTags.Contains("Player")) GetDestroyed();
 	
-
-	FString i = OverlappedComp->GetName();
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, i);
+	if (!OtherComp->ComponentTags.Contains("Player")) GetDestroyed();
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("Collision")));
 
 
