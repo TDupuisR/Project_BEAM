@@ -43,6 +43,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 {
 	if(shootDelay <= 0.f)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("Shot Delay good")));
 		if(ProjectileActor)
 		{
 			FVector newDir = FVector(direction.X, .0f, -direction.Y);
@@ -72,7 +73,7 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	if(Character->GetInputShoot() && !wasShootTriggered) //check input and if it was recently pressed
 	{
 		wasShootTriggered = true;
-		Weapon->StartWeaponCharge(); //activate qte
+		if(shootDelay <= 0.f) Weapon->StartWeaponCharge(); //activate qte
 		
 	}
 	if(!Character->GetInputShoot() && wasShootTriggered) //no input enter and no recent action
@@ -83,8 +84,7 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	}
 
 	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());
-	shootDelay -= GetWorld()->GetDeltaSeconds();
-
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("Aim Tick")));
+	
+	if (shootDelay > .0f) shootDelay -= GetWorld()->GetDeltaSeconds();
 }
 
