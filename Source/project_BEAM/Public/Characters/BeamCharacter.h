@@ -7,6 +7,7 @@
 #include "BeamCharacterInputdata.h"
 #include "InputMappingContext.h"
 #include "ProjectileInterface.h"
+#include "Camera/CameraFollowTarget.h"
 #include "GameFramework/Character.h"
 
 
@@ -18,7 +19,7 @@ class UBoxComponent;
 class UPlayerAim;
 
 UCLASS()
-class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInterface
+class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInterface, public ICameraFollowTarget
 {
 	GENERATED_BODY()
 
@@ -244,4 +245,14 @@ private:
 	void playerAimInit();
 
 #pragma endregion
+
+#pragma region FollowTarget
+
+	virtual bool IsFollowable() override;
+
+	virtual FVector GetFollowPosition() override;
+
+#pragma endregion
+
+
 };
