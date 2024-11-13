@@ -41,6 +41,10 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
+	if (Character->IsPhaseTwo()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
+	}
+
 	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,

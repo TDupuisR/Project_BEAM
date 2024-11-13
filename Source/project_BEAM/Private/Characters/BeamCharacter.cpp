@@ -15,7 +15,7 @@
 // Sets default values
 ABeamCharacter::ABeamCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -280,6 +280,16 @@ float ABeamCharacter::GetStunTime() const
 void ABeamCharacter::SetStunTime(float NewStunTime)
 {
 	StunTime = NewStunTime;
+}
+
+void ABeamCharacter::SetMultiplierStun(float NewMultiplierStun)
+{
+	MultiplierStun = NewMultiplierStun;
+}
+
+float ABeamCharacter::GetMultiplierStun()
+{
+	return MultiplierStun;
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const

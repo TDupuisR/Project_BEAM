@@ -235,7 +235,12 @@ public:
 
 	void SetStunTime(float NewStunTime);
 
+	void SetMultiplierStun(float NewMultiplierStun);
+
+	float GetMultiplierStun();
+
 private:
+
 	UPROPERTY()
 	float StunTime = 1.f;
 
