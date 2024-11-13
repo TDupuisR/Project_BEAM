@@ -48,9 +48,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UCapsuleComponent* Capsule;
-	UPROPERTY(EditAnywhere)
-	UStaticMesh* projectileMesh;
-
+	
 	UPROPERTY()
 	AActor* actorParent;
 	
