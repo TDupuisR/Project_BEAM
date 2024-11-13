@@ -90,11 +90,9 @@ protected:
 public:
 	UPROPERTY()
 	TObjectPtr<UInputMappingContext> InputMappingContext;
-	UPROPERTY()
-	TObjectPtr<UBeamCharacterInputData> InputData;
 
 	UPROPERTY()
-	APlayerController* playerController;
+	TObjectPtr<UBeamCharacterInputData> InputData;
 
 	FVector2D GetInputMove() const;
 	bool GetInputJump() const;
@@ -109,7 +107,7 @@ public:
 	bool GetInputFly() const;
 	
 protected:
-	void SetupMappingContextIntoController();
+	void SetupMappingContextIntoController() const;
 
 	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
 	UPROPERTY() bool InputJump = false;

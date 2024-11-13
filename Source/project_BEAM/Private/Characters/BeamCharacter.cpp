@@ -2,14 +2,12 @@
 
 
 #include "Characters/BeamCharacter.h"
-#include "Arena/ArenaCamera.h"
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
 
@@ -33,6 +31,7 @@ void ABeamCharacter::BeginPlay()
 	InitStateMachine();
 
 	StartLocation = this->GetActorLocation();
+
 	
 }
 
@@ -287,9 +286,9 @@ const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 	return CharacterSettings;
 }
 
-void ABeamCharacter::SetupMappingContextIntoController()
+void ABeamCharacter::SetupMappingContextIntoController() const
 {
-	playerController = Cast<APlayerController>(Controller);
+	APlayerController* playerController = Cast<APlayerController>(Controller);
 	if (playerController == nullptr) return;
 
 	ULocalPlayer* player = playerController->GetLocalPlayer();
