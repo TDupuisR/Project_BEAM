@@ -79,7 +79,10 @@ protected:
 public:
 	UFUNCTION()
 	void InitCharacterSettings();
-	UFUNCTION()
+
+	UFUNCTION(BlueprintCallable)
+	void ReattributeCharacterSettings();
+
 	const UBeamCharacterSettings* GetCharacterSettings() const;
 
 protected:
