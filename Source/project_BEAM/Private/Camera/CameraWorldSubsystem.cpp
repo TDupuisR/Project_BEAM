@@ -9,6 +9,7 @@
 #include <Kismet/GameplayStatics.h>
 #include <Camera/CameraFollowTarget.h>
 #include "Components/BoxComponent.h"
+#include <Camera/BeamCameraSettings.h>
 
 void UCameraWorldSubsystem::PostInitialize()
 {
@@ -18,6 +19,9 @@ void UCameraWorldSubsystem::PostInitialize()
 void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 {
 	Super::OnWorldBeginPlay(InWorld);
+
+	CameraZoomDistanceBetweenTargetsMin = GetDefault<UBeamCameraSettings>()->CameraZoomDistanceBetweenTargetsMin;
+	CameraZoomDistanceBetweenTargetsMax = GetDefault<UBeamCameraSettings>()->CameraZoomDistanceBetweenTargetsMax;
 
 	ArenaCamera = Cast<AArenaCamera>(UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass()));
 
@@ -340,23 +344,20 @@ FVector UCameraWorldSubsystem::CalculateWorldPositionFromViewportPosition(const 
 void UCameraWorldSubsystem::InitCameraZoomParameters()
 {
 
-	TArray<AActor*> CameraDistancesMinActors;
-	TArray<AActor*> CameraDistancesMaxActors;
+	//TArray<AActor*> CameraDistancesMinActors;
+	//TArray<AActor*> CameraDistancesMaxActors;
 
 
-	UGameplayStatics::GetAllActorsWithTag(GetWorld(), "CameraDistanceMin", CameraDistancesMinActors);
-	UGameplayStatics::GetAllActorsWithTag(GetWorld(), "CameraDistanceMax", CameraDistancesMaxActors);
+	//UGameplayStatics::GetAllActorsWithTag(GetWorld(), "CameraDistanceMin", CameraDistancesMinActors);
+	//UGameplayStatics::GetAllActorsWithTag(GetWorld(), "CameraDistanceMax", CameraDistancesMaxActors);
 
-	if (CameraDistancesMinActors.Num() == 0 || CameraDistancesMaxActors.Num() == 0) return;
+	//if (CameraDistancesMinActors.Num() == 0 || CameraDistancesMaxActors.Num() == 0) return;
 
-	UE_LOG(LogTemp, Warning, TEXT("CameraDistancesMinActors: %d"), CameraDistancesMinActors[0]->GetActorLocation().Y);
-	UE_LOG(LogTemp, Warning, TEXT("CameraDistancesMaxActors: %d"), CameraDistancesMaxActors[0]->GetActorLocation().Y);
+	//UE_LOG(LogTemp, Warning, TEXT("CameraDistancesMinActors: %d"), CameraDistancesMinActors[0]->GetActorLocation().Y);
+	//UE_LOG(LogTemp, Warning, TEXT("CameraDistancesMaxActors: %d"), CameraDistancesMaxActors[0]->GetActorLocation().Y);
 
-	CameraZoomYMin = 1500.f;
-	CameraZoomYMax = 2500.f;
-
-	//CameraZoomYMin = CameraDistancesMinActors[0]->GetActorLocation().Y;
-	//CameraZoomYMax = CameraDistancesMaxActors[0]->GetActorLocation().Y;
+	CameraZoomYMin = GetDefault<UBeamCameraSettings>()->CameraZoomYMin;
+	CameraZoomYMax = GetDefault<UBeamCameraSettings>()->CameraZoomYMax;
 
 }
 
