@@ -2,6 +2,7 @@
 
 
 #include "DestructibleWall.h"
+#include "ProjectileInterface.h"
 
 
 // Sets default values
@@ -11,16 +12,37 @@ ADestructibleWall::ADestructibleWall()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+EProjectileType ADestructibleWall::ProjectileGetType()
+{
+	return EProjectileType::DestructWall;
+}
+AProjectile* ADestructibleWall::GetProjectile()
+{
+	return nullptr;
+}
+bool ADestructibleWall::ProjectileContext(int power, FVector position)
+{
+	if (power < resistance) return true;
+
+	
+}
+
 // Called when the game starts or when spawned
 void ADestructibleWall::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (resistance < 0) resistance = 0;
+	else if (resistance > 10) resistance = 10;
 }
 
-// Called every frame
-void ADestructibleWall::Tick(float DeltaTime)
+void ADestructibleWall::GetDestroyed()
 {
-	Super::Tick(DeltaTime);
+	//Play Animation
+	//Play Sound
+	this->Destroy();
 }
+
+
+
 

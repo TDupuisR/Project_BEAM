@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Projectie"
+#include "ProjectileInterface.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "DestructibleWall.generated.h"
@@ -16,11 +16,18 @@ public:
 	// Sets default values for this actor's properties
 	ADestructibleWall();
 
+	virtual EProjectileType ProjectileGetType() override;
+	virtual AProjectile* GetProjectile() override;
+	virtual bool ProjectileContext(int power, FVector position) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditAnywhere)
+	int resistance;
+	
+	UFUNCTION()
+	void GetDestroyed();
+	
 };
