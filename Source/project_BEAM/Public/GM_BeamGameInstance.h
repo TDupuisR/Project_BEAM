@@ -6,15 +6,18 @@
 #include "Engine/GameInstance.h"
 #include "GM_BeamGameInstance.generated.h"
 
-/**
- * 
- */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChangePoints);
+
 UCLASS()
 class PROJECT_BEAM_API UGM_BeamGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 	
 public:
+
+	UPROPERTY(BlueprintAssignable)
+	FOnChangePoints OnChangePoints;
+
 	UFUNCTION(BlueprintCallable)
 	int GetManche();
 
@@ -35,6 +38,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ResetPlayerPoints();
+
+	UFUNCTION(BlueprintCallable)
+	void DeployEvent();
 
 	void SetPlayerPoints(TArray<int> NewPoints);
 

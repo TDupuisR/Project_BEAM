@@ -39,6 +39,11 @@ void UGM_BeamGameInstance::ResetPlayerPoints()
 	PlayerPoints[1] = 0;
 }
 
+void UGM_BeamGameInstance::DeployEvent()
+{
+	OnChangePoints.Broadcast();
+}
+
 void UGM_BeamGameInstance::SetPlayerPoints(TArray<int> NewPoints)
 {
 	PlayerPoints = NewPoints;

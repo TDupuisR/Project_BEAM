@@ -140,7 +140,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 	BeamGameInstance->AddManche();
 
-	
+	BeamGameInstance->DeployEvent();
 
 	if (BeamGameInstance->GetPlayersPoints().Max() >= BeamGameInstance->GetMaxManche())
 	{
