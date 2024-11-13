@@ -36,11 +36,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetPlayerPoints();
 
-	UFUNCTION(BlueprintCallable)
 	void SetPlayerPoints(TArray<int> NewPoints);
 
 	UFUNCTION(BlueprintCallable)
-	TArray<int> GetPlayerPoints();
+	TArray<int> GetPlayersPoints();
 
 	UFUNCTION(BlueprintCallable)
 	void SetMaxManche(int NewMaxManche);

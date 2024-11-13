@@ -125,7 +125,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 	BeamGameInstance->AddPlayerPoints(0, 1);
 	BeamGameInstance->AddPlayerPoints(1, 1);
 
-	TArray<int> PointsPlayers = BeamGameInstance->GetPlayerPoints();
+	TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
 
 	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0])
 	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1])
@@ -133,7 +133,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 	if (CharactersInArena.Find(DeadPlayer) < 0) return;
 	BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
 
-	PointsPlayers = BeamGameInstance->GetPlayerPoints();
+	PointsPlayers = BeamGameInstance->GetPlayersPoints();
 
 	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0])
 	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1])
@@ -142,7 +142,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 	
 
-	if (BeamGameInstance->GetPlayerPoints().Max() >= BeamGameInstance->GetMaxManche())
+	if (BeamGameInstance->GetPlayersPoints().Max() >= BeamGameInstance->GetMaxManche())
 	{
 		// END OF THE GAME
 		// GO TO MENU

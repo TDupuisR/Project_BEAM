@@ -44,7 +44,7 @@ void UGM_BeamGameInstance::SetPlayerPoints(TArray<int> NewPoints)
 	PlayerPoints = NewPoints;
 }
 
-TArray<int> UGM_BeamGameInstance::GetPlayerPoints()
+TArray<int> UGM_BeamGameInstance::GetPlayersPoints()
 {
 	return PlayerPoints;
 }
