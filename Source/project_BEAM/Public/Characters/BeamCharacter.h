@@ -17,6 +17,9 @@ class UBeamCharacterSettings;
 class UBoxComponent;
 class UPlayerAim;
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathEvent, ABeamCharacter*, pointeurCharacter);
+
 UCLASS()
 class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInterface
 {
@@ -183,6 +186,9 @@ public:
 	UFUNCTION()
 	bool IsPhaseTwo() const;
 
+	UFUNCTION()
+	void OnDeath();
+
 protected:
 	UFUNCTION()
 	void CheckLife();
@@ -244,4 +250,16 @@ private:
 	void playerAimInit();
 
 #pragma endregion
+
+#pragma region DeathEvent
+
+
+
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnDeathEvent OnDeathEvent;
+
+
+#pragma endregion
+
 };

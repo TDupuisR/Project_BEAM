@@ -19,11 +19,13 @@ class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
+
 protected:
 	UPROPERTY()
 	TArray<ABeamCharacter*> CharactersInArena;
 	
 private:
+	
 	UBeamCharacterInputData* LoadInputDataFromConfig();
 
 	UInputMappingContext* LoadInputMappingContextFromConfig();
@@ -35,4 +37,18 @@ private:
 	TSubclassOf<ABeamCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
 	
 	void CreateAndInitPlayers() const;
+
+#pragma region MancheSystem
+
+public:
+	UFUNCTION()
+	void OnPlayerDeath(ABeamCharacter* pointeur);
+
+private:
+	void AddEventsPlayers() const;
+	
+
+
+#pragma endregion
+
 };

@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Arena/ArenaSettings.h"
 #include "Characters/BeamCharacterSettings.h"
+#include "GM_BeamGameInstance.h"
 
 void AMatchGameMode::BeginPlay()
 {
@@ -18,6 +19,7 @@ void AMatchGameMode::BeginPlay()
 	TArray<AArenaPlayerStart*> PlayerStartsPoints;
 	FindPlayerStartActorsInArena(PlayerStartsPoints);
 	SpawnCharacters(PlayerStartsPoints);
+	AddEventsPlayers();
 	
 	// TObjectPtr<AActor> camera = UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass());
 	//
@@ -94,6 +96,69 @@ void AMatchGameMode::CreateAndInitPlayers() const
 	if (LocalMultiplayerSubsystem == nullptr) return;
 
 	LocalMultiplayerSubsystem->CreateAndInitPlayers();
+}
+
+void AMatchGameMode::AddEventsPlayers() const
+{
+	for (int i = 0; i < CharactersInArena.Num(); i++)
+	{
+		ABeamCharacter* Character = CharactersInArena[i];
+		if (Character == nullptr) continue;
+
+		Character->OnDeathEvent.AddDynamic(this, &AMatchGameMode::OnPlayerDeath);
+	}
+}
+
+void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
+{
+	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
+
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		15.0f,
+		FColor::Purple,
+		FString::Printf(TEXT("PLAYER DEATH"))
+	);
+
+	BeamGameInstance->AddPlayerPoints(0, 1);
+	BeamGameInstance->AddPlayerPoints(1, 1);
+
+	TArray<int> PointsPlayers = BeamGameInstance->GetPlayerPoints();
+
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0])
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1])
+
+	if (CharactersInArena.Find(DeadPlayer) < 0) return;
+	BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
+
+	PointsPlayers = BeamGameInstance->GetPlayerPoints();
+
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0])
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1])
+
+	BeamGameInstance->AddManche();
+
+	
+
+	if (BeamGameInstance->GetPlayerPoints().Max() >= BeamGameInstance->GetMaxManche())
+	{
+		// END OF THE GAME
+		// GO TO MENU
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			15.0f,
+			FColor::Purple,
+			FString::Printf(TEXT("------------- END GAME ------------"))
+		);
+		
+	}
+	else {
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	}
+
+
 }
 
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
