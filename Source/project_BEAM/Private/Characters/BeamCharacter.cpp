@@ -262,6 +262,26 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 	PlayersInZone.Remove(player);
 }
 
+void ABeamCharacter::Stun(float TimeToStun = 3.f)
+{
+
+	SetStunTime(TimeToStun);
+
+	if (StateMachine != nullptr)
+	StateMachine->ChangeState(EBeamCharacterStateID::Stun);
+
+}
+
+float ABeamCharacter::GetStunTime() const
+{
+	return StunTime;
+}
+
+void ABeamCharacter::SetStunTime(float NewStunTime)
+{
+	StunTime = NewStunTime;
+}
+
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;

@@ -13,6 +13,7 @@
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
+class UEnhancedInputComponent;
 class UBoxComponent;
 
 UCLASS()
@@ -221,6 +222,25 @@ private:
 	UFUNCTION()
 	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+
+# pragma endregion
+
+# pragma region Stun
+
+public:
+
+	void Stun(float TimeToStun);
+
+	float GetStunTime() const;
+
+	void SetStunTime(float NewStunTime);
+
+private:
+	UPROPERTY()
+	float StunTime = 1.f;
+
+	UPROPERTY()
+	float MultiplierStun = 0.f;
 
 # pragma endregion
 
