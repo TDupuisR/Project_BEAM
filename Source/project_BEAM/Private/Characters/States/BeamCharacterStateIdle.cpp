@@ -52,7 +52,7 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	if (Character->GetInputJump()) {
+	if (Character->GetInputJump() || Character->GetInputJumpJoystick()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}

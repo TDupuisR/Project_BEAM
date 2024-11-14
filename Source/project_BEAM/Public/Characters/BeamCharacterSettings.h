@@ -58,10 +58,16 @@ public:
 
 #pragma region Jump
 
-	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Pour le d�placement dans les airs"))
+	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Pour le deplacement dans les airs"))
 	double Jump_VelocityMax;
-	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Force � laquelle le joueur est projet�"))
+	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Force a laquelle le joueur est projete"))
 	double Jump_Force;
+	
+	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Sensibilite du saut via l'input joystick vers le haut"))
+	float  Joystick_Jump_SensibilityY;
+	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Sensibilite qui ignore le saut si le move X est trop fort"))
+	float  Joystick_Jump_SensibilityX;
+	
 	
 	UPROPERTY(Config, EditAnywhere, Category = "Jump", meta = (ToolTip = "Bas -> Pas beaucoup bouger, Haut -> Bouge comme si il �tait au sol mais dans les airs"))
 	double AirControl;

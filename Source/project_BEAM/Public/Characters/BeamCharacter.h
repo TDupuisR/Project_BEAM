@@ -98,9 +98,11 @@ public:
 
 	UPROPERTY()
 	APlayerController* playerController;
+	
 
 	UFUNCTION() FVector2D GetInputMove() const;
 	UFUNCTION() bool GetInputJump() const;
+	UFUNCTION() bool GetInputJumpJoystick() const;
 	UFUNCTION() bool GetInputDash() const;
 
 	UFUNCTION() bool GetInputCharge() const;
@@ -117,6 +119,7 @@ protected:
 
 	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
 	UPROPERTY() bool InputJump = false;
+	UPROPERTY() bool InputJumpJoystick = false;
 	UPROPERTY() bool InputDash = false;
 
 	UPROPERTY() bool InputCharge = false;
@@ -133,6 +136,7 @@ private:
 
 	UFUNCTION() void OnInputMove(const FInputActionValue& InputActionValue);
 	UFUNCTION() void OnInputJump(const FInputActionValue& InputActionValue);
+	UFUNCTION() void OnInputJumpJoystick(const FInputActionValue& InputActionValue);
 	UFUNCTION() void OnInputDash(const FInputActionValue& InputActionValue);
 	
 	UFUNCTION() void OnInputCharge(const FInputActionValue& InputActionValue);

@@ -80,6 +80,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		}
 	}
 
+	/*
 	if (Character->GetInputFly() && !firstFrame) {
 		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 		//Character->GetCapsuleComponent()->SetSimulatePhysics(true);
@@ -87,7 +88,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 
 		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
 		return;
-	}
+	}*/
 
 	// Dash
 	if (Character->GetInputDash() && !dashIsStillActive && canDash) {
