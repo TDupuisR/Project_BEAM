@@ -14,12 +14,12 @@ EBeamCharacterStateID UBeamCharacterStateProjection::GetStateID()
 
 void UBeamCharacterStateProjection::StateEnter(EBeamCharacterStateID PreviousStateID)
 {
-
+	Character->SetCanTakeDamage(false);
 }
 
 void UBeamCharacterStateProjection::StateExit(EBeamCharacterStateID NextStateID)
 {
-
+	Character->SetCanTakeDamage(true);
 }
 
 void UBeamCharacterStateProjection::StateTick(float DeltaTime)

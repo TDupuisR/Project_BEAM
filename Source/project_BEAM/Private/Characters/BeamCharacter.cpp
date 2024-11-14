@@ -184,6 +184,16 @@ float ABeamCharacter::GetMinSizeVelocity() const
 	return MinSizeVelocity;
 }
 
+bool ABeamCharacter::GetCanTakeDamage() const
+{
+	return CanTakeDamage;
+}
+
+void ABeamCharacter::SetCanTakeDamage(bool NewCanTakeDamage)
+{
+	CanTakeDamage = NewCanTakeDamage;
+}
+
 int const ABeamCharacter::GetLife() const
 {
 	return Life;
@@ -216,6 +226,9 @@ void const ABeamCharacter::SetLifeToFly(const int NewLifeToFly)
 
 void ABeamCharacter::TakeDamage(const int Damage)
 {
+
+	if (!CanTakeDamage) return;
+
 	Life -= Damage;
 	if (Life <= 0) {
 		Life = 0;

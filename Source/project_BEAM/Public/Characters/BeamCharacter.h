@@ -159,6 +159,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetMinSizeVelocity() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool GetCanTakeDamage() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanTakeDamage(bool NewCanTakeDamage);
+		
 
 private:
 	UPROPERTY()
@@ -166,6 +172,9 @@ private:
 
 	UPROPERTY()
 	float MinSizeVelocity = 100;
+
+	UPROPERTY()
+	bool CanTakeDamage;
 
 # pragma endregion
 
