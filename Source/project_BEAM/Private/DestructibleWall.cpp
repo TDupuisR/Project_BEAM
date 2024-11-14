@@ -22,9 +22,22 @@ AProjectile* ADestructibleWall::GetProjectile()
 }
 bool ADestructibleWall::ProjectileContext(int power, FVector position)
 {
-	if (power < resistance) return true;
-
+	if (power < resistance)
+	{
+		return true;
+	}
+	else if (power == resistance)
+	{
+		GetDestroyed();
+		return true;
+	}
+	else if (power > resistance)
+	{
+		GetDestroyed();
+		return false;
+	}
 	
+	return false;
 }
 
 // Called when the game starts or when spawned
