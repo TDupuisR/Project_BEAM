@@ -142,11 +142,36 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void KnockBack(FVector Direction, float Force);
 
+	UFUNCTION(BlueprintCallable)
+	void Bounce(FVector Normal);
+
+	UFUNCTION(BlueprintCallable)
+	void OnHit(UPrimitiveComponent* HitComponent,  // The component that was hit
+		AActor* OtherActor,                // The other actor involved in the hit
+		UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
+		FVector NormalImpulse,             // The force applied to resolve the collision
+		const FHitResult& Hit              // Detailed information about the hit)
+	);
+
+	UFUNCTION(BlueprintCallable)
+	float GetBounciness() const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetMinSizeVelocity() const;
+
+
+private:
+	UPROPERTY()
+	float Bounciness = 0.7;
+
+	UPROPERTY()
+	float MinSizeVelocity = 100;
 
 # pragma endregion
 
 # pragma region Life
 
+public:
 	// GETTERS
 	int const GetLife() const;
 
@@ -202,6 +227,9 @@ private:
 
 	UPROPERTY()
 	TArray<ABeamCharacter*> PlayersInZone;
+
+	UPROPERTY()
+	UCapsuleComponent* capsuleCollision;
 
 	UPROPERTY()
 	bool canPush = true;

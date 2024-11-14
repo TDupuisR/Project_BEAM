@@ -10,6 +10,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
+
 
 
 // Sets default values
@@ -32,7 +34,6 @@ void ABeamCharacter::BeginPlay()
 
 	StartLocation = this->GetActorLocation();
 
-	
 }
 
 // Called every frame
@@ -53,6 +54,8 @@ void ABeamCharacter::Tick(float DeltaTime)
 	{
 		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
 	}
+
+
 
 }
 
@@ -133,6 +136,51 @@ void ABeamCharacter::KnockBack(FVector Direction, float Force)
 	this->GetCharacterMovement()->Launch(Direction * Force);
 }
 
+void ABeamCharacter::Bounce(FVector Normal)
+{
+
+	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
+
+	FVector velocityDir = velocity.GetSafeNormal();
+	
+	FVector newVector = velocityDir - 2 * FVector::DotProduct(velocityDir, Normal) * Normal;
+
+	float Force = velocity.Size() * Bounciness;
+
+	KnockBack(newVector, Force);
+
+}
+
+void ABeamCharacter::OnHit(
+	UPrimitiveComponent* HitComponent,  // The component that was hit
+	AActor* OtherActor,                // The other actor involved in the hit
+	UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
+	FVector NormalImpulse,             // The force applied to resolve the collision
+	const FHitResult& Hit              // Detailed information about the hit
+)
+{
+	if (OtherActor == nullptr) return;
+	
+	if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection) return;
+
+	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
+
+	if (velocity.Size() < MinSizeVelocity) return;
+
+	Bounce(Hit.Normal);
+
+}
+
+float ABeamCharacter::GetBounciness() const
+{
+	return Bounciness;
+}
+
+float ABeamCharacter::GetMinSizeVelocity() const
+{
+	return MinSizeVelocity;
+}
+
 int const ABeamCharacter::GetLife() const
 {
 	return Life;
@@ -170,6 +218,7 @@ void ABeamCharacter::TakeDamage(const int Damage)
 		Life = 0;
 	}
 	CheckLife();
+	
 }
 
 void const ABeamCharacter::ResetLife()
@@ -243,6 +292,12 @@ void ABeamCharacter::SetupCollision()
 
 	boxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABeamCharacter::OnBeginOverlapZone);
 	boxCollision->OnComponentEndOverlap.AddDynamic(this, &ABeamCharacter::OnEndOverlapZone);
+
+	capsuleCollision = GetComponentByClass<UCapsuleComponent>();
+
+	if (capsuleCollision == nullptr) return;
+
+	capsuleCollision->OnComponentHit.AddDynamic(this, &ABeamCharacter::OnHit);
 
 }
 

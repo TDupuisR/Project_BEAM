@@ -54,6 +54,13 @@ void UBeamCharacterStateStun::StateTick(float DeltaTime)
 
 	stunTimer += DeltaTime;
 
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		0.1f,
+		FColor::Blue,
+		FString::Printf(TEXT("STATE TICK STUN"))
+	);
+
 	if (stunTimer >= timeToStun) {
 		stunTimer = 0.f;
 		StateMachine->ChangeState(EBeamCharacterStateID::Idle);

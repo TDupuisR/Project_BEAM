@@ -16,5 +16,6 @@ enum class EBeamCharacterStateID : uint8
 	Push,
 	Fly,
 	Stun,
+	Projection,
 	Dead
 };
