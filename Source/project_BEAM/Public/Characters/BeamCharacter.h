@@ -165,6 +165,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetCanTakeDamage(bool NewCanTakeDamage);
 		
+	UFUNCTION(BlueprintCallable)
+	bool GetCanTakeKnockback();
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanTakeKnockback(bool NewCanTakeKnockback);
+
 
 private:
 	UPROPERTY()
@@ -174,7 +180,10 @@ private:
 	float MinSizeVelocity = 100;
 
 	UPROPERTY()
-	bool CanTakeDamage;
+	bool CanTakeDamage = true;
+
+	UPROPERTY()
+	bool CanTakeKnockBack = true;
 
 # pragma endregion
 

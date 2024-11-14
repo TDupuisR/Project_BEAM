@@ -134,6 +134,9 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "La taille du vector pour que la projection s'arrete"))
 	double MinSizeVelocity;
 
+	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "Temps après la projection pour se relever"))
+	double TimeToWaitAfterProjection;
+
 #pragma endregion
 
 

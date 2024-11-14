@@ -194,6 +194,17 @@ void ABeamCharacter::SetCanTakeDamage(bool NewCanTakeDamage)
 	CanTakeDamage = NewCanTakeDamage;
 }
 
+bool ABeamCharacter::GetCanTakeKnockback()
+{
+	return CanTakeKnockBack;
+}
+
+void ABeamCharacter::SetCanTakeKnockback(bool NewCanTakeKnockback)
+{
+	CanTakeKnockBack = NewCanTakeKnockback;
+
+}
+
 int const ABeamCharacter::GetLife() const
 {
 	return Life;

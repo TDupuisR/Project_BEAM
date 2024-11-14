@@ -24,4 +24,11 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 
 
+private:
+	float TimeToWait = 0.4f;
+
+	float Timer = 0.f;
+
+	bool AfterProjection = false;
+
 };
