@@ -26,8 +26,14 @@ public:
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
 	void InitAim(UPlayerAim* playerAim);
-
+	UFUNCTION(BlueprintCallable)
 	bool GetIsQteActive() const;
+	UFUNCTION(BlueprintCallable)
+	float GetQteTimeLeft() const;
+	UFUNCTION(BlueprintCallable)
+	float GetQteMaxTime() const;
+	UFUNCTION(BlueprintCallable)
+	float GetQteTimeStamp() const;
 
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<ABeamCharacter> Character;
