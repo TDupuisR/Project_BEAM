@@ -123,6 +123,9 @@ void ABeamCharacter::InitCharacterSettings()
 	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
 	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
+
+	Bounciness = CharacterSettings->Bounciness;
+	MinSizeVelocity = CharacterSettings->MinSizeVelocity;
 	
 	// CHARACTER STATS SETTINGS
 	MaxLife = CharacterSettings->MaxLife;

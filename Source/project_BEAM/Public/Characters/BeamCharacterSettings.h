@@ -126,6 +126,15 @@ public:
 
 #pragma endregion
 
+#pragma region Projection
+
+	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "La bounciness pour la projection"))
+	double Bounciness;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "La taille du vector pour que la projection s'arrete"))
+	double MinSizeVelocity;
+
+#pragma endregion
 
 
 };
