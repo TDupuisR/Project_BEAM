@@ -45,6 +45,10 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
 	}
 
+	if (IsKeyWasPressed(EKeys::U)) {
+		Character->TakeDamage(3);
+	}
+
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
@@ -79,7 +83,7 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
 
-	if (!Character->GetMovementComponent()->IsMovingOnGround()) {
+	if (!Character->GetMovementComponent()->IsMovingOnGround() && Character->GetMovementComponent()->Velocity.Y < 0) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
 	}
 

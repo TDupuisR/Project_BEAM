@@ -13,7 +13,7 @@
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
-class UPlayerAim;
+class UEnhancedInputComponent;
 class UBoxComponent;
 
 UCLASS()
@@ -142,24 +142,60 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void KnockBack(FVector Direction, float Force);
 
+	UFUNCTION(BlueprintCallable)
+	void Bounce(FVector Normal);
+
+	UFUNCTION(BlueprintCallable)
+	void OnHit(UPrimitiveComponent* HitComponent,  // The component that was hit
+		AActor* OtherActor,                // The other actor involved in the hit
+		UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
+		FVector NormalImpulse,             // The force applied to resolve the collision
+		const FHitResult& Hit              // Detailed information about the hit)
+	);
+
+	UFUNCTION(BlueprintCallable)
+	float GetBounciness() const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetMinSizeVelocity() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCanTakeDamage() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanTakeDamage(bool NewCanTakeDamage);
+		
+	UFUNCTION(BlueprintCallable)
+	bool GetCanTakeKnockback();
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanTakeKnockback(bool NewCanTakeKnockback);
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsDashing() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsDashing(bool NewIsDashing);
+
+private:
+
+	UPROPERTY()
+	bool IsDashing = false;
+
+	UPROPERTY()
+	float Bounciness = 0.7;
+
+	UPROPERTY()
+	float MinSizeVelocity = 100;
+
+	UPROPERTY()
+	bool CanTakeDamage = true;
+
+	UPROPERTY()
+	bool CanTakeKnockBack = true;
 
 # pragma endregion
 
-#pragma region playerAim
-
-public:
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UPlayerAim> localPlayerAim;
-	
-private:
-	UFUNCTION()
-	void creatAim();
-	
-	UFUNCTION()
-	void playerAimInit();
-
-	
-#pragma endregion
 # pragma region Life
 
 public:
@@ -220,6 +256,9 @@ private:
 	TArray<ABeamCharacter*> PlayersInZone;
 
 	UPROPERTY()
+	UCapsuleComponent* capsuleCollision;
+
+	UPROPERTY()
 	bool canPush = true;
 
 	UPROPERTY()
@@ -238,6 +277,30 @@ private:
 	UFUNCTION()
 	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+
+# pragma endregion
+
+# pragma region Stun
+
+public:
+
+	void Stun(float TimeToStun);
+
+	float GetStunTime() const;
+
+	void SetStunTime(float NewStunTime);
+
+	void SetMultiplierStun(float NewMultiplierStun);
+
+	float GetMultiplierStun();
+
+private:
+
+	UPROPERTY()
+	float StunTime = 1.f;
+
+	UPROPERTY()
+	float MultiplierStun = 0.f;
 
 # pragma endregion
 
