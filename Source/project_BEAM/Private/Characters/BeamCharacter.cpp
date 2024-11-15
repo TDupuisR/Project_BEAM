@@ -7,17 +7,16 @@
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
+#include "Characters/PlayerAim.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
-#include "Components/CapsuleComponent.h"
-
 
 
 // Sets default values
 ABeamCharacter::ABeamCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -32,10 +31,9 @@ void ABeamCharacter::BeginPlay()
 	CreateStateMachine();
 	InitStateMachine();
 
-	creatAim();
-
 	StartLocation = this->GetActorLocation();
 
+	
 }
 
 // Called every frame
@@ -48,7 +46,6 @@ void ABeamCharacter::Tick(float DeltaTime)
 
 	TickPush(DeltaTime);
 
-
 	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
 
 	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
@@ -57,8 +54,6 @@ void ABeamCharacter::Tick(float DeltaTime)
 	{
 		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
 	}
-
-
 
 }
 
@@ -126,9 +121,6 @@ void ABeamCharacter::InitCharacterSettings()
 	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
 	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
-
-	Bounciness = CharacterSettings->Bounciness;
-	MinSizeVelocity = CharacterSettings->MinSizeVelocity;
 	
 	// CHARACTER STATS SETTINGS
 	MaxLife = CharacterSettings->MaxLife;
@@ -139,78 +131,19 @@ void ABeamCharacter::InitCharacterSettings()
 
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
 {
-
-	if (!CanTakeKnockBack) return;
-
 	this->GetCharacterMovement()->Launch(Direction * Force);
 }
 
-void ABeamCharacter::Bounce(FVector Normal)
+void ABeamCharacter::creatAim()
 {
-
-	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
-
-	FVector velocityDir = velocity.GetSafeNormal();
-	
-	FVector newVector = velocityDir - 2 * FVector::DotProduct(velocityDir, Normal) * Normal;
-
-	float Force = velocity.Size() * Bounciness;
-
-	KnockBack(newVector, Force);
-
+	localPlayerAim = NewObject<UPlayerAim>(this);
 }
 
-void ABeamCharacter::OnHit(
-	UPrimitiveComponent* HitComponent,  // The component that was hit
-	AActor* OtherActor,                // The other actor involved in the hit
-	UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
-	FVector NormalImpulse,             // The force applied to resolve the collision
-	const FHitResult& Hit              // Detailed information about the hit
-)
+void ABeamCharacter::playerAimInit()
 {
-	if (OtherActor == nullptr) return;
-	
-	if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection) return;
-
-	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
-
-	if (velocity.Size() < MinSizeVelocity) return;
-
-	Bounce(Hit.Normal);
-
+	if(localPlayerAim == nullptr) return;
+	localPlayerAim->InitCharacter(this);
 }
-
-float ABeamCharacter::GetBounciness() const
-{
-	return Bounciness;
-}
-
-float ABeamCharacter::GetMinSizeVelocity() const
-{
-	return MinSizeVelocity;
-}
-
-bool ABeamCharacter::GetCanTakeDamage() const
-{
-	return CanTakeDamage;
-}
-
-void ABeamCharacter::SetCanTakeDamage(bool NewCanTakeDamage)
-{
-	CanTakeDamage = NewCanTakeDamage;
-}
-
-bool ABeamCharacter::GetCanTakeKnockback()
-{
-	return CanTakeKnockBack;
-}
-
-void ABeamCharacter::SetCanTakeKnockback(bool NewCanTakeKnockback)
-{
-	CanTakeKnockBack = NewCanTakeKnockback;
-
-}
-
 int const ABeamCharacter::GetLife() const
 {
 	return Life;
@@ -243,15 +176,11 @@ void const ABeamCharacter::SetLifeToFly(const int NewLifeToFly)
 
 void ABeamCharacter::TakeDamage(const int Damage)
 {
-
-	if (!CanTakeDamage) return;
-
 	Life -= Damage;
 	if (Life <= 0) {
 		Life = 0;
 	}
 	CheckLife();
-	
 }
 
 void const ABeamCharacter::ResetLife()
@@ -262,12 +191,6 @@ void const ABeamCharacter::ResetLife()
 bool ABeamCharacter::IsPhaseTwo() const
 {
 	return Life <= LifeToFly;
-}
-
-void ABeamCharacter::OnDeath()
-{
-	StateMachine->ChangeState(EBeamCharacterStateID::Dead);
-	OnDeathEvent.Broadcast(this);
 }
 
 void ABeamCharacter::CheckLife()
@@ -283,7 +206,7 @@ void ABeamCharacter::CheckLife()
 		}
 	}
 	else {
-		OnDeath();
+		StateMachine->ChangeState(EBeamCharacterStateID::Dead);
 	}
 }
 
@@ -332,12 +255,6 @@ void ABeamCharacter::SetupCollision()
 	boxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABeamCharacter::OnBeginOverlapZone);
 	boxCollision->OnComponentEndOverlap.AddDynamic(this, &ABeamCharacter::OnEndOverlapZone);
 
-	capsuleCollision = GetComponentByClass<UCapsuleComponent>();
-
-	if (capsuleCollision == nullptr) return;
-
-	capsuleCollision->OnComponentHit.AddDynamic(this, &ABeamCharacter::OnHit);
-
 }
 
 void ABeamCharacter::OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -354,36 +271,6 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 	if (player == nullptr) return;
 
 	PlayersInZone.Remove(player);
-}
-
-void ABeamCharacter::Stun(float TimeToStun = 3.f)
-{
-
-	SetStunTime(TimeToStun);
-
-	if (StateMachine != nullptr)
-	StateMachine->ChangeState(EBeamCharacterStateID::Stun);
-
-}
-
-float ABeamCharacter::GetStunTime() const
-{
-	return StunTime;
-}
-
-void ABeamCharacter::SetStunTime(float NewStunTime)
-{
-	StunTime = NewStunTime;
-}
-
-void ABeamCharacter::SetMultiplierStun(float NewMultiplierStun)
-{
-	MultiplierStun = NewMultiplierStun;
-}
-
-float ABeamCharacter::GetMultiplierStun()
-{
-	return MultiplierStun;
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
