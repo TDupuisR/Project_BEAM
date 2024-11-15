@@ -79,7 +79,10 @@ protected:
 public:
 	UFUNCTION()
 	void InitCharacterSettings();
-	UFUNCTION()
+
+	UFUNCTION(BlueprintCallable)
+	void ReattributeCharacterSettings();
+
 	const UBeamCharacterSettings* GetCharacterSettings() const;
 
 protected:
@@ -93,11 +96,9 @@ protected:
 public:
 	UPROPERTY()
 	TObjectPtr<UInputMappingContext> InputMappingContext;
-	UPROPERTY()
-	TObjectPtr<UBeamCharacterInputData> InputData;
 
 	UPROPERTY()
-	APlayerController* playerController;
+	TObjectPtr<UBeamCharacterInputData> InputData;
 
 	UFUNCTION() FVector2D GetInputMove() const;
 	UFUNCTION() bool GetInputJump() const;
@@ -113,7 +114,7 @@ public:
 	
 protected:
 	UFUNCTION()
-	void SetupMappingContextIntoController();
+	void SetupMappingContextIntoController() const;
 
 	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
 	UPROPERTY() bool InputJump = false;
