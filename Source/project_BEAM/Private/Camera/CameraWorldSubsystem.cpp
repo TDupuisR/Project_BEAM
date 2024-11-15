@@ -114,7 +114,7 @@ void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
 	if (ArenaCamera == nullptr) return;
 
 	float GreatestDistanceBetweenTargets = CalculateGreatestDistanceBetweenTargets();
-	UE_LOG(LogTemp, Warning, TEXT("Greatest Distance : %f"), GreatestDistanceBetweenTargets);
+	//UE_LOG(LogTemp, Warning, TEXT("Greatest Distance : %f"), GreatestDistanceBetweenTargets);
 
 	if (GreatestDistanceBetweenTargets < CameraZoomDistanceBetweenTargetsMin) {
 		GreatestDistanceBetweenTargets = CameraZoomDistanceBetweenTargetsMin;
@@ -128,20 +128,20 @@ void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
 
 	FVector posCamera = ArenaCamera->GetActorLocation();
 
-	UE_LOG(LogTemp, Warning, TEXT("PERCENTAGE : %f"), PercentDistance);
+	//UE_LOG(LogTemp, Warning, TEXT("PERCENTAGE : %f"), PercentDistance);
 
 	float value = CameraZoomYMax * PercentDistance;
 
-	UE_LOG(LogTemp, Warning, TEXT("VALUE : %f"), value);
+	//UE_LOG(LogTemp, Warning, TEXT("VALUE : %f"), value);
 
 	float zoomValue = FMath::Clamp(value, CameraZoomYMin, CameraZoomYMax);
 
-	UE_LOG(LogTemp, Warning, TEXT("ZOOM VALUE : %f"), zoomValue);
+	//UE_LOG(LogTemp, Warning, TEXT("ZOOM VALUE : %f"), zoomValue);
 
 
 	FVector newPosition = FVector(posCamera.X, zoomValue, posCamera.Z);
 
-	UE_LOG(LogTemp, Warning, TEXT("POSITION NEW ZOOM : %s"), *newPosition.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("POSITION NEW ZOOM : %s"), *newPosition.ToString());
 
 	ArenaCamera->SetActorLocation(newPosition);
 
@@ -209,12 +209,12 @@ float UCameraWorldSubsystem::CalculateGreatestDistanceBetweenTargets()
 			if (FollowTargetInterface2 == nullptr) continue;
 			if (!FollowTargetInterface2->IsFollowable()) continue;
 
-			UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface: %s"), *FollowTargetInterface->GetFollowPosition().ToString());
-			UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface2: %s"), *FollowTargetInterface2->GetFollowPosition().ToString());
+			//UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface: %s"), *FollowTargetInterface->GetFollowPosition().ToString());
+			//UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface2: %s"), *FollowTargetInterface2->GetFollowPosition().ToString());
 
 			float distance = FVector::Distance(FollowTargetInterface->GetFollowPosition(), FollowTargetInterface2->GetFollowPosition());
 
-			UE_LOG(LogTemp, Error, TEXT("Distance: %f"), distance);
+			//UE_LOG(LogTemp, Error, TEXT("Distance: %f"), distance);
 
 			if (distance > GreatestDistance)
 			{

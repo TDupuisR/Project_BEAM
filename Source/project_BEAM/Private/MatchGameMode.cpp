@@ -142,13 +142,13 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 	BeamGameInstance->DeployEvent();
 
-	if (BeamGameInstance->GetPlayersPoints().Max() >= BeamGameInstance->GetMaxManche())
+	if (BeamGameInstance->GetPlayersPoints()[0] >= BeamGameInstance->GetMaxManche() || BeamGameInstance->GetPlayersPoints()[1] >= BeamGameInstance->GetMaxManche())
 	{
 		// END OF THE GAME
 		// GO TO MENU
 		GEngine->AddOnScreenDebugMessage(
 			-1,
-			15.0f,
+			20.0f,
 			FColor::Purple,
 			FString::Printf(TEXT("------------- END GAME ------------"))
 		);
