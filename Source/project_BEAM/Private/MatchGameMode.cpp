@@ -4,7 +4,6 @@
 
 #include "LocalMutliplayerSubsystem.h"
 #include "Arena/ArenaPlayerStart.h"
-#include "Arena/ArenaCamera.h"
 #include "Characters/BeamCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Arena/ArenaSettings.h"
@@ -14,23 +13,10 @@ void AMatchGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	CreateAndInitPlayers();
-	
+
 	TArray<AArenaPlayerStart*> PlayerStartsPoints;
 	FindPlayerStartActorsInArena(PlayerStartsPoints);
 	SpawnCharacters(PlayerStartsPoints);
-	
-	// TObjectPtr<AActor> camera = UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass());
-	//
-	// TObjectPtr<APlayerController> playerController = UGameplayStatics::GetPlayerController(GetWorld(), 1);
-	// if (playerController)
-	// {
-	// 	playerController->SetViewTargetWithBlend(camera);
-	// 	UE_LOG(LogTemp, Warning, TEXT("Player controller is true"));
-	// }
-	// else
-	// {
-	// 	UE_LOG(LogTemp, Warning, TEXT("Player controller is null"));
-	// }
 }
 
 void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors)
@@ -100,7 +86,7 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 {
 	UBeamCharacterInputData* InputData = LoadInputDataFromConfig();
 	UInputMappingContext* InputMappingContext = LoadInputMappingContextFromConfig();
-
+	
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
 	{
 		EAutoReceiveInput::Type InputType = SpawnPoint->AutoReceiveInput.GetValue();
