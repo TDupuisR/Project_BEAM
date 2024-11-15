@@ -62,8 +62,8 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
-		FColor::Red,
-		FString::Printf(TEXT("Tick State %d"), GetStateID())
+		FColor::Blue,
+		FString::Printf(TEXT("STATE TICK FLY"))
 	);
 
 	if (!canDash) {
@@ -112,8 +112,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			return;
 		}
 
-
-		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce);
+		Character->GetCharacterMovement()->AddImpulse(dashVector * (Character->GetCharacterSettings()->Fly_DashForce * 100000 ));
 	}
 
 	if (canMove) {

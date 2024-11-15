@@ -232,7 +232,7 @@ public:
 
 
 	// OTHERS
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void TakeDamage(const int Damage = 1);
 	UFUNCTION()
 	void const ResetLife();

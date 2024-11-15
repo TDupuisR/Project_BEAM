@@ -296,6 +296,14 @@ void const ABeamCharacter::SetLifeToFly(const int NewLifeToFly)
 
 void ABeamCharacter::TakeDamage(const int Damage)
 {
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		5.f,
+		FColor::Purple,
+		FString::Printf(TEXT("TAKE DAMAGE"))
+	);
+
 	if (!CanTakeDamage) return;
 
 	Life -= Damage;
@@ -318,6 +326,9 @@ bool ABeamCharacter::IsPhaseTwo() const
 
 void ABeamCharacter::CheckLife()
 {
+
+	if (StateMachine == nullptr) return;
+
 	if (Life > 0 && Life <= LifeToFly) {
 		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) {
 			StateMachine->ChangeState(EBeamCharacterStateID::Fly);
