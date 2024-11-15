@@ -36,7 +36,7 @@ void UWeaponCharge::StartWeaponCharge()
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
-void UWeaponCharge::CancelWeaponCharge()
+void UWeaponCharge::CancelWeaponCharge(bool isFail)
 {
 	isQteActive = false;
 	pointAim->ShotCall(power);
@@ -99,7 +99,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				}
 				else // if QTE Fail
 				{
-					CancelWeaponCharge();
+					CancelWeaponCharge(true);
 				}
 			}
 			else if (!Character->GetInputCharge() && chargeWasPushed && power < 3)
@@ -117,7 +117,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		}
 		else // Time over
 		{
-			CancelWeaponCharge();
+			CancelWeaponCharge(false);
 		}
 	}
 }

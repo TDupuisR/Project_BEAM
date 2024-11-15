@@ -9,7 +9,7 @@
 class ABeamCharacter;
 class UPlayerAim;
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
 {
 	GENERATED_BODY()
@@ -21,7 +21,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartWeaponCharge();
 	UFUNCTION(BlueprintCallable)
-	void CancelWeaponCharge();
+	void CancelWeaponCharge(bool isFail);
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
