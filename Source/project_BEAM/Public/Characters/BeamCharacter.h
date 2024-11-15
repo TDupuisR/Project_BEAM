@@ -268,8 +268,8 @@ private:
 	UPROPERTY()
 	UCapsuleComponent* capsuleCollision;
 
-	UPROPERTY()
 	bool canPush = true;
+
 	UPROPERTY()
 	float timerPush = 0.0f;
 	UPROPERTY()

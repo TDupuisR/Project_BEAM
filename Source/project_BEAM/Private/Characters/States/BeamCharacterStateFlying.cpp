@@ -55,7 +55,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 
 	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
 
-	if (Character->GetInputPunch() && Character->CanPush()) {
+	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -113,7 +113,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		}
 
 		if (dashVector == FVector::ZeroVector) {
-			dashIsStillActive = false;
+			Character->SetIsDashing(false);
 			canDash = true;
 			canMove = true;
 			return;
