@@ -4,19 +4,35 @@
 
 #include "LocalMutliplayerSubsystem.h"
 #include "Arena/ArenaPlayerStart.h"
+#include "Arena/ArenaCamera.h"
 #include "Characters/BeamCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Arena/ArenaSettings.h"
 #include "Characters/BeamCharacterSettings.h"
+#include "GM_BeamGameInstance.h"
 
 void AMatchGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	CreateAndInitPlayers();
-
+	
 	TArray<AArenaPlayerStart*> PlayerStartsPoints;
 	FindPlayerStartActorsInArena(PlayerStartsPoints);
 	SpawnCharacters(PlayerStartsPoints);
+	AddEventsPlayers();
+	
+	// TObjectPtr<AActor> camera = UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass());
+	//
+	// TObjectPtr<APlayerController> playerController = UGameplayStatics::GetPlayerController(GetWorld(), 1);
+	// if (playerController)
+	// {
+	// 	playerController->SetViewTargetWithBlend(camera);
+	// 	UE_LOG(LogTemp, Warning, TEXT("Player controller is true"));
+	// }
+	// else
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("Player controller is null"));
+	// }
 }
 
 void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors)
@@ -82,11 +98,74 @@ void AMatchGameMode::CreateAndInitPlayers() const
 	LocalMultiplayerSubsystem->CreateAndInitPlayers();
 }
 
+void AMatchGameMode::AddEventsPlayers() const
+{
+	for (int i = 0; i < CharactersInArena.Num(); i++)
+	{
+		ABeamCharacter* Character = CharactersInArena[i];
+		if (Character == nullptr) continue;
+
+		Character->OnDeathEvent.AddDynamic(this, &AMatchGameMode::OnPlayerDeath);
+	}
+}
+
+void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
+{
+	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
+
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		15.0f,
+		FColor::Purple,
+		FString::Printf(TEXT("PLAYER DEATH"))
+	);
+
+	BeamGameInstance->AddPlayerPoints(0, 1);
+	BeamGameInstance->AddPlayerPoints(1, 1);
+
+	TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
+
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0])
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1])
+
+	if (CharactersInArena.Find(DeadPlayer) < 0) return;
+	BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
+
+	PointsPlayers = BeamGameInstance->GetPlayersPoints();
+
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0])
+	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1])
+
+	BeamGameInstance->AddManche();
+
+	BeamGameInstance->DeployEvent();
+
+	if (BeamGameInstance->GetPlayersPoints().Max() >= BeamGameInstance->GetMaxManche())
+	{
+		// END OF THE GAME
+		// GO TO MENU
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			15.0f,
+			FColor::Purple,
+			FString::Printf(TEXT("------------- END GAME ------------"))
+		);
+		
+	}
+	else {
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	}
+
+
+}
+
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
 {
 	UBeamCharacterInputData* InputData = LoadInputDataFromConfig();
 	UInputMappingContext* InputMappingContext = LoadInputMappingContextFromConfig();
-	
+
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
 	{
 		EAutoReceiveInput::Type InputType = SpawnPoint->AutoReceiveInput.GetValue();
