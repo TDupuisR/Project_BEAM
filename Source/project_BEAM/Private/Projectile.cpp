@@ -49,10 +49,6 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 {
 	if (actorParent == OverlappedComp->GetAttachParentActor()) return;
 	
-	if (!OtherComp->ComponentTags.Contains("Player")) GetDestroyed();
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("Collision")));
-
-
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
 		 // disable collider to detected self
@@ -65,16 +61,18 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 			{
 			case EProjectileType::Player:
 				{
+					if (!OtherComp->ComponentTags.Contains("Player")) break;
+					
 					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
 					else return;
 				};
 			
 			case EProjectileType::Bullet:
 				{
-					if (!canAccess) return;
+					if (!canAccess) break;
 					
 					TObjectPtr<AProjectile> otherBullet = interface->GetProjectile();
-					if (otherBullet == nullptr) return;
+					if (otherBullet == nullptr) break;
 					
 					int otherPower = otherBullet->GetPower();
 					
@@ -104,11 +102,8 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 			case EProjectileType::DestructWall:
 				{
 					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
-					else return;
+					else break;
 				};
-
-			default:
-				GetDestroyed();
 			}
 		}
 		else
