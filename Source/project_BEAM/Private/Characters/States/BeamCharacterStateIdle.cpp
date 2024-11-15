@@ -48,6 +48,11 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);*/
 
+	if (IsKeyWasPressed(EKeys::U)) {
+		Character->TakeDamage(3);
+		return;
+	}
+
 	if (Character->GetInputPunch() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
