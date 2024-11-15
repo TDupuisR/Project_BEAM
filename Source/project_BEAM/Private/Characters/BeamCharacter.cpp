@@ -59,8 +59,6 @@ void ABeamCharacter::BeginPlay()
 	CreateStateMachine();
 	InitStateMachine();
 
-	creatAim();
-
 	StartLocation = this->GetActorLocation();
 
 }
