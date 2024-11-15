@@ -13,7 +13,6 @@ AProjectile::AProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	projectileMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("Projectile Mesh"));
 	projectileComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Component"));
 	projectileComponent-> InitialSpeed = 50.f;
 	projectileComponent-> MaxSpeed = 50.f;
