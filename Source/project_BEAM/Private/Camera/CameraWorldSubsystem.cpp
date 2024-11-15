@@ -27,6 +27,11 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 
 	CameraMain = FindCameraByTag(TEXT("CameraMain"));
 
+	if (ArenaCamera == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("ArenaCamera not found"));
+		return;
+	}
+
 	if (CameraMain == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("CameraMain not found"));
 		return;
@@ -105,6 +110,8 @@ void UCameraWorldSubsystem::TickUpdateCameraPosition(float DeltaTime)
 void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
 {
 	if (CameraMain == nullptr) return;
+
+	if (ArenaCamera == nullptr) return;
 
 	float GreatestDistanceBetweenTargets = CalculateGreatestDistanceBetweenTargets();
 	UE_LOG(LogTemp, Warning, TEXT("Greatest Distance : %f"), GreatestDistanceBetweenTargets);

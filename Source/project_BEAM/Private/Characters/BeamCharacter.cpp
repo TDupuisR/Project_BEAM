@@ -446,6 +446,7 @@ void ABeamCharacter::SetMultiplierStun(float NewMultiplierStun)
 float ABeamCharacter::GetMultiplierStun()
 {
 	return MultiplierStun;
+}
 bool ABeamCharacter::IsFollowable()
 {
 	return true;
