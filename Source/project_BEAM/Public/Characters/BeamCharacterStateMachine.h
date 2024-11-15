@@ -29,6 +29,8 @@ public:
 	UFUNCTION()
 	EBeamCharacterStateID const GetCurrentStateID() const;
 
+	void RedoParams();
+
 protected: 
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;

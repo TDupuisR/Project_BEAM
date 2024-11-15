@@ -6,8 +6,6 @@
 #include "CoreMinimal.h"
 #include "BeamCharacterInputdata.h"
 #include "InputMappingContext.h"
-#include "ProjectileInterface.h"
-#include "Camera/CameraFollowTarget.h"
 #include "GameFramework/Character.h"
 
 
@@ -16,19 +14,15 @@
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
 class UBoxComponent;
-class UPlayerAim;
 
 UCLASS()
-class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInterface, public ICameraFollowTarget
+class PROJECT_BEAM_API ABeamCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ABeamCharacter();
-	virtual EProjectileType ProjectileGetType() override;
-	virtual bool ProjectileContext(int power, FVector position) override;
-	virtual AProjectile* GetProjectile() override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -46,41 +40,43 @@ public:
 #pragma region Orient
 
 public:
-	UFUNCTION()
 	float GetOrientX() const;
-	UFUNCTION()
+
 	void SetOrientX(float NewOrientX);
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	float OrientX = 1.f;
-	UFUNCTION()
+
 	void RotateMeshUsingOrientX() const;
 
 #pragma endregion
 
+
 # pragma region State Machine
 
-public:
-	UFUNCTION()
+public: 
 	void CreateStateMachine();
-	UFUNCTION()
+
 	void InitStateMachine();
-	UFUNCTION()
+
 	void TickStateMachine(float DeltaTime) const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UBeamCharacterStateMachine> StateMachine;
 
+
 # pragma endregion
 
 # pragma region Character Settings
 
 public:
-	UFUNCTION()
 	void InitCharacterSettings();
-	UFUNCTION()
+
+	UFUNCTION(BlueprintCallable)
+	void ReattributeCharacterSettings();
+
 	const UBeamCharacterSettings* GetCharacterSettings() const;
 
 protected:
@@ -94,27 +90,24 @@ protected:
 public:
 	UPROPERTY()
 	TObjectPtr<UInputMappingContext> InputMappingContext;
+
 	UPROPERTY()
 	TObjectPtr<UBeamCharacterInputData> InputData;
 
-	UPROPERTY()
-	APlayerController* playerController;
+	FVector2D GetInputMove() const;
+	bool GetInputJump() const;
+	bool GetInputDash() const;
 
-	UFUNCTION() FVector2D GetInputMove() const;
-	UFUNCTION() bool GetInputJump() const;
-	UFUNCTION() bool GetInputDash() const;
+	bool GetInputCharge() const;
+	FVector2D GetInputAim() const;
+	bool GetInputShoot() const;
 
-	UFUNCTION() bool GetInputCharge() const;
-	UFUNCTION() FVector2D GetInputAim() const;
-	UFUNCTION() bool GetInputShoot() const;
+	bool GetInputPunch() const;
 
-	UFUNCTION() bool GetInputPush() const;
-	
-	UFUNCTION() bool GetInputFly() const;
+	bool GetInputFly() const;
 	
 protected:
-	UFUNCTION()
-	void SetupMappingContextIntoController();
+	void SetupMappingContextIntoController() const;
 
 	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
 	UPROPERTY() bool InputJump = false;
@@ -124,25 +117,24 @@ protected:
 	UPROPERTY() FVector2D InputAim = FVector2D::ZeroVector;
 	UPROPERTY() bool InputShoot = false;
 
-	UPROPERTY() bool InputPush = false;
+	UPROPERTY() bool InputPunch = false;
 
 	UPROPERTY() bool InputFly = false;
 
 private:
-	UFUNCTION()
 	void BindInputActions(UEnhancedInputComponent* EnhancedInputComponent);
 
-	UFUNCTION() void OnInputMove(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputJump(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputDash(const FInputActionValue& InputActionValue);
+	void OnInputMove(const FInputActionValue& InputActionValue);
+	void OnInputJump(const FInputActionValue& InputActionValue);
+	void OnInputDash(const FInputActionValue& InputActionValue);
 	
-	UFUNCTION() void OnInputCharge(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputAim(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputShoot(const FInputActionValue& InputActionValue);
+	void OnInputCharge(const FInputActionValue& InputActionValue);
+	void OnInputAim(const FInputActionValue& InputActionValue);
+	void OnInputShoot(const FInputActionValue& InputActionValue);
 	
-	UFUNCTION() void OnInputPush(const FInputActionValue& InputActionValue);
+	void OnInputPunch(const FInputActionValue& InputActionValue);
 
-	UFUNCTION() void OnInputFly(const FInputActionValue& InputActionValue);
+	void OnInputFly(const FInputActionValue& InputActionValue);
 	
 # pragma endregion
 
@@ -157,102 +149,83 @@ public:
 
 # pragma region Life
 
-public:
 	// GETTERS
-	UFUNCTION(BlueprintCallable)
 	int const GetLife() const;
-	UFUNCTION(BlueprintCallable)
+
 	int const GetMaxLife() const;
-	UFUNCTION(BlueprintCallable)
+
 	int const GetLifeToFly() const;
 
 
 	// SETTERS
-	UFUNCTION()
 	void SetLife(const int NewLife);
-	UFUNCTION()
+
 	void const SetMaxLife(const int NewMaxLife);
-	UFUNCTION()
+
 	void const SetLifeToFly(const int NewLifeToFly);
 
 
 	// OTHERS
-	UFUNCTION()
 	void TakeDamage(const int Damage = 1);
-	UFUNCTION()
+
 	void const ResetLife();
-	UFUNCTION()
+
 	bool IsPhaseTwo() const;
 
 protected:
-	UFUNCTION()
+
 	void CheckLife();
+
+	
 
 	UPROPERTY(BlueprintReadOnly)
 	int Life;
+
 	UPROPERTY(BlueprintReadOnly)
 	int MaxLife;
+
 	UPROPERTY(BlueprintReadOnly)
 	int LifeToFly;
 
 # pragma endregion
 
-# pragma region Push
+# pragma region Punch
 
 public:
-	UFUNCTION()
 	void Push();
-	UFUNCTION()
+
 	bool CanPush() const;
-	UFUNCTION()
+
 	void SetCanPush(bool NewCanPush);
 
 private:
 	UPROPERTY()
 	UBoxComponent* boxCollision;
+
 	UPROPERTY()
 	TArray<ABeamCharacter*> PlayersInZone;
-	
+
+	UPROPERTY()
 	bool canPush = true;
+
 	UPROPERTY()
 	float timerPush = 0.0f;
+
 	UPROPERTY()
 	float timeToWaitPush = 2.0f;
 
-	UFUNCTION()
 	void TickPush(float DeltaTime);
-	UFUNCTION()
+
 	void SetupCollision();
 
 	UFUNCTION()
 	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	UFUNCTION()
 	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 
 # pragma endregion
-
-#pragma region playerAim
-
-public:
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UPlayerAim> localPlayerAim;
-	
-private:
-	UFUNCTION()
-	void creatAim();
-	UFUNCTION()
-	void playerAimInit();
-
-#pragma endregion
-
-#pragma region FollowTarget
-
-	virtual bool IsFollowable() override;
-
-	virtual FVector GetFollowPosition() override;
-
-#pragma endregion
 
 
 };
