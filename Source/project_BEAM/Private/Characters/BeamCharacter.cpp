@@ -12,6 +12,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 
+#include <Camera/CameraWorldSubsystem.h>
 
 
 // Sets default values
@@ -19,6 +20,7 @@ ABeamCharacter::ABeamCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 }
 
 EProjectileType ABeamCharacter::ProjectileGetType()
@@ -49,7 +51,7 @@ void ABeamCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	//GetComponentByClass<UPlayerAim>()->Character = this;
-	
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->AddFollowTarget(this);
 	InitCharacterSettings();
 	SetupCollision();
 	CreateStateMachine();
@@ -444,6 +446,14 @@ void ABeamCharacter::SetMultiplierStun(float NewMultiplierStun)
 float ABeamCharacter::GetMultiplierStun()
 {
 	return MultiplierStun;
+bool ABeamCharacter::IsFollowable()
+{
+	return true;
+}
+
+FVector ABeamCharacter::GetFollowPosition()
+{
+	return GetActorLocation();
 }
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
