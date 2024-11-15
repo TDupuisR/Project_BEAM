@@ -35,6 +35,8 @@ public:
 
 	bool const IsKeyWasPressed(FKey key) const;	
 
+	virtual void RedoParams();
+
 protected:
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;

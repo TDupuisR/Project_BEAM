@@ -48,7 +48,7 @@ void ABeamCharacter::Tick(float DeltaTime)
 	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
 
 	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
-
+	
 	if (GetActorLocation().Y != StartLocation.Y)
 	{
 		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
@@ -129,6 +129,7 @@ void ABeamCharacter::InitCharacterSettings()
 	Life = MaxLife;
 	LifeToFly = CharacterSettings->LifeToFly;
 	timeToWaitPush = CharacterSettings->Push_Cooldown;
+
 }
 
 void ABeamCharacter::ReattributeCharacterSettings()
@@ -144,6 +145,10 @@ void ABeamCharacter::ReattributeCharacterSettings()
 	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
 	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
+
+	if (StateMachine != nullptr) {
+		StateMachine->RedoParams();
+	}
 
 }
 
