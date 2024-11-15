@@ -59,6 +59,22 @@ bool UWeaponCharge::GetIsQteActive() const
 	return isQteActive;
 }
 
+float UWeaponCharge::GetQteTimeLeft() const
+{
+	return qteTimeLeft;
+}
+
+float UWeaponCharge::GetQteMaxTime() const
+{
+	return qteMaxTime;
+}
+
+float UWeaponCharge::GetQteTimeStamp() const
+{;
+	if (power < 0 || power > 2) return .0f;
+	else return qteTimeStamp[power];
+}
+
 
 // Called every frame
 void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
