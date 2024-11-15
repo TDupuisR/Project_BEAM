@@ -48,7 +48,7 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);*/
 
-	if (Character->GetInputPunch() && Character->CanPush()) {
+	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 

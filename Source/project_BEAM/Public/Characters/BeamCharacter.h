@@ -20,7 +20,7 @@ class UBoxComponent;
 class UPlayerAim;
 
 UCLASS()
-class PROJECT_BEAM_API ABeamCharacter : public ACharacter, , public IProjectileInterface, public ICameraFollowTarget
+class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInterface, public ICameraFollowTarget
 {
 	GENERATED_BODY()
 

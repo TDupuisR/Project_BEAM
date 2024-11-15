@@ -53,7 +53,9 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	if (Character->GetInputPunch() && Character->CanPush()) {
+	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
+
+	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -76,23 +78,16 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		timerInputs += DeltaTime;
 		if (timerInputs >= Character->GetCharacterSettings()->Fly_InputsTimer) {
 			canMove = true;
+			Character->SetIsDashing(false);
 			timerInputs = 0;
 		}
 	}
 
-	if (Character->GetInputFly() && !firstFrame) {
-		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
-		//Character->GetCapsuleComponent()->SetSimulatePhysics(true);
-		//Character->GetCharacterMovement()->Gravity = true;
-
-		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
-		return;
-	}
-
+	
 	// Dash
-	if (Character->GetInputDash() && !dashIsStillActive && canDash) {
+	if (Character->GetInputDash() && !Character->GetIsDashing() && canDash) {
 
-		dashIsStillActive = true;
+		Character->SetIsDashing(true);
 		canDash = false;
 		canMove = false;
 
@@ -109,12 +104,16 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			dashVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
 		}
 
+		if (dashVector == FVector::ZeroVector)
+		{
+			Character->SetIsDashing(false);
+			canDash = true;
+			canMove = true;
+			return;
+		}
+
 
 		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce);
-	}
-	else if (!Character->GetInputDash())
-	{
-		dashIsStillActive = false;
 	}
 
 	if (canMove) {
@@ -127,10 +126,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
 		}
 	}
-
-	if (firstFrame) {
-		firstFrame = false;
-	}
+	
 }
 
 void UBeamCharacterStateFlying::RedoParams()
