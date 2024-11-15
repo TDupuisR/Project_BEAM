@@ -9,6 +9,11 @@
 class ABeamCharacter;
 class UPlayerAim;
 
+#pragma region QteEvent
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnfailEvent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSucceedEvent);
+#pragma endregion
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
 {
@@ -17,7 +22,7 @@ class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UWeaponCharge();
-
+	
 	UFUNCTION(BlueprintCallable)
 	void StartWeaponCharge();
 	UFUNCTION(BlueprintCallable)
@@ -26,6 +31,8 @@ public:
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
 	void InitAim(UPlayerAim* playerAim);
+
+	
 	UFUNCTION(BlueprintCallable)
 	bool GetIsQteActive() const;
 	UFUNCTION(BlueprintCallable)
@@ -34,11 +41,16 @@ public:
 	float GetQteMaxTime() const;
 	UFUNCTION(BlueprintCallable)
 	float GetQteTimeStamp() const;
-
+	
+	
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<ABeamCharacter> Character;
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UPlayerAim> pointAim;
+	UPROPERTY(BlueprintAssignable,BlueprintCallable)
+	FOnfailEvent OnFailEvent;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnSucceedEvent OnSucceedEvent;
 	
 protected:
 	// Called when the game starts
