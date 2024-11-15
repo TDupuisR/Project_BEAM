@@ -61,7 +61,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		-1,
 		0.1f,
 		FColor::Red,
-		FString::Printf(TEXT("Tick State %d"), GetStateID())
+		FString::Printf(TEXT("Tick State FLY"))
 	);
 
 	if (!canDash) {

@@ -31,7 +31,7 @@ void UBeamCharacterStateFall::StateEnter(EBeamCharacterStateID PreviousStateID)
 	else {
 		canCoyote = true;
 	}
-	
+
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		5.0f,
@@ -57,7 +57,14 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	if (Character->GetInputPush() && Character->CanPush()) {
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		0.1f,
+		FColor::Blue,
+		FString::Printf(TEXT("STATE TICK FALL"))
+	);
+
+	if (Character->GetInputPunch() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -82,10 +89,23 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 	);*/
 
 	if (Character->GetInputMove().X != 0) {
+		float appliedForce = .0f;
+		if (Character->GetInputMove().X != 0)
+		{
+			appliedForce = Character->GetInputMove().X;
+		}
+		else
+		{
+			appliedForce = Character->GetOrientX();
+		}
 
-		float appliedForce = Character->GetInputMove().X;
 		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
 	}
+
+	if (IsKeyWasPressed(EKeys::I)) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Projection);
+	}
+
 
 	if (Character->GetMovementComponent()->IsMovingOnGround()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Idle);

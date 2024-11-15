@@ -53,6 +53,10 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);
 
+	if (IsKeyWasPressed(EKeys::O)) {
+		Character->SetStunTime(5.f);
+		StateMachine->ChangeState(EBeamCharacterStateID::Stun);
+	}
 
 	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);

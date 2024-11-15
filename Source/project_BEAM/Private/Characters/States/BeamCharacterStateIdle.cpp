@@ -41,12 +41,16 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	/*GEngine->AddOnScreenDebugMessage(
+	if (Character->IsPhaseTwo()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
+	}
+
+	GEngine->AddOnScreenDebugMessage(
 		-1,
 		0.1f,
 		FColor::Red,
-		FString::Printf(TEXT("Tick State %d"), GetStateID())
-	);*/
+		FString::Printf(TEXT("Tick State IDLE"))
+	);
 
 	if (IsKeyWasPressed(EKeys::U)) {
 		Character->TakeDamage(3);
