@@ -53,7 +53,9 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	if (Character->GetInputPush() && Character->CanPush()) {
+	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
+
+	if (Character->GetInputPunch() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -61,7 +63,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		-1,
 		0.1f,
 		FColor::Red,
-		FString::Printf(TEXT("Tick State %d"), GetStateID())
+		FString::Printf(TEXT("Tick State FLY"))
 	);
 
 	if (!canDash) {
@@ -76,6 +78,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		timerInputs += DeltaTime;
 		if (timerInputs >= Character->GetCharacterSettings()->Fly_InputsTimer) {
 			canMove = true;
+			Character->SetIsDashing(false);
 			timerInputs = 0;
 		}
 	}
@@ -90,9 +93,9 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	}
 
 	// Dash
-	if (Character->GetInputDash() && !dashIsStillActive && canDash) {
+	if (Character->GetInputDash() && !Character->GetIsDashing() && canDash) {
 
-		dashIsStillActive = true;
+		Character->SetIsDashing(true);
 		canDash = false;
 		canMove = false;
 
@@ -122,7 +125,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	}
 	else if (!Character->GetInputDash())
 	{
-		dashIsStillActive = false;
+		//Character->SetIsDashing(true);
 	}
 
 	if (canMove) {

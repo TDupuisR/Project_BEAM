@@ -57,7 +57,14 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	if (Character->GetInputPush() && Character->CanPush()) {
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		0.1f,
+		FColor::Blue,
+		FString::Printf(TEXT("STATE TICK FALL"))
+	);
+
+	if (Character->GetInputPunch() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -86,6 +93,11 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 		float appliedForce = Character->GetInputMove().X;
 		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
 	}
+
+	if (IsKeyWasPressed(EKeys::I)) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Projection);
+	}
+
 
 	if (Character->GetMovementComponent()->IsMovingOnGround()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
