@@ -136,6 +136,9 @@ void ABeamCharacter::InitCharacterSettings()
 
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
 {
+
+	if (!CanTakeKnockBack) return;
+
 	this->GetCharacterMovement()->Launch(Direction * Force);
 }
 
