@@ -24,7 +24,6 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 
 private:
-	bool dashIsStillActive = false;
 
 	bool canDash = true;
 	bool canMove = true;

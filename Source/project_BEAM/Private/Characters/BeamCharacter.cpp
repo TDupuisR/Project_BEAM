@@ -167,7 +167,9 @@ void ABeamCharacter::OnHit(
 {
 	if (OtherActor == nullptr) return;
 	
-	if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection) return;
+	if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection && StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) return;
+
+	if (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Fly && !GetIsDashing()) return;
 
 	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
 
@@ -206,6 +208,16 @@ void ABeamCharacter::SetCanTakeKnockback(bool NewCanTakeKnockback)
 {
 	CanTakeKnockBack = NewCanTakeKnockback;
 
+}
+
+bool ABeamCharacter::GetIsDashing() const
+{
+	return IsDashing;
+}
+
+void ABeamCharacter::SetIsDashing(bool NewIsDashing)
+{
+	IsDashing = NewIsDashing;
 }
 
 int const ABeamCharacter::GetLife() const

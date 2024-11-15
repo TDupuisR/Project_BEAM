@@ -171,8 +171,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetCanTakeKnockback(bool NewCanTakeKnockback);
 
+	UFUNCTION(BlueprintCallable)
+	bool GetIsDashing() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsDashing(bool NewIsDashing);
 
 private:
+
+	UPROPERTY()
+	bool IsDashing = false;
+
 	UPROPERTY()
 	float Bounciness = 0.7;
 
