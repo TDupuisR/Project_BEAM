@@ -59,6 +59,8 @@ void ABeamCharacter::BeginPlay()
 	CreateStateMachine();
 	InitStateMachine();
 
+	creatAim();
+
 	StartLocation = this->GetActorLocation();
 
 }
@@ -72,6 +74,7 @@ void ABeamCharacter::Tick(float DeltaTime)
 	RotateMeshUsingOrientX();
 
 	TickPush(DeltaTime);
+
 
 	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
 
@@ -324,6 +327,12 @@ bool ABeamCharacter::IsPhaseTwo() const
 	return Life <= LifeToFly;
 }
 
+void ABeamCharacter::OnDeath()
+{
+	StateMachine->ChangeState(EBeamCharacterStateID::Dead);
+	OnDeathEvent.Broadcast(this);
+}
+
 void ABeamCharacter::CheckLife()
 {
 
@@ -340,7 +349,7 @@ void ABeamCharacter::CheckLife()
 		}
 	}
 	else {
-		StateMachine->ChangeState(EBeamCharacterStateID::Dead);
+		OnDeath();
 	}
 }
 
