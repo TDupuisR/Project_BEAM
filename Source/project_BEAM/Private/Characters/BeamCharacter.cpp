@@ -10,8 +10,12 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Characters/PlayerAim.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
+
+#include <Camera/CameraWorldSubsystem.h>
 
 
 // Sets default values
@@ -22,18 +26,41 @@ ABeamCharacter::ABeamCharacter()
 
 }
 
+EProjectileType ABeamCharacter::ProjectileGetType()
+{
+	return EProjectileType::Player;
+}
+
+bool ABeamCharacter::ProjectileContext(int power, FVector position)
+{
+	TakeDamage(power + 1);
+
+	FVector direction = GetActorLocation() - position;
+	direction.Normalize();
+
+	KnockBack(direction, (power + 1) * 500.f); // Magic Number for the force, to dertemine how to tweak it
+
+	return true;
+}
+
+AProjectile* ABeamCharacter::GetProjectile()
+{
+	return nullptr;
+}
+
 // Called when the game starts or when spawned
 void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->AddFollowTarget(this);
 	InitCharacterSettings();
 	SetupCollision();
 	CreateStateMachine();
 	InitStateMachine();
 
 	StartLocation = this->GetActorLocation();
-	
+
 }
 
 // Called every frame
@@ -146,11 +173,95 @@ void ABeamCharacter::ReattributeCharacterSettings()
 	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
 	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
 
+	if (StateMachine != nullptr) {
+		StateMachine->RedoParams();
+	}
 }
 
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
 {
+
+	if (!CanTakeKnockBack) return;
+
 	this->GetCharacterMovement()->Launch(Direction * Force);
+}
+
+void ABeamCharacter::Bounce(FVector Normal)
+{
+
+	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
+
+	FVector velocityDir = velocity.GetSafeNormal();
+
+	FVector newVector = velocityDir - 2 * FVector::DotProduct(velocityDir, Normal) * Normal;
+
+	float Force = velocity.Size() * Bounciness;
+
+	KnockBack(newVector, Force);
+
+}
+
+void ABeamCharacter::OnHit(
+	UPrimitiveComponent* HitComponent,  // The component that was hit
+	AActor* OtherActor,                // The other actor involved in the hit
+	UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
+	FVector NormalImpulse,             // The force applied to resolve the collision
+	const FHitResult& Hit              // Detailed information about the hit
+)
+{
+	if (OtherActor == nullptr) return;
+
+	if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection && StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) return;
+
+	if (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Fly && !GetIsDashing()) return;
+
+	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
+
+	if (velocity.Size() < MinSizeVelocity) return;
+
+	Bounce(Hit.Normal);
+
+}
+
+float ABeamCharacter::GetBounciness() const
+{
+	return Bounciness;
+}
+
+float ABeamCharacter::GetMinSizeVelocity() const
+{
+	return MinSizeVelocity;
+}
+
+bool ABeamCharacter::GetCanTakeDamage() const
+{
+	return CanTakeDamage;
+}
+
+void ABeamCharacter::SetCanTakeDamage(bool NewCanTakeDamage)
+{
+	CanTakeDamage = NewCanTakeDamage;
+}
+
+bool ABeamCharacter::GetCanTakeKnockback()
+{
+	return CanTakeKnockBack;
+}
+
+void ABeamCharacter::SetCanTakeKnockback(bool NewCanTakeKnockback)
+{
+	CanTakeKnockBack = NewCanTakeKnockback;
+
+}
+
+bool ABeamCharacter::GetIsDashing() const
+{
+	return IsDashing;
+}
+
+void ABeamCharacter::SetIsDashing(bool NewIsDashing)
+{
+	IsDashing = NewIsDashing;
 }
 
 int const ABeamCharacter::GetLife() const
@@ -185,11 +296,14 @@ void const ABeamCharacter::SetLifeToFly(const int NewLifeToFly)
 
 void ABeamCharacter::TakeDamage(const int Damage)
 {
+	if (!CanTakeDamage) return;
+
 	Life -= Damage;
 	if (Life <= 0) {
 		Life = 0;
 	}
 	CheckLife();
+
 }
 
 void const ABeamCharacter::ResetLife()
@@ -264,6 +378,12 @@ void ABeamCharacter::SetupCollision()
 	boxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABeamCharacter::OnBeginOverlapZone);
 	boxCollision->OnComponentEndOverlap.AddDynamic(this, &ABeamCharacter::OnEndOverlapZone);
 
+	capsuleCollision = GetComponentByClass<UCapsuleComponent>();
+
+	if (capsuleCollision == nullptr) return;
+
+	capsuleCollision->OnComponentHit.AddDynamic(this, &ABeamCharacter::OnHit);
+
 }
 
 void ABeamCharacter::OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -282,14 +402,65 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 	PlayersInZone.Remove(player);
 }
 
+void ABeamCharacter::creatAim()
+{
+	localPlayerAim = NewObject<UPlayerAim>(this);
+}
+
+void ABeamCharacter::playerAimInit()
+{
+	if (localPlayerAim == nullptr) return;
+	localPlayerAim->InitCharacter(this);
+}
+
+void ABeamCharacter::Stun(float TimeToStun = 3.f)
+{
+
+	SetStunTime(TimeToStun);
+
+	if (StateMachine != nullptr)
+		StateMachine->ChangeState(EBeamCharacterStateID::Stun);
+
+}
+
+float ABeamCharacter::GetStunTime() const
+{
+	return StunTime;
+}
+
+void ABeamCharacter::SetStunTime(float NewStunTime)
+{
+	StunTime = NewStunTime;
+}
+
+void ABeamCharacter::SetMultiplierStun(float NewMultiplierStun)
+{
+	MultiplierStun = NewMultiplierStun;
+}
+
+float ABeamCharacter::GetMultiplierStun()
+{
+	return MultiplierStun;
+}
+bool ABeamCharacter::IsFollowable()
+{
+	return true;
+}
+
+FVector ABeamCharacter::GetFollowPosition()
+{
+	return GetActorLocation();
+}
+
+
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;
 }
 
-void ABeamCharacter::SetupMappingContextIntoController()
+void ABeamCharacter::SetupMappingContextIntoController() const
 {
-	playerController = Cast<APlayerController>(Controller);
+	APlayerController* playerController = Cast<APlayerController>(Controller);
 	if (playerController == nullptr) return;
 
 	ULocalPlayer* player = playerController->GetLocalPlayer();
@@ -305,136 +476,136 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 {
 	if (InputData == nullptr) return;
 
-	if(InputData->InputActionMoveVector2D)
+	if (InputData->InputActionMoveVector2D)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveVector2D,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputMove
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveVector2D,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputMove
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveVector2D,
 			ETriggerEvent::Triggered,
 			this,
 			&ABeamCharacter::OnInputMove
-			);
+		);
 	}
-	if(InputData->InputActionJump)
+	if (InputData->InputActionJump)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionJump,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputJump
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionJump,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputJump
-			);
+		);
 	}
-	if(InputData->InputActionDash)
+	if (InputData->InputActionDash)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionDash,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputDash
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionDash,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputDash
-			);
+		);
 	}
 
-	if(InputData->InputActionCharge)
+	if (InputData->InputActionCharge)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionCharge,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputCharge
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionCharge,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputCharge
-			);
+		);
 	}
-	if(InputData->InputActionAimVector2D)
+	if (InputData->InputActionAimVector2D)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionAimVector2D,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputAim
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionAimVector2D,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputAim
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionAimVector2D,
 			ETriggerEvent::Triggered,
 			this,
 			&ABeamCharacter::OnInputAim
-			);
+		);
 	}
-	if(InputData->InputActionShoot)
+	if (InputData->InputActionShoot)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionShoot,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputShoot
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionShoot,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputShoot
-			);
+		);
 	}
 
-	if(InputData->InputActionPunch)
+	if (InputData->InputActionPunch)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionPunch,
 			ETriggerEvent::Started,
 			this,
-			&ABeamCharacter::OnInputPunch
-			);
+			&ABeamCharacter::OnInputPush
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionPunch,
 			ETriggerEvent::Completed,
 			this,
-			&ABeamCharacter::OnInputPunch
-			);
+			&ABeamCharacter::OnInputPush
+		);
 	}
 
-	if (InputData->InputActionFly) 
+	if (InputData->InputActionFly)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionFly,
@@ -482,9 +653,9 @@ void ABeamCharacter::OnInputShoot(const FInputActionValue& InputActionValue)
 	InputShoot = InputActionValue.Get<bool>();
 }
 
-void ABeamCharacter::OnInputPunch(const FInputActionValue& InputActionValue)
+void ABeamCharacter::OnInputPush(const FInputActionValue& InputActionValue)
 {
-	InputPunch = InputActionValue.Get<bool>();
+	InputPush = InputActionValue.Get<bool>();
 }
 
 void ABeamCharacter::OnInputFly(const FInputActionValue& InputActionValue)
@@ -493,14 +664,14 @@ void ABeamCharacter::OnInputFly(const FInputActionValue& InputActionValue)
 }
 
 
-FVector2D ABeamCharacter::GetInputMove() const{ return InputMove; }
-bool ABeamCharacter::GetInputJump() const{ return InputJump; }
-bool ABeamCharacter::GetInputDash() const{ return InputDash; }
+FVector2D ABeamCharacter::GetInputMove() const { return InputMove; }
+bool ABeamCharacter::GetInputJump() const { return InputJump; }
+bool ABeamCharacter::GetInputDash() const { return InputDash; }
 
-bool ABeamCharacter::GetInputCharge() const{ return InputCharge; }
-FVector2D ABeamCharacter::GetInputAim() const{ return InputAim; }
-bool ABeamCharacter::GetInputShoot() const{ return InputShoot; }
+bool ABeamCharacter::GetInputCharge() const { return InputCharge; }
+FVector2D ABeamCharacter::GetInputAim() const { return InputAim; }
+bool ABeamCharacter::GetInputShoot() const { return InputShoot; }
 
-bool ABeamCharacter::GetInputPunch() const{ return InputPunch; }
+bool ABeamCharacter::GetInputPush() const { return InputPush; }
 
 bool ABeamCharacter::GetInputFly() const { return InputFly; }

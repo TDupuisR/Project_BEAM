@@ -61,3 +61,7 @@ bool const UBeamCharacterState::IsKeyWasPressed(FKey key) const
 	
 	return Character->GetLocalViewingPlayerController()->WasInputKeyJustPressed(key);
 }
+
+void UBeamCharacterState::RedoParams()
+{
+}

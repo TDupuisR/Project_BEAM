@@ -133,6 +133,11 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	}
 }
 
+void UBeamCharacterStateFlying::RedoParams()
+{
+	Character->GetCharacterMovement()->BrakingFrictionFactor = Character->GetCharacterSettings()->Fly_BrakingFrictionFactor;
+}
+
 //void UBeamCharacterStateFlying::AfterDash()
 //{
 //	canDash = true;
