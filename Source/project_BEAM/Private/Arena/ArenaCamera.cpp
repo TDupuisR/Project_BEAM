@@ -23,6 +23,7 @@ void AArenaCamera::BeginPlay()
 	Super::BeginPlay();
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABeamCharacter::StaticClass(), players);
+
 }
 
 // Called every frame

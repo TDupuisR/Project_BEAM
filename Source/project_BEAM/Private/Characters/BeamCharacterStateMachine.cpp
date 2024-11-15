@@ -68,12 +68,6 @@ EBeamCharacterStateID const UBeamCharacterStateMachine::GetCurrentStateID() cons
 	return CurrentState->GetStateID();
 }
 
-void UBeamCharacterStateMachine::RedoParams()
-{
-	if (CurrentState == nullptr) return;
-	CurrentState->RedoParams();
-}
-
 void UBeamCharacterStateMachine::FindStates()
 {
 	TArray<UActorComponent*> FoundComponents = Character->K2_GetComponentsByClass(UBeamCharacterState::StaticClass());

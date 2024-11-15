@@ -53,9 +53,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
-
-	if (Character->GetInputPush() && Character->CanPush()) {
+	if (Character->GetInputPunch() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
@@ -63,7 +61,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		-1,
 		0.1f,
 		FColor::Red,
-		FString::Printf(TEXT("Tick State FLY"))
+		FString::Printf(TEXT("Tick State %d"), GetStateID())
 	);
 
 	if (!canDash) {
@@ -78,7 +76,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		timerInputs += DeltaTime;
 		if (timerInputs >= Character->GetCharacterSettings()->Fly_InputsTimer) {
 			canMove = true;
-			Character->SetIsDashing(false);
 			timerInputs = 0;
 		}
 	}
@@ -93,9 +90,9 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	}
 
 	// Dash
-	if (Character->GetInputDash() && !Character->GetIsDashing() && canDash) {
+	if (Character->GetInputDash() && !dashIsStillActive && canDash) {
 
-		Character->SetIsDashing(true);
+		dashIsStillActive = true;
 		canDash = false;
 		canMove = false;
 
@@ -112,20 +109,12 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			dashVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
 		}
 
-		if (dashVector == FVector::ZeroVector) {
-			Character->SetIsDashing(false);
-			canDash = true;
-			canMove = true;
-			return;
-		}
 
-		UE_LOG(LogTemp, Warning, TEXT("DashVector : %f"), Character->GetCharacterSettings()->Fly_DashForce);
-
-		Character->GetCharacterMovement()->AddImpulse(dashVector * (Character->GetCharacterSettings()->Fly_DashForce * 100000.0));
+		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce);
 	}
 	else if (!Character->GetInputDash())
 	{
-		//Character->SetIsDashing(true);
+		dashIsStillActive = false;
 	}
 
 	if (canMove) {
@@ -142,11 +131,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	if (firstFrame) {
 		firstFrame = false;
 	}
-}
-
-void UBeamCharacterStateFlying::RedoParams()
-{
-	Character->GetCharacterMovement()->BrakingFrictionFactor = Character->GetCharacterSettings()->Fly_BrakingFrictionFactor;
 }
 
 //void UBeamCharacterStateFlying::AfterDash()
