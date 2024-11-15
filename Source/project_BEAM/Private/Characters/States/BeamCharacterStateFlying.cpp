@@ -109,16 +109,8 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			dashVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
 		}
 
-		if (dashVector == FVector::ZeroVector) {
-			dashIsStillActive = false;
-			canDash = true;
-			canMove = true;
-			return;
-		}
 
-		UE_LOG(LogTemp, Warning, TEXT("DashVector : %f"), Character->GetCharacterSettings()->Fly_DashForce);
-
-		Character->GetCharacterMovement()->AddImpulse(dashVector * (Character->GetCharacterSettings()->Fly_DashForce * 100000.0));
+		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce);
 	}
 	else if (!Character->GetInputDash())
 	{
@@ -139,11 +131,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	if (firstFrame) {
 		firstFrame = false;
 	}
-}
-
-void UBeamCharacterStateFlying::RedoParams()
-{
-	Character->GetCharacterMovement()->BrakingFrictionFactor = Character->GetCharacterSettings()->Fly_BrakingFrictionFactor;
 }
 
 //void UBeamCharacterStateFlying::AfterDash()

@@ -23,8 +23,6 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
-	virtual void RedoParams() override;
-
 private:
 	bool dashIsStillActive = false;
 
