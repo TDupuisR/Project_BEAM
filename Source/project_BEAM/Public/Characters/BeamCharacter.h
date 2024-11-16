@@ -105,9 +105,7 @@ public:
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 	UPROPERTY()
 	TObjectPtr<UBeamCharacterInputData> InputData;
-
-	UPROPERTY()
-	APlayerController* playerController;
+	
 
 	UFUNCTION() FVector2D GetInputMove() const;
 	UFUNCTION() bool GetInputJump() const;
@@ -262,6 +260,7 @@ protected:
 	int LifeToFly;
 
 # pragma endregion
+	
 # pragma region Push
 
 public:

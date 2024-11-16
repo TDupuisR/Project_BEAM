@@ -51,12 +51,12 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 	}
 	
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Blue,
-		FString::Printf(TEXT("STATE TICK IDLE"))
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("STATE TICK IDLE"))
+	// );
 
 	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);

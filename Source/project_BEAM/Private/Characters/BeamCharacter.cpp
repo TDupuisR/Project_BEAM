@@ -74,8 +74,7 @@ void ABeamCharacter::Tick(float DeltaTime)
 	TickPush(DeltaTime);
 
 
-	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
-	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, GetName() + FString::Printf(TEXT(" current life : %d"), Life));
 
 	if (GetActorLocation().Y != StartLocation.Y)
 	{

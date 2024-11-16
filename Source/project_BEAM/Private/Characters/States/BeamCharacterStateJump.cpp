@@ -59,12 +59,12 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Blue,
-		FString::Printf(TEXT("STATE TICK JUMP"))
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("STATE TICK JUMP"))
+	// );
 	
 	if (Character->GetInputMove().X != 0) 
 	{

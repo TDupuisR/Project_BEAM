@@ -59,12 +59,12 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Blue,
-		FString::Printf(TEXT("STATE TICK FLY"))
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("STATE TICK FLY"))
+	// );
 
 	if (!canDash) {
 		timerDash += DeltaTime;
