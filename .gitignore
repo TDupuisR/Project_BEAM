@@ -60,8 +60,12 @@ Binaries/Win64/*
 !Binaries/Win64/UnrealEditor-project_BEAM.dll
 !Binaries/Win64/project_BEAM.target
 
-
+# Plugins Files
 Plugins/*/Binaries/*
+!Plugins/*/Binaries/Win64
+Plugins/*/Binaries/Win64/*
+!Plugins/*/Binaries/Win64/UnrealEditor.modules
+!Plugins/*/Binaries/Win64/UnrealEditor-LocalMultiplayer.dll
 
 # Builds
 Build/*
