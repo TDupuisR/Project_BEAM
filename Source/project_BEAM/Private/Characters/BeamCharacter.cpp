@@ -75,7 +75,6 @@ void ABeamCharacter::Tick(float DeltaTime)
 
 
 	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
-
 	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
 
 	if (GetActorLocation().Y != StartLocation.Y)
@@ -83,6 +82,10 @@ void ABeamCharacter::Tick(float DeltaTime)
 		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
 	}
 
+	if (InputJumpJoystick && (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Jump || StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Fall))
+	{
+		InputJumpJoystick = false;
+	}
 }
 
 // Called to bind functionality to input
@@ -501,7 +504,13 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputMove
-		);
+			);
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionMoveVector2D,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputJumpJoystick
+			);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveVector2D,
@@ -647,11 +656,20 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 void ABeamCharacter::OnInputMove(const FInputActionValue& InputActionValue)
 {
 	InputMove = InputActionValue.Get<FVector2D>();
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %s"), *InputMove.ToString()));
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("move : %s"), *InputMove.ToString()));
 }
 void ABeamCharacter::OnInputJump(const FInputActionValue& InputActionValue)
 {
 	InputJump = InputActionValue.Get<bool>();
+}
+void ABeamCharacter::OnInputJumpJoystick(const FInputActionValue& InputActionValue)
+{
+	if (InputActionValue.Get<FVector2D>().Y >= CharacterSettings->Joystick_Jump_SensibilityY &&
+		(InputActionValue.Get<FVector2D>().X < CharacterSettings->Joystick_Jump_SensibilityX && InputActionValue.Get<FVector2D>().X > -CharacterSettings->Joystick_Jump_SensibilityX))
+	{
+		InputJumpJoystick = true;
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("jump joystick : %f"), InputActionValue.Get<FVector2D>().Y));
+	}
 }
 void ABeamCharacter::OnInputDash(const FInputActionValue& InputActionValue)
 {
@@ -682,9 +700,10 @@ void ABeamCharacter::OnInputFly(const FInputActionValue& InputActionValue)
 }
 
 
-FVector2D ABeamCharacter::GetInputMove() const { return InputMove; }
-bool ABeamCharacter::GetInputJump() const { return InputJump; }
-bool ABeamCharacter::GetInputDash() const { return InputDash; }
+FVector2D ABeamCharacter::GetInputMove() const{ return InputMove; }
+bool ABeamCharacter::GetInputJump() const{ return InputJump; }
+bool ABeamCharacter::GetInputJumpJoystick() const{ return InputJumpJoystick; }
+bool ABeamCharacter::GetInputDash() const{ return InputDash; }
 
 bool ABeamCharacter::GetInputCharge() const { return InputCharge; }
 FVector2D ABeamCharacter::GetInputAim() const { return InputAim; }

@@ -63,14 +63,18 @@ public:
 #pragma endregion
 
 #pragma region Jump
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Pour le dï¿½placement dans les airs"))
+	
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Pour le deplacement dans les airs"))
 	double Jump_VelocityMax;
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Force ï¿½ laquelle le joueur est projetï¿½"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Force a laquelle le joueur est projetï¿½"))
 	double Jump_Force;
+	
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Sensibilite du saut via l'input joystick vers le haut"))
+	float  Joystick_Jump_SensibilityY;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Sensibilite qui ignore le saut si le move X est trop fort"))
+	float  Joystick_Jump_SensibilityX;
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Bas -> Pas beaucoup bouger, Haut -> Bouge comme si il ï¿½tait au sol mais dans les airs"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Bas -> Pas beaucoup bouger, Haut -> Bouge comme si il etait au sol mais dans les airs"))
 	double AirControl;
 
 #pragma endregion
@@ -134,7 +138,7 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "La taille du vector pour que la projection s'arrete"))
 	double MinSizeVelocity;
 
-	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "Temps après la projection pour se relever"))
+	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "Temps aprï¿½s la projection pour se relever"))
 	double TimeToWaitAfterProjection;
 
 #pragma endregion
