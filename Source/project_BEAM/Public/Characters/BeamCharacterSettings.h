@@ -138,10 +138,21 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "La taille du vector pour que la projection s'arrete"))
 	double MinSizeVelocity;
 
-	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "Temps apr�s la projection pour se relever"))
+	UPROPERTY(Config, EditAnywhere, Category = "Projection", meta = (ToolTip = "Temps apres la projection pour se relever"))
 	double TimeToWaitAfterProjection;
 
 #pragma endregion
 
+#pragma region QTE
+public:
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "Temps maximal du QTE"))
+	float QTEMaxTime;
 
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux"));
+	TArray<float> QTETimeStamp;
+
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "temps d'attente après dernier chargement"));
+	float QTELastWait;
+	
+#pragma endregion
 };

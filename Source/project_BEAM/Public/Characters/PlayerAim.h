@@ -27,7 +27,7 @@ public:
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
-	void initWeapon(UWeaponCharge* playerweapon);
+	void InitWeapon(UWeaponCharge* playerWeapon);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float Radius = 200.f;

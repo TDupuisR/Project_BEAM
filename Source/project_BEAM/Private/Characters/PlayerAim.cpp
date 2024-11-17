@@ -22,9 +22,11 @@ void UPlayerAim::InitCharacter(ABeamCharacter* playerCharacter)
 	Character = playerCharacter;
 }
 
-void UPlayerAim::initWeapon(UWeaponCharge* playerweapon)
+void UPlayerAim::InitWeapon(UWeaponCharge* playerWeapon)
 {
-	Weapon = playerweapon;
+	if (playerWeapon == nullptr) return;
+	Weapon = playerWeapon;
+	Weapon->InitValues();
 }
 
 void UPlayerAim::ShotCall(int power)

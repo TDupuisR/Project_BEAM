@@ -22,6 +22,9 @@ public:
 	void StartWeaponCharge();
 	UFUNCTION(BlueprintCallable)
 	void CancelWeaponCharge();
+	UFUNCTION(BlueprintCallable)
+	void InitValues();
+	
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
@@ -38,6 +41,13 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float qteMaxTime = 5.f;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float qteFinaleDelay = 3.f;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TArray<float> qteTimeStamp = {2.f, 1.5f, 1.f};
+	
 private:
 	UPROPERTY()
 	bool isQteActive = false;
@@ -45,14 +55,8 @@ private:
 	bool chargeWasPushed = false;
 	UPROPERTY()
 	float qteTimeLeft;
-	UPROPERTY(EditAnywhere)
-	float qteMaxTime = 5.f;
 	UPROPERTY()
 	int power = 0;
-	UPROPERTY(EditAnywhere)
-	float qteFinaleDelay = 3.f;
-	UPROPERTY(EditAnywhere)
-	TArray<float> qteTimeStamp = {2.f, 1.5f, 1.f};
 	
 public:
 	// Called every frame

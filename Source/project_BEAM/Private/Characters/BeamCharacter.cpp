@@ -2,14 +2,12 @@
 
 
 #include "Characters/BeamCharacter.h"
-#include "Arena/ArenaCamera.h"
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "Characters/PlayerAim.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
@@ -60,7 +58,6 @@ void ABeamCharacter::BeginPlay()
 	InitStateMachine();
 
 	StartLocation = this->GetActorLocation();
-
 }
 
 // Called every frame
