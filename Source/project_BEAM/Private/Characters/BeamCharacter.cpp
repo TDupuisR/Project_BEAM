@@ -12,6 +12,7 @@
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "WeaponCharge.h"
 
 #include <Camera/CameraWorldSubsystem.h>
 
@@ -57,6 +58,8 @@ void ABeamCharacter::BeginPlay()
 	CreateStateMachine();
 	InitStateMachine();
 
+	InitWeaponAndAim();
+
 	StartLocation = this->GetActorLocation();
 }
 
@@ -65,10 +68,19 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Check if he is shooting -> can't move if he is charging in phase 1
+	//if (GetComponentByClass<UPlayerAim>() != nullptr) {
+	if (playerAim != nullptr) {
+		if (playerAim->GetIsActive() && !IsPhaseTwo()) {
+			InputMove = FVector2D(0.f, 0.f);
+		}
+	}
+
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
 	TickPush(DeltaTime);
+
 
 
 	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, GetName() + FString::Printf(TEXT(" current life : %d"), Life));
@@ -467,6 +479,20 @@ bool ABeamCharacter::IsFollowable()
 FVector ABeamCharacter::GetFollowPosition()
 {
 	return GetActorLocation();
+}
+
+void ABeamCharacter::InitWeaponAndAim()
+{
+	playerAim = GetComponentByClass<UPlayerAim>();
+	weapon = GetComponentByClass<UWeaponCharge>();
+
+	if (playerAim == nullptr || weapon == nullptr) return;
+
+	playerAim->InitCharacter(this);
+	weapon->InitCharacter(this);
+	weapon->InitAim(playerAim);
+	playerAim->InitWeapon(weapon);
+
 }
 
 
