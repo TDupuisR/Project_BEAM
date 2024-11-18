@@ -34,6 +34,11 @@ void UPlayerAim::ShotCall(int power)
 	Shoot(aimPos, Character->GetInputAim().GetSafeNormal(), Character, power);
 }
 
+bool UPlayerAim::GetIsActive() const
+{
+	return wasShootTriggered;
+}
+
 
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos)
 {	

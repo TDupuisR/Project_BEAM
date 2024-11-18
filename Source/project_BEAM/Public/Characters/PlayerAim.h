@@ -40,6 +40,8 @@ public:
 	UFUNCTION()
 	void ShotCall(int power);
 	
+	UFUNCTION(BlueprintCallable)
+	bool GetIsActive() const;
 	
 protected:
 	// Called when the game starts

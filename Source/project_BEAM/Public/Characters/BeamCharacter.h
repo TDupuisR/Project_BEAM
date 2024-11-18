@@ -18,6 +18,7 @@ class UBeamCharacterSettings;
 class UEnhancedInputComponent;
 class UBoxComponent;
 class UPlayerAim;
+class UWeaponCharge;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathEvent, ABeamCharacter*, pointeurCharacter);
@@ -355,6 +356,18 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathEvent OnDeathEvent;
 
+
+#pragma endregion
+
+#pragma region Shoot
+
+private:
+	UFUNCTION()
+	void InitWeaponAndAim();
+
+	UPlayerAim* playerAim;
+
+	UWeaponCharge* weapon;
 
 #pragma endregion
 
