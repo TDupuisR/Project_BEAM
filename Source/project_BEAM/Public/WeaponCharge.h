@@ -26,7 +26,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartWeaponCharge();
 	UFUNCTION(BlueprintCallable)
-	void CancelWeaponCharge(bool isFail);
+	void CancelWeaponCharge(bool noShoot);
 	UFUNCTION(BlueprintCallable)
 	void InitValues();
 	

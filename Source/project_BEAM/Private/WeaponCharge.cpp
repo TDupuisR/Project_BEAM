@@ -36,10 +36,10 @@ void UWeaponCharge::StartWeaponCharge()
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
-void UWeaponCharge::CancelWeaponCharge(bool isFail)
+void UWeaponCharge::CancelWeaponCharge(bool noShoot)
 {
 	isQteActive = false;
-	pointAim->ShotCall(power);
+	if (!noShoot) pointAim->ShotCall(power);
 	OnFailEvent.Broadcast();
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
@@ -96,12 +96,13 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	if (isQteActive) // enter the QTE condition
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("QTE Time left: %f"), qteTimeLeft));
-		if (power < 3) GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("QTE Time stamp: %f"), qteTimeStamp[power]));
 		
 		if(qteTimeLeft >= .0f)
 		{
 			if (!Character->IsPhaseTwo()) // Phase One
 			{
+				if (power < qteTimeStamp.Num()) GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("QTE Time stamp: %f"), qteTimeStamp[power]));
+				
 				if (Character->GetInputCharge() && !chargeWasPushed && power < qteTimeStamp.Num())
 				{
 					chargeWasPushed = true;
@@ -116,7 +117,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 					}
 					else // if QTE Fail
 					{
-						CancelWeaponCharge(true);
+						CancelWeaponCharge(false);
 					}
 				}
 				else if (!Character->GetInputCharge() && chargeWasPushed && power < qteTimeStamp.Num())
@@ -132,6 +133,8 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			}
 			else // Phase Two
 			{
+				if (power < 2) GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("QTE Time stamp: %f"), qteTimeStamp[power]));
+				
 				if (Character->GetInputCharge() && !chargeWasPushed && power < 2)
 				{
 					chargeWasPushed = true;
@@ -146,7 +149,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 					}
 					else // if QTE Fail
 					{
-						CancelWeaponCharge(true);
+						CancelWeaponCharge(false);
 					}
 				}
 				else if (!Character->GetInputCharge() && chargeWasPushed && power < 2)

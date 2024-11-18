@@ -32,6 +32,7 @@ EProjectileType ABeamCharacter::ProjectileGetType()
 
 bool ABeamCharacter::ProjectileContext(int power, FVector position)
 {
+	if (weapon->GetIsQteActive()) weapon->CancelWeaponCharge(true);
 	TakeDamage(power + 1);
 
 	FVector direction = GetActorLocation() - position;
@@ -495,7 +496,6 @@ void ABeamCharacter::InitWeaponAndAim()
 
 }
 
-
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;
@@ -720,7 +720,6 @@ void ABeamCharacter::OnInputFly(const FInputActionValue& InputActionValue)
 {
 	InputFly = InputActionValue.Get<bool>();
 }
-
 
 FVector2D ABeamCharacter::GetInputMove() const{ return InputMove; }
 bool ABeamCharacter::GetInputJump() const{ return InputJump; }

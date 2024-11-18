@@ -112,7 +112,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			return;
 		}
 
-		Character->GetCharacterMovement()->AddImpulse(dashVector * (Character->GetCharacterSettings()->Fly_DashForce * 100000 ));
+		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce );
 	}
 
 	if (canMove) {
