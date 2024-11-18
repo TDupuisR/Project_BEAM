@@ -34,6 +34,8 @@ void UWeaponCharge::StartWeaponCharge()
 	chargeWasPushed = false;
 	isQteActive = true;
 
+	Character->DisplayQte_Implementation();
+
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
 void UWeaponCharge::CancelWeaponCharge(bool isFail)
@@ -54,7 +56,6 @@ void UWeaponCharge::InitAim(UPlayerAim* playerAim)
 {
 	pointAim = playerAim;
 }
-
 
 bool UWeaponCharge::GetIsQteActive() const
 {
@@ -124,4 +125,3 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		}
 	}
 }
-

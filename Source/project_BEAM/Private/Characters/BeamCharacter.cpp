@@ -514,3 +514,6 @@ bool ABeamCharacter::GetInputShoot() const{ return InputShoot; }
 bool ABeamCharacter::GetInputPush() const{ return InputPush; }
 
 bool ABeamCharacter::GetInputFly() const { return InputFly; }
+
+
+void ABeamCharacter::DisplayQte_Implementation() {}

@@ -244,4 +244,10 @@ private:
 	void playerAimInit();
 
 #pragma endregion
+
+#pragma region UI
+	public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void DisplayQte();
+#pragma endregion
 };
