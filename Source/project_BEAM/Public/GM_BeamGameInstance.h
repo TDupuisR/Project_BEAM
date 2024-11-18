@@ -4,9 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "MatchTypeID.h"
+
 #include "GM_BeamGameInstance.generated.h"
 
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChangePoints);
+
 
 UCLASS()
 class PROJECT_BEAM_API UGM_BeamGameInstance : public UGameInstance
@@ -53,11 +57,23 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int GetMaxManche();
 
+	UFUNCTION(BlueprintCallable)
+	EMatchTypeID GetMatchType();
+
+	UFUNCTION(BlueprintCallable)
+	void SetMatchType(EMatchTypeID NewMatchType);
+
 private:
+	UPROPERTY()
 	int Manche = 0;
 
+	UPROPERTY()
 	TArray<int> PlayerPoints = {0, 0};
 
+	UPROPERTY()
 	int MaxManche = 3;	
+
+	UPROPERTY()
+	EMatchTypeID MatchType = EMatchTypeID::Deathmatch;
 
 };

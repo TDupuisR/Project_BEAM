@@ -114,7 +114,6 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
 	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
 
-
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		15.0f,
@@ -122,41 +121,68 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 		FString::Printf(TEXT("PLAYER DEATH"))
 	);
 
-	BeamGameInstance->AddPlayerPoints(0, 1);
-	BeamGameInstance->AddPlayerPoints(1, 1);
+	if (BeamGameInstance == nullptr) return;
 
-	TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
-
-	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0])
-	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1])
-
-	if (CharactersInArena.Find(DeadPlayer) < 0) return;
-	BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
-
-	PointsPlayers = BeamGameInstance->GetPlayersPoints();
-
-	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0])
-	UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1])
-
-	BeamGameInstance->AddManche();
-
-	BeamGameInstance->DeployEvent();
-
-	if (BeamGameInstance->GetPlayersPoints()[0] >= BeamGameInstance->GetMaxManche() || BeamGameInstance->GetPlayersPoints()[1] >= BeamGameInstance->GetMaxManche())
+	if (BeamGameInstance->GetMatchType() == EMatchTypeID::Free)
 	{
-		// END OF THE GAME
-		// GO TO MENU
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		GEngine->AddOnScreenDebugMessage(
 			-1,
-			20.0f,
+			15.0f,
 			FColor::Purple,
-			FString::Printf(TEXT("------------- END GAME ------------"))
+			FString::Printf(TEXT("MATCH TYPE FREE"))
 		);
-		
+		return;
 	}
-	else {
-		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	else if (BeamGameInstance->GetMatchType() == EMatchTypeID::Deathmatch) {
+
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			15.0f,
+			FColor::Purple,
+			FString::Printf(TEXT("MATCH TYPE GAMEMODE"))
+		);
+
+		BeamGameInstance->AddPlayerPoints(0, 1);
+		BeamGameInstance->AddPlayerPoints(1, 1);
+
+		TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
+
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0])
+			UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1])
+
+			if (CharactersInArena.Find(DeadPlayer) < 0) return;
+		BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
+
+		PointsPlayers = BeamGameInstance->GetPlayersPoints();
+
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0])
+			UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1])
+
+			BeamGameInstance->AddManche();
+
+		BeamGameInstance->DeployEvent();
+
+		if (BeamGameInstance->GetPlayersPoints()[0] >= BeamGameInstance->GetMaxManche() || BeamGameInstance->GetPlayersPoints()[1] >= BeamGameInstance->GetMaxManche())
+		{
+			// END OF THE GAME
+			// GO TO MENU
+			GEngine->AddOnScreenDebugMessage(
+				-1,
+				20.0f,
+				FColor::Purple,
+				FString::Printf(TEXT("------------- END GAME ------------"))
+			);
+
+		}
+		else {
+			UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		}
+
 	}
+
+	
+	
 
 
 }

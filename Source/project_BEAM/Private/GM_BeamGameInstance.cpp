@@ -63,3 +63,13 @@ int UGM_BeamGameInstance::GetMaxManche()
 {
 	return MaxManche;
 }
+
+EMatchTypeID UGM_BeamGameInstance::GetMatchType()
+{
+	return MatchType;
+}
+
+void UGM_BeamGameInstance::SetMatchType(EMatchTypeID NewMatchType)
+{
+	MatchType = NewMatchType;
+}
