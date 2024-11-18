@@ -72,7 +72,7 @@ private:
 	UPROPERTY()
 	bool chargeWasPushed = false;
 	UPROPERTY()
-	float qteTimeLeft;
+	float qteTimeLeft = 0.f;
 	UPROPERTY()
 	int power = 0;
 	

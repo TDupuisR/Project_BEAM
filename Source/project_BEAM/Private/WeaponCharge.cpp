@@ -116,7 +116,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 					}
 					else // if QTE Fail
 					{
-						CancelWeaponCharge();
+						CancelWeaponCharge(true);
 					}
 				}
 				else if (!Character->GetInputCharge() && chargeWasPushed && power < qteTimeStamp.Num())
@@ -146,7 +146,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 					}
 					else // if QTE Fail
 					{
-						CancelWeaponCharge();
+						CancelWeaponCharge(true);
 					}
 				}
 				else if (!Character->GetInputCharge() && chargeWasPushed && power < 2)
