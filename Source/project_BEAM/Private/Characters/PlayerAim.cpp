@@ -82,7 +82,7 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	{
 		wasShootTriggered = false;
 		
-		if (Weapon->GetIsQteActive()) Weapon->CancelWeaponCharge(); //if qte still active -> deactivate Qte
+		if (Weapon->GetIsQteActive()) Weapon->CancelWeaponCharge(false); //if qte still active -> deactivate Qte
 	}
 
 	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());

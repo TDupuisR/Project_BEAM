@@ -36,10 +36,11 @@ void UWeaponCharge::StartWeaponCharge()
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
-void UWeaponCharge::CancelWeaponCharge()
+void UWeaponCharge::CancelWeaponCharge(bool isFail)
 {
 	isQteActive = false;
 	pointAim->ShotCall(power);
+	OnFailEvent.Broadcast();
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
 }
@@ -64,9 +65,26 @@ void UWeaponCharge::InitAim(UPlayerAim* playerAim)
 	pointAim = playerAim;
 }
 
+
 bool UWeaponCharge::GetIsQteActive() const
 {
 	return isQteActive;
+}
+
+float UWeaponCharge::GetQteTimeLeft() const
+{
+	return qteTimeLeft;
+}
+
+float UWeaponCharge::GetQteMaxTime() const
+{
+	return qteMaxTime;
+}
+
+float UWeaponCharge::GetQteTimeStamp() const
+{;
+	if (power < 0 || power > 2) return .0f;
+	else return qteTimeStamp[power];
 }
 
 
@@ -147,7 +165,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		}
 		else // Time over
 		{
-			CancelWeaponCharge();
+			CancelWeaponCharge(false);
 		}
 	}
 }
