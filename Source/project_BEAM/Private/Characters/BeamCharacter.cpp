@@ -319,12 +319,22 @@ void ABeamCharacter::TakeDamage(const int Damage)
 
 	if (!CanTakeDamage) return;
 
+	if (HasShield()) {
+		SetShield(GetShield() - 1);
+		return;
+	}
+
 	Life -= Damage;
 	if (Life <= 0) {
 		Life = 0;
 	}
 	CheckLife();
 
+}
+
+bool ABeamCharacter::HasShield() const
+{
+	return Shield > 0;
 }
 
 void const ABeamCharacter::ResetLife()
@@ -341,6 +351,16 @@ void ABeamCharacter::OnDeath()
 {
 	StateMachine->ChangeState(EBeamCharacterStateID::Dead);
 	OnDeathEvent.Broadcast(this);
+}
+
+void ABeamCharacter::SetShield(int NewShield)
+{
+	Shield = NewShield;
+}
+
+int ABeamCharacter::GetShield() const
+{
+	return Shield;
 }
 
 void ABeamCharacter::CheckLife()

@@ -20,6 +20,16 @@ void AMatchGameMode::BeginPlay()
 	FindPlayerStartActorsInArena(PlayerStartsPoints);
 	SpawnCharacters(PlayerStartsPoints);
 	AddEventsPlayers();
+
+	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
+
+	if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] >= GetDefault<UArenaSettings>()->MancheDiffShield) {
+		CharactersInArena[1]->SetShield(1);
+	}
+	else if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] <= -GetDefault<UArenaSettings>()->MancheDiffShield) {
+		CharactersInArena[0]->SetShield(1);
+	}
 	
 	// TObjectPtr<AActor> camera = UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass());
 	//
@@ -148,18 +158,19 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 		TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
 
-		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0])
-			UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1])
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
 
-			if (CharactersInArena.Find(DeadPlayer) < 0) return;
+		if (CharactersInArena.Find(DeadPlayer) < 0) return;
 		BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
 
 		PointsPlayers = BeamGameInstance->GetPlayersPoints();
 
-		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0])
-			UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1])
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0]);
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1]);
 
-			BeamGameInstance->AddManche();
+
+		BeamGameInstance->AddManche();
 
 		BeamGameInstance->DeployEvent();
 

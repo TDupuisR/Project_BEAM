@@ -19,4 +19,7 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category="Characters")
 	TSubclassOf<ABeamCharacter> BeamCharacterClassP2;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Manche")
+	int MancheDiffShield = 2;
 };

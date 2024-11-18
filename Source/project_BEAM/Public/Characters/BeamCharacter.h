@@ -249,6 +249,15 @@ public:
 	UFUNCTION()
 	void OnDeath();
 
+	UFUNCTION(BlueprintCallable)
+	bool HasShield() const;
+
+	UFUNCTION()
+	void SetShield(int NewShield);
+
+	UFUNCTION()
+	int GetShield() const;
+
 protected:
 	UFUNCTION()
 	void CheckLife();
@@ -259,6 +268,9 @@ protected:
 	int MaxLife;
 	UPROPERTY(BlueprintReadOnly)
 	int LifeToFly;
+
+	UPROPERTY(BlueprintReadOnly)
+	int Shield = 0;
 
 # pragma endregion
 	
@@ -350,8 +362,6 @@ private:
 
 #pragma region DeathEvent
 
-
-
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathEvent OnDeathEvent;
@@ -370,5 +380,7 @@ private:
 	UWeaponCharge* weapon;
 
 #pragma endregion
+
+
 
 };
