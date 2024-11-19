@@ -135,13 +135,45 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 	if (BeamGameInstance->GetMatchType() == EMatchTypeID::Free)
 	{
-		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+
+		BeamGameInstance->AddPlayerPoints(0, 1);
+		BeamGameInstance->AddPlayerPoints(1, 1);
+
+		TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
+
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
+
+		if (CharactersInArena.Find(DeadPlayer) < 0) return;
+		BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
+
+		PointsPlayers = BeamGameInstance->GetPlayersPoints();
+
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0]);
+		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1]);
+
+
+		BeamGameInstance->AddManche();
+
+		BeamGameInstance->DeployEvent();
+
+
 		GEngine->AddOnScreenDebugMessage(
 			-1,
 			15.0f,
 			FColor::Purple,
 			FString::Printf(TEXT("MATCH TYPE FREE"))
 		);
+
+		// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
+		// Here ->
+		// Appeler ResetPlayerPoints() pour remettre les points à 0
+
+		BeamGameInstance->ResetPlayerPoints();
+
+		// A enlever quand menu fin
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+
 		return;
 	}
 	else if (BeamGameInstance->GetMatchType() == EMatchTypeID::Deathmatch) {
@@ -184,6 +216,9 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 				FColor::Purple,
 				FString::Printf(TEXT("------------- END GAME ------------"))
 			);
+
+			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
+			// Here ->
 
 		}
 		else {
