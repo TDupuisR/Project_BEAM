@@ -58,8 +58,16 @@ public:
 
 	int GetSelectedPair() const;
 
+	void SetPairNumberMax(int NewMax);
+
+	int GetPairNumberMax() const;
+
 private:
 	int SelectedPair = 0;
+
+	int PairNumberMax = 0;
+
+	int SelectedPairChoose = 0;
 
 	void NewPair(int Max);
 
