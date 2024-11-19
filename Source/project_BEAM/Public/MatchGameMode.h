@@ -62,7 +62,11 @@ public:
 
 	int GetPairNumberMax() const;
 
+	void CheckSpawnPairs(TArray<AArenaPlayerStart*> PlayerStartsPoints);
+
 private:
+	TArray<int> listSpawnPairPossible;
+
 	int SelectedPair = 0;
 
 	int PairNumberMax = 0;
