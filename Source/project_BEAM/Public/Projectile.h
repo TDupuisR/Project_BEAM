@@ -72,6 +72,8 @@ protected:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
 	void InitParameters();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
+	void DestructionEffect(int power);
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UProjectileMovementComponent* projectileComponent;
@@ -89,10 +91,11 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	int ownPower;
+	UPROPERTY()
+	float currentLifeSpan;
 
 private:
 	UPROPERTY()
 	bool canAccess = true;
-	UPROPERTY()
-	float currentLifeSpan;
+	
 };
