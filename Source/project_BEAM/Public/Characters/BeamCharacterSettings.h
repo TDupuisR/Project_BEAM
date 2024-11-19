@@ -47,7 +47,11 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "La masse du character :O"))
 	double Mass;
 
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "La valeur minimale pour que le minimum en velocity en Z soit de X pour stun avec la chute"))
+	float MinVelocityZStunFall;
 
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Multiplier pour le stun avec la chute"))
+	float MultiplyerStunFall;
 
 #pragma endregion
 
