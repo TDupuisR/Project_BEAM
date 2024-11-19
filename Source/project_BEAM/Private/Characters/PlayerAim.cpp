@@ -43,7 +43,7 @@ bool UPlayerAim::GetIsActive() const
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos)
 {	
 	FVector2D DirNormal = dir.GetSafeNormal();
-	return FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z - DirNormal.Y * Radius );
+	return FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius );
 }
 
 void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power)
@@ -53,7 +53,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("Shot Delay good")));
 		if(ProjectileActor)
 		{
-			FVector newDir = FVector(direction.X, .0f, -direction.Y);
+			FVector newDir = FVector(direction.X, .0f, direction.Y);
 			if(newDir == FVector::ZeroVector) newDir = FVector(Character->GetOrientX(), .0f, .0f);
 			
 			FActorSpawnParameters spawnParams;
