@@ -64,10 +64,6 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Force � laquelle le joueur est projet�"))
 	double Jump_Force;
 	
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Bas -> Pas beaucoup bouger, Haut -> Bouge comme si il �tait au sol mais dans les airs"))
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Force a laquelle le joueur est projet�"))
-	double Jump_Force;
-	
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Sensibilite du saut via l'input joystick vers le haut"))
 	float  Joystick_Jump_SensibilityY;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Sensibilite qui ignore le saut si le move X est trop fort"))
