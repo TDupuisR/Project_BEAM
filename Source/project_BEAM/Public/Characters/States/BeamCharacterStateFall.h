@@ -31,6 +31,9 @@ private:
 
 	UFUNCTION() void OnCoyoteTimerEnd();
 	UFUNCTION() void ResetCoyoteTimer();
+
+	UPROPERTY()
+	float ZVelocity = 0;
 	
 # pragma endregion
 

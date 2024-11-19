@@ -21,4 +21,7 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 
 
+private:
+	bool FirstFrame = true;
+
 };

@@ -39,7 +39,9 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 		Character->Jump();
 	}
 
+	FirstFrame = true;
 
+	
 
 }
 
@@ -59,13 +61,14 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	// GEngine->AddOnScreenDebugMessage(
-	// 	-1,
-	// 	0.1f,
-	// 	FColor::Blue,
-	// 	FString::Printf(TEXT("STATE TICK JUMP"))
-	// );
+	 GEngine->AddOnScreenDebugMessage(
+	 	-1,
+	 	0.1f,
+	 	FColor::Blue,
+	 	FString::Printf(TEXT("STATE TICK JUMP"))
+	 );
 	
+	 
 	if (Character->GetInputMove().X != 0) 
 	{
 
@@ -83,11 +86,24 @@ void UBeamCharacterStateJump::StateTick(float DeltaTime)
 
 	}
 
-	if (Character->GetMovementComponent()->Velocity.Y <= 0) {
+
+
+	if (Character->GetMovementComponent()->Velocity.Z < 0 && FirstFrame == false) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
+		return;
+	}
+
+	if (Character->GetMovementComponent()->IsMovingOnGround() && FirstFrame == false) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
+		return;
 	}
 
 	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
+		return;
+	}
+
+	if (FirstFrame) {
+		FirstFrame = false;
 	}
 }
