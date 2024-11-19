@@ -351,6 +351,14 @@ private:
 
 #pragma endregion
 
+#pragma region UI
+	public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void DisplayQte();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void HideQte();
+#pragma endregion
+
 #pragma region FollowTarget
 
 	virtual bool IsFollowable() override;

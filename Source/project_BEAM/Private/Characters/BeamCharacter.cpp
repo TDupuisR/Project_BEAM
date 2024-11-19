@@ -492,6 +492,7 @@ float ABeamCharacter::GetMultiplierStun()
 {
 	return MultiplierStun;
 }
+
 bool ABeamCharacter::IsFollowable()
 {
 	return true;
@@ -753,3 +754,7 @@ bool ABeamCharacter::GetInputShoot() const { return InputShoot; }
 bool ABeamCharacter::GetInputPush() const { return InputPush; }
 
 bool ABeamCharacter::GetInputFly() const { return InputFly; }
+
+
+void ABeamCharacter::DisplayQte_Implementation() {}
+void ABeamCharacter::HideQte_Implementation() {}

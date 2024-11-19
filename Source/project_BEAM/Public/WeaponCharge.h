@@ -34,7 +34,6 @@ public:
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
 	void InitAim(UPlayerAim* playerAim);
-
 	
 	UFUNCTION(BlueprintCallable)
 	bool GetIsQteActive() const;
