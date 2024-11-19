@@ -2,6 +2,7 @@
 #pragma once
 
 #include "ProjectileInterface.h"
+#include "ProjectileSettings.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "CollisionQueryParams.h"
@@ -17,13 +18,13 @@ struct FProjectileParameters
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	float speed = 100.f;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	float width = 100.f;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	float height = 100.f;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	float lifeSpan = 100000.f;
 };
 
@@ -38,19 +39,11 @@ public:
 	AProjectile();
 	UFUNCTION()
 	void InitialisePower(int power);
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(EditAnywhere)
-	float height;
-	UPROPERTY(EditAnywhere)
-	float radius;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UCapsuleComponent* Capsule;
-	UPROPERTY(EditAnywhere)
-	UStaticMesh* projectileMesh;
-
+	
 	UPROPERTY()
 	AActor* actorParent;
 	
@@ -65,28 +58,42 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FakeDestroy(int power);
 
+	UFUNCTION(Blueprintable)
+	FProjectileParameters GetCurrentParam();
+	UFUNCTION()
+	void InitProjectileSettings();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	FCollisionQueryParams params;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
+	void InitParameters();
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UProjectileMovementComponent* projectileComponent;
 	
 	UPROPERTY(Config, EditAnywhere, Category="Power Parameters") 
 	TMap<int, FProjectileParameters> powerParameters;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	FProjectileParameters projectileCurrentParam;
 	
 	UPROPERTY(EditAnywhere)
 	FHitResult projectileHitResult;
+	
+	UPROPERTY(BlueprintReadOnly)
+	const UProjectileSettings* ProjectileSettings;
+
+	UPROPERTY(BlueprintReadOnly)
+	int ownPower;
 
 private:
 	UPROPERTY()
 	bool canAccess = true;
 	UPROPERTY()
-	int ownPower;
+	float currentLifeSpan;
 	
 };

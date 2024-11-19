@@ -21,8 +21,9 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
+	virtual void RedoParams() override;
+
 private:
-	UPROPERTY() bool dashIsStillActive = false;
 
 	UPROPERTY() bool canDash = true;
 	UPROPERTY() bool canMove = true;

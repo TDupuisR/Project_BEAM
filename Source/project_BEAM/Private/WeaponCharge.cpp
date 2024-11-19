@@ -4,6 +4,7 @@
 #include "WeaponCharge.h"
 #include "Engine/World.h"
 #include "Characters/BeamCharacter.h"
+#include "Characters/BeamCharacterSettings.h"
 #include "Characters/PlayerAim.h"
 
 
@@ -22,15 +23,14 @@ UWeaponCharge::UWeaponCharge()
 void UWeaponCharge::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 void UWeaponCharge::StartWeaponCharge()
 {
+	InitValues();
+	
 	power = 0;
-	qteTimeLeft = 5.0f;
+	qteTimeLeft = qteMaxTime;
 	chargeWasPushed = false;
 	isQteActive = true;
 
@@ -45,6 +45,16 @@ void UWeaponCharge::CancelWeaponCharge(bool isFail)
 	OnFailEvent.Broadcast();
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
+}
+
+void UWeaponCharge::InitValues()
+{
+	qteMaxTime = Character->GetCharacterSettings()->QTEMaxTime;
+	if (qteMaxTime <= 0) qteMaxTime = 5.f;
+	qteFinaleDelay = Character->GetCharacterSettings()->QTELastWait;
+	if (qteFinaleDelay <= 0) qteFinaleDelay = 3.f;
+	qteTimeStamp = Character->GetCharacterSettings()->QTETimeStamp;
+	if (qteTimeStamp.Num() <= 0) qteTimeStamp = {2.f, 1.5f, 1.f};
 }
 
 void UWeaponCharge::InitCharacter(ABeamCharacter* playerCharacter)
@@ -86,35 +96,70 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	if (isQteActive) // enter the QTE condition
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("QTE Time left: %f"), qteTimeLeft));
+		if (power < 3) GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Cyan, FString::Printf(TEXT("QTE Time stamp: %f"), qteTimeStamp[power]));
+		
 		if(qteTimeLeft >= .0f)
 		{
-			if (Character->GetInputCharge() && !chargeWasPushed && power < 3)
+			if (!Character->IsPhaseTwo()) // Phase One
 			{
-				chargeWasPushed = true;
+				if (Character->GetInputCharge() && !chargeWasPushed && power < qteTimeStamp.Num())
+				{
+					chargeWasPushed = true;
 				
-				if (qteTimeLeft <= qteTimeStamp[power]) // if QTE success
-				{
-					power++;
-					qteTimeLeft = qteMaxTime;
+					if (qteTimeLeft <= qteTimeStamp[power]) // if QTE success
+					{
+						power++;
+						qteTimeLeft = qteMaxTime;
 					
-					GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("QTE success to power: %d "), power));
-					//PlayAnimQTE()
-					OnSucceedEvent.Broadcast();
+						GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
+						//PlayAnimQTE()
+					}
+					else // if QTE Fail
+					{
+						CancelWeaponCharge(true);
+					}
 				}
-				else // if QTE Fail
+				else if (!Character->GetInputCharge() && chargeWasPushed && power < qteTimeStamp.Num())
 				{
-					CancelWeaponCharge(true);
+					chargeWasPushed = false;
+				}
+
+				if(power >= 3 && chargeWasPushed)
+				{
+					qteTimeLeft = qteFinaleDelay;
+					chargeWasPushed = false;
 				}
 			}
-			else if (!Character->GetInputCharge() && chargeWasPushed && power < 3)
+			else // Phase Two
 			{
-				chargeWasPushed = false;
-			}
+				if (Character->GetInputCharge() && !chargeWasPushed && power < 2)
+				{
+					chargeWasPushed = true;
+				
+					if (qteTimeLeft <= qteTimeStamp[power]) // if QTE success
+					{
+						power += 2;
+						qteTimeLeft = qteMaxTime;
+					
+						GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
+						//PlayAnimQTE()
+					}
+					else // if QTE Fail
+					{
+						CancelWeaponCharge(true);
+					}
+				}
+				else if (!Character->GetInputCharge() && chargeWasPushed && power < 2)
+				{
+					chargeWasPushed = false;
+				}
 
-			if(power >= 3 && chargeWasPushed)
-			{
-				qteTimeLeft = qteFinaleDelay;
-				chargeWasPushed = false;
+				if(power >= 2 && chargeWasPushed)
+				{
+					qteTimeLeft = qteFinaleDelay;
+					chargeWasPushed = false;
+				}
 			}
 			
 			qteTimeLeft -= GetWorld()->DeltaTimeSeconds;

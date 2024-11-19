@@ -2,14 +2,19 @@
 
 
 #include "Characters/BeamCharacter.h"
+
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
-#include "Characters/PlayerAim.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Characters/PlayerAim.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "WeaponCharge.h"
+
+#include <Camera/CameraWorldSubsystem.h>
 
 
 // Sets default values
@@ -17,6 +22,7 @@ ABeamCharacter::ABeamCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 }
 
 EProjectileType ABeamCharacter::ProjectileGetType()
@@ -26,13 +32,13 @@ EProjectileType ABeamCharacter::ProjectileGetType()
 
 bool ABeamCharacter::ProjectileContext(int power, FVector position)
 {
-	TakeDamage(power+1);
+	TakeDamage(power + 1);
 
 	FVector direction = GetActorLocation() - position;
 	direction.Normalize();
-	
-	KnockBack(direction, (power+1)*500.f); // Magic Number for the force, to dertemine how to tweak it
-	
+
+	KnockBack(direction, (power + 1) * 500.f); // Magic Number for the force, to dertemine how to tweak it
+
 	return true;
 }
 
@@ -45,13 +51,14 @@ AProjectile* ABeamCharacter::GetProjectile()
 void ABeamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	//GetComponentByClass<UPlayerAim>()->Character = this;
-	
+
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->AddFollowTarget(this);
 	InitCharacterSettings();
 	SetupCollision();
 	CreateStateMachine();
 	InitStateMachine();
+
+	InitWeaponAndAim();
 
 	StartLocation = this->GetActorLocation();
 }
@@ -61,18 +68,31 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Check if he is shooting -> can't move if he is charging in phase 1
+	//if (GetComponentByClass<UPlayerAim>() != nullptr) {
+	if (playerAim != nullptr) {
+		if (playerAim->GetIsActive() && !IsPhaseTwo()) {
+			InputMove = FVector2D(0.f, 0.f);
+		}
+	}
+
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
 	TickPush(DeltaTime);
 
-	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %d"), InputMappingContext));
 
-	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, GetName());
+
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, GetName() + FString::Printf(TEXT(" current life : %d"), Life));
 
 	if (GetActorLocation().Y != StartLocation.Y)
 	{
 		SetActorLocation(FVector(GetActorLocation().X, StartLocation.Y, GetActorLocation().Z));
+	}
+
+	if (InputJumpJoystick && (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Jump || StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Fall))
+	{
+		InputJumpJoystick = false;
 	}
 }
 
@@ -126,7 +146,10 @@ void ABeamCharacter::TickStateMachine(float DeltaTime) const
 
 void ABeamCharacter::InitCharacterSettings()
 {
+	
 	CharacterSettings = GetDefault<UBeamCharacterSettings>();
+	
+
 
 	if (CharacterSettings == nullptr) return;
 
@@ -148,9 +171,109 @@ void ABeamCharacter::InitCharacterSettings()
 	timeToWaitPush = CharacterSettings->Push_Cooldown;
 }
 
+void ABeamCharacter::ReattributeCharacterSettings()
+{
+	if (CharacterSettings == nullptr) return;
+
+	GetCharacterMovement()->MaxAcceleration = CharacterSettings->MaxAcceleration;
+	GetCharacterMovement()->GroundFriction = CharacterSettings->GroundFriction;
+	GetCharacterMovement()->GravityScale = CharacterSettings->GravityScale;
+	GetCharacterMovement()->Mass = CharacterSettings->Mass;
+	GetCharacterMovement()->BrakingDecelerationWalking = CharacterSettings->BreakingDecelerationWalking;
+	GetCharacterMovement()->JumpZVelocity = CharacterSettings->Jump_Force;
+	GetCharacterMovement()->AirControl = CharacterSettings->AirControl;
+	GetCharacterMovement()->FallingLateralFriction = CharacterSettings->FallingLateralFriction;
+	GetCharacterMovement()->MaxFlySpeed = CharacterSettings->Fly_MaxSpeed;
+
+	if (StateMachine != nullptr) {
+		StateMachine->RedoParams();
+	}
+}
+
 void ABeamCharacter::KnockBack(FVector Direction, float Force)
 {
+
+	if (!CanTakeKnockBack) return;
+
 	this->GetCharacterMovement()->Launch(Direction * Force);
+}
+
+void ABeamCharacter::Bounce(FVector Normal)
+{
+
+	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
+
+	FVector velocityDir = velocity.GetSafeNormal();
+
+	FVector newVector = velocityDir - 2 * FVector::DotProduct(velocityDir, Normal) * Normal;
+
+	float Force = velocity.Size() * Bounciness;
+
+	KnockBack(newVector, Force);
+
+}
+
+void ABeamCharacter::OnHit(
+	UPrimitiveComponent* HitComponent,  // The component that was hit
+	AActor* OtherActor,                // The other actor involved in the hit
+	UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
+	FVector NormalImpulse,             // The force applied to resolve the collision
+	const FHitResult& Hit              // Detailed information about the hit
+)
+{
+	if (OtherActor == nullptr) return;
+
+	if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection && StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) return;
+
+	if (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Fly && !GetIsDashing()) return;
+
+	FVector velocity = GetCharacterMovement()->GetLastUpdateVelocity();
+
+	if (velocity.Size() < MinSizeVelocity) return;
+
+	Bounce(Hit.Normal);
+
+}
+
+float ABeamCharacter::GetBounciness() const
+{
+	return Bounciness;
+}
+
+float ABeamCharacter::GetMinSizeVelocity() const
+{
+	return MinSizeVelocity;
+}
+
+bool ABeamCharacter::GetCanTakeDamage() const
+{
+	return CanTakeDamage;
+}
+
+void ABeamCharacter::SetCanTakeDamage(bool NewCanTakeDamage)
+{
+	CanTakeDamage = NewCanTakeDamage;
+}
+
+bool ABeamCharacter::GetCanTakeKnockback()
+{
+	return CanTakeKnockBack;
+}
+
+void ABeamCharacter::SetCanTakeKnockback(bool NewCanTakeKnockback)
+{
+	CanTakeKnockBack = NewCanTakeKnockback;
+
+}
+
+bool ABeamCharacter::GetIsDashing() const
+{
+	return IsDashing;
+}
+
+void ABeamCharacter::SetIsDashing(bool NewIsDashing)
+{
+	IsDashing = NewIsDashing;
 }
 
 int const ABeamCharacter::GetLife() const
@@ -185,11 +308,22 @@ void const ABeamCharacter::SetLifeToFly(const int NewLifeToFly)
 
 void ABeamCharacter::TakeDamage(const int Damage)
 {
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		5.f,
+		FColor::Purple,
+		FString::Printf(TEXT("TAKE DAMAGE"))
+	);
+
+	if (!CanTakeDamage) return;
+
 	Life -= Damage;
 	if (Life <= 0) {
 		Life = 0;
 	}
 	CheckLife();
+
 }
 
 void const ABeamCharacter::ResetLife()
@@ -202,8 +336,17 @@ bool ABeamCharacter::IsPhaseTwo() const
 	return Life <= LifeToFly;
 }
 
+void ABeamCharacter::OnDeath()
+{
+	StateMachine->ChangeState(EBeamCharacterStateID::Dead);
+	OnDeathEvent.Broadcast(this);
+}
+
 void ABeamCharacter::CheckLife()
 {
+
+	if (StateMachine == nullptr) return;
+
 	if (Life > 0 && Life <= LifeToFly) {
 		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) {
 			StateMachine->ChangeState(EBeamCharacterStateID::Fly);
@@ -215,7 +358,7 @@ void ABeamCharacter::CheckLife()
 		}
 	}
 	else {
-		StateMachine->ChangeState(EBeamCharacterStateID::Dead);
+		OnDeath();
 	}
 }
 
@@ -224,7 +367,7 @@ void ABeamCharacter::Push()
 	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
 
 	for (ABeamCharacter* player : PlayersInZone) {
-		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("Push Zone Detect")));
+		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW")));
 		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 		player->KnockBack(direction, CharacterSettings->Push_Force);
 	}
@@ -264,6 +407,12 @@ void ABeamCharacter::SetupCollision()
 	boxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABeamCharacter::OnBeginOverlapZone);
 	boxCollision->OnComponentEndOverlap.AddDynamic(this, &ABeamCharacter::OnEndOverlapZone);
 
+	capsuleCollision = GetComponentByClass<UCapsuleComponent>();
+
+	if (capsuleCollision == nullptr) return;
+
+	capsuleCollision->OnComponentHit.AddDynamic(this, &ABeamCharacter::OnHit);
+
 }
 
 void ABeamCharacter::OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -281,6 +430,7 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 
 	PlayersInZone.Remove(player);
 }
+
 void ABeamCharacter::creatAim()
 {
 	localPlayerAim = NewObject<UPlayerAim>(this);
@@ -288,18 +438,72 @@ void ABeamCharacter::creatAim()
 
 void ABeamCharacter::playerAimInit()
 {
-	if(localPlayerAim == nullptr) return;
+	if (localPlayerAim == nullptr) return;
 	localPlayerAim->InitCharacter(this);
 }
+
+void ABeamCharacter::Stun(float TimeToStun = 3.f)
+{
+
+	SetStunTime(TimeToStun);
+
+	if (StateMachine != nullptr)
+		StateMachine->ChangeState(EBeamCharacterStateID::Stun);
+
+}
+
+float ABeamCharacter::GetStunTime() const
+{
+	return StunTime;
+}
+
+void ABeamCharacter::SetStunTime(float NewStunTime)
+{
+	StunTime = NewStunTime;
+}
+
+void ABeamCharacter::SetMultiplierStun(float NewMultiplierStun)
+{
+	MultiplierStun = NewMultiplierStun;
+}
+
+float ABeamCharacter::GetMultiplierStun()
+{
+	return MultiplierStun;
+}
+bool ABeamCharacter::IsFollowable()
+{
+	return true;
+}
+
+FVector ABeamCharacter::GetFollowPosition()
+{
+	return GetActorLocation();
+}
+
+void ABeamCharacter::InitWeaponAndAim()
+{
+	playerAim = GetComponentByClass<UPlayerAim>();
+	weapon = GetComponentByClass<UWeaponCharge>();
+
+	if (playerAim == nullptr || weapon == nullptr) return;
+
+	playerAim->InitCharacter(this);
+	weapon->InitCharacter(this);
+	weapon->InitAim(playerAim);
+	playerAim->InitWeapon(weapon);
+
+}
+
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
 	return CharacterSettings;
 }
 
-void ABeamCharacter::SetupMappingContextIntoController()
+void ABeamCharacter::SetupMappingContextIntoController() const
 {
-	playerController = Cast<APlayerController>(Controller);
+	APlayerController* playerController = Cast<APlayerController>(Controller);
 	if (playerController == nullptr) return;
 
 	ULocalPlayer* player = playerController->GetLocalPlayer();
@@ -315,7 +519,7 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 {
 	if (InputData == nullptr) return;
 
-	if(InputData->InputActionMoveVector2D)
+	if (InputData->InputActionMoveVector2D)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveVector2D,
@@ -323,128 +527,134 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 			this,
 			&ABeamCharacter::OnInputMove
 			);
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionMoveVector2D,
+			ETriggerEvent::Started,
+			this,
+			&ABeamCharacter::OnInputJumpJoystick
+			);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveVector2D,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputMove
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveVector2D,
 			ETriggerEvent::Triggered,
 			this,
 			&ABeamCharacter::OnInputMove
-			);
+		);
 	}
-	if(InputData->InputActionJump)
+	if (InputData->InputActionJump)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionJump,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputJump
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionJump,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputJump
-			);
+		);
 	}
-	if(InputData->InputActionDash)
+	if (InputData->InputActionDash)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionDash,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputDash
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionDash,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputDash
-			);
+		);
 	}
 
-	if(InputData->InputActionCharge)
+	if (InputData->InputActionCharge)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionCharge,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputCharge
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionCharge,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputCharge
-			);
+		);
 	}
-	if(InputData->InputActionAimVector2D)
+	if (InputData->InputActionAimVector2D)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionAimVector2D,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputAim
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionAimVector2D,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputAim
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionAimVector2D,
 			ETriggerEvent::Triggered,
 			this,
 			&ABeamCharacter::OnInputAim
-			);
+		);
 	}
-	if(InputData->InputActionShoot)
+	if (InputData->InputActionShoot)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionShoot,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputShoot
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionShoot,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputShoot
-			);
+		);
 	}
 
-	if(InputData->InputActionPunch)
+	if (InputData->InputActionPunch)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionPunch,
 			ETriggerEvent::Started,
 			this,
 			&ABeamCharacter::OnInputPush
-			);
+		);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionPunch,
 			ETriggerEvent::Completed,
 			this,
 			&ABeamCharacter::OnInputPush
-			);
+		);
 	}
 
-	if (InputData->InputActionFly) 
+	if (InputData->InputActionFly)
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionFly,
@@ -468,11 +678,20 @@ void ABeamCharacter::BindInputActions(UEnhancedInputComponent* EnhancedInputComp
 void ABeamCharacter::OnInputMove(const FInputActionValue& InputActionValue)
 {
 	InputMove = InputActionValue.Get<FVector2D>();
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("WOWWWW : %s"), *InputMove.ToString()));
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Blue, FString::Printf(TEXT("move : %s"), *InputMove.ToString()));
 }
 void ABeamCharacter::OnInputJump(const FInputActionValue& InputActionValue)
 {
 	InputJump = InputActionValue.Get<bool>();
+}
+void ABeamCharacter::OnInputJumpJoystick(const FInputActionValue& InputActionValue)
+{
+	if (InputActionValue.Get<FVector2D>().Y >= CharacterSettings->Joystick_Jump_SensibilityY &&
+		(InputActionValue.Get<FVector2D>().X < CharacterSettings->Joystick_Jump_SensibilityX && InputActionValue.Get<FVector2D>().X > -CharacterSettings->Joystick_Jump_SensibilityX))
+	{
+		InputJumpJoystick = true;
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("jump joystick : %f"), InputActionValue.Get<FVector2D>().Y));
+	}
 }
 void ABeamCharacter::OnInputDash(const FInputActionValue& InputActionValue)
 {
@@ -505,13 +724,14 @@ void ABeamCharacter::OnInputFly(const FInputActionValue& InputActionValue)
 
 FVector2D ABeamCharacter::GetInputMove() const{ return InputMove; }
 bool ABeamCharacter::GetInputJump() const{ return InputJump; }
+bool ABeamCharacter::GetInputJumpJoystick() const{ return InputJumpJoystick; }
 bool ABeamCharacter::GetInputDash() const{ return InputDash; }
 
-bool ABeamCharacter::GetInputCharge() const{ return InputCharge; }
-FVector2D ABeamCharacter::GetInputAim() const{ return InputAim; }
-bool ABeamCharacter::GetInputShoot() const{ return InputShoot; }
+bool ABeamCharacter::GetInputCharge() const { return InputCharge; }
+FVector2D ABeamCharacter::GetInputAim() const { return InputAim; }
+bool ABeamCharacter::GetInputShoot() const { return InputShoot; }
 
-bool ABeamCharacter::GetInputPush() const{ return InputPush; }
+bool ABeamCharacter::GetInputPush() const { return InputPush; }
 
 bool ABeamCharacter::GetInputFly() const { return InputFly; }
 

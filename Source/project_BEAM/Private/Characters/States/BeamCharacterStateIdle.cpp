@@ -41,29 +41,40 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	/*GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Red,
-		FString::Printf(TEXT("Tick State %d"), GetStateID())
-	);*/
+	if (Character->IsPhaseTwo()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
+		return;
+	}
+
+	if (IsKeyWasPressed(EKeys::U)) {
+		Character->TakeDamage(3);
+	}
+	
+
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("STATE TICK IDLE"))
+	// );
 
 	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	if (Character->GetInputJump()) {
+	if (Character->GetInputJump() || Character->GetInputJumpJoystick()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
 	
 	if (Character->GetInputMove() != FVector2D::ZeroVector)
 	{
+
 		GEngine->AddOnScreenDebugMessage(
 			-1,
 			0.1f,
 			FColor::Red,
-			FString::Printf(TEXT("Pressed : %d"), GetStateID())
+			FString::Printf(TEXT("Pressed"), GetStateID())
 		);
 
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);

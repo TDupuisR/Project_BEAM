@@ -65,7 +65,16 @@ UBeamCharacterState* UBeamCharacterStateMachine::GetState(EBeamCharacterStateID 
 
 EBeamCharacterStateID const UBeamCharacterStateMachine::GetCurrentStateID() const
 {
+
+	if (CurrentState == nullptr) return EBeamCharacterStateID::None;
+
 	return CurrentState->GetStateID();
+}
+
+void UBeamCharacterStateMachine::RedoParams()
+{
+	if (CurrentState == nullptr) return;
+	CurrentState->RedoParams();
 }
 
 void UBeamCharacterStateMachine::FindStates()

@@ -4,7 +4,6 @@
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Characters/BeamCharacter.h"
-#include "Engine/StaticMeshActor.h"
 
 
 // Sets default values
@@ -13,11 +12,7 @@ AProjectile::AProjectile()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	projectileMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("Projectile Mesh"));
 	projectileComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Component"));
-	projectileComponent-> InitialSpeed = 50.f;
-	projectileComponent-> MaxSpeed = 50.f;
-	projectileComponent->ProjectileGravityScale = 0.f;
 
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	Capsule->SetCollisionProfileName(TEXT("OverlapAll"));
@@ -29,10 +24,11 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	powerParameters.Add( 0, FProjectileParameters(500.f, 50.f, 50.f, 100000.f ));
-	powerParameters.Add( 1, FProjectileParameters(500.f, 100.f, 100.f, 100000.f ));
-	powerParameters.Add( 2, FProjectileParameters(500.f, 150.f, 150.f, 100000.f ));
-	powerParameters.Add( 3, FProjectileParameters(500.f, 200.f, 200.f, 100000.f ));
+	
+	projectileComponent->ProjectileGravityScale = 0.f;
+	currentLifeSpan = 0.f;
+
+	InitProjectileSettings();
 }
 
 void AProjectile::InitialisePower(int power)
@@ -40,6 +36,8 @@ void AProjectile::InitialisePower(int power)
 	ownPower = power;
 	projectileCurrentParam = powerParameters[power];
 
+	InitParameters();
+	
 	//Set here: POWER, HEIGHT, WIDTH, SPEED, SIZE OF COLLIDER
 }
 
@@ -49,10 +47,6 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 {
 	if (actorParent == OverlappedComp->GetAttachParentActor()) return;
 	
-	if (!OtherComp->ComponentTags.Contains("Player")) GetDestroyed();
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("Collision")));
-
-
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
 		 // disable collider to detected self
@@ -65,16 +59,18 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 			{
 			case EProjectileType::Player:
 				{
+					if (!OtherComp->ComponentTags.Contains("Player")) break;
+					
 					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
 					else return;
 				};
 			
 			case EProjectileType::Bullet:
 				{
-					if (!canAccess) return;
+					if (!canAccess) break;
 					
 					TObjectPtr<AProjectile> otherBullet = interface->GetProjectile();
-					if (otherBullet == nullptr) return;
+					if (otherBullet == nullptr) break;
 					
 					int otherPower = otherBullet->GetPower();
 					
@@ -104,11 +100,8 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 			case EProjectileType::DestructWall:
 				{
 					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
-					else return;
+					else break;
 				};
-
-			default:
-				GetDestroyed();
 			}
 		}
 		else
@@ -122,6 +115,9 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	currentLifeSpan += DeltaTime * projectileCurrentParam.speed;
+	if (currentLifeSpan >= projectileCurrentParam.lifeSpan) GetDestroyed();
 }
 
 
@@ -154,5 +150,24 @@ void AProjectile::FakeDestroy(int power) // Produce a destruction effect and res
 	// Call an Explosion effect
 	InitialisePower(power);
 }
+
+FProjectileParameters AProjectile::GetCurrentParam()
+{
+	return projectileCurrentParam;
+}
+
+void AProjectile::InitProjectileSettings()
+{
+	ProjectileSettings = GetDefault<UProjectileSettings>();
+	if (ProjectileSettings == nullptr) return;
+	
+	powerParameters.Add( 0, FProjectileParameters(ProjectileSettings->speed_0, ProjectileSettings->width_0, ProjectileSettings->height_0, ProjectileSettings->lifespan_0));
+	powerParameters.Add( 1, FProjectileParameters(ProjectileSettings->speed_1, ProjectileSettings->width_1, ProjectileSettings->height_1, ProjectileSettings->lifespan_1));
+	powerParameters.Add( 2, FProjectileParameters(ProjectileSettings->speed_2, ProjectileSettings->width_2, ProjectileSettings->height_2, ProjectileSettings->lifespan_2));
+	powerParameters.Add( 3, FProjectileParameters(ProjectileSettings->speed_3, ProjectileSettings->width_3, ProjectileSettings->height_3, ProjectileSettings->lifespan_3));
+}
+
+void AProjectile::InitParameters_Implementation() {}
+
 
 

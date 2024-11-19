@@ -46,13 +46,17 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Red,
-		FString::Printf(TEXT("Tick State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Tick State %d"), GetStateID())
+	// );
 
+	if (IsKeyWasPressed(EKeys::O)) {
+		Character->SetStunTime(5.f);
+		StateMachine->ChangeState(EBeamCharacterStateID::Stun);
+	}
 
 	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
