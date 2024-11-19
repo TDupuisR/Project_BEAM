@@ -131,25 +131,70 @@ int AMatchGameMode::GetSelectedPair() const
 	return SelectedPair;
 }
 
+void AMatchGameMode::SetPairNumberMax(int NewMax)
+{
+	PairNumberMax = NewMax;
+}
+
+int AMatchGameMode::GetPairNumberMax() const
+{
+	return PairNumberMax;
+}
+
 void AMatchGameMode::NewPair(int Max)
 {
-	SetSelectedPair(FMath::RandRange(0, Max));
+	if (Max == 0) return;
+
+	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
+
+	if (BeamGameInstance == nullptr) return;
+
+	int random = FMath::RandRange(0, Max);
+
+	if (BeamGameInstance->GetLastSpawnNumber() == random) {
+		BeamGameInstance->SetLastSpawnNumber(random);
+		BeamGameInstance->SetNumberPairAppeared(BeamGameInstance->GetNumberPairAppeared() + 1);
+
+		if (BeamGameInstance->GetNumberPairAppeared() >= 3) {
+			BeamGameInstance->SetNumberPairAppeared(0);
+			random = 0;
+
+			if (random != BeamGameInstance->GetLastSpawnNumber()) {
+				BeamGameInstance->SetLastSpawnNumber(random);
+			}
+			else {
+				random = 1;
+				BeamGameInstance->SetLastSpawnNumber(random);
+			}
+		}
+	}
+	else {
+		BeamGameInstance->SetNumberPairAppeared(0);
+	}
+
+
+	SetSelectedPair(random);
+
+	
+
 }
 
 void AMatchGameMode::CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoints)
 {
 
-	int Max = 0;
+
+	SetPairNumberMax(0);
 
 	for (int i = 0; i < PlayerStartsPoints.Num(); i++)
 	{
-		if (PlayerStartsPoints[i]->SpawnPair > Max)
+		if (PlayerStartsPoints[i]->SpawnPair > GetPairNumberMax())
 		{
-			Max = PlayerStartsPoints[i]->SpawnPair;
+			SetPairNumberMax(PlayerStartsPoints[i]->SpawnPair);
 		}
 	}
 
-	NewPair(Max);
+	NewPair(GetPairNumberMax());
 }
 
 void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
@@ -244,6 +289,8 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 	{
 
 		if (SpawnPoint->SpawnPair != GetSelectedPair()) continue;
+
+		
 
 		if (listInputTypes.Num() <= 0) continue;
 

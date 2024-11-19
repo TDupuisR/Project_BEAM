@@ -73,3 +73,23 @@ void UGM_BeamGameInstance::SetMatchType(EMatchTypeID NewMatchType)
 {
 	MatchType = NewMatchType;
 }
+
+void UGM_BeamGameInstance::SetLastSpawnNumber(int NewSpawnNumber)
+{
+	LastSpawnNumber = NewSpawnNumber;
+}
+
+int UGM_BeamGameInstance::GetLastSpawnNumber()
+{
+	return LastSpawnNumber;
+}
+
+void UGM_BeamGameInstance::SetNumberPairAppeared(int NewNumber)
+{
+	NumberPairAppeared = NewNumber;
+}
+
+int UGM_BeamGameInstance::GetNumberPairAppeared()
+{
+	return NumberPairAppeared;
+}
