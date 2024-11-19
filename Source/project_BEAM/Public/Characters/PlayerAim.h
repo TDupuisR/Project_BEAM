@@ -53,7 +53,7 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AProjectile> ProjectileActor;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	FVector aimPos;
 	
 private:

@@ -95,5 +95,4 @@ private:
 	bool canAccess = true;
 	UPROPERTY()
 	float currentLifeSpan;
-	
 };

@@ -50,24 +50,23 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 {
 	if(shootDelay <= 0.f)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("Shot Delay good")));
-		if(ProjectileActor)
-		{
-			FVector newDir = FVector(direction.X, .0f, -direction.Y);
-			FActorSpawnParameters spawnParams;
-			spawnParams.Owner = Character->GetOwner();
-			spawnParams.Instigator = Character->GetInstigator();
-		
-			AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
-			if(projectile == nullptr) return;
+		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("Shot Delay good")));
+		if(!ProjectileActor) GEngine->AddOnScreenDebugMessage(-1,20.f,FColor::Red,FString::Printf(TEXT("No ProjectileActor")));
 
-			if (power > 3) power = 3;
-			if (power < 0) power = 0;
-			projectile->InitialisePower(power);
-			projectile->actorParent = playerActor;
-			GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
-			Character->KnockBack(-newDir, 1000.f);
-		}
+		FVector newDir = FVector(direction.X, .0f, -direction.Y);
+		FActorSpawnParameters spawnParams;
+		spawnParams.Owner = Character->GetOwner();
+		spawnParams.Instigator = Character->GetInstigator();
+		
+		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
+		if(projectile == nullptr) return;
+
+		if (power > 3) power = 3;
+		if (power < 0) power = 0;
+		projectile->InitialisePower(power);
+		projectile->actorParent = playerActor;
+		//GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
+		Character->KnockBack(-newDir, 1000.f);
 	}
 	shootDelay = shootDelayInit;
 }

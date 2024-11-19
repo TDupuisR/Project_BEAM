@@ -152,8 +152,10 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "Temps maximal du QTE"))
 	float QTEMaxTime;
 
-	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux"));
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux (Phase 1)"));
 	TArray<float> QTETimeStamp;
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux (Phase 2)"));
+	float QTETimeStampPhase2;
 
 	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "temps d'attente après dernier chargement"));
 	float QTELastWait;

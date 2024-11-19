@@ -357,6 +357,10 @@ private:
 	void DisplayQte();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
 	void HideQte();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void PassQte();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void FailQte();
 #pragma endregion
 
 #pragma region FollowTarget
