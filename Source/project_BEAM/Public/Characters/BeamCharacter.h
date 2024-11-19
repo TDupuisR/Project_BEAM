@@ -343,6 +343,8 @@ private:
 	public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
 	void DisplayQte();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void HideQte();
 #pragma endregion
 
 #pragma region FollowTarget

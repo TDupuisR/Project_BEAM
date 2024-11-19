@@ -34,7 +34,7 @@ void UWeaponCharge::StartWeaponCharge()
 	chargeWasPushed = false;
 	isQteActive = true;
 
-	Character->DisplayQte_Implementation();
+	Character->DisplayQte();
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
@@ -42,6 +42,7 @@ void UWeaponCharge::CancelWeaponCharge(bool isFail)
 {
 	isQteActive = false;
 	pointAim->ShotCall(power);
+	Character->HideQte();
 	OnFailEvent.Broadcast();
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
