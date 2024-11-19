@@ -51,4 +51,20 @@ private:
 
 #pragma endregion
 
+#pragma region SpawnPairs
+
+public:
+	void SetSelectedPair(int NewPair);
+
+	int GetSelectedPair() const;
+
+private:
+	int SelectedPair = 0;
+
+	void NewPair(int Max);
+
+	void CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoints);
+
+#pragma endregion
+
 };

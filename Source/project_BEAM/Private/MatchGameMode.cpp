@@ -11,6 +11,7 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
 
+
 void AMatchGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -18,6 +19,7 @@ void AMatchGameMode::BeginPlay()
 	
 	TArray<AArenaPlayerStart*> PlayerStartsPoints;
 	FindPlayerStartActorsInArena(PlayerStartsPoints);
+	CalculateNewPair(PlayerStartsPoints);
 	SpawnCharacters(PlayerStartsPoints);
 	AddEventsPlayers();
 
@@ -119,6 +121,37 @@ void AMatchGameMode::AddEventsPlayers() const
 	}
 }
 
+void AMatchGameMode::SetSelectedPair(int NewPair)
+{
+	SelectedPair = NewPair;
+}
+
+int AMatchGameMode::GetSelectedPair() const
+{
+	return SelectedPair;
+}
+
+void AMatchGameMode::NewPair(int Max)
+{
+	SetSelectedPair(FMath::RandRange(0, Max));
+}
+
+void AMatchGameMode::CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoints)
+{
+
+	int Max = 0;
+
+	for (int i = 0; i < PlayerStartsPoints.Num(); i++)
+	{
+		if (PlayerStartsPoints[i]->SpawnPair > Max)
+		{
+			Max = PlayerStartsPoints[i]->SpawnPair;
+		}
+	}
+
+	NewPair(Max);
+}
+
 void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 {
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
@@ -203,9 +236,38 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 	UBeamCharacterInputData* InputData = LoadInputDataFromConfig();
 	UInputMappingContext* InputMappingContext = LoadInputMappingContextFromConfig();
 
+	uint8_t PlayerInstantiated = 0;
+
+	TArray<EAutoReceiveInput::Type> listInputTypes = {EAutoReceiveInput::Player0 ,EAutoReceiveInput::Player1};
+
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
 	{
-		EAutoReceiveInput::Type InputType = SpawnPoint->AutoReceiveInput.GetValue();
+
+		if (SpawnPoint->SpawnPair != GetSelectedPair()) continue;
+
+		if (listInputTypes.Num() <= 0) continue;
+
+		EAutoReceiveInput::Type InputType = SpawnPoint->AutoReceiveInput;
+
+		uint8_t RandomNumber = 0;
+
+
+		if (listInputTypes.Num() > 0) {
+			RandomNumber = FMath::RandRange(0, listInputTypes.Num()-1);
+			InputType = listInputTypes[RandomNumber];
+		}
+
+		
+
+		SpawnPoint->AutoReceiveInput = InputType;
+
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			20.0f,
+			FColor::Purple,
+			FString::Printf(TEXT("INPUT TYPE : %d"), InputType)
+		);
+
 		TSubclassOf<ABeamCharacter> SmashCharacterClass = GetSmashCharacterClassFromInputType(InputType);
 		if (SmashCharacterClass == nullptr) continue;
 
@@ -222,6 +284,11 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
 
 		CharactersInArena.Add(NewCharacter);
+
+		listInputTypes.RemoveAt(RandomNumber);
+
+		PlayerInstantiated++;
+
 	}
 }
 
