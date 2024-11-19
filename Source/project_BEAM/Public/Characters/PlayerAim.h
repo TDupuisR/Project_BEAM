@@ -55,6 +55,10 @@ protected:
 	TSubclassOf<class AProjectile> ProjectileActor;
 	UPROPERTY()
 	FVector aimPos;
+	UPROPERTY()
+	FVector2D aimDir;
+	UPROPERTY()
+	bool isAimWhileCharge;
 	
 private:
 	UPROPERTY(EditAnywhere)

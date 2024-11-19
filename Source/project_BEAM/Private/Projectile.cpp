@@ -148,6 +148,7 @@ void AProjectile::GetDestroyed() // Destroy the projectile
 void AProjectile::FakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {
 	// Call an Explosion effect
+	SpawnEm
 	InitialisePower(power);
 }
 

@@ -31,7 +31,7 @@ void UPlayerAim::InitWeapon(UWeaponCharge* playerWeapon)
 
 void UPlayerAim::ShotCall(int power)
 {
-	Shoot(aimPos, Character->GetInputAim().GetSafeNormal(), Character, power);
+	Shoot(aimPos, aimDir.GetSafeNormal(), Character, power);
 }
 
 bool UPlayerAim::GetIsActive() const
@@ -54,6 +54,8 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 		if(ProjectileActor)
 		{
 			FVector newDir = FVector(direction.X, .0f, -direction.Y);
+			if(newDir == FVector::ZeroVector) newDir = FVector(Character->GetOrientX(), .0f, .0f);
+			
 			FActorSpawnParameters spawnParams;
 			spawnParams.Owner = Character->GetOwner();
 			spawnParams.Instigator = Character->GetInstigator();
@@ -90,7 +92,21 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 		if (Weapon->GetIsQteActive()) Weapon->CancelWeaponCharge(false); //if qte still active -> deactivate Qte
 	}
 
-	aimPos = AimCursorPos(Character->GetInputAim(), Character->GetActorLocation());
+	// Aim Position
+	if (Character->GetInputAim() != FVector2D::ZeroVector)
+	{
+		aimDir = Character->GetInputAim();
+		aimPos = AimCursorPos(aimDir, Character->GetActorLocation());
+
+		if (Weapon->GetIsQteActive() && !isAimWhileCharge) isAimWhileCharge = true;
+	}
+	else if (Character->GetInputMove() != FVector2D::ZeroVector && !isAimWhileCharge)
+	{
+		aimDir = Character->GetInputMove();
+		aimPos = AimCursorPos(aimDir, Character->GetActorLocation());
+	}
+	if (!Weapon->GetIsQteActive() && isAimWhileCharge) isAimWhileCharge = false;
+	
 	
 	if (shootDelay > .0f) shootDelay -= GetWorld()->GetDeltaSeconds();
 }
