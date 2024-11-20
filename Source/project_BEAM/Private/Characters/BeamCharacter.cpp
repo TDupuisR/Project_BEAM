@@ -71,9 +71,10 @@ void ABeamCharacter::Tick(float DeltaTime)
 
 	// Check if he is shooting -> can't move if he is charging in phase 1
 	//if (GetComponentByClass<UPlayerAim>() != nullptr) {
-	if (playerAim != nullptr) {
-		if (playerAim->GetIsActive() && !IsPhaseTwo()) {
+	if (weapon != nullptr) {
+		if (weapon->GetIsQteActive() && !IsPhaseTwo()) {
 			InputMove = FVector2D(0.f, 0.f);
+			InputJump = false;
 		}
 	}
 
@@ -170,6 +171,7 @@ void ABeamCharacter::InitCharacterSettings()
 	Life = MaxLife;
 	LifeToFly = CharacterSettings->LifeToFly;
 	timeToWaitPush = CharacterSettings->Push_Cooldown;
+	
 }
 
 void ABeamCharacter::ReattributeCharacterSettings()
@@ -336,6 +338,8 @@ void ABeamCharacter::TakeDamage(const int Damage)
 		}
 	}
 	CheckLife();
+
+	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 
 }
 
@@ -522,6 +526,9 @@ void ABeamCharacter::InitWeaponAndAim()
 	weapon->InitCharacter(this);
 	weapon->InitAim(playerAim);
 	playerAim->InitWeapon(weapon);
+
+	if (CharacterSettings == nullptr) return;
+	playerAim->Radius = CharacterSettings->RadiusShoot;
 
 }
 
