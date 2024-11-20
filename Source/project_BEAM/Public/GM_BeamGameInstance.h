@@ -63,9 +63,27 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetMatchType(EMatchTypeID NewMatchType);
 
+	UFUNCTION(BlueprintCallable)
+	void SetLastSpawnNumber(int NewSpawnNumber);
+
+	UFUNCTION(BlueprintCallable)
+	int GetLastSpawnNumber();
+
+	UFUNCTION(BlueprintCallable)
+	void SetNumberPairAppeared(int NewNumber);
+
+	UFUNCTION(BlueprintCallable)
+	int GetNumberPairAppeared();
+
 private:
 	UPROPERTY()
 	int Manche = 0;
+
+	UPROPERTY()
+	int LastSpawnNumber = 0;
+
+	UPROPERTY()
+	int NumberPairAppeared = 0;
 
 	UPROPERTY()
 	TArray<int> PlayerPoints = {0, 0};

@@ -42,7 +42,11 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "La masse du character :O"))
 	double Mass;
 
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "La valeur minimale pour que le minimum en velocity en Z soit de X pour stun avec la chute"))
+	float MinVelocityZStunFall;
 
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Multiplier pour le stun avec la chute"))
+	float MultiplyerStunFall;
 
 #pragma endregion
 
@@ -111,8 +115,10 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Temps de cooldown pour le push"))
 	float Push_Cooldown;
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Force de Knockback des tirs"))
 	TArray<float> ChargesKnockbacks;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Force de Knockback des projectils recu"))
+	TArray<float> DamageKnockbacks;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Taille de la zone"))
 	FVector2D ZoneKnockback_Size;
@@ -138,16 +144,35 @@ public:
 
 #pragma endregion
 
+#pragma region Shoot&Aim
+
+	UPROPERTY(Config, EditAnywhere, Category = "Shoot&Aim", meta = (ToolTip = "Cooldown entre chaque tir"))
+	float ShootCoolDown;
+	
+#pragma endregion
+	
 #pragma region QTE
 public:
 	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "Temps maximal du QTE"))
 	float QTEMaxTime;
 
-	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux"));
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux (Phase 1)"));
 	TArray<float> QTETimeStamp;
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux (Phase 2)"));
+	float QTETimeStampPhase2;
 
 	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "temps d'attente après dernier chargement"));
 	float QTELastWait;
 	
 #pragma endregion
+
+#pragma region Aim
+
+public:
+	UPROPERTY(Config, EditAnywhere, Category = "Aim", meta = (ToolTip = "Vitesse du curseur"));
+	float SpeedCursor;
+
+
+#pragma endregion
+
 };

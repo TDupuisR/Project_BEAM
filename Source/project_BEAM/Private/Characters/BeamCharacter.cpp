@@ -324,9 +324,16 @@ void ABeamCharacter::TakeDamage(const int Damage)
 		return;
 	}
 
-	Life -= Damage;
-	if (Life <= 0) {
-		Life = 0;
+	if (Damage >= 4 && Life == MaxLife)
+	{
+		Life = 1;
+	}
+	else
+	{
+		Life -= Damage;
+		if (Life <= 0) {
+			Life = 0;
+		}
 	}
 	CheckLife();
 
@@ -492,6 +499,8 @@ float ABeamCharacter::GetMultiplierStun()
 {
 	return MultiplierStun;
 }
+
+
 bool ABeamCharacter::IsFollowable()
 {
 	return true;
@@ -753,3 +762,13 @@ bool ABeamCharacter::GetInputShoot() const { return InputShoot; }
 bool ABeamCharacter::GetInputPush() const { return InputPush; }
 
 bool ABeamCharacter::GetInputFly() const { return InputFly; }
+
+
+void ABeamCharacter::DisplayQte_Implementation() {}
+void ABeamCharacter::HideQte_Implementation() {}
+void ABeamCharacter::PassQte_Implementation() {}
+void ABeamCharacter::FailQte_Implementation() {}
+
+void ABeamCharacter::GunBuildUp_Implementation() {}
+
+

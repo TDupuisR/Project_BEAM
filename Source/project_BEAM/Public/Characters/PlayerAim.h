@@ -42,19 +42,28 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	bool GetIsActive() const;
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetAimPos();
 	
 protected:
 	// Called when the game starts
 	
 	UFUNCTION(BlueprintCallable)
-	FVector AimCursorPos(const FVector2D& dir, const FVector& playerPos);
+	FVector AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed);
 	UFUNCTION(BlueprintCallable)
 	void Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power);
+	UFUNCTION(BlueprintCallable)
+	float GetShootDelay();
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AProjectile> ProjectileActor;
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	FVector aimPos;
+	UPROPERTY()
+	FVector2D aimDir;
+	UPROPERTY()
+	bool isAimWhileCharge;
 	
 private:
 	UPROPERTY(EditAnywhere)

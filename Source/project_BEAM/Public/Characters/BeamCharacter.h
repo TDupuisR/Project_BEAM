@@ -114,7 +114,7 @@ public:
 	UFUNCTION() bool GetInputDash() const;
 
 	UFUNCTION() bool GetInputCharge() const;
-	UFUNCTION() FVector2D GetInputAim() const;
+	UFUNCTION(BlueprintCallable) FVector2D GetInputAim() const;
 	UFUNCTION() bool GetInputShoot() const;
 
 	UFUNCTION() bool GetInputPush() const;
@@ -349,6 +349,21 @@ private:
 	UFUNCTION()
 	void playerAimInit();
 
+	UPROPERTY()
+	UBoxComponent* boxAim;
+
+#pragma endregion
+
+#pragma region UI
+	public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void DisplayQte();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void HideQte();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void PassQte();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void FailQte();
 #pragma endregion
 
 #pragma region FollowTarget
@@ -381,6 +396,10 @@ private:
 
 #pragma endregion
 
-
+#pragma region VFX
+	public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Player VFX")
+	void GunBuildUp();
+#pragma endregion
 
 };
