@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "Characters/BeamCharacter.h"
 #include "WeaponCharge.h"
+#include "Characters/BeamCharacterSettings.h"
 
 
 // Sets default values for this component's properties
@@ -48,6 +49,9 @@ FVector UPlayerAim::GetAimPos()
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed = 10)
 {	
 
+	if (interpSpeed == 10) {
+		interpSpeed = Character->GetCharacterSettings()->SpeedCursor;
+	}
 
 	FVector2D DirNormal = dir.GetSafeNormal();
 

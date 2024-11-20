@@ -155,4 +155,14 @@ public:
 	float QTELastWait;
 	
 #pragma endregion
+
+#pragma region Aim
+
+public:
+	UPROPERTY(Config, EditAnywhere, Category = "Aim", meta = (ToolTip = "Vitesse du curseur"));
+	float SpeedCursor;
+
+
+#pragma endregion
+
 };
