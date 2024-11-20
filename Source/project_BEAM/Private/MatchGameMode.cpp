@@ -141,6 +141,29 @@ int AMatchGameMode::GetPairNumberMax() const
 	return PairNumberMax;
 }
 
+void AMatchGameMode::CheckSpawnPairs(TArray<AArenaPlayerStart*> PlayerStartsPoints)
+{
+
+	TArray<int> listPairsMax;
+
+	for (int i = 0; i < GetPairNumberMax()+1; i++) {
+		listPairsMax.Add(0);
+	}
+
+	for (AArenaPlayerStart* SpawnPoint : PlayerStartsPoints) { 
+		listPairsMax[SpawnPoint->SpawnPair]++;
+	}
+
+	for (int i = 0; i < listPairsMax.Num(); i++) {
+		if (listPairsMax[i] > 1) {
+			listSpawnPairPossible.Add(i);
+		}
+		else {
+			UE_LOG(LogTemp, Error, TEXT("PAIR NOT POSSIBLE : %d"), listPairsMax[i]);
+		}
+	}
+}
+
 void AMatchGameMode::NewPair(int Max)
 {
 	if (Max == 0) return;
@@ -150,22 +173,22 @@ void AMatchGameMode::NewPair(int Max)
 
 	if (BeamGameInstance == nullptr) return;
 
-	int random = FMath::RandRange(0, Max);
+	int random = FMath::RandRange(0, listSpawnPairPossible.Num()-1);
 
-	if (BeamGameInstance->GetLastSpawnNumber() == random) {
-		BeamGameInstance->SetLastSpawnNumber(random);
+	if (BeamGameInstance->GetLastSpawnNumber() == listSpawnPairPossible[random]) {
+		BeamGameInstance->SetLastSpawnNumber(listSpawnPairPossible[random]);
 		BeamGameInstance->SetNumberPairAppeared(BeamGameInstance->GetNumberPairAppeared() + 1);
 
 		if (BeamGameInstance->GetNumberPairAppeared() >= 3) {
 			BeamGameInstance->SetNumberPairAppeared(0);
-			random = 0;
+			listSpawnPairPossible[0];
 
-			if (random != BeamGameInstance->GetLastSpawnNumber()) {
-				BeamGameInstance->SetLastSpawnNumber(random);
+			if (listSpawnPairPossible[random] != BeamGameInstance->GetLastSpawnNumber()) {
+				BeamGameInstance->SetLastSpawnNumber(listSpawnPairPossible[random]);
 			}
 			else {
-				random = 1;
-				BeamGameInstance->SetLastSpawnNumber(random);
+				listSpawnPairPossible[1];
+				BeamGameInstance->SetLastSpawnNumber(listSpawnPairPossible[random]);
 			}
 		}
 	}
@@ -174,7 +197,7 @@ void AMatchGameMode::NewPair(int Max)
 	}
 
 
-	SetSelectedPair(random);
+	SetSelectedPair(listSpawnPairPossible[random]);
 
 	
 
@@ -193,7 +216,8 @@ void AMatchGameMode::CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoi
 			SetPairNumberMax(PlayerStartsPoints[i]->SpawnPair);
 		}
 	}
-
+	
+	CheckSpawnPairs(PlayerStartsPoints);
 	NewPair(GetPairNumberMax());
 }
 
