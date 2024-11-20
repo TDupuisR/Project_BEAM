@@ -94,6 +94,11 @@ float UWeaponCharge::GetQteTimeStamp() const
 	else return qteTimeStamp[power];
 }
 
+int UWeaponCharge::GetQtePower() const
+{
+	return power;
+}
+
 
 // Called every frame
 void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

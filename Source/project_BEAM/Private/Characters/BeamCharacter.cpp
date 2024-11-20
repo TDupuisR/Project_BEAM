@@ -769,3 +769,6 @@ void ABeamCharacter::HideQte_Implementation() {}
 void ABeamCharacter::PassQte_Implementation() {}
 void ABeamCharacter::FailQte_Implementation() {}
 
+void ABeamCharacter::GunBuildUp_Implementation() {}
+
+
