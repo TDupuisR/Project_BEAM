@@ -172,6 +172,9 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Aim", meta = (ToolTip = "Vitesse du curseur"));
 	float SpeedCursor;
 
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Radius pour le tir autour du joueur"));
+	float RadiusShoot;
+
 
 #pragma endregion
 
