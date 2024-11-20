@@ -18,6 +18,8 @@ void UBeamCharacterStateFall::StateEnter(EBeamCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
 
+	ZVelocity = 0;
+
 	/*GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
@@ -57,12 +59,24 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 	
-	// GEngine->AddOnScreenDebugMessage(
-	// 	-1,
-	// 	0.1f,
-	// 	FColor::Blue,
-	// 	FString::Printf(TEXT("STATE TICK FALL"))
-	// );
+	if (Character->GetMovementComponent()->Velocity.Z < ZVelocity) {
+		ZVelocity = Character->GetMovementComponent()->Velocity.Z;
+	}
+
+	 GEngine->AddOnScreenDebugMessage(
+	 	-1,
+	 	0.1f,
+	 	FColor::Blue,
+	 	FString::Printf(TEXT("STATE TICK FALL"))
+	 );
+
+	 GEngine->AddOnScreenDebugMessage(
+		 -1,
+		 0.1f,
+		 FColor::Purple,
+		 FString::Printf(TEXT("%f"), ZVelocity)
+	 );
+
 
 	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
@@ -92,8 +106,22 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 	}
 
 
-	if (Character->GetMovementComponent()->IsMovingOnGround()) {
-		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
+	if (Character->GetMovementComponent()->IsMovingOnGround() || Character->GetMovementComponent()->Velocity.Z >= 0) {
+
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			5.f,
+			FColor::Purple,
+			FString::Printf(TEXT("%f"), ZVelocity)
+		);	
+
+		if (Character->GetCharacterSettings()->MinVelocityZStunFall < FMath::Abs(ZVelocity)) {
+			Character->SetStunTime((Character->GetCharacterSettings()->MultiplyerStunFall / 1000) * FMath::Abs(ZVelocity));
+			StateMachine->ChangeState(EBeamCharacterStateID::Stun);
+		}
+		else {
+			StateMachine->ChangeState(EBeamCharacterStateID::Idle);
+		}
 	}
 
 	if (Character->GetInputJump() && canCoyote) {

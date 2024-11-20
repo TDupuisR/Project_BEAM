@@ -30,6 +30,13 @@ void UBeamCharacterStateStun::StateEnter(EBeamCharacterStateID PreviousStateID)
 
 		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 	}
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		10.f,
+		FColor::Blue,
+		FString::Printf(TEXT("STUN TIME %f"), Character->GetStunTime())
+	);
 }
 
 void UBeamCharacterStateStun::StateExit(EBeamCharacterStateID NextStateID)
@@ -54,12 +61,12 @@ void UBeamCharacterStateStun::StateTick(float DeltaTime)
 
 	stunTimer += DeltaTime;
 
-	// GEngine->AddOnScreenDebugMessage(
-	// 	-1,
-	// 	0.1f,
-	// 	FColor::Blue,
-	// 	FString::Printf(TEXT("STATE TICK STUN"))
-	// );
+	 GEngine->AddOnScreenDebugMessage(
+	 	-1,
+	 	0.1f,
+	 	FColor::Blue,
+	 	FString::Printf(TEXT("STATE TICK STUN"))
+	 );
 
 	if (stunTimer >= timeToStun) {
 		stunTimer = 0.f;
