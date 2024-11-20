@@ -38,6 +38,8 @@ public:
 	float GetQteMaxTime() const;
 	UFUNCTION(BlueprintCallable)
 	float GetQteTimeStamp() const;
+	UFUNCTION(BlueprintCallable)
+	int GetQtePower() const;
 	
 	
 	UPROPERTY(BlueprintReadWrite)

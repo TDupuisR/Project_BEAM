@@ -396,6 +396,10 @@ private:
 
 #pragma endregion
 
-
+#pragma region VFX
+	public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Player VFX")
+	void GunBuildUp();
+#pragma endregion
 
 };
