@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "Characters/BeamCharacter.h"
 #include "WeaponCharge.h"
+#include "Characters/BeamCharacterSettings.h"
 
 
 // Sets default values for this component's properties
@@ -20,6 +21,7 @@ UPlayerAim::UPlayerAim()
 void UPlayerAim::InitCharacter(ABeamCharacter* playerCharacter)
 {
 	Character = playerCharacter;
+	shootDelayInit = Character->GetCharacterSettings()->ShootCoolDown;
 }
 
 void UPlayerAim::InitWeapon(UWeaponCharge* playerWeapon)
@@ -55,6 +57,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 
 		FVector newDir = FVector(direction.X, .0f, direction.Y);
 		if(newDir == FVector::ZeroVector) newDir = FVector(Character->GetOrientX(), .0f, .0f);
+		if(newDir == FVector::ZeroVector) newDir = FVector(1.f, .0f, .0f);
 
 		FActorSpawnParameters spawnParams;
 		spawnParams.Owner = Character->GetOwner();
@@ -68,9 +71,17 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 		projectile->InitialisePower(power);
 		projectile->actorParent = playerActor;
 		//GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
-		Character->KnockBack(-newDir, 1000.f);
+
+		if (Character->GetCharacterSettings()->ChargesKnockbacks.Num() >= power) Character->KnockBack(-newDir, 1000.f);
+		else Character->KnockBack(-newDir, Character->GetCharacterSettings()->ChargesKnockbacks[power]);
 	}
 	shootDelay = shootDelayInit;
+}
+
+float UPlayerAim::GetShootDelay()
+{
+	if (shootDelay < .0f) return .0f;
+	return shootDelay;
 }
 
 // Called every frame

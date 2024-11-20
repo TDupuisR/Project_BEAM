@@ -50,6 +50,8 @@ protected:
 	FVector AimCursorPos(const FVector2D& dir, const FVector& playerPos);
 	UFUNCTION(BlueprintCallable)
 	void Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power);
+	UFUNCTION(BlueprintCallable)
+	float GetShootDelay();
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AProjectile> ProjectileActor;
