@@ -171,6 +171,7 @@ void ABeamCharacter::InitCharacterSettings()
 	Life = MaxLife;
 	LifeToFly = CharacterSettings->LifeToFly;
 	timeToWaitPush = CharacterSettings->Push_Cooldown;
+	
 }
 
 void ABeamCharacter::ReattributeCharacterSettings()
@@ -525,6 +526,9 @@ void ABeamCharacter::InitWeaponAndAim()
 	weapon->InitCharacter(this);
 	weapon->InitAim(playerAim);
 	playerAim->InitWeapon(weapon);
+
+	if (CharacterSettings == nullptr) return;
+	playerAim->Radius = CharacterSettings->RadiusShoot;
 
 }
 
