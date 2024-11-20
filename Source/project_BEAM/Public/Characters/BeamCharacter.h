@@ -340,7 +340,7 @@ private:
 # pragma region Player Aim
 
 public:
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UPlayerAim> localPlayerAim;
 
 private:
@@ -357,13 +357,13 @@ private:
 #pragma region UI
 	public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void DisplayQte();
+	void DisplayQte(ABeamCharacter* Character);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void HideQte();
+	void HideQte(ABeamCharacter* Character);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void PassQte();
+	void PassQte(ABeamCharacter* Character);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void FailQte();
+	void FailQte(ABeamCharacter* Character);
 #pragma endregion
 
 #pragma region FollowTarget
@@ -390,9 +390,10 @@ private:
 	UFUNCTION()
 	void InitWeaponAndAim();
 
-	UPlayerAim* playerAim;
-
-	UWeaponCharge* weapon;
+	UPROPERTY()
+	UPlayerAim* componentPlayerAim;
+	UPROPERTY()
+	UWeaponCharge* componentWeapon;
 
 #pragma endregion
 

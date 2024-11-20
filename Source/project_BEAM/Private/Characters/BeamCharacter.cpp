@@ -32,7 +32,7 @@ EProjectileType ABeamCharacter::ProjectileGetType()
 
 bool ABeamCharacter::ProjectileContext(int power, FVector position)
 {
-	if (weapon->GetIsQteActive()) weapon->CancelWeaponCharge(true);
+	if (componentWeapon->GetIsQteActive()) componentWeapon->CancelWeaponCharge(true);
 	TakeDamage(power + 1);
 
 	FVector direction = GetActorLocation() - position;
@@ -69,10 +69,13 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (InputMove.X > .0f)SetOrientX(1.f);
+	if (InputMove.X < .0f)SetOrientX(-1.f);
+	
 	// Check if he is shooting -> can't move if he is charging in phase 1
 	//if (GetComponentByClass<UPlayerAim>() != nullptr) {
-	if (weapon != nullptr) {
-		if (weapon->GetIsQteActive() && !IsPhaseTwo()) {
+	if (componentWeapon != nullptr) {
+		if (componentWeapon->GetIsQteActive() && !IsPhaseTwo()) {
 			InputMove = FVector2D(0.f, 0.f);
 			InputJump = false;
 		}
@@ -517,18 +520,18 @@ FVector ABeamCharacter::GetFollowPosition()
 
 void ABeamCharacter::InitWeaponAndAim()
 {
-	playerAim = GetComponentByClass<UPlayerAim>();
-	weapon = GetComponentByClass<UWeaponCharge>();
+	componentPlayerAim = GetComponentByClass<UPlayerAim>();
+	componentWeapon = GetComponentByClass<UWeaponCharge>();
 
-	if (playerAim == nullptr || weapon == nullptr) return;
+	if (componentPlayerAim == nullptr || componentWeapon == nullptr) return;
 
-	playerAim->InitCharacter(this);
-	weapon->InitCharacter(this);
-	weapon->InitAim(playerAim);
-	playerAim->InitWeapon(weapon);
+	componentPlayerAim->InitCharacter(this);
+	componentWeapon->InitCharacter(this);
+	componentWeapon->InitAim(componentPlayerAim);
+	componentPlayerAim->InitWeapon(componentWeapon);
 
 	if (CharacterSettings == nullptr) return;
-	playerAim->Radius = CharacterSettings->RadiusShoot;
+	componentPlayerAim->Radius = CharacterSettings->RadiusShoot;
 
 }
 
@@ -771,10 +774,10 @@ bool ABeamCharacter::GetInputPush() const { return InputPush; }
 bool ABeamCharacter::GetInputFly() const { return InputFly; }
 
 
-void ABeamCharacter::DisplayQte_Implementation() {}
-void ABeamCharacter::HideQte_Implementation() {}
-void ABeamCharacter::PassQte_Implementation() {}
-void ABeamCharacter::FailQte_Implementation() {}
+void ABeamCharacter::DisplayQte_Implementation(ABeamCharacter* Character) {}
+void ABeamCharacter::HideQte_Implementation(ABeamCharacter* Character) {}
+void ABeamCharacter::PassQte_Implementation(ABeamCharacter* Character) {}
+void ABeamCharacter::FailQte_Implementation(ABeamCharacter* Character) {}
 
 void ABeamCharacter::GunBuildUp_Implementation() {}
 

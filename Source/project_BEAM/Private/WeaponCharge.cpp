@@ -34,7 +34,7 @@ void UWeaponCharge::StartWeaponCharge()
 	chargeWasPushed = false;
 	isQteActive = true;
 
-	Character->DisplayQte();
+	Character->DisplayQte(Character);
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
@@ -42,7 +42,7 @@ void UWeaponCharge::CancelWeaponCharge(bool noShoot)
 {
 	isQteActive = false;
 	if (!noShoot) pointAim->ShotCall(power);
-	Character->HideQte();
+	Character->HideQte(Character);
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
 }
@@ -125,11 +125,11 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 						qteTimeLeft = qteMaxTime;
 					
 						//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
-						Character->PassQte();
+						Character->PassQte(Character);
 					}
 					else // if QTE Fail
 					{
-						Character->FailQte();
+						Character->FailQte(Character);
 						CancelWeaponCharge(false);
 					}
 				}
@@ -142,6 +142,8 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				{
 					qteTimeLeft = qteFinaleDelay;
 					chargeWasPushed = false;
+
+					Character->HideQte(Character);
 				}
 			}
 			else // Phase Two
@@ -158,12 +160,12 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 						qteTimeLeft = qteMaxTime;
 					
 						//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
-						Character->PassQte();
+						Character->PassQte(Character);
 					}
 					else // if QTE Fail
 					{
 						CancelWeaponCharge(false);
-						Character->FailQte();
+						Character->FailQte(Character);
 					}
 				}
 				else if (!Character->GetInputCharge() && chargeWasPushed && power < 2)
@@ -175,6 +177,8 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 				{
 					qteTimeLeft = qteFinaleDelay;
 					chargeWasPushed = false;
+					
+					Character->HideQte(Character);
 				}
 			}
 			
