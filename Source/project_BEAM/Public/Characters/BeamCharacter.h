@@ -114,7 +114,7 @@ public:
 	UFUNCTION() bool GetInputDash() const;
 
 	UFUNCTION() bool GetInputCharge() const;
-	UFUNCTION() FVector2D GetInputAim() const;
+	UFUNCTION(BlueprintCallable) FVector2D GetInputAim() const;
 	UFUNCTION() bool GetInputShoot() const;
 
 	UFUNCTION() bool GetInputPush() const;
@@ -348,6 +348,9 @@ private:
 	void creatAim();
 	UFUNCTION()
 	void playerAimInit();
+
+	UPROPERTY()
+	UBoxComponent* boxAim;
 
 #pragma endregion
 

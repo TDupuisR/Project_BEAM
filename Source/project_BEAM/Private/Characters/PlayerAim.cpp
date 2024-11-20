@@ -39,11 +39,29 @@ bool UPlayerAim::GetIsActive() const
 	return wasShootTriggered;
 }
 
+FVector UPlayerAim::GetAimPos()
+{
+	return aimPos;
+}
 
-FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos)
+
+FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed = 10)
 {	
+
+
 	FVector2D DirNormal = dir.GetSafeNormal();
-	return FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius );
+
+	//GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Blue, TEXT("DirNormal : %s", DirNormal.ToString()));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("DirNormal : %s"), *DirNormal.ToString()));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("DirNormal : %d"), DirNormal.Length()));
+
+	FVector TargetPos = FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius);
+
+	FVector newPos = FMath::VInterpTo(aimPos, TargetPos, DeltaTime, interpSpeed);
+
+	return newPos;
+
+
 }
 
 void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power)
@@ -79,6 +97,8 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
+	aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
+
 	if(Character->GetInputShoot() && !wasShootTriggered) //check input and if it was recently pressed
 	{
 		wasShootTriggered = true;
@@ -96,14 +116,14 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	if (Character->GetInputAim() != FVector2D::ZeroVector)
 	{
 		aimDir = Character->GetInputAim();
-		aimPos = AimCursorPos(aimDir, Character->GetActorLocation());
+		aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
 
 		if (Weapon->GetIsQteActive() && !isAimWhileCharge) isAimWhileCharge = true;
 	}
 	else if (Character->GetInputMove() != FVector2D::ZeroVector && !isAimWhileCharge)
 	{
 		aimDir = Character->GetInputMove();
-		aimPos = AimCursorPos(aimDir, Character->GetActorLocation());
+		aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
 	}
 	if (!Weapon->GetIsQteActive() && isAimWhileCharge) isAimWhileCharge = false;
 	
