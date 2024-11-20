@@ -14,6 +14,12 @@ void ULocalMultiplayerSubsystem::CreateAndInitPlayers()
 	//Création des PC gamepad
 	for(int i=0; i < LocalMultiplayerSettings->NbMaxGamepads; i++)
 	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			15.0f,
+			FColor::Purple,
+			FString::Printf(TEXT("INIT PLAYER : %d"), i)
+		);
 		UGameplayStatics::CreatePlayer(GetWorld(),-1);
 	}
 }
