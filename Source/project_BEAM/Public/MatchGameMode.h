@@ -44,9 +44,19 @@ public:
 	UFUNCTION()
 	void OnPlayerDeath(ABeamCharacter* pointeur);
 
+	UFUNCTION(BlueprintCallable)
+	bool GetMancheEnd() const;
+
+	void ResetLevel();
+
 private:
 	void AddEventsPlayers() const;
+
+	bool MancheEnd = false;
+
+	FTimerHandle TimerHandle;
 	
+
 
 
 #pragma endregion

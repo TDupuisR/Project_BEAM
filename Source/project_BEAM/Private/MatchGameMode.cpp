@@ -10,13 +10,18 @@
 #include "Arena/ArenaSettings.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
+#include "Blueprint/WidgetTree.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
+#include "HAL/PlatformProcess.h"
+
+
 
 
 void AMatchGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	CreateAndInitPlayers();
-	
+
 	TArray<AArenaPlayerStart*> PlayerStartsPoints;
 	FindPlayerStartActorsInArena(PlayerStartsPoints);
 	CalculateNewPair(PlayerStartsPoints);
@@ -226,6 +231,8 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
 	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
 
+	MancheEnd = true;
+
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		15.0f,
@@ -274,7 +281,8 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 		BeamGameInstance->ResetPlayerPoints();
 
 		// A enlever quand menu fin
-		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		//FPlatformProcess::Sleep(3.0f);
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 3.0f, false);
 
 		return;
 	}
@@ -308,6 +316,18 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 		BeamGameInstance->DeployEvent();
 
+		//TArray<UUserWidget*> FoundWidgets;
+		//UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, );
+
+		//for (UUserWidget* Widget : FoundWidgets)
+		//{
+		//	if (Widget->ComponentHasTag(FName("MyUniqueTag")))
+		//	{
+		//		// Found the widget with the specific tag
+		//		break;
+		//	}
+		//}
+
 		if (BeamGameInstance->GetPlayersPoints()[0] >= BeamGameInstance->GetMaxManche() || BeamGameInstance->GetPlayersPoints()[1] >= BeamGameInstance->GetMaxManche())
 		{
 			// END OF THE GAME
@@ -324,7 +344,10 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 		}
 		else {
-			UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+			//FPlatformProcess::Sleep(3.0f);
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 3.0f, false);
+
+			//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		}
 
 	}
@@ -333,6 +356,16 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 	
 
 
+}
+
+bool AMatchGameMode::GetMancheEnd() const
+{
+	return MancheEnd;
+}
+
+void AMatchGameMode::ResetLevel()
+{
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }
 
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
