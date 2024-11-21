@@ -205,7 +205,8 @@ void ABeamCharacter::KnockBack(FVector Direction, float Force)
 
 	if (!CanTakeKnockBack) return;
 
-	this->GetCharacterMovement()->Launch(Direction * Force);
+	GetCharacterMovement()->Launch(Direction * Force);
+	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 }
 
 void ABeamCharacter::Bounce(FVector Normal)
@@ -328,9 +329,15 @@ void ABeamCharacter::TakeDamage(const int Damage)
 
 	if (!CanTakeDamage) return;
 
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
+
 	if (HasShield()) {
 		SetShield(GetShield() - 1);
 		return;
+	}
+
+	if (Life > LifeToFly && Life-Damage <= LifeToFly) {
+		GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
 	}
 
 	if (Damage >= 4 && Life == MaxLife)
