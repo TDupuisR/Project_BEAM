@@ -32,7 +32,7 @@ EProjectileType ABeamCharacter::ProjectileGetType()
 
 bool ABeamCharacter::ProjectileContext(int power, FVector position)
 {
-	if (componentWeapon->GetIsQteActive()) componentWeapon->CancelWeaponCharge(true);
+	if (weaponComp->GetIsQteActive()) weaponComp->CancelWeaponCharge(true);
 	TakeDamage(power + 1);
 
 	FVector direction = GetActorLocation() - position;
@@ -73,9 +73,9 @@ void ABeamCharacter::Tick(float DeltaTime)
 	if (InputMove.X < .0f)SetOrientX(-1.f);
 	
 	// Check if he is shooting -> can't move if he is charging in phase 1
-	//if (GetComponentByClass<UPlayerAim>() != nullptr) {
-	if (componentWeapon != nullptr) {
-		if (componentWeapon->GetIsQteActive() && !IsPhaseTwo()) {
+	//if (GetComponentByClass<UplayerAimComp>() != nullptr) {
+	if (weaponComp != nullptr) {
+		if (weaponComp->GetIsQteActive() && !IsPhaseTwo()) {
 			InputMove = FVector2D(0.f, 0.f);
 			InputJump = false;
 		}
@@ -468,13 +468,13 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 
 void ABeamCharacter::creatAim()
 {
-	localPlayerAim = NewObject<UPlayerAim>(this);
+	//localplayerAimComp = NewObject<UPlayerAim>(this);
 }
 
 void ABeamCharacter::playerAimInit()
 {
-	if (localPlayerAim == nullptr) return;
-	localPlayerAim->InitCharacter(this);
+	//if (localPlayerAim == nullptr) return;
+	//localPlayerAim->InitCharacter(this);
 }
 
 void ABeamCharacter::Stun(float TimeToStun = 3.f)
@@ -518,20 +518,32 @@ FVector ABeamCharacter::GetFollowPosition()
 	return GetActorLocation();
 }
 
+UPlayerAim* ABeamCharacter::GetPlayerAimComp() const
+{
+	return playerAimComp;
+}
+
+UWeaponCharge* ABeamCharacter::GetWeaponComp() const
+{
+	return weaponComp;
+}
+
 void ABeamCharacter::InitWeaponAndAim()
 {
-	componentPlayerAim = GetComponentByClass<UPlayerAim>();
-	componentWeapon = GetComponentByClass<UWeaponCharge>();
+	playerAimComp = GetComponentByClass<UPlayerAim>();
+	weaponComp = GetComponentByClass<UWeaponCharge>();
 
-	if (componentPlayerAim == nullptr || componentWeapon == nullptr) return;
+	if (playerAimComp == nullptr || weaponComp == nullptr) return;
 
-	componentPlayerAim->InitCharacter(this);
-	componentWeapon->InitCharacter(this);
-	componentWeapon->InitAim(componentPlayerAim);
-	componentPlayerAim->InitWeapon(componentWeapon);
+	playerAimComp->InitCharacter(this);
+	weaponComp->InitCharacter(this);
+	weaponComp->InitAim(playerAimComp);
+	playerAimComp->InitWeapon(weaponComp);
+
+	localPlayerAim = playerAimComp;
 
 	if (CharacterSettings == nullptr) return;
-	componentPlayerAim->Radius = CharacterSettings->RadiusShoot;
+	playerAimComp->Radius = CharacterSettings->RadiusShoot;
 
 }
 

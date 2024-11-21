@@ -340,7 +340,7 @@ private:
 # pragma region Player Aim
 
 public:
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UPlayerAim> localPlayerAim;
 
 private:
@@ -386,14 +386,21 @@ public:
 
 #pragma region Shoot
 
+public:
+	UFUNCTION(BlueprintCallable)
+	UPlayerAim* GetPlayerAimComp() const;
+
+	UFUNCTION(BlueprintCallable)
+	UWeaponCharge* GetWeaponComp() const;
+
 private:
 	UFUNCTION()
 	void InitWeaponAndAim();
 
 	UPROPERTY()
-	UPlayerAim* componentPlayerAim;
+	UPlayerAim* playerAimComp;
 	UPROPERTY()
-	UWeaponCharge* componentWeapon;
+	UWeaponCharge* weaponComp;
 
 #pragma endregion
 
