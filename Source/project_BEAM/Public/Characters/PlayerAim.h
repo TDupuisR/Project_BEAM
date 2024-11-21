@@ -45,9 +45,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FVector GetAimPos();
-
-	UFUNCTION(BlueprintCallable)
-	void SetAimDir();
 	
 protected:
 	// Called when the game starts
@@ -55,7 +52,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	FVector AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed);
 	UFUNCTION(BlueprintCallable)
-	void Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power);
+	void Shoot(FVector spawnLocation, FVector2D direction, int power);
 	UFUNCTION(BlueprintCallable)
 	float GetShootDelay();
 	

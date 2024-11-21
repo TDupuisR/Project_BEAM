@@ -53,16 +53,17 @@ void ADestructibleWall::BeginPlay()
 void ADestructibleWall::GetDestroyed()
 {
 
-	switch (resistance) {
-		case 2 :{
+	switch (resistance)
+	{
+	case 2 :{
 			GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 50);
 			break;
-		}
-		case 3 : {
+	}
+	case 3 : {
 			GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
 			break;
-		}
-
+	}
+	}
 	//Play Animation
 	//Play Sound
 	this->Destroy();
