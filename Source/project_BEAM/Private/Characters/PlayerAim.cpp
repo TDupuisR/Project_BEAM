@@ -46,6 +46,11 @@ FVector UPlayerAim::GetAimPos()
 	return aimPos;
 }
 
+void UPlayerAim::SetAimDir()
+{
+	aimDir = Character->GetInputMove();;
+}
+
 
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed = 10)
 {	

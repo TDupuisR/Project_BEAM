@@ -45,6 +45,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FVector GetAimPos();
+
+	UFUNCTION(BlueprintCallable)
+	void SetAimDir();
 	
 protected:
 	// Called when the game starts

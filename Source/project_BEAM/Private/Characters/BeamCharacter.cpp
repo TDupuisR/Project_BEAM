@@ -76,8 +76,12 @@ void ABeamCharacter::Tick(float DeltaTime)
 	//if (GetComponentByClass<UplayerAimComp>() != nullptr) {
 	if (weaponComp != nullptr) {
 		if (weaponComp->GetIsQteActive() && !IsPhaseTwo()) {
+
+			playerAimComp->SetAimDir();
+
 			InputMove = FVector2D(0.f, 0.f);
 			InputJump = false;
+			InputJumpJoystick = false;
 		}
 	}
 
