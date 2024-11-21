@@ -71,6 +71,16 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 void UCameraWorldSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (isShaking) {
+		timerShake += DeltaTime;
+		if (timerShake >= timerShakeMax) {
+			isShaking = false;
+			timerShake = 0;
+			cameraFollowMode = ECameraFollowMode::Normal;
+		}
+	}
+
 	TickUpdateCameraZoom(DeltaTime);
 	TickUpdateCameraPosition(DeltaTime);
 }
@@ -98,12 +108,40 @@ void UCameraWorldSubsystem::TickUpdateCameraPosition(float DeltaTime)
 
 	if (CameraMain != nullptr)
 	{
+
 		FVector NewCameraPosition = CalculateAveragePositionBetweenTargets();
 
 		FVector posCamera = ArenaCamera->GetActorLocation();
 		ClampPositionIntoCameraBounds(NewCameraPosition);
 
-		ArenaCamera->SetActorLocation(FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z));
+		posToFollow = NewCameraPosition;
+
+		switch (cameraMode)
+		{
+		case ECameraMode::None:
+			break;
+		case ECameraMode::Follow:
+
+			switch (cameraFollowMode)
+			{
+			case ECameraFollowMode::Normal:
+				ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z), DeltaTime, cameraSpeed));
+				break;
+			case ECameraFollowMode::Shake:
+				ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X + FMath::RandRange(-shakeForce, shakeForce), posCamera.Y, NewCameraPosition.Z + FMath::RandRange(-shakeForce, shakeForce)), DeltaTime, cameraSpeed));
+				break;
+			default:
+				break;
+			}
+
+			break;
+		default:
+			break;
+		}
+
+
+
+		//ArenaCamera->SetActorLocation(FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z));
 	}
 }
 
@@ -140,6 +178,7 @@ void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
 
 
 	FVector newPosition = FVector(posCamera.X, zoomValue, posCamera.Z);
+
 
 	//UE_LOG(LogTemp, Warning, TEXT("POSITION NEW ZOOM : %s"), *newPosition.ToString());
 
@@ -366,6 +405,65 @@ void UCameraWorldSubsystem::InitCameraZoomParameters()
 	CameraZoomYMin = GetDefault<UBeamCameraSettings>()->CameraZoomYMin;
 	CameraZoomYMax = GetDefault<UBeamCameraSettings>()->CameraZoomYMax;
 
+}
+
+float UCameraWorldSubsystem::GetCameraSpeed() const
+{
+	return cameraSpeed;
+}
+
+float UCameraWorldSubsystem::GetShakeForce() const
+{
+	return shakeForce;
+}
+
+ECameraMode UCameraWorldSubsystem::GetCameraMode() const
+{
+	return cameraMode;
+}
+
+ECameraFollowMode UCameraWorldSubsystem::GetCameraFollowMode() const
+{
+	return cameraFollowMode;
+}
+
+FVector UCameraWorldSubsystem::GetPosToFollow() const
+{
+	return posToFollow;
+}
+
+bool UCameraWorldSubsystem::GetIsShaking() const
+{
+	return isShaking;
+}
+
+void UCameraWorldSubsystem::SetShakeForce(float NewShakeForce)
+{
+	shakeForce = NewShakeForce;
+}
+
+void UCameraWorldSubsystem::SetCameraSpeed(float NewCameraSpeed)
+{
+	cameraSpeed = NewCameraSpeed;
+}
+
+void UCameraWorldSubsystem::ChangeCameraMode(ECameraMode NewCameraMode)
+{
+	cameraMode = NewCameraMode;
+}
+
+void UCameraWorldSubsystem::ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode)
+{
+	cameraFollowMode = NewCameraFollowMode;
+}
+
+void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 100)
+{
+	timerShakeMax = Seconds;
+	timerShake = 0;
+	shakeForce = ForceShake;
+	isShaking = true;
+	cameraFollowMode = ECameraFollowMode::Shake;
 }
 
 

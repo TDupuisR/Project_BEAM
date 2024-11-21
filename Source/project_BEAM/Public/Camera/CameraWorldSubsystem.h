@@ -5,8 +5,11 @@
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
 #include <Arena/ArenaCamera.h>
+#include "CameraMode.h"
+#include "CameraFollowMode.h"
 
 #include "CameraWorldSubsystem.generated.h"
+
 
 class UObject;
 class UCameraComponent;
@@ -102,5 +105,79 @@ protected:
 
 #pragma endregion
 
+#pragma region CamereMode
+
+public:
+
+	/// GETTERS
+
+	UFUNCTION(BlueprintCallable)
+	float GetCameraSpeed() const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetShakeForce() const;
+
+	UFUNCTION(BlueprintCallable)
+	ECameraMode GetCameraMode() const;
+
+	UFUNCTION(BlueprintCallable)
+	ECameraFollowMode GetCameraFollowMode() const;
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetPosToFollow() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsShaking() const;
+
+	// SETTERS
+
+	UFUNCTION(BlueprintCallable)
+	void SetShakeForce(float NewShakeForce);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCameraSpeed(float NewCameraSpeed);
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeCameraMode(ECameraMode NewCameraMode);
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode);
+
+	UFUNCTION(BlueprintCallable)
+	void ShakeForSeconds(float Seconds, float ForceShake);
+
+
+
+private:
+
+	bool isShaking = false;
+
+	float timerShake = 0;
+
+	float timerShakeMax = 0;
+
+	float cameraSpeed = 10.f;
+
+	float shakeForce = 10;
+
+	FVector posToFollow;
+
+	ECameraMode cameraMode = ECameraMode::Follow;
+
+	ECameraFollowMode cameraFollowMode = ECameraFollowMode::Normal;
+
+#pragma endregion
 
 };
+
+//enum class ECameraMode : uint8
+//{
+//	None,
+//	Follow,
+//};
+
+//enum class ECameraFollowMode : uint8
+//{
+//	Normal,
+//	Shake,
+//};

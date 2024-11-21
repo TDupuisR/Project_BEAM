@@ -38,7 +38,7 @@ bool ABeamCharacter::ProjectileContext(int power, FVector position)
 	FVector direction = GetActorLocation() - position;
 	direction.Normalize();
 
-	KnockBack(direction, (power + 1) * 500.f); // Magic Number for the force, to dertemine how to tweak it
+	KnockBack(direction, GetCharacterSettings()->DamageKnockbacks[power], true); // Magic Number for the force, to dertemine how to tweak it
 
 	return true;
 }
@@ -75,13 +75,13 @@ void ABeamCharacter::Tick(float DeltaTime)
 	// Check if he is shooting -> can't move if he is charging in phase 1
 	//if (GetComponentByClass<UplayerAimComp>() != nullptr) {
 	if (weaponComp != nullptr) {
-		if (weaponComp->GetIsQteActive() && !IsPhaseTwo()) {
-
-			playerAimComp->SetAimDir();
-
-			InputMove = FVector2D(0.f, 0.f);
-			InputJump = false;
-			InputJumpJoystick = false;
+		if (weaponComp->GetIsQteActive() && !IsPhaseTwo() && !isShooting) {
+			isShooting = true;
+			StateMachine->ChangeState(EBeamCharacterStateID::Idle);
+		}
+		else if (!weaponComp->GetIsQteActive() && !IsPhaseTwo() && isShooting)
+		{
+			isShooting = false;
 		}
 	}
 
@@ -200,12 +200,13 @@ void ABeamCharacter::ReattributeCharacterSettings()
 	}
 }
 
-void ABeamCharacter::KnockBack(FVector Direction, float Force)
+void ABeamCharacter::KnockBack(FVector Direction, float Force, bool projection)
 {
 
 	if (!CanTakeKnockBack) return;
 
-	this->GetCharacterMovement()->Launch(Direction * Force);
+	GetCharacterMovement()->Launch(Direction * Force);
+	if (projection) StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 }
 
 void ABeamCharacter::Bounce(FVector Normal)
@@ -328,9 +329,15 @@ void ABeamCharacter::TakeDamage(const int Damage)
 
 	if (!CanTakeDamage) return;
 
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
+
 	if (HasShield()) {
 		SetShield(GetShield() - 1);
 		return;
+	}
+
+	if (Life > LifeToFly && Life-Damage <= LifeToFly) {
+		GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
 	}
 
 	if (Damage >= 4 && Life == MaxLife)
@@ -408,7 +415,8 @@ void ABeamCharacter::Push()
 	for (ABeamCharacter* player : PlayersInZone) {
 		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW")));
 		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-		player->KnockBack(direction, CharacterSettings->Push_Force);
+		player->KnockBack(direction, CharacterSettings->Push_Force, true);
+		
 	}
 }
 

@@ -38,14 +38,14 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 	UFUNCTION()
-	void InitialisePower(int power);
+	void InitialisePower(int power, ABeamCharacter* character);
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UCapsuleComponent* Capsule;
 	
 	UPROPERTY()
-	AActor* actorParent;
+	FString actorParentName;
 	
 	virtual EProjectileType ProjectileGetType() override;
 	virtual AProjectile* GetProjectile() override;
@@ -70,6 +70,8 @@ protected:
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	FCollisionQueryParams params;
 
+	UFUNCTION()
+	void ReInitialisePower(int power);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
 	void InitParameters();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")

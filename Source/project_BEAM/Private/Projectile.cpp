@@ -17,35 +17,52 @@ AProjectile::AProjectile()
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	Capsule->SetCollisionProfileName(TEXT("OverlapAll"));
 	Capsule->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
-	params.AddIgnoredActor(this);
 }
 
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	Capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
 	projectileComponent->ProjectileGravityScale = 0.f;
 	currentLifeSpan = 0.f;
 
+	params.AddIgnoredActor(this);
+	params.AddIgnoredActor(GetOwner());
+	Capsule->IgnoreActorWhenMoving(this, true);
+	Capsule->IgnoreActorWhenMoving(GetOwner(), true);
+
 	InitProjectileSettings();
 }
 
-void AProjectile::InitialisePower(int power)
+void AProjectile::InitialisePower(int power, ABeamCharacter* character)
 {
 	ownPower = power;
 	projectileCurrentParam = powerParameters[power];
-
+	
+	params.AddIgnoredActor(character);
+	Capsule->IgnoreActorWhenMoving(character, true);
+	actorParentName = character->GetName();
+	
 	InitParameters();
 	
-	//Set here: POWER, HEIGHT, WIDTH, SPEED, SIZE OF COLLIDER
+	Capsule->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+void AProjectile::ReInitialisePower(int power)
+{
+	ownPower = power;
+	projectileCurrentParam = powerParameters[power];
+	
+	InitParameters();
 }
 
 
 void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (actorParent == OverlappedComp->GetAttachParentActor()) return;
+	if (actorParentName == OtherActor->GetName()) return;
+	GEngine->AddOnScreenDebugMessage(-1,20.f,FColor::Cyan,OtherActor->GetName() + " " + actorParentName + " test");
 	
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
@@ -148,7 +165,7 @@ void AProjectile::GetDestroyed() // Destroy the projectile
 void AProjectile::FakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {
 	DestructionEffect(power);
-	InitialisePower(power);
+	ReInitialisePower(power);
 }
 
 FProjectileParameters AProjectile::GetCurrentParam()

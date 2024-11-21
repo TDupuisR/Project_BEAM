@@ -19,8 +19,7 @@ void UBeamCharacterStateMachine::Init(ABeamCharacter* NewCharacter)
 
 void UBeamCharacterStateMachine::Tick(float DeltaTime)
 {
-	if (CurrentState == nullptr) return;
-	CurrentState->StateTick(DeltaTime);
+	if (CurrentState != nullptr) CurrentState->StateTick(DeltaTime);
 }
 
 ABeamCharacter* UBeamCharacterStateMachine::GetCharacter() const

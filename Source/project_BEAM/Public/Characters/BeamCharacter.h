@@ -75,6 +75,8 @@ public:
 	UFUNCTION()
 	void TickStateMachine(float DeltaTime) const;
 
+	bool isShooting;
+
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UBeamCharacterStateMachine> StateMachine;
@@ -161,7 +163,7 @@ private:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void KnockBack(FVector Direction, float Force);
+	void KnockBack(FVector Direction, float Force, bool projection = false);
 
 	UFUNCTION(BlueprintCallable)
 	void Bounce(FVector Normal);

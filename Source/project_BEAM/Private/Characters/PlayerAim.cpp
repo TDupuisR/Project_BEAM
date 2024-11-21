@@ -33,7 +33,7 @@ void UPlayerAim::InitWeapon(UWeaponCharge* playerWeapon)
 
 void UPlayerAim::ShotCall(int power)
 {
-	Shoot(aimPos, aimDir.GetSafeNormal(), Character, power);
+	Shoot(aimPos, aimDir.GetSafeNormal(), power);
 }
 
 bool UPlayerAim::GetIsActive() const
@@ -44,11 +44,6 @@ bool UPlayerAim::GetIsActive() const
 FVector UPlayerAim::GetAimPos()
 {
 	return aimPos;
-}
-
-void UPlayerAim::SetAimDir()
-{
-	aimDir = Character->GetInputMove();;
 }
 
 
@@ -73,7 +68,7 @@ FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos,
 
 }
 
-void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playerActor, int power)
+void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, int power)
 {
 	if(shootDelay <= 0.f)
 	{
@@ -83,7 +78,8 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 		FVector newDir = FVector(direction.X, .0f, direction.Y);
 		if(newDir == FVector::ZeroVector) newDir = FVector(Character->GetOrientX(), .0f, .0f);
 		if(newDir == FVector::ZeroVector) newDir = FVector(1.f, .0f, .0f);
-
+		
+		if (!Character) return;
 		FActorSpawnParameters spawnParams;
 		spawnParams.Owner = Character->GetOwner();
 		spawnParams.Instigator = Character->GetInstigator();
@@ -94,8 +90,9 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 
 		if (power > 3) power = 3;
 		if (power < 0) power = 0;
-		projectile->actorParent = playerActor;
-		projectile->InitialisePower(power);
+		
+		//projectile->actorParentName = Character->GetName();
+		projectile->InitialisePower(power, Character);
 		//GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
 
 		if (Character->GetCharacterSettings()->ChargesKnockbacks.Num() >= power) Character->KnockBack(-newDir, 1000.f);
@@ -163,7 +160,7 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 		aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
 	}
 	if (!Weapon->GetIsQteActive() && isAimWhileCharge) isAimWhileCharge = false;
-	
+
 	
 	if (shootDelay > .0f) shootDelay -= GetWorld()->GetDeltaSeconds();
 }
