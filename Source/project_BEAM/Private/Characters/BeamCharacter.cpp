@@ -32,7 +32,7 @@ EProjectileType ABeamCharacter::ProjectileGetType()
 
 bool ABeamCharacter::ProjectileContext(int power, FVector position)
 {
-	if (weapon->GetIsQteActive()) weapon->CancelWeaponCharge(true);
+	if (weaponComp->GetIsQteActive()) weaponComp->CancelWeaponCharge(true);
 	TakeDamage(power + 1);
 
 	FVector direction = GetActorLocation() - position;
@@ -69,12 +69,19 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (InputMove.X > .0f)SetOrientX(1.f);
+	if (InputMove.X < .0f)SetOrientX(-1.f);
+	
 	// Check if he is shooting -> can't move if he is charging in phase 1
-	//if (GetComponentByClass<UPlayerAim>() != nullptr) {
-	if (weapon != nullptr) {
-		if (weapon->GetIsQteActive() && !IsPhaseTwo()) {
+	//if (GetComponentByClass<UplayerAimComp>() != nullptr) {
+	if (weaponComp != nullptr) {
+		if (weaponComp->GetIsQteActive() && !IsPhaseTwo()) {
+
+			playerAimComp->SetAimDir();
+
 			InputMove = FVector2D(0.f, 0.f);
 			InputJump = false;
+			InputJumpJoystick = false;
 		}
 	}
 
@@ -465,13 +472,13 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 
 void ABeamCharacter::creatAim()
 {
-	localPlayerAim = NewObject<UPlayerAim>(this);
+	//localplayerAimComp = NewObject<UPlayerAim>(this);
 }
 
 void ABeamCharacter::playerAimInit()
 {
-	if (localPlayerAim == nullptr) return;
-	localPlayerAim->InitCharacter(this);
+	//if (localPlayerAim == nullptr) return;
+	//localPlayerAim->InitCharacter(this);
 }
 
 void ABeamCharacter::Stun(float TimeToStun = 3.f)
@@ -515,20 +522,32 @@ FVector ABeamCharacter::GetFollowPosition()
 	return GetActorLocation();
 }
 
+UPlayerAim* ABeamCharacter::GetPlayerAimComp() const
+{
+	return playerAimComp;
+}
+
+UWeaponCharge* ABeamCharacter::GetWeaponComp() const
+{
+	return weaponComp;
+}
+
 void ABeamCharacter::InitWeaponAndAim()
 {
-	playerAim = GetComponentByClass<UPlayerAim>();
-	weapon = GetComponentByClass<UWeaponCharge>();
+	playerAimComp = GetComponentByClass<UPlayerAim>();
+	weaponComp = GetComponentByClass<UWeaponCharge>();
 
-	if (playerAim == nullptr || weapon == nullptr) return;
+	if (playerAimComp == nullptr || weaponComp == nullptr) return;
 
-	playerAim->InitCharacter(this);
-	weapon->InitCharacter(this);
-	weapon->InitAim(playerAim);
-	playerAim->InitWeapon(weapon);
+	playerAimComp->InitCharacter(this);
+	weaponComp->InitCharacter(this);
+	weaponComp->InitAim(playerAimComp);
+	playerAimComp->InitWeapon(weaponComp);
+
+	localPlayerAim = playerAimComp;
 
 	if (CharacterSettings == nullptr) return;
-	playerAim->Radius = CharacterSettings->RadiusShoot;
+	playerAimComp->Radius = CharacterSettings->RadiusShoot;
 
 }
 
@@ -771,10 +790,10 @@ bool ABeamCharacter::GetInputPush() const { return InputPush; }
 bool ABeamCharacter::GetInputFly() const { return InputFly; }
 
 
-void ABeamCharacter::DisplayQte_Implementation() {}
-void ABeamCharacter::HideQte_Implementation() {}
-void ABeamCharacter::PassQte_Implementation() {}
-void ABeamCharacter::FailQte_Implementation() {}
+void ABeamCharacter::DisplayQte_Implementation(ABeamCharacter* Character) {}
+void ABeamCharacter::HideQte_Implementation(ABeamCharacter* Character) {}
+void ABeamCharacter::PassQte_Implementation(ABeamCharacter* Character) {}
+void ABeamCharacter::FailQte_Implementation(ABeamCharacter* Character) {}
 
 void ABeamCharacter::GunBuildUp_Implementation() {}
 

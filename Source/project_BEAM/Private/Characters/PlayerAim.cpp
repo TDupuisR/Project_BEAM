@@ -46,6 +46,11 @@ FVector UPlayerAim::GetAimPos()
 	return aimPos;
 }
 
+void UPlayerAim::SetAimDir()
+{
+	aimDir = Character->GetInputMove();;
+}
+
 
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed = 10)
 {	
@@ -82,14 +87,15 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, AActor* playe
 		FActorSpawnParameters spawnParams;
 		spawnParams.Owner = Character->GetOwner();
 		spawnParams.Instigator = Character->GetInstigator();
-		
+
+		spawnLocation += FVector(.0f, .0f, Character->GetCharacterSettings()->AimVerticalOffset); 
 		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
 		if(projectile == nullptr) return;
 
 		if (power > 3) power = 3;
 		if (power < 0) power = 0;
-		projectile->InitialisePower(power);
 		projectile->actorParent = playerActor;
+		projectile->InitialisePower(power);
 		//GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
 
 		if (Character->GetCharacterSettings()->ChargesKnockbacks.Num() >= power) Character->KnockBack(-newDir, 1000.f);
@@ -135,6 +141,25 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	else if (Character->GetInputMove() != FVector2D::ZeroVector && !isAimWhileCharge)
 	{
 		aimDir = Character->GetInputMove();
+
+		// Comment every marked lines for switching 4dir -> 8dir
+		// if (abs(aimDir.X) > abs(aimDir.Y))//
+		// {//
+			// if (aimDir.X > .5f) aimDir.X = 1.f;
+			// else if (aimDir.X < -.5f) aimDir.X = -1.f;
+			// else aimDir.X = 0.f;
+		
+		// 	aimDir.Y = 0.f;//
+		// }//
+		// else//
+		// {//
+			// if (aimDir.Y > .5f) aimDir.Y = 1.f;
+			// else if (aimDir.Y < -.5f) aimDir.Y = -1.f;
+			// else aimDir.Y = 0.f;
+		
+		// 	aimDir.X = 0.f;//
+		// }//
+		
 		aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
 	}
 	if (!Weapon->GetIsQteActive() && isAimWhileCharge) isAimWhileCharge = false;

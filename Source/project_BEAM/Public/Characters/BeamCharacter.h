@@ -357,13 +357,13 @@ private:
 #pragma region UI
 	public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void DisplayQte();
+	void DisplayQte(ABeamCharacter* Character);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void HideQte();
+	void HideQte(ABeamCharacter* Character);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void PassQte();
+	void PassQte(ABeamCharacter* Character);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void FailQte();
+	void FailQte(ABeamCharacter* Character);
 #pragma endregion
 
 #pragma region FollowTarget
@@ -386,13 +386,21 @@ public:
 
 #pragma region Shoot
 
+public:
+	UFUNCTION(BlueprintCallable)
+	UPlayerAim* GetPlayerAimComp() const;
+
+	UFUNCTION(BlueprintCallable)
+	UWeaponCharge* GetWeaponComp() const;
+
 private:
 	UFUNCTION()
 	void InitWeaponAndAim();
 
-	UPlayerAim* playerAim;
-
-	UWeaponCharge* weapon;
+	UPROPERTY()
+	UPlayerAim* playerAimComp;
+	UPROPERTY()
+	UWeaponCharge* weaponComp;
 
 #pragma endregion
 

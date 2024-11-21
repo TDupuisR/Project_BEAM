@@ -143,13 +143,6 @@ public:
 	double TimeToWaitAfterProjection;
 
 #pragma endregion
-
-#pragma region Shoot&Aim
-
-	UPROPERTY(Config, EditAnywhere, Category = "Shoot&Aim", meta = (ToolTip = "Cooldown entre chaque tir"))
-	float ShootCoolDown;
-	
-#pragma endregion
 	
 #pragma region QTE
 public:
@@ -169,12 +162,16 @@ public:
 #pragma region Aim
 
 public:
+	UPROPERTY(Config, EditAnywhere, Category = "Aim", meta = (ToolTip = "Cooldown entre chaque tir"))
+	float ShootCoolDown;
+	
 	UPROPERTY(Config, EditAnywhere, Category = "Aim", meta = (ToolTip = "Vitesse du curseur"));
 	float SpeedCursor;
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Radius pour le tir autour du joueur"));
 	float RadiusShoot;
-
+	UPROPERTY(Config, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
+	float AimVerticalOffset;
 
 #pragma endregion
 
