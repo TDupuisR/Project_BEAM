@@ -47,7 +47,7 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 	}
 
 	if (IsKeyWasPressed(EKeys::U)) {
-		Character->TakeDamage(3);
+		Character->PlayerTakeDamage(3);
 	}
 	
 

@@ -246,7 +246,7 @@ public:
 
 	// OTHERS
 	UFUNCTION(BlueprintCallable)
-	void TakeDamage(const int Damage = 1);
+	void PlayerTakeDamage(const int Damage = 1);
 	UFUNCTION()
 	void const ResetLife();
 	UFUNCTION()

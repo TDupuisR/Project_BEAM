@@ -36,7 +36,7 @@ EProjectileType ABeamCharacter::ProjectileGetType()
 bool ABeamCharacter::ProjectileContext(int power, FVector position)
 {
 	if (weaponComp->GetIsQteActive()) weaponComp->CancelWeaponCharge(true);
-	TakeDamage(power + 1);
+	PlayerTakeDamage(power + 1);
 
 	FVector direction = GetActorLocation() - position;
 	direction.Normalize();
@@ -334,7 +334,7 @@ void const ABeamCharacter::SetLifeToFly(const int NewLifeToFly)
 	LifeToFly = NewLifeToFly;
 }
 
-void ABeamCharacter::TakeDamage(const int Damage)
+void ABeamCharacter::PlayerTakeDamage(const int Damage)
 {
 
 	GEngine->AddOnScreenDebugMessage(

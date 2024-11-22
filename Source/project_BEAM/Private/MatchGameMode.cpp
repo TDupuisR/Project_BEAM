@@ -4,14 +4,11 @@
 
 #include "LocalMutliplayerSubsystem.h"
 #include "Arena/ArenaPlayerStart.h"
-#include "Arena/ArenaCamera.h"
 #include "Characters/BeamCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Arena/ArenaSettings.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
-#include "Blueprint/WidgetTree.h"
-#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "HAL/PlatformProcess.h"
 
 
@@ -276,7 +273,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 		// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 		// Here ->
-		// Appeler ResetPlayerPoints() pour remettre les points à 0
+		// Appeler ResetPlayerPoints() pour remettre les points ï¿½ 0
 
 		BeamGameInstance->ResetPlayerPoints();
 
