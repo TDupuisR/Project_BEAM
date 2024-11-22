@@ -604,12 +604,16 @@ void ABeamCharacter::InitWeaponAndAim()
 	weaponComp->InitAim(playerAimComp);
 	playerAimComp->InitWeapon(weaponComp);
 
-	localPlayerAim = playerAimComp;
+	//localPlayerAim = playerAimComp;
+
+	InitQTE(this);
 
 	if (CharacterSettings == nullptr) return;
 	playerAimComp->Radius = CharacterSettings->RadiusShoot;
 
 }
+
+
 
 const UBeamCharacterSettings* ABeamCharacter::GetCharacterSettings() const
 {
@@ -854,6 +858,8 @@ void ABeamCharacter::DisplayQte_Implementation(ABeamCharacter* Character) {}
 void ABeamCharacter::HideQte_Implementation(ABeamCharacter* Character) {}
 void ABeamCharacter::PassQte_Implementation(ABeamCharacter* Character) {}
 void ABeamCharacter::FailQte_Implementation(ABeamCharacter* Character) {}
+void ABeamCharacter::InitQTE_Implementation(ABeamCharacter* Character) {}
+
 
 void ABeamCharacter::GunBuildUp_Implementation() {}
 

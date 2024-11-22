@@ -228,7 +228,6 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
 	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
 
-	MancheEnd = true;
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
@@ -238,6 +237,10 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 	);
 
 	if (BeamGameInstance == nullptr) return;
+
+	if (MancheEnd) return;
+
+	MancheEnd = true;
 
 	if (BeamGameInstance->GetMatchType() == EMatchTypeID::Free)
 	{

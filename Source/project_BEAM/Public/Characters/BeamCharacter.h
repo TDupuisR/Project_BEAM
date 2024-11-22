@@ -402,9 +402,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool TraceCheckBeforeProjectile(FVector endPosition, int power);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void InitQTE(ABeamCharacter* Character);
+
 private:
 	UFUNCTION()
 	void InitWeaponAndAim();
+
 
 	UPROPERTY()
 	TArray<float> shootRadius;
