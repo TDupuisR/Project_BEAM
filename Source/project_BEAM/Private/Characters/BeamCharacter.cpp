@@ -348,7 +348,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
 
-	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->CinematicForSeconds(2, GetActorLocation());
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->CinematicForSeconds(0.2f, GetActorLocation(), 5);
 
 	if (HasShield()) {
 		SetShield(GetShield() - 1);

@@ -440,9 +440,9 @@ void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 10
 	cameraFollowMode = ECameraFollowMode::Shake;
 }
 
-void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFollow)
+void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed = 10)
 {
-	cameraSpeed = 2;
+	cameraSpeed = CameraSpeed;
 	timer = 0;
 	timerMax = Seconds;
 	posToFollow = PosToFollow;

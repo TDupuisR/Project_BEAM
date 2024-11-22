@@ -147,7 +147,7 @@ public:
 	void ShakeForSeconds(float Seconds, float ForceShake);
 
 	UFUNCTION(BlueprintCallable)
-	void CinematicForSeconds(float Seconds, FVector PosToFollow);
+	void CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed);
 
 private:
 
