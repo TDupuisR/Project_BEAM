@@ -10,11 +10,11 @@
 #include "Camera/CameraFollowTarget.h"
 #include "GameFramework/Character.h"
 
-
 #include "BeamCharacter.generated.h"
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
+class UProjectileSettings;
 class UEnhancedInputComponent;
 class UBoxComponent;
 class UPlayerAim;
@@ -75,6 +75,7 @@ public:
 	UFUNCTION()
 	void TickStateMachine(float DeltaTime) const;
 
+	UPROPERTY()
 	bool isShooting;
 
 protected:
@@ -93,11 +94,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReattributeCharacterSettings();
 
+	UFUNCTION()
 	const UBeamCharacterSettings* GetCharacterSettings() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	const UBeamCharacterSettings* CharacterSettings;
+	UPROPERTY(BlueprintReadOnly)
+	const UProjectileSettings* ProjectileSettings;
 
 # pragma endregion
 
@@ -395,10 +399,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UWeaponCharge* GetWeaponComp() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool TraceCheckBeforeProjectile(FVector endPosition, int power);
+
 private:
 	UFUNCTION()
 	void InitWeaponAndAim();
 
+	UPROPERTY()
+	TArray<float> shootRadius;
+	UPROPERTY()
+	TArray<float> shootHalfHeight;
+	
 	UPROPERTY()
 	UPlayerAim* playerAimComp;
 	UPROPERTY()

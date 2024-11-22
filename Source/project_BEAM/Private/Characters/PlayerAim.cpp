@@ -73,29 +73,34 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, int power)
 	if(shootDelay <= 0.f)
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("Shot Delay good")));
-		if(!ProjectileActor) GEngine->AddOnScreenDebugMessage(-1,20.f,FColor::Red,FString::Printf(TEXT("No ProjectileActor")));
+		if(!ProjectileActor)
+		{
+			GEngine->AddOnScreenDebugMessage(-1,20.f,FColor::Red,FString::Printf(TEXT("No ProjectileActor")));
+			return;
+		}
+		
+		if (power > 3) power = 3;
+		if (power < 0) power = 0;
 
 		FVector newDir = FVector(direction.X, .0f, direction.Y);
 		if(newDir == FVector::ZeroVector) newDir = FVector(Character->GetOrientX(), .0f, .0f);
 		if(newDir == FVector::ZeroVector) newDir = FVector(1.f, .0f, .0f);
 		
-		if (!Character) return;
-		FActorSpawnParameters spawnParams;
-		spawnParams.Owner = Character->GetOwner();
-		spawnParams.Instigator = Character->GetInstigator();
+		if (Character->TraceCheckBeforeProjectile(spawnLocation, power))
+		{
+			FActorSpawnParameters spawnParams;
+			spawnParams.Owner = Character->GetOwner();
+			spawnParams.Instigator = Character->GetInstigator();
 
-		spawnLocation += FVector(.0f, .0f, Character->GetCharacterSettings()->AimVerticalOffset); 
-		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
-		if(projectile == nullptr) return;
-
-		if (power > 3) power = 3;
-		if (power < 0) power = 0;
+			spawnLocation += FVector(.0f, .0f, Character->GetCharacterSettings()->AimVerticalOffset); 
+			AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
+			if(projectile == nullptr) return;
 		
-		//projectile->actorParentName = Character->GetName();
-		projectile->InitialisePower(power, Character);
+			projectile->InitialisePower(power, Character);
+		}
 		//GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Blue,FString::Printf(TEXT("shot")));
 
-		if (Character->GetCharacterSettings()->ChargesKnockbacks.Num() >= power) Character->KnockBack(-newDir, 1000.f);
+		if (Character->GetCharacterSettings()->ChargesKnockbacks.Num() <= power) Character->KnockBack(-newDir, 1000.f);
 		else Character->KnockBack(-newDir, Character->GetCharacterSettings()->ChargesKnockbacks[power]);
 	}
 	shootDelay = shootDelayInit;

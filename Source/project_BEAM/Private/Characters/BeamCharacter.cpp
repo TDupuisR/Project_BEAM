@@ -3,6 +3,7 @@
 
 #include "Characters/BeamCharacter.h"
 
+#include "Kismet/KismetSystemLibrary.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Characters/BeamCharacterStateMachine.h"
@@ -11,10 +12,12 @@
 #include "Characters/PlayerAim.h"
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
+#include "ProjectileInterface.h"
 #include "Components/CapsuleComponent.h"
 #include "WeaponCharge.h"
 
 #include <Camera/CameraWorldSubsystem.h>
+#include "ProjectileSettings.h"
 
 
 // Sets default values
@@ -157,8 +160,22 @@ void ABeamCharacter::InitCharacterSettings()
 {
 	
 	CharacterSettings = GetDefault<UBeamCharacterSettings>();
+	ProjectileSettings = GetDefault<UProjectileSettings>();
 	
+	if (ProjectileSettings != nullptr)
+	{
+		shootRadius.Empty();
+		shootRadius.Add(ProjectileSettings->width_0 * 50.f);
+		shootRadius.Add(ProjectileSettings->width_1 * 50.f);
+		shootRadius.Add(ProjectileSettings->width_2 * 50.f);
+		shootRadius.Add(ProjectileSettings->width_3 * 50.f);
 
+		shootHalfHeight.Empty();
+		shootHalfHeight.Add(ProjectileSettings->height_0 * 50.f);
+		shootHalfHeight.Add(ProjectileSettings->height_1 * 50.f);
+		shootHalfHeight.Add(ProjectileSettings->height_2 * 50.f);
+		shootHalfHeight.Add(ProjectileSettings->height_3 * 50.f);
+	}
 
 	if (CharacterSettings == nullptr) return;
 
@@ -539,6 +556,41 @@ UWeaponCharge* ABeamCharacter::GetWeaponComp() const
 {
 	return weaponComp;
 }
+
+bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
+{
+	TArray<FHitResult> hitResults;
+	TArray<AActor*> ignoreActors;
+	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffset);
+	
+	UKismetSystemLibrary::CapsuleTraceMulti(
+		GetWorld(),
+		start,
+		endPosition,
+		shootRadius[power],
+		shootHalfHeight[power],
+		TraceTypeQuery1,
+		false,
+		ignoreActors,
+		EDrawDebugTrace::None,
+		hitResults,
+		true
+	);
+	
+	for (FHitResult hitResult : hitResults)
+	{
+		if (hitResult.GetActor()->Implements<UProjectileInterface>())
+		{
+			IProjectileInterface* interface = Cast<IProjectileInterface>(hitResult.GetActor());
+			if (interface->ProjectileGetType() == EProjectileType::DestructWall)
+			{
+				if (interface->ProjectileContext(power, hitResult.Location)) return false;
+			}
+		}
+	}
+
+	return true;
+}	
 
 void ABeamCharacter::InitWeaponAndAim()
 {
