@@ -346,7 +346,9 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 
 	if (!CanTakeDamage) return;
 
-	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
+	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
+
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->CinematicForSeconds(2, GetActorLocation());
 
 	if (HasShield()) {
 		SetShield(GetShield() - 1);
@@ -354,7 +356,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	}
 
 	if (Life > LifeToFly && Life-Damage <= LifeToFly) {
-		GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
+		//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
 	}
 
 	if (Damage >= 4 && Life == MaxLife)
