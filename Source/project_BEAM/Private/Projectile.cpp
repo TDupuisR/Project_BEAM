@@ -62,7 +62,6 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (actorParentName == OtherActor->GetName()) return;
-	GEngine->AddOnScreenDebugMessage(-1,20.f,FColor::Cyan,OtherActor->GetName() + " " + actorParentName + " test");
 	
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
