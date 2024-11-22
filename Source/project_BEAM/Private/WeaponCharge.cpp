@@ -53,7 +53,7 @@ void UWeaponCharge::InitValues()
 	if (qteMaxTime <= 0) qteMaxTime = 5.f;
 	
 	qteFinaleDelay = Character->GetCharacterSettings()->QTELastWait;
-	if (qteFinaleDelay <= 0) qteFinaleDelay = 3.f;
+	if (qteFinaleDelay < 0) qteFinaleDelay = 0.f;
 	
 	qteTimeStamp = Character->GetCharacterSettings()->QTETimeStamp;
 	if (qteTimeStamp.Num() <= 0) qteTimeStamp = {2.f, 1.5f, 1.f};
@@ -187,6 +187,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		else // Time over
 		{
 			CancelWeaponCharge(false);
+			chargeWasPushed = false;
 		}
 	}
 }
