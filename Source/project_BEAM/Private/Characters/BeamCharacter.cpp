@@ -27,7 +27,7 @@ ABeamCharacter::ABeamCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 }
-
+#pragma region Projectile Interface
 EProjectileType ABeamCharacter::ProjectileGetType()
 {
 	return EProjectileType::Player;
@@ -50,6 +50,7 @@ AProjectile* ABeamCharacter::GetProjectile()
 {
 	return nullptr;
 }
+#pragma endregion
 
 // Called when the game starts or when spawned
 void ABeamCharacter::BeginPlay()
@@ -77,23 +78,11 @@ void ABeamCharacter::Tick(float DeltaTime)
 	
 	// Check if he is shooting -> can't move if he is charging in phase 1
 	//if (GetComponentByClass<UplayerAimComp>() != nullptr) {
-	if (weaponComp != nullptr) {
-		if (weaponComp->GetIsQteActive() && !IsPhaseTwo() && !isShooting) {
-			isShooting = true;
-			StateMachine->ChangeState(EBeamCharacterStateID::Idle);
-		}
-		else if (!weaponComp->GetIsQteActive() && !IsPhaseTwo() && isShooting)
-		{
-			isShooting = false;
-		}
-	}
 
 	TickStateMachine(DeltaTime);
 	RotateMeshUsingOrientX();
 
 	TickPush(DeltaTime);
-
-
 
 	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, GetName() + FString::Printf(TEXT(" current life : %d"), Life));
 
@@ -119,16 +108,6 @@ void ABeamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	if(EnhancedInputComponent == nullptr) return;
 
 	BindInputActions(EnhancedInputComponent);
-}
-
-float ABeamCharacter::GetOrientX() const
-{
-	return OrientX;
-}
-
-void ABeamCharacter::SetOrientX(float NewOrientX)
-{
-	OrientX = NewOrientX;
 }
 
 void ABeamCharacter::RotateMeshUsingOrientX() const
@@ -590,7 +569,12 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 	}
 
 	return true;
-}	
+}
+
+void ABeamCharacter::ChangeStateWhenQte()
+{
+	if (!IsPhaseTwo()) { StateMachine->ChangeState(EBeamCharacterStateID::Idle);}
+}
 
 void ABeamCharacter::InitWeaponAndAim()
 {

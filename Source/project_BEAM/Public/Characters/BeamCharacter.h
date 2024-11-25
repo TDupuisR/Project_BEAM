@@ -52,9 +52,9 @@ public:
 
 public:
 	UFUNCTION()
-	float GetOrientX() const;
+	float GetOrientX() const {return OrientX;}
 	UFUNCTION()
-	void SetOrientX(float NewOrientX);
+	void SetOrientX(float NewOrientX) {OrientX = NewOrientX;}
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -63,7 +63,6 @@ protected:
 	void RotateMeshUsingOrientX() const;
 
 #pragma endregion
-
 
 # pragma region State Machine
 
@@ -74,9 +73,6 @@ public:
 	void InitStateMachine();
 	UFUNCTION()
 	void TickStateMachine(float DeltaTime) const;
-
-	UPROPERTY()
-	bool isShooting;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -380,7 +376,6 @@ private:
 
 #pragma endregion
 
-
 #pragma region DeathEvent
 
 public:
@@ -405,6 +400,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
 	void InitQTE(ABeamCharacter* Character);
 
+	UFUNCTION(BlueprintCallable)
+	void ChangeStateWhenQte();
+	
 private:
 	UFUNCTION()
 	void InitWeaponAndAim();
