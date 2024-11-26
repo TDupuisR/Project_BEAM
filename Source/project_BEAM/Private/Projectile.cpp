@@ -27,9 +27,7 @@ void AProjectile::BeginPlay()
 	
 	projectileComponent->ProjectileGravityScale = 0.f;
 	currentLifeSpan = 0.f;
-
-	params.AddIgnoredActor(this);
-	params.AddIgnoredActor(GetOwner());
+	
 	Capsule->IgnoreActorWhenMoving(this, true);
 	Capsule->IgnoreActorWhenMoving(GetOwner(), true);
 
@@ -41,7 +39,6 @@ void AProjectile::InitialisePower(int power, ABeamCharacter* character)
 	ownPower = power;
 	projectileCurrentParam = powerParameters[power];
 	
-	params.AddIgnoredActor(character);
 	Capsule->IgnoreActorWhenMoving(character, true);
 	actorParentName = character->GetName();
 	
@@ -77,8 +74,10 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 				{
 					if (!OtherComp->ComponentTags.Contains("Player")) break;
 					
-					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
+					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
 					else return;
+
+					break;
 				};
 			
 			case EProjectileType::Bullet:
@@ -95,34 +94,37 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 						int newPower = ((otherPower +1) - (ownPower +1)) -1;
 						if (newPower < 0) newPower = 0;
 						
-						if (otherBullet != nullptr) otherBullet->FakeDestroy(newPower);
-						GetDestroyed();
+						if (otherBullet != nullptr) otherBullet->CallFakeDestroy(newPower);
+						CallDestroyed();
 					}
 					else if (otherPower < ownPower)
 					{
 						int newPower = ((ownPower +1) - (otherPower +1)) -1;
 						if (newPower < 0) newPower = 0;
 
-						if (otherBullet != nullptr) otherBullet->GetDestroyed();
-						FakeDestroy(newPower);
+						if (otherBullet != nullptr) otherBullet->CallDestroyed();
+						CallFakeDestroy(newPower);
 					}
 					else
 					{
-						if (otherBullet != nullptr) otherBullet->GetDestroyed();
-						GetDestroyed();
+						if (otherBullet != nullptr) otherBullet->CallDestroyed();
+						CallDestroyed();
 					}
+
+					break;
 				};
 
 			case EProjectileType::DestructWall:
 				{
-					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
-					else break;
+					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
+
+					break;
 				};
 			}
 		}
-		else
+		else //if actor doesn't implement interface
 		{
-			GetDestroyed();
+			CallDestroyed();
 		}
 	}
 }
@@ -133,14 +135,10 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	currentLifeSpan += DeltaTime * projectileCurrentParam.speed;
-	if (currentLifeSpan >= projectileCurrentParam.lifeSpan) GetDestroyed();
+	if (currentLifeSpan >= projectileCurrentParam.lifeSpan) CallDestroyed();
 }
 
 
-int AProjectile::GetPower()
-{
-	return ownPower;
-}
 
 EProjectileType AProjectile::ProjectileGetType()
 {
@@ -156,20 +154,16 @@ bool AProjectile::ProjectileContext(int power, FVector position) // Should not b
 	return false;
 }
 
-void AProjectile::GetDestroyed() // Destroy the projectile
+void AProjectile::CallDestroyed() // Destroy the projectile
 {
 	DestructionEffect(ownPower);
 	this->Destroy();
 }
-void AProjectile::FakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
+void AProjectile::CallFakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {
 	DestructionEffect(power);
+	canAccess = true;
 	ReInitialisePower(power);
-}
-
-FProjectileParameters AProjectile::GetCurrentParam()
-{
-	return projectileCurrentParam;
 }
 
 void AProjectile::InitProjectileSettings()

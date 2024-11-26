@@ -36,17 +36,6 @@ void UPlayerAim::ShotCall(int power)
 	Shoot(aimPos, aimDir.GetSafeNormal(), power);
 }
 
-bool UPlayerAim::GetIsActive() const
-{
-	return wasShootTriggered;
-}
-
-FVector UPlayerAim::GetAimPos()
-{
-	return aimPos;
-}
-
-
 FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed = 10)
 {	
 
@@ -106,12 +95,6 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, int power)
 	shootDelay = shootDelayInit;
 }
 
-float UPlayerAim::GetShootDelay()
-{
-	if (shootDelay < .0f) return .0f;
-	return shootDelay;
-}
-
 // Called every frame
 void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -144,7 +127,9 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	{
 		aimDir = Character->GetInputMove();
 
+		// Comment if needed, Switch from all dir aim to 4 or 8 dir
 		// Comment every marked lines for switching 4dir -> 8dir
+		//
 		// if (abs(aimDir.X) > abs(aimDir.Y))//
 		// {//
 			// if (aimDir.X > .5f) aimDir.X = 1.f;

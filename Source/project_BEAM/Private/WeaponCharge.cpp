@@ -23,20 +23,21 @@ UWeaponCharge::UWeaponCharge()
 void UWeaponCharge::BeginPlay()
 {
 	Super::BeginPlay();
+
+	InitValues();
 }
 
 void UWeaponCharge::StartWeaponCharge()
 {
-	InitValues();
-	
 	power = 0;
 	qteTimeLeft = qteMaxTime;
 	chargeWasPushed = false;
 	isQteActive = true;
 
+	Character->ChangeStateWhenQte();
 	Character->DisplayQte(Character);
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
 void UWeaponCharge::CancelWeaponCharge(bool noShoot)
 {
@@ -44,7 +45,7 @@ void UWeaponCharge::CancelWeaponCharge(bool noShoot)
 	if (!noShoot) pointAim->ShotCall(power);
 	Character->HideQte(Character);
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE cancel")));
 }
 
 void UWeaponCharge::InitValues()
@@ -72,33 +73,12 @@ void UWeaponCharge::InitAim(UPlayerAim* playerAim)
 	pointAim = playerAim;
 }
 
-bool UWeaponCharge::GetIsQteActive() const
-{
-	return isQteActive;
-}
-
-float UWeaponCharge::GetQteTimeLeft() const
-{
-	return qteTimeLeft;
-}
-
-float UWeaponCharge::GetQteMaxTime() const
-{
-	return qteMaxTime;
-}
-
 float UWeaponCharge::GetQteTimeStamp() const
-{;
+{
 	if (power < 0 || power > 2) return .0f;
 	else if (Character->IsPhaseTwo()) return qteTimeStampPhase2;
 	else return qteTimeStamp[power];
 }
-
-int UWeaponCharge::GetQtePower() const
-{
-	return power;
-}
-
 
 // Called every frame
 void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
