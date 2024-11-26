@@ -21,14 +21,6 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
 
-
-	/*GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Blue,
-		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);*/
-
 	Character->GetCharacterMovement()->JumpZVelocity = Character->GetCharacterSettings()->Jump_Force;
 	Character->GetCharacterMovement()->MaxWalkSpeed = Character->GetCharacterSettings()->Jump_VelocityMax;
 
@@ -40,35 +32,38 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 	}
 
 	FirstFrame = true;
-
 	
-
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		3.f,
+		FColor::Blue,
+		FString::Printf(TEXT("Enter State %d"), GetStateID())
+	);
 }
 
 void UBeamCharacterStateJump::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
-	/*GEngine->AddOnScreenDebugMessage(
+	GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
 		FColor::Blue,
 		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);*/
+	);
 }
 
 void UBeamCharacterStateJump::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	 GEngine->AddOnScreenDebugMessage(
-	 	-1,
-	 	0.1f,
-	 	FColor::Blue,
-	 	FString::Printf(TEXT("STATE TICK JUMP"))
-	 );
+	 // GEngine->AddOnScreenDebugMessage(
+	 // 	-1,
+	 // 	0.1f,
+	 // 	FColor::Blue,
+	 // 	FString::Printf(TEXT("STATE TICK JUMP"))
+	 // );
 	
-	 
 	if (Character->GetInputMove().X != 0) 
 	{
 

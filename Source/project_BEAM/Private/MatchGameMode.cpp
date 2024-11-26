@@ -9,9 +9,6 @@
 #include "Arena/ArenaSettings.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
-#include "HAL/PlatformProcess.h"
-
-
 
 
 void AMatchGameMode::BeginPlay()
@@ -34,19 +31,6 @@ void AMatchGameMode::BeginPlay()
 	else if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] <= -GetDefault<UArenaSettings>()->MancheDiffShield) {
 		CharactersInArena[0]->SetShield(1);
 	}
-	
-	// TObjectPtr<AActor> camera = UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass());
-	//
-	// TObjectPtr<APlayerController> playerController = UGameplayStatics::GetPlayerController(GetWorld(), 1);
-	// if (playerController)
-	// {
-	// 	playerController->SetViewTargetWithBlend(camera);
-	// 	UE_LOG(LogTemp, Warning, TEXT("Player controller is true"));
-	// }
-	// else
-	// {
-	// 	UE_LOG(LogTemp, Warning, TEXT("Player controller is null"));
-	// }
 }
 
 void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors)
