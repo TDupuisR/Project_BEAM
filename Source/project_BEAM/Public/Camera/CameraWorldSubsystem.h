@@ -112,36 +112,36 @@ public:
 	/// GETTERS
 
 	UFUNCTION(BlueprintCallable)
-	float GetCameraSpeed() const;
+	float GetCameraSpeed() const {return cameraSpeed;}
 
 	UFUNCTION(BlueprintCallable)
-	float GetShakeForce() const;
+	float GetShakeForce() const {return shakeForce;}
+	
+	UFUNCTION(BlueprintCallable)
+	ECameraMode GetCameraMode() const {return cameraMode;}
 
 	UFUNCTION(BlueprintCallable)
-	ECameraMode GetCameraMode() const;
+	ECameraFollowMode GetCameraFollowMode() const {return cameraFollowMode;}
 
 	UFUNCTION(BlueprintCallable)
-	ECameraFollowMode GetCameraFollowMode() const;
+	FVector GetPosToFollow() const {return posToFollow;}
 
 	UFUNCTION(BlueprintCallable)
-	FVector GetPosToFollow() const;
-
-	UFUNCTION(BlueprintCallable)
-	bool GetIsShaking() const;
+	bool GetIsShaking() const {return isShaking;}
 
 	// SETTERS
 
 	UFUNCTION(BlueprintCallable)
-	void SetShakeForce(float NewShakeForce);
+	void SetShakeForce(float NewShakeForce) {shakeForce = NewShakeForce;}
 
 	UFUNCTION(BlueprintCallable)
-	void SetCameraSpeed(float NewCameraSpeed);
+	void SetCameraSpeed(float NewCameraSpeed) {cameraSpeed = NewCameraSpeed;}
 
 	UFUNCTION(BlueprintCallable)
-	void ChangeCameraMode(ECameraMode NewCameraMode);
+	void ChangeCameraMode(ECameraMode NewCameraMode) {cameraMode = NewCameraMode;}
 
 	UFUNCTION(BlueprintCallable)
-	void ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode);
+	void ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode) {cameraFollowMode = NewCameraFollowMode;}
 
 	UFUNCTION(BlueprintCallable)
 	void ShakeForSeconds(float Seconds, float ForceShake);
