@@ -91,7 +91,7 @@ public:
 	void ReattributeCharacterSettings();
 
 	UFUNCTION()
-	const UBeamCharacterSettings* GetCharacterSettings() const;
+	const UBeamCharacterSettings* GetCharacterSettings() const {return CharacterSettings;}
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -100,6 +100,233 @@ protected:
 	const UProjectileSettings* ProjectileSettings;
 
 # pragma endregion
+
+# pragma region Fight
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void KnockBack(FVector Direction, float Force, bool projection = false);
+
+	UFUNCTION(BlueprintCallable)
+	void Bounce(FVector Normal);
+
+	UFUNCTION(BlueprintCallable)
+	void OnHit(UPrimitiveComponent* HitComponent,  // The component that was hit
+		AActor* OtherActor,                // The other actor involved in the hit
+		UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
+		FVector NormalImpulse,             // The force applied to resolve the collision
+		const FHitResult& Hit              // Detailed information about the hit)
+	);
+
+	UFUNCTION(BlueprintCallable)
+	float GetBounciness() const {return Bounciness;}
+	UFUNCTION(BlueprintCallable)
+	float GetMinSizeVelocity() const {return MinSizeVelocity;}
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCanTakeDamage() const {return CanTakeDamage;}
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanTakeDamage(bool NewCanTakeDamage) {CanTakeDamage = NewCanTakeDamage;}
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCanTakeKnockback() {return CanTakeKnockBack;}
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanTakeKnockback(bool NewCanTakeKnockback) {CanTakeKnockBack = NewCanTakeKnockback;}
+
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsDashing() const {return IsDashing;}
+
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsDashing(bool NewIsDashing) {IsDashing = NewIsDashing;}
+
+
+private:
+
+	UPROPERTY()
+	bool IsDashing = false;
+
+	UPROPERTY()
+	float Bounciness = 0.7;
+
+	UPROPERTY()
+	float MinSizeVelocity = 100;
+
+	UPROPERTY()
+	bool CanTakeDamage = true;
+
+	UPROPERTY()
+	bool CanTakeKnockBack = true;
+
+# pragma endregion
+
+# pragma region Life
+
+public:
+	// GETTERS
+	UFUNCTION(BlueprintCallable)
+	int GetLife() const {return Life;}
+	UFUNCTION(BlueprintCallable)
+	int GetMaxLife() const {return MaxLife;}
+	UFUNCTION(BlueprintCallable)
+	int GetLifeToFly() const {return LifeToFly;}
+
+
+	// SETTERS
+	UFUNCTION()
+	void SetLife(const int NewLife) {Life = NewLife;}
+	UFUNCTION()
+	void SetMaxLife(const int NewMaxLife) {MaxLife = NewMaxLife;}
+	UFUNCTION()
+	void SetLifeToFly(const int NewLifeToFly) {LifeToFly = NewLifeToFly;}
+
+	
+	// OTHERS
+	UFUNCTION(BlueprintCallable)
+	void PlayerTakeDamage(const int Damage = 1);
+	UFUNCTION()
+	void ResetLife() {Life = MaxLife;}
+	UFUNCTION()
+	bool IsPhaseTwo() const {return Life <= LifeToFly;}
+
+	UFUNCTION()
+	void OnDeath();
+
+	UFUNCTION(BlueprintCallable)
+	bool HasShield() const {return Shield > 0;}
+	UFUNCTION()
+	void SetShield(int NewShield) {Shield = NewShield;}
+	UFUNCTION()
+	int GetShield() const {return Shield;}
+
+
+protected:
+	UFUNCTION()
+	void CheckLife();
+
+	UPROPERTY(BlueprintReadOnly)
+	int Life;
+	UPROPERTY(BlueprintReadOnly)
+	int MaxLife;
+	UPROPERTY(BlueprintReadOnly)
+	int LifeToFly;
+
+	UPROPERTY(BlueprintReadOnly)
+	int Shield = 0;
+
+# pragma endregion
+	
+# pragma region Push
+
+public:
+	UFUNCTION()
+	void Push();
+	UFUNCTION()
+	bool CanPush() const {return canPush;}
+
+	UFUNCTION()
+	void SetCanPush(bool NewCanPush) {canPush = NewCanPush;}
+
+
+private:
+	UPROPERTY()
+	UBoxComponent* boxCollision;
+	UPROPERTY()
+	TArray<ABeamCharacter*> PlayersInZone;
+
+	UPROPERTY()
+	UCapsuleComponent* capsuleCollision;
+
+	UPROPERTY()
+	bool canPush = true;
+	UPROPERTY()
+	float timerPush = 0.0f;
+	UPROPERTY()
+	float timeToWaitPush = 2.0f;
+
+	UFUNCTION()
+	void TickPush(float DeltaTime);
+	UFUNCTION()
+	void SetupCollision();
+
+	UFUNCTION()
+	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
+# pragma endregion
+
+# pragma region Stun
+
+public:
+
+	void Stun(float TimeToStun);
+
+	float GetStunTime() const {return StunTime;}
+
+	void SetStunTime(float NewStunTime) {StunTime = NewStunTime;}
+
+	void SetMultiplierStun(float NewMultiplierStun) {MultiplierStun = NewMultiplierStun;}
+
+	float GetMultiplierStun() const {return MultiplierStun;}
+
+
+private:
+
+	UPROPERTY()
+	float StunTime = 1.f;
+
+	UPROPERTY()
+	float MultiplierStun = 0.f;
+
+# pragma endregion
+
+#pragma region FollowTarget
+
+	bool IsFollowable() const {return true;}
+
+	virtual FVector GetFollowPosition() override;
+
+#pragma endregion
+
+#pragma region Shoot
+
+public:
+	UFUNCTION(BlueprintCallable)
+	UPlayerAim* GetPlayerAimComp() const {return playerAimComp;}
+
+	UFUNCTION(BlueprintCallable)
+	UWeaponCharge* GetWeaponComp() const {return weaponComp;}
+
+	UFUNCTION(BlueprintCallable)
+	bool TraceCheckBeforeProjectile(FVector endPosition, int power);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void InitQTE(ABeamCharacter* Character);
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeStateWhenQte();
+	
+private:
+	UFUNCTION()
+	void InitWeaponAndAim();
+
+
+	UPROPERTY()
+	TArray<float> shootRadius;
+	UPROPERTY()
+	TArray<float> shootHalfHeight;
+	
+	UPROPERTY()
+	UPlayerAim* playerAimComp;
+	UPROPERTY()
+	UWeaponCharge* weaponComp;
+
+#pragma endregion
 
 # pragma region Character Input
 
@@ -110,18 +337,20 @@ public:
 	TObjectPtr<UBeamCharacterInputData> InputData;
 	
 
-	UFUNCTION() FVector2D GetInputMove() const;
-	UFUNCTION() bool GetInputJump() const;
-	UFUNCTION() bool GetInputJumpJoystick() const;
-	UFUNCTION() bool GetInputDash() const;
+	UFUNCTION() FVector2D GetInputMove() const {return InputMove;}
+	UFUNCTION() bool GetInputJump() const {return InputJump;}
+	UFUNCTION() bool GetInputJumpJoystick() const {return InputJumpJoystick;}
+	UFUNCTION() bool GetInputDash() const {return InputDash;}
 
-	UFUNCTION() bool GetInputCharge() const;
-	UFUNCTION(BlueprintCallable) FVector2D GetInputAim() const;
-	UFUNCTION() bool GetInputShoot() const;
 
-	UFUNCTION() bool GetInputPush() const;
+	UFUNCTION() bool GetInputCharge() const {return InputCharge;}
+	UFUNCTION(BlueprintCallable) FVector2D GetInputAim() const {return InputAim;}
+	UFUNCTION() bool GetInputShoot() const {return InputShoot;}
 
-	UFUNCTION() bool GetInputFly() const;
+	UFUNCTION() bool GetInputPush() const {return InputPush;}
+
+	UFUNCTION() bool GetInputFly() const {return InputFly;}
+
 
 protected:
 	UFUNCTION()
@@ -158,187 +387,7 @@ private:
 	UFUNCTION() void OnInputFly(const FInputActionValue& InputActionValue);
 
 # pragma endregion
-
-# pragma region Fight
-
-public:
-	UFUNCTION(BlueprintCallable)
-	void KnockBack(FVector Direction, float Force, bool projection = false);
-
-	UFUNCTION(BlueprintCallable)
-	void Bounce(FVector Normal);
-
-	UFUNCTION(BlueprintCallable)
-	void OnHit(UPrimitiveComponent* HitComponent,  // The component that was hit
-		AActor* OtherActor,                // The other actor involved in the hit
-		UPrimitiveComponent* OtherComp,    // The other actor's component that was hit
-		FVector NormalImpulse,             // The force applied to resolve the collision
-		const FHitResult& Hit              // Detailed information about the hit)
-	);
-
-	UFUNCTION(BlueprintCallable)
-	float GetBounciness() const;
-
-	UFUNCTION(BlueprintCallable)
-	float GetMinSizeVelocity() const;
-
-	UFUNCTION(BlueprintCallable)
-	bool GetCanTakeDamage() const;
-
-	UFUNCTION(BlueprintCallable)
-	void SetCanTakeDamage(bool NewCanTakeDamage);
-
-	UFUNCTION(BlueprintCallable)
-	bool GetCanTakeKnockback();
-
-	UFUNCTION(BlueprintCallable)
-	void SetCanTakeKnockback(bool NewCanTakeKnockback);
-
-	UFUNCTION(BlueprintCallable)
-	bool GetIsDashing() const;
-
-	UFUNCTION(BlueprintCallable)
-	void SetIsDashing(bool NewIsDashing);
-
-private:
-
-	UPROPERTY()
-	bool IsDashing = false;
-
-	UPROPERTY()
-	float Bounciness = 0.7;
-
-	UPROPERTY()
-	float MinSizeVelocity = 100;
-
-	UPROPERTY()
-	bool CanTakeDamage = true;
-
-	UPROPERTY()
-	bool CanTakeKnockBack = true;
-
-# pragma endregion
-
-# pragma region Life
-
-public:
-	// GETTERS
-	UFUNCTION(BlueprintCallable)
-	int const GetLife() const;
-	UFUNCTION(BlueprintCallable)
-	int const GetMaxLife() const;
-	UFUNCTION(BlueprintCallable)
-	int const GetLifeToFly() const;
-
-
-	// SETTERS
-	UFUNCTION()
-	void SetLife(const int NewLife);
-	UFUNCTION()
-	void const SetMaxLife(const int NewMaxLife);
-	UFUNCTION()
-	void const SetLifeToFly(const int NewLifeToFly);
-
-
-	// OTHERS
-	UFUNCTION(BlueprintCallable)
-	void PlayerTakeDamage(const int Damage = 1);
-	UFUNCTION()
-	void const ResetLife();
-	UFUNCTION()
-	bool IsPhaseTwo() const;
-
-	UFUNCTION()
-	void OnDeath();
-
-	UFUNCTION(BlueprintCallable)
-	bool HasShield() const;
-
-	UFUNCTION()
-	void SetShield(int NewShield);
-
-	UFUNCTION()
-	int GetShield() const;
-
-protected:
-	UFUNCTION()
-	void CheckLife();
-
-	UPROPERTY(BlueprintReadOnly)
-	int Life;
-	UPROPERTY(BlueprintReadOnly)
-	int MaxLife;
-	UPROPERTY(BlueprintReadOnly)
-	int LifeToFly;
-
-	UPROPERTY(BlueprintReadOnly)
-	int Shield = 0;
-
-# pragma endregion
 	
-# pragma region Push
-
-public:
-	UFUNCTION()
-	void Push();
-	UFUNCTION()
-	bool CanPush() const;
-	UFUNCTION()
-	void SetCanPush(bool NewCanPush);
-
-private:
-	UPROPERTY()
-	UBoxComponent* boxCollision;
-	UPROPERTY()
-	TArray<ABeamCharacter*> PlayersInZone;
-
-	UPROPERTY()
-	UCapsuleComponent* capsuleCollision;
-
-	bool canPush = true;
-
-	UPROPERTY()
-	float timerPush = 0.0f;
-	UPROPERTY()
-	float timeToWaitPush = 2.0f;
-
-	UFUNCTION()
-	void TickPush(float DeltaTime);
-	UFUNCTION()
-	void SetupCollision();
-
-	UFUNCTION()
-	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION()
-	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-
-# pragma endregion
-
-# pragma region Stun
-
-public:
-
-	void Stun(float TimeToStun);
-
-	float GetStunTime() const;
-
-	void SetStunTime(float NewStunTime);
-
-	void SetMultiplierStun(float NewMultiplierStun);
-
-	float GetMultiplierStun();
-
-private:
-
-	UPROPERTY()
-	float StunTime = 1.f;
-
-	UPROPERTY()
-	float MultiplierStun = 0.f;
-
-# pragma endregion
-
 # pragma region Player Aim
 
 public:
@@ -346,10 +395,6 @@ public:
 	TObjectPtr<UPlayerAim> localPlayerAim;
 
 private:
-	UFUNCTION()
-	void creatAim();
-	UFUNCTION()
-	void playerAimInit();
 
 	UPROPERTY()
 	UBoxComponent* boxAim;
@@ -368,55 +413,12 @@ private:
 	void FailQte(ABeamCharacter* Character);
 #pragma endregion
 
-#pragma region FollowTarget
-
-	virtual bool IsFollowable() override;
-
-	virtual FVector GetFollowPosition() override;
-
-#pragma endregion
-
 #pragma region DeathEvent
 
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathEvent OnDeathEvent;
 
-
-#pragma endregion
-
-#pragma region Shoot
-
-public:
-	UFUNCTION(BlueprintCallable)
-	UPlayerAim* GetPlayerAimComp() const;
-
-	UFUNCTION(BlueprintCallable)
-	UWeaponCharge* GetWeaponComp() const;
-
-	UFUNCTION(BlueprintCallable)
-	bool TraceCheckBeforeProjectile(FVector endPosition, int power);
-
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
-	void InitQTE(ABeamCharacter* Character);
-
-	UFUNCTION(BlueprintCallable)
-	void ChangeStateWhenQte();
-	
-private:
-	UFUNCTION()
-	void InitWeaponAndAim();
-
-
-	UPROPERTY()
-	TArray<float> shootRadius;
-	UPROPERTY()
-	TArray<float> shootHalfHeight;
-	
-	UPROPERTY()
-	UPlayerAim* playerAimComp;
-	UPROPERTY()
-	UWeaponCharge* weaponComp;
 
 #pragma endregion
 
