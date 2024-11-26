@@ -22,6 +22,6 @@ public:
 
 
 private:
-	bool FirstFrame = true;
+	UPROPERTY() bool FirstFrame = true;
 
 };

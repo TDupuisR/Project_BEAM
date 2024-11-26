@@ -46,11 +46,6 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		return;
 	}
 
-	if (IsKeyWasPressed(EKeys::U)) {
-		Character->PlayerTakeDamage(3);
-	}
-	
-
 	// GEngine->AddOnScreenDebugMessage(
 	// 	-1,
 	// 	0.1f,
@@ -69,14 +64,6 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 	
 	if (Character->GetInputMove() != FVector2D::ZeroVector && !Character->isShooting)
 	{
-
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			0.1f,
-			FColor::Red,
-			FString::Printf(TEXT("Pressed"), GetStateID())
-		);
-
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
 
@@ -87,5 +74,4 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 	if (Character->GetInputFly()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
 	}
-
 }

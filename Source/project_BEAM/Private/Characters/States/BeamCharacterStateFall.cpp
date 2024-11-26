@@ -20,12 +20,12 @@ void UBeamCharacterStateFall::StateEnter(EBeamCharacterStateID PreviousStateID)
 
 	ZVelocity = 0;
 
-	/*GEngine->AddOnScreenDebugMessage(
+	GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
-		FColor::Purple,
-		FString::Printf(TEXT("ENTER FALL"), GetStateID())
-	);*/
+		FColor::Red,
+		FString::Printf(TEXT("Enter State %d"), GetStateID())
+	);
 
 	if (PreviousStateID == EBeamCharacterStateID::Jump) {
 		canCoyote = false;
@@ -47,12 +47,12 @@ void UBeamCharacterStateFall::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
-	/*GEngine->AddOnScreenDebugMessage(
+	GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
-		FColor::Purple,
-		FString::Printf(TEXT("EXIT FALL"), GetStateID())
-	);*/
+		FColor::Red,
+		FString::Printf(TEXT("Exit State %d"), GetStateID())
+	);
 }
 
 void UBeamCharacterStateFall::StateTick(float DeltaTime)
@@ -63,19 +63,19 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 		ZVelocity = Character->GetMovementComponent()->Velocity.Z;
 	}
 
-	 GEngine->AddOnScreenDebugMessage(
-	 	-1,
-	 	0.1f,
-	 	FColor::Blue,
-	 	FString::Printf(TEXT("STATE TICK FALL"))
-	 );
-
-	 GEngine->AddOnScreenDebugMessage(
-		 -1,
-		 0.1f,
-		 FColor::Purple,
-		 FString::Printf(TEXT("%f"), ZVelocity)
-	 );
+	 // GEngine->AddOnScreenDebugMessage(
+	 // 	-1,
+	 // 	0.1f,
+	 // 	FColor::Blue,
+	 // 	FString::Printf(TEXT("STATE TICK FALL"))
+	 // );
+	 //
+	 // GEngine->AddOnScreenDebugMessage(
+		//  -1,
+		//  0.1f,
+		//  FColor::Purple,
+		//  FString::Printf(TEXT("%f"), ZVelocity)
+	 // );
 
 
 	if (Character->GetInputPush() && Character->CanPush()) {
@@ -85,12 +85,6 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 	if (canCoyote) {
 		timerCoyote += DeltaTime;
 		if (timerCoyote >= timerCoyoteMax) {
-			GEngine->AddOnScreenDebugMessage(
-				-1,
-				0.1f,
-				FColor::Purple,
-				FString::Printf(TEXT("END TIMER"))
-			);
 			OnCoyoteTimerEnd();
 		}
 	}
@@ -108,12 +102,12 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 
 	if (Character->GetMovementComponent()->IsMovingOnGround() || Character->GetMovementComponent()->Velocity.Z >= 0) {
 
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			5.f,
-			FColor::Purple,
-			FString::Printf(TEXT("%f"), ZVelocity)
-		);	
+		// GEngine->AddOnScreenDebugMessage(
+		// 	-1,
+		// 	5.f,
+		// 	FColor::Purple,
+		// 	FString::Printf(TEXT("%f"), ZVelocity)
+		// );	
 
 		if (Character->GetCharacterSettings()->MinVelocityZStunFall < FMath::Abs(ZVelocity)) {
 			Character->SetStunTime((Character->GetCharacterSettings()->MultiplyerStunFall / 1000) * FMath::Abs(ZVelocity));
@@ -127,14 +121,12 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 	if (Character->GetInputJump() && canCoyote) {
 		GEngine->AddOnScreenDebugMessage(
 			-1,
-			0.1f,
+			1.f,
 			FColor::Purple,
-			FString::Printf(TEXT("TAPPED"))
+			FString::Printf(TEXT("COYOTE"))
 		);
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 	}
-
-	
 }
 
 void UBeamCharacterStateFall::OnCoyoteTimerEnd()

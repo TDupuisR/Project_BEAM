@@ -33,6 +33,13 @@ void UBeamCharacterStateStun::StateEnter(EBeamCharacterStateID PreviousStateID)
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
+		3.f,
+		FColor::Red,
+		FString::Printf(TEXT("Enter State %d"), GetStateID())
+	);
+	
+	GEngine->AddOnScreenDebugMessage(
+		-1,
 		10.f,
 		FColor::Blue,
 		FString::Printf(TEXT("STUN TIME %f"), Character->GetStunTime())
@@ -42,6 +49,13 @@ void UBeamCharacterStateStun::StateEnter(EBeamCharacterStateID PreviousStateID)
 void UBeamCharacterStateStun::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
+	
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		3.f,
+		FColor::Red,
+		FString::Printf(TEXT("Exit State %d"), GetStateID())
+	);
 
 	if (Character->IsPhaseTwo()) {
 		Character->GetCharacterMovement()->MaxFlySpeed = Character->GetCharacterSettings()->Fly_MaxSpeed;
@@ -61,12 +75,12 @@ void UBeamCharacterStateStun::StateTick(float DeltaTime)
 
 	stunTimer += DeltaTime;
 
-	 GEngine->AddOnScreenDebugMessage(
-	 	-1,
-	 	0.1f,
-	 	FColor::Blue,
-	 	FString::Printf(TEXT("STATE TICK STUN"))
-	 );
+	 // GEngine->AddOnScreenDebugMessage(
+	 // 	-1,
+	 // 	0.1f,
+	 // 	FColor::Blue,
+	 // 	FString::Printf(TEXT("STATE TICK STUN"))
+	 // );
 
 	if (stunTimer >= timeToStun) {
 		stunTimer = 0.f;
