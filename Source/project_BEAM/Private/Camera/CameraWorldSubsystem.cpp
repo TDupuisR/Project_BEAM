@@ -428,6 +428,9 @@ void UCameraWorldSubsystem::ChangeCameraMode(ECameraMode NewCameraMode)
 
 void UCameraWorldSubsystem::ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode)
 {
+	isTimer = false;
+	timer = 0;
+
 	cameraFollowMode = NewCameraFollowMode;
 }
 
@@ -438,6 +441,23 @@ void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 10
 	shakeForce = ForceShake;
 	isTimer = true;
 	cameraFollowMode = ECameraFollowMode::Shake;
+}
+
+void UCameraWorldSubsystem::ShakeCamera(float ForceShake, float speedCamera)
+{
+	shakeForce = ForceShake;
+	cameraFollowMode = ECameraFollowMode::Shake;
+	isTimer = false;
+	timer = 0;
+	cameraSpeed = speedCamera;
+}
+
+void UCameraWorldSubsystem::UnShakeCamera()
+{
+	cameraFollowMode = ECameraFollowMode::Normal;
+	isTimer = false;
+	timer = 0;
+	cameraSpeed = cameraBaseSpeed;
 }
 
 void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed = 10)
@@ -477,6 +497,7 @@ void UCameraWorldSubsystem::CameraFollowMode(float DeltaTime)
 		if (timer >= timerMax) {
 			isTimer = false;
 			timer = 0;
+			cameraSpeed = cameraBaseSpeed;
 			cameraFollowMode = ECameraFollowMode::Normal;
 		}
 	}

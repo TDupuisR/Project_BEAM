@@ -147,6 +147,12 @@ public:
 	void ShakeForSeconds(float Seconds, float ForceShake);
 
 	UFUNCTION(BlueprintCallable)
+	void ShakeCamera(float ForceShake, float speedCamera = 10);
+
+	UFUNCTION(BlueprintCallable)
+	void UnShakeCamera();
+
+	UFUNCTION(BlueprintCallable)
 	void CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed);
 
 private:

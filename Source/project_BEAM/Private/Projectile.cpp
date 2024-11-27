@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Characters/BeamCharacter.h"
+#include <Camera/CameraWorldSubsystem.h>
 
 
 // Sets default values
@@ -65,12 +66,18 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
+
+		FPlatformProcess::Sleep(0.05f);
+
+		GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(ownPower * 0.2,(ownPower^2) * 10);
+
 		 // disable collider to detected self
 		if(OtherActor->Implements<UProjectileInterface>())
 		{
 			IProjectileInterface* interface = Cast<IProjectileInterface>(OtherActor);
 			if (interface == nullptr) return;
 			
+
 			switch (interface->ProjectileGetType())
 			{
 			case EProjectileType::Player:
