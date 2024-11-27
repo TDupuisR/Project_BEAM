@@ -24,7 +24,6 @@ void UWeaponCharge::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitValues();
 }
 
 void UWeaponCharge::StartWeaponCharge()
@@ -50,6 +49,10 @@ void UWeaponCharge::CancelWeaponCharge(bool noShoot)
 
 void UWeaponCharge::InitValues()
 {
+	Character;
+
+	Character->GetCharacterSettings();
+
 	qteMaxTime = Character->GetCharacterSettings()->QTEMaxTime;
 	if (qteMaxTime <= 0) qteMaxTime = 5.f;
 	

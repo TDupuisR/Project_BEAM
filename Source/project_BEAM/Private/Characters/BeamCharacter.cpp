@@ -368,6 +368,11 @@ bool ABeamCharacter::IsPhaseTwo() const
 	return Life <= LifeToFly;
 }
 
+bool ABeamCharacter::IsDead() const
+{
+	return Life <= 0;
+}
+
 void ABeamCharacter::OnDeath()
 {
 	StateMachine->ChangeState(EBeamCharacterStateID::Dead);
@@ -483,6 +488,13 @@ void ABeamCharacter::playerAimInit()
 {
 	//if (localPlayerAim == nullptr) return;
 	//localPlayerAim->InitCharacter(this);
+}
+
+bool ABeamCharacter::isShooting()
+{
+
+	if (weaponComp == nullptr) return false;
+	return weaponComp->GetIsQteActive();
 }
 
 void ABeamCharacter::Stun(float TimeToStun = 3.f)

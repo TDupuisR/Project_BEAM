@@ -10,6 +10,7 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
 #include "HAL/PlatformProcess.h"
+#include "Match/BeamMatchSystem.h"
 
 
 
@@ -27,13 +28,17 @@ void AMatchGameMode::BeginPlay()
 
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
 	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
+	BeamGameInstance->GetMancheSystem()->InitializeMatch(CharactersInArena.Num());
+	BeamGameInstance->GetMancheSystem()->SetCharacters(CharactersInArena);
 
-	if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] >= GetDefault<UArenaSettings>()->MancheDiffShield) {
+
+
+	/*if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] >= GetDefault<UArenaSettings>()->MancheDiffShield) {
 		CharactersInArena[1]->SetShield(1);
 	}
 	else if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] <= -GetDefault<UArenaSettings>()->MancheDiffShield) {
 		CharactersInArena[0]->SetShield(1);
-	}
+	}*/
 	
 	// TObjectPtr<AActor> camera = UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass());
 	//
@@ -201,8 +206,6 @@ void AMatchGameMode::NewPair(int Max)
 
 	SetSelectedPair(listSpawnPairPossible[random]);
 
-	
-
 }
 
 void AMatchGameMode::CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoints)
@@ -223,7 +226,7 @@ void AMatchGameMode::CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoi
 	NewPair(GetPairNumberMax());
 }
 
-void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
+void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 {
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
 	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
@@ -240,29 +243,30 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 	if (MancheEnd) return;
 
-	MancheEnd = true;
+	if (!BeamGameInstance->GetMancheSystem()->IsMancheFinished()) return;
 
-	if (BeamGameInstance->GetMatchType() == EMatchTypeID::Free)
+	MancheEnd = true;
+	if (BeamGameInstance->GetMancheSystem()->GetMatchType() == EMatchTypeID::Free)
 	{
 
-		BeamGameInstance->AddPlayerPoints(0, 1);
-		BeamGameInstance->AddPlayerPoints(1, 1);
+		BeamGameInstance->GetMancheSystem()->AddPlayerPoints(0, 1);
+		BeamGameInstance->GetMancheSystem()->AddPlayerPoints(1, 1);
 
-		TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
+		TArray<int> PointsPlayers = BeamGameInstance->GetMancheSystem()->GetPlayersPoints();
 
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
 
-		if (CharactersInArena.Find(DeadPlayer) < 0) return;
-		BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
+		if (CharactersInArena.Find(pointeur) < 0) return;
+		BeamGameInstance->GetMancheSystem()->SetPlayerPoints(CharactersInArena.Find(pointeur), -1);
 
-		PointsPlayers = BeamGameInstance->GetPlayersPoints();
+		PointsPlayers = BeamGameInstance->GetMancheSystem()->GetPlayersPoints();
 
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1]);
 
 
-		BeamGameInstance->AddManche();
+		BeamGameInstance->GetMancheSystem()->AddManche();
 
 		BeamGameInstance->DeployEvent();
 
@@ -278,15 +282,16 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 		// Here ->
 		// Appeler ResetPlayerPoints() pour remettre les points � 0
 
-		BeamGameInstance->ResetPlayerPoints();
+		BeamGameInstance->GetMancheSystem()->ResetPlayerPoints();
+		BeamGameInstance->GetMancheSystem()->SetManche(0);
 
 		// A enlever quand menu fin
-		//FPlatformProcess::Sleep(3.0f);
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 3.0f, false);
 
 		return;
 	}
-	else if (BeamGameInstance->GetMatchType() == EMatchTypeID::Deathmatch) {
+	else if (BeamGameInstance->GetMancheSystem()->GetMatchType() == EMatchTypeID::Deathmatch) {
+
 
 		GEngine->AddOnScreenDebugMessage(
 			-1,
@@ -295,40 +300,18 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 			FString::Printf(TEXT("MATCH TYPE GAMEMODE"))
 		);
 
-		BeamGameInstance->AddPlayerPoints(0, 1);
-		BeamGameInstance->AddPlayerPoints(1, 1);
+		BeamGameInstance->GetMancheSystem()->ChangePointWin();
 
-		TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
+		TArray<int> PointsPlayers = BeamGameInstance->GetMancheSystem()->GetPlayersPoints();
 
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
 
-		if (CharactersInArena.Find(DeadPlayer) < 0) return;
-		BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
-
-		PointsPlayers = BeamGameInstance->GetPlayersPoints();
-
-		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0]);
-		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1]);
-
-
-		BeamGameInstance->AddManche();
+		BeamGameInstance->GetMancheSystem()->AddManche();
 
 		BeamGameInstance->DeployEvent();
 
-		//TArray<UUserWidget*> FoundWidgets;
-		//UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, );
-
-		//for (UUserWidget* Widget : FoundWidgets)
-		//{
-		//	if (Widget->ComponentHasTag(FName("MyUniqueTag")))
-		//	{
-		//		// Found the widget with the specific tag
-		//		break;
-		//	}
-		//}
-
-		if (BeamGameInstance->GetPlayersPoints()[0] >= BeamGameInstance->GetMaxManche() || BeamGameInstance->GetPlayersPoints()[1] >= BeamGameInstance->GetMaxManche())
+		if (BeamGameInstance->GetMancheSystem()->IsMatchFinished())
 		{
 			// END OF THE GAME
 			// GO TO MENU
@@ -344,18 +327,10 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 		}
 		else {
-			//FPlatformProcess::Sleep(3.0f);
 			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 3.0f, false);
-
-			//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		}
 
 	}
-
-	
-	
-
-
 }
 
 bool AMatchGameMode::GetMancheEnd() const

@@ -249,6 +249,9 @@ public:
 	bool IsPhaseTwo() const;
 
 	UFUNCTION()
+	bool IsDead() const;
+
+	UFUNCTION()
 	void OnDeath();
 
 	UFUNCTION(BlueprintCallable)
@@ -345,11 +348,15 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UPlayerAim> localPlayerAim;
 
+	UFUNCTION()
+	bool isShooting();
+
 private:
 	UFUNCTION()
 	void creatAim();
 	UFUNCTION()
 	void playerAimInit();
+
 
 	UPROPERTY()
 	UBoxComponent* boxAim;
