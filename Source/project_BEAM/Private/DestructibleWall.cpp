@@ -25,25 +25,19 @@ AProjectile* ADestructibleWall::GetProjectile()
 }
 bool ADestructibleWall::ProjectileContext(int power, FVector position)
 {
-	switch (power)
+	if (power < resistance)
+		return true;
+	else if (power == resistance)
 	{
-		case power < resistance:
-			{
-				return true;
-			}
-		case power == resistance:
-			{
-				GetDestroyed();
-				return true;
-			}
-		case power > resistance:
-			{
-				GetDestroyed();
-				return false;
-			}
-
-		default: return false;
+		GetDestroyed();
+		return true;
 	}
+	else if (power > resistance)
+	{
+		GetDestroyed();
+		return false;
+	}
+	else return false;
 }
 
 // Called when the game starts or when spawned

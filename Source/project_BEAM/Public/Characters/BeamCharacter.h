@@ -31,6 +31,7 @@ class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInt
 public:
 	// Sets default values for this character's properties
 	ABeamCharacter();
+	
 	virtual EProjectileType ProjectileGetType() override;
 	virtual bool ProjectileContext(int power, FVector position) override;
 	virtual AProjectile* GetProjectile() override;
@@ -230,7 +231,6 @@ public:
 	UFUNCTION()
 	void SetCanPush(bool NewCanPush) {canPush = NewCanPush;}
 
-
 private:
 	UPROPERTY()
 	UBoxComponent* boxCollision;
@@ -239,8 +239,7 @@ private:
 
 	UPROPERTY()
 	UCapsuleComponent* capsuleCollision;
-
-	UPROPERTY()
+	
 	bool canPush = true;
 	UPROPERTY()
 	float timerPush = 0.0f;
@@ -287,7 +286,7 @@ private:
 
 #pragma region FollowTarget
 
-	bool IsFollowable() const {return true;}
+	virtual bool IsFollowable() override;
 
 	virtual FVector GetFollowPosition() override;
 
@@ -310,6 +309,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeStateWhenQte();
+
+	bool isShooting = false;
 	
 private:
 	UFUNCTION()

@@ -401,7 +401,10 @@ void ABeamCharacter::Stun(float TimeToStun = 3.f)
 
 #pragma region FollowTarget
 
+bool ABeamCharacter::IsFollowable() { return true; }
+
 FVector ABeamCharacter::GetFollowPosition() {return GetActorLocation();}
+
 #pragma endregion
 
 #pragma region Shoot

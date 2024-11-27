@@ -23,8 +23,6 @@ UWeaponCharge::UWeaponCharge()
 void UWeaponCharge::BeginPlay()
 {
 	Super::BeginPlay();
-
-	InitValues();
 }
 
 void UWeaponCharge::StartWeaponCharge()
@@ -36,7 +34,9 @@ void UWeaponCharge::StartWeaponCharge()
 
 	Character->ChangeStateWhenQte();
 	Character->DisplayQte(Character);
-
+	
+	InitValues();
+	
 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
 void UWeaponCharge::CancelWeaponCharge(bool noShoot)
