@@ -311,6 +311,11 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 }
 
+bool ABeamCharacter::IsDead() const
+{
+	return Life <= 0;
+}
+
 void ABeamCharacter::OnDeath()
 {
 	StateMachine->ChangeState(EBeamCharacterStateID::Dead);
@@ -390,6 +395,13 @@ void ABeamCharacter::OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, 
 #pragma endregion 
 
 #pragma region Stun
+
+bool ABeamCharacter::isShooting()
+{
+
+	if (weaponComp == nullptr) return false;
+	return weaponComp->GetIsQteActive();
+}
 
 void ABeamCharacter::Stun(float TimeToStun = 3.f)
 {

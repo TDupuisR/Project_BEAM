@@ -395,7 +395,11 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UPlayerAim> localPlayerAim;
 
+	UFUNCTION()
+	bool isShooting();
+
 private:
+
 
 	UPROPERTY()
 	UBoxComponent* boxAim;

@@ -53,21 +53,21 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 	// 	FString::Printf(TEXT("STATE TICK IDLE"))
 	// );
 
-	if (Character->GetInputPush() && Character->CanPush() && !Character->isShooting) {
+	if (Character->GetInputPush() && Character->CanPush() && !Character->isShooting()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	if ((Character->GetInputJump() || Character->GetInputJumpJoystick()) && !Character->isShooting) {
+	if ((Character->GetInputJump() || Character->GetInputJumpJoystick()) && !Character->isShooting()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
 	
-	if (Character->GetInputMove() != FVector2D::ZeroVector && !Character->isShooting)
+	if (Character->GetInputMove() != FVector2D::ZeroVector && !Character->isShooting())
 	{
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
 
-	if (!Character->GetMovementComponent()->IsMovingOnGround() && !Character->isShooting) {
+	if (!Character->GetMovementComponent()->IsMovingOnGround() && !Character->isShooting()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
 	}
 

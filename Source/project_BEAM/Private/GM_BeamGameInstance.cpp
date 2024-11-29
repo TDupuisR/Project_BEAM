@@ -3,31 +3,42 @@
 
 #include "GM_BeamGameInstance.h"
 
-void UGM_BeamGameInstance::ResetPlayerPoints()
+#include "Match/BeamMatchSystem.h"
+
+void UGM_BeamGameInstance::Init()
 {
-	PlayerPoints[0] = 0;
-	PlayerPoints[1] = 0;
+	Super::Init();
+	manche = new BeamMatchSystem();
 }
+
 void UGM_BeamGameInstance::DeployEvent()
 {
 	OnChangePoints.Broadcast();
 }
 
-void UGM_BeamGameInstance::AddManche()
+
+void UGM_BeamGameInstance::SetLastSpawnNumber(int NewSpawnNumber)
 {
-	Manche++;
+	LastSpawnNumber = NewSpawnNumber;
 }
 
-int UGM_BeamGameInstance::GetPlayerPoints(int PlayerIndex)
+int UGM_BeamGameInstance::GetLastSpawnNumber()
 {
-	return PlayerPoints[PlayerIndex];
+	return LastSpawnNumber;
 }
-void UGM_BeamGameInstance::SetPlayerPoints(int PlayerIndex, int NewPoints)
+
+void UGM_BeamGameInstance::SetNumberPairAppeared(int NewNumber)
 {
-	PlayerPoints[PlayerIndex] = NewPoints;
+	NumberPairAppeared = NewNumber;
 }
-void UGM_BeamGameInstance::AddPlayerPoints(int PlayerIndex, int Points)
+
+int UGM_BeamGameInstance::GetNumberPairAppeared()
 {
-	PlayerPoints[PlayerIndex] += Points;
+	return NumberPairAppeared;
+}
+
+BeamMatchSystem* UGM_BeamGameInstance::GetMancheSystem()
+{
+	return manche;
 }
 
