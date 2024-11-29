@@ -127,12 +127,12 @@ public:
 	FVector GetPosToFollow() const {return posToFollow;}
 
 	UFUNCTION(BlueprintCallable)
-	bool GetIsShaking() const {return isShaking;}
+	bool GetIsShaking() const {return cameraFollowMode == ECameraFollowMode::Shake;}
 	
-	FVector GetPosToFollow() const;
+	//FVector GetPosToFollow() const;
 
 	UFUNCTION(BlueprintCallable)
-	bool GetIsTimer() const;
+	bool GetIsTimer() const { return isTimer; };
 
 	// SETTERS
 

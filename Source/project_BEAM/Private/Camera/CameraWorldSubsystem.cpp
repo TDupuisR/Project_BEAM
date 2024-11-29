@@ -381,58 +381,28 @@ void UCameraWorldSubsystem::InitCameraZoomParameters()
 
 }
 
-float UCameraWorldSubsystem::GetCameraSpeed() const
-{
-	return cameraSpeed;
-}
+//void UCameraWorldSubsystem::SetShakeForce(float NewShakeForce)
+//{
+//	shakeForce = NewShakeForce;
+//}
 
-float UCameraWorldSubsystem::GetShakeForce() const
-{
-	return shakeForce;
-}
+//void UCameraWorldSubsystem::SetCameraSpeed(float NewCameraSpeed)
+//{
+//	cameraSpeed = NewCameraSpeed;
+//}
 
-ECameraMode UCameraWorldSubsystem::GetCameraMode() const
-{
-	return cameraMode;
-}
+//void UCameraWorldSubsystem::ChangeCameraMode(ECameraMode NewCameraMode)
+//{
+//	cameraMode = NewCameraMode;
+//}
 
-ECameraFollowMode UCameraWorldSubsystem::GetCameraFollowMode() const
-{
-	return cameraFollowMode;
-}
-
-FVector UCameraWorldSubsystem::GetPosToFollow() const
-{
-	return posToFollow;
-}
-
-bool UCameraWorldSubsystem::GetIsTimer() const
-{
-	return isTimer;
-}
-
-void UCameraWorldSubsystem::SetShakeForce(float NewShakeForce)
-{
-	shakeForce = NewShakeForce;
-}
-
-void UCameraWorldSubsystem::SetCameraSpeed(float NewCameraSpeed)
-{
-	cameraSpeed = NewCameraSpeed;
-}
-
-void UCameraWorldSubsystem::ChangeCameraMode(ECameraMode NewCameraMode)
-{
-	cameraMode = NewCameraMode;
-}
-
-void UCameraWorldSubsystem::ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode)
-{
-	isTimer = false;
-	timer = 0;
-
-	cameraFollowMode = NewCameraFollowMode;
-}
+//void UCameraWorldSubsystem::ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode)
+//{
+//	isTimer = false;
+//	timer = 0;
+//
+//	cameraFollowMode = NewCameraFollowMode;
+//}
 
 void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 100)
 {
