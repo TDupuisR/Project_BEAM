@@ -6,6 +6,7 @@
 #include "Characters/BeamCharacter.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "Characters/PlayerAim.h"
+#include <Camera/CameraWorldSubsystem.h>
 
 
 // Sets default values for this component's properties
@@ -38,6 +39,11 @@ void UWeaponCharge::StartWeaponCharge()
 	InitValues();
 	
 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
+
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeCamera(power + 1);
+
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
 void UWeaponCharge::CancelWeaponCharge(bool noShoot)
 {
@@ -106,11 +112,20 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 					
 						//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
 						Character->PassQte(Character);
+						
+						float shakeForce = power == 3 ? 30 : power == 2 ? 20 : 2;
+						float shakeSpeed = power == 3 ? 20 : power == 2 ? 15 : 10;
+
+
+						GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeCamera(shakeForce, shakeSpeed);
+
 					}
 					else // if QTE Fail
 					{
 						Character->FailQte(Character);
 						CancelWeaponCharge(false);
+						GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->UnShakeCamera();
+
 					}
 				}
 				else if (!Character->GetInputCharge() && chargeWasPushed && power < qteTimeStamp.Num())
@@ -124,6 +139,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 					chargeWasPushed = false;
 
 					Character->HideQte(Character);
+					GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->UnShakeCamera();
 				}
 			}
 			else // Phase Two

@@ -4,11 +4,14 @@
 
 #include "CoreMinimal.h"
 
-UENUM(BlueprintType)
-enum class ECameraMode : uint8
+/**
+ * 
+ */
+class PROJECT_BEAM_API SpawnTool
 {
-	None = 0,
-	Follow,
-	Free,
-	Cinematic,
+public:
+	SpawnTool();
+	~SpawnTool();
+
+	void WhenStarting();
 };

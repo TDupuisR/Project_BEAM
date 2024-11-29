@@ -13,6 +13,11 @@
 				"CoreUObject",
 				"DeveloperSettings"
 			]
+		},
+		{
+			"Name" : "EditorTools",
+			"Type": "Editor",
+			"LoadingPhase" : "PostEngineInit"
 		}
 	],
 	"Plugins": [

@@ -8,6 +8,7 @@
 #include "GameFramework/Actor.h"
 #include <Kismet/GameplayStatics.h>
 #include <Camera/CameraFollowTarget.h>
+#include "Components/BoxComponent.h"
 #include <Camera/BeamCameraSettings.h>
 
 void UCameraWorldSubsystem::PostInitialize()
@@ -34,10 +35,13 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 	if (CameraMain == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("CameraMain not found"));
 		return;
+
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Camera FOUND !"));
 	}
+
+	rotCameraStart = ArenaCamera->GetActorRotation();
 
 	USceneComponent* ParentComponent = CameraMain->GetAttachParent();
 
@@ -48,7 +52,7 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 	}
 	else
 	{
-		// Si aucun parent n'est trouvï¿½
+		// Si aucun parent n'est trouvé
 		UE_LOG(LogTemp, Warning, TEXT("CameraMain has no parent."));
 	}
 
@@ -59,68 +63,60 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 		UE_LOG(LogTemp, Warning, TEXT("Camerabounds true"));
 		InitCameraBounds(CameraBoundsActor);
 		FVector posCamera = ArenaCamera->GetActorLocation();
-		ArenaCamera->SetActorLocation(FVector(CameraMain->Bounds.Origin.X,posCamera.Y, CameraMain->Bounds.Origin.Z));
+		ArenaCamera->SetActorLocation(FVector(CameraMain->Bounds.Origin.X, posCamera.Y, CameraMain->Bounds.Origin.Z));
 	}
 
 	InitCameraZoomParameters();
+
 }
 
 void UCameraWorldSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (isShaking) {
-		timerShake += DeltaTime;
-		if (timerShake >= timerShakeMax) {
-			isShaking = false;
-			timerShake = 0;
-			cameraFollowMode = ECameraFollowMode::Normal;
-		}
-	}
-
-	TickUpdateCameraZoom(DeltaTime);
-	TickUpdateCameraPosition(DeltaTime);
-}
-
-void UCameraWorldSubsystem::TickUpdateCameraPosition(float DeltaTime)
-{
-
-	//UE_LOG(LogTemp, Warning, TEXT("Number of FollowTargets: %d"), FollowTargets.Num());
-
 	if (CameraMain != nullptr)
 	{
-		FVector NewCameraPosition = CalculateAveragePositionBetweenTargets();
-
-		FVector posCamera = ArenaCamera->GetActorLocation();
-		ClampPositionIntoCameraBounds(NewCameraPosition);
-
-		posToFollow = NewCameraPosition;
-
 		switch (cameraMode)
 		{
 		case ECameraMode::None:
 			break;
 		case ECameraMode::Follow:
-
-			switch (cameraFollowMode)
-			{
-			case ECameraFollowMode::Normal:
-				ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z), DeltaTime, cameraSpeed));
-				break;
-			case ECameraFollowMode::Shake:
-				ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X + FMath::RandRange(-shakeForce, shakeForce), posCamera.Y, NewCameraPosition.Z + FMath::RandRange(-shakeForce, shakeForce)), DeltaTime, cameraSpeed));
-				break;
-			default:
-				break;
-			}
-
+			CameraFollowMode(DeltaTime);
+			TickUpdateCameraZoom(DeltaTime);
 			break;
+
+		case ECameraMode::Cinematic:
+			CameraCinematicMode(DeltaTime);
+			break;
+		case ECameraMode::Free:
+			CameraFreeMode(DeltaTime);
+			break;
+
 		default:
 			break;
 		}
-
-		//ArenaCamera->SetActorLocation(FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z));
 	}
+	//TickUpdateCameraPosition(DeltaTime);
+}
+
+void UCameraWorldSubsystem::AddFollowTarget(UObject* FollowTarget)
+{
+	if (FollowTarget)
+	{
+		FollowTargets.Add(FollowTarget);
+	}
+}
+
+void UCameraWorldSubsystem::RemoveFollowTarget(UObject* FollowTarget)
+{
+	if (FollowTarget)
+	{
+		FollowTargets.Remove(FollowTarget);
+	}
+}
+
+void UCameraWorldSubsystem::TickUpdateCameraPosition(float DeltaTime)
+{
 }
 
 void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
@@ -165,20 +161,6 @@ void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
 	CameraMain->SetWorldLocation(FVector(0.0f, FMath::Lerp(CameraZoomYMin, CameraZoomYMax, PercentDistance), 0.0f));
 
 }
-
-void UCameraWorldSubsystem::AddFollowTarget(UObject* FollowTarget)
-{
-	if (FollowTarget)
-		FollowTargets.Add(FollowTarget);
-}
-
-void UCameraWorldSubsystem::RemoveFollowTarget(UObject* FollowTarget)
-{
-	if (FollowTarget)
-		FollowTargets.Remove(FollowTarget);
-}
-
-
 
 FVector UCameraWorldSubsystem::CalculateAveragePositionBetweenTargets()
 {
@@ -303,7 +285,7 @@ void UCameraWorldSubsystem::InitCameraBounds(AActor* CameraBoundsActor)
 	//TArray<UBoxComponent*> components;
 
 	//CameraBoundsActor->GetComponents<UBoxComponent>(components);
-	
+
 	UE_LOG(LogTemp, Warning, TEXT("CameraOrigin: %s"), *CameraMain->Bounds.Origin.ToString());
 	GEngine->AddOnScreenDebugMessage(-1, 20.f, FColor::Black, FString::Printf(TEXT("BoxOrigin: %s"), *CameraMain->Bounds.Origin.ToString()));
 	CameraMain->Bounds.BoxExtent = BoundsExtent;
@@ -399,13 +381,220 @@ void UCameraWorldSubsystem::InitCameraZoomParameters()
 
 }
 
+float UCameraWorldSubsystem::GetCameraSpeed() const
+{
+	return cameraSpeed;
+}
+
+float UCameraWorldSubsystem::GetShakeForce() const
+{
+	return shakeForce;
+}
+
+ECameraMode UCameraWorldSubsystem::GetCameraMode() const
+{
+	return cameraMode;
+}
+
+ECameraFollowMode UCameraWorldSubsystem::GetCameraFollowMode() const
+{
+	return cameraFollowMode;
+}
+
+FVector UCameraWorldSubsystem::GetPosToFollow() const
+{
+	return posToFollow;
+}
+
+bool UCameraWorldSubsystem::GetIsTimer() const
+{
+	return isTimer;
+}
+
+void UCameraWorldSubsystem::SetShakeForce(float NewShakeForce)
+{
+	shakeForce = NewShakeForce;
+}
+
+void UCameraWorldSubsystem::SetCameraSpeed(float NewCameraSpeed)
+{
+	cameraSpeed = NewCameraSpeed;
+}
+
+void UCameraWorldSubsystem::ChangeCameraMode(ECameraMode NewCameraMode)
+{
+	cameraMode = NewCameraMode;
+}
+
+void UCameraWorldSubsystem::ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode)
+{
+	isTimer = false;
+	timer = 0;
+
+	cameraFollowMode = NewCameraFollowMode;
+}
+
 void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 100)
 {
-	timerShakeMax = Seconds;
-	timerShake = 0;
+	timerMax = Seconds;
+	timer = 0;
 	shakeForce = ForceShake;
-	isShaking = true;
+	isTimer = true;
 	cameraFollowMode = ECameraFollowMode::Shake;
+}
+
+void UCameraWorldSubsystem::ShakeCamera(float ForceShake, float speedCamera)
+{
+	shakeForce = ForceShake;
+	cameraFollowMode = ECameraFollowMode::Shake;
+	isTimer = false;
+	timer = 0;
+	cameraSpeed = speedCamera;
+}
+
+void UCameraWorldSubsystem::UnShakeCamera()
+{
+	cameraFollowMode = ECameraFollowMode::Normal;
+	isTimer = false;
+	timer = 0;
+	cameraSpeed = cameraBaseSpeed;
+}
+
+void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed = 10)
+{
+	cameraSpeed = CameraSpeed;
+	timer = 0;
+	timerMax = Seconds;
+	posToFollow = PosToFollow;
+	cameraMode = ECameraMode::Cinematic;
+	posToFollowStart = ArenaCamera->GetActorLocation();
+	isReverse = true;
+}
+
+void UCameraWorldSubsystem::CameraFollowMode(float DeltaTime)
+{
+	FVector NewCameraPosition = CalculateAveragePositionBetweenTargets();
+
+	FVector posCamera = ArenaCamera->GetActorLocation();
+	ClampPositionIntoCameraBounds(NewCameraPosition);
+
+	posToFollow = NewCameraPosition;
+
+	switch (cameraFollowMode)
+	{
+	case ECameraFollowMode::Normal:
+		ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z), DeltaTime, cameraSpeed));
+		break;
+	case ECameraFollowMode::Shake:
+		ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X + FMath::RandRange(-shakeForce, shakeForce), posCamera.Y, NewCameraPosition.Z + FMath::RandRange(-shakeForce, shakeForce)), DeltaTime, cameraSpeed));
+		break;
+	default:
+		break;
+	}
+
+	if (isTimer && cameraFollowMode == ECameraFollowMode::Shake) {
+		timer += DeltaTime;
+		if (timer >= timerMax) {
+			isTimer = false;
+			timer = 0;
+			cameraSpeed = cameraBaseSpeed;
+			cameraFollowMode = ECameraFollowMode::Normal;
+		}
+	}
+
+	//ArenaCamera->SetActorRotation(rotToFollow);
+
+	TickUpdateCameraZoom(DeltaTime);
+}
+
+void UCameraWorldSubsystem::CameraFreeMode(float DeltaTime)
+{
+}
+
+void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
+{
+	FVector posCamera = ArenaCamera->GetActorLocation();
+	FRotator lookAtRotation = FRotationMatrix::MakeFromX(posToFollow - posCamera).Rotator();
+
+	if (isReverse && isReversing) {
+		lookAtRotation = rotToFollow;
+	}
+
+	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + 200, posToFollow.Z + 100);
+
+	ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, posToGet, DeltaTime, cameraSpeed));
+	ArenaCamera->SetActorRotation(FMath::RInterpTo(ArenaCamera->GetActorRotation(), lookAtRotation, DeltaTime, cameraSpeed));
+
+	posCamera = ArenaCamera->GetActorLocation();
+
+	if (
+		posCamera.X > posToGet.X - 10 && posCamera.X < posToGet.X + 10 &&
+		posCamera.Z > posToGet.Z - 10 && posCamera.Z < posToGet.Z + 10 &&
+		isTimer == false && !isReverse
+		) 
+	{
+		isTimer = true;
+	}
+
+	if (isReverse) {
+		if (
+			posCamera.X > posToGet.X - 10 && posCamera.X < posToGet.X + 10 &&
+			posCamera.Z > posToGet.Z - 10 && posCamera.Z < posToGet.Z + 10 &&
+			isTimer == false
+			)
+		{
+			if (isReversing) {
+				isTimer = false;
+				timer = 0;
+				cameraSpeed = cameraBaseSpeed;
+				rotToFollow = rotCameraStart;
+				cameraMode = ECameraMode::Follow;
+				cameraFollowMode = ECameraFollowMode::Normal;
+				isReverse = false;
+				isReversing = false;
+			}
+			else {
+				isTimer = true;
+			}
+		}
+
+		if (isTimer) {
+			timer += DeltaTime;
+			if (timer >= timerMax) {
+				isTimer = false;
+				timer = 0;
+				rotToFollow = rotCameraStart;
+				posToFollow = posToFollowStart;
+				isReversing = true;
+			}
+		}
+
+		
+	}
+	else {
+		if (isTimer) {
+			timer += DeltaTime;
+			if (timer >= timerMax) {
+
+				if (!isReverse) {
+					isTimer = false;
+					timer = 0;
+					cameraSpeed = cameraBaseSpeed;
+					rotToFollow = rotCameraStart;
+					cameraMode = ECameraMode::Follow;
+					cameraFollowMode = ECameraFollowMode::Normal;
+				}
+			}
+		}
+	}
+
+
+	//if (ArenaCamera->GetActorLocation() == FVector(posToFollow.X, posToFollow.Y - 20, posToFollow.Z) && !isTimer) {
+	//	isTimer = true;
+	//}
+
+	
+
 }
 
 

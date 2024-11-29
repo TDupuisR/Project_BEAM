@@ -10,6 +10,6 @@ public class project_BEAMEditorTarget : TargetRules
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V4;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_3;
-		ExtraModuleNames.Add("project_BEAM");
+		ExtraModuleNames.AddRange( new string[] { "project_BEAM", "EditorTools" } );
 	}
 }

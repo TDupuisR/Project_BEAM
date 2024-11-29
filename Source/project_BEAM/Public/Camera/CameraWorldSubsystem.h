@@ -16,18 +16,18 @@ class UCameraComponent;
 
 
 /**
- * 
+ *
  */
 UCLASS()
 class PROJECT_BEAM_API UCameraWorldSubsystem : public UTickableWorldSubsystem
 {
 	GENERATED_BODY()
-	
-public: 
+
+public:
 	virtual void PostInitialize() override;
 
 	virtual void OnWorldBeginPlay(UWorld& World) override;
-	
+
 	virtual void Tick(float DeltaTime) override;
 
 	virtual TStatId GetStatId() const override { return TStatId(); };
@@ -128,6 +128,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool GetIsShaking() const {return isShaking;}
+	
+	FVector GetPosToFollow() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsTimer() const;
 
 	// SETTERS
 
@@ -146,27 +151,57 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ShakeForSeconds(float Seconds, float ForceShake);
 
+	UFUNCTION(BlueprintCallable)
+	void ShakeCamera(float ForceShake, float speedCamera = 10);
 
+	UFUNCTION(BlueprintCallable)
+	void UnShakeCamera();
+
+	UFUNCTION(BlueprintCallable)
+	void CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed);
 
 private:
 
-	bool isShaking = false;
+	bool isTimer = false;
 
-	float timerShake = 0;
+	float timer = 0;
 
-	float timerShakeMax = 0;
+	float timerMax = 0;
+
+	float cameraBaseSpeed = 10.f;
 
 	float cameraSpeed = 10.f;
 
 	float shakeForce = 10;
 
+	bool isReverse = false;
+
+	bool isReversing = false;
+
 	FVector posToFollow;
+	FRotator rotToFollow;
+
+	FVector posToFollowStart;
 
 	ECameraMode cameraMode = ECameraMode::Follow;
 
 	ECameraFollowMode cameraFollowMode = ECameraFollowMode::Normal;
 
+	FRotator rotCameraStart;
+
 #pragma endregion
+
+#pragma region State
+
+	void CameraFollowMode(float DeltaTime);
+
+	void CameraFreeMode(float DeltaTime);
+
+	void CameraCinematicMode(float DeltaTime);
+
+
+#pragma endregion
+
 
 };
 
