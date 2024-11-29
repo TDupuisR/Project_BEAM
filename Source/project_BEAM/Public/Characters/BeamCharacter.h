@@ -175,6 +175,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int GetLifeToFly() const {return LifeToFly;}
 
+	UFUNCTION(BlueprintCallable)
+	bool IsDead() const;
+
 
 	// SETTERS
 	UFUNCTION()
@@ -310,7 +313,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ChangeStateWhenQte();
 
-	bool isShooting = false;
+	//bool isShooting = false;
 	
 private:
 	UFUNCTION()
