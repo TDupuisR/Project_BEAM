@@ -26,18 +26,29 @@ void UBeamCharacterStatePush::StateEnter(EBeamCharacterStateID PreviousStateID)
 	Character->SetCanPush(false);
 
 	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		3.f,
+		FColor::Red,
+		FString::Printf(TEXT("Enter State %d"), GetStateID())
+	);
 }
 
 void UBeamCharacterStatePush::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		3.f,
+		FColor::Red,
+		FString::Printf(TEXT("Exit State %d"), GetStateID())
+	);
 
 	if (!Character->IsPhaseTwo()) {
 		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 	}
-
-
 }
 
 void UBeamCharacterStatePush::StateTick(float DeltaTime)

@@ -27,7 +27,6 @@ void UBeamCharacterStateWalk::StateEnter(EBeamCharacterStateID PreviousStateID)
 	);
 
 	Character->GetCharacterMovement()->MaxWalkSpeed = Character->GetCharacterSettings()->Walk_VelocityMax;
-
 }
 
 void UBeamCharacterStateWalk::StateExit(EBeamCharacterStateID NextStateID)
@@ -46,12 +45,12 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Red,
-		FString::Printf(TEXT("Tick State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Tick State %d"), GetStateID())
+	// );
 
 	if (IsKeyWasPressed(EKeys::O)) {
 		Character->SetStunTime(5.f);
@@ -63,14 +62,6 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 	}
 
 	if (Character->GetInputJump()) {
-
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			3.f,
-			FColor::Red,
-			FString::Printf(TEXT("Change STATE Jump"), GetStateID())
-		);
-
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
@@ -88,16 +79,13 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 		{
 			Character->SetOrientX(1);
 		}*/
-
+		
 		float appliedForce = .0f;
+		
 		if (Character->GetInputMove().X != 0)
-		{
 			appliedForce = Character->GetInputMove().X;
-		}
 		else
-		{
 			appliedForce = Character->GetOrientX();
-		}
 		
 		Character->AddMovementInput(FVector::ForwardVector, appliedForce);
 	}

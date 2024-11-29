@@ -6,9 +6,6 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateProjection.generated.h"
 
-/**
- * 
- */
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateProjection : public UBeamCharacterState
 {
@@ -25,10 +22,9 @@ public:
 
 
 private:
-	float TimeToWait = 0.4f;
+	UPROPERTY() float TimeToWait = 0.4f;
+	UPROPERTY() float Timer = 0.f;
 
-	float Timer = 0.f;
-
-	bool AfterProjection = false;
+	UPROPERTY() bool AfterProjection = false;
 
 };

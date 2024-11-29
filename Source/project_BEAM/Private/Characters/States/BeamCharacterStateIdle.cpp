@@ -43,51 +43,35 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 
 	if (Character->IsPhaseTwo()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
-	}
-
-	if (IsKeyWasPressed(EKeys::U)) {
-		Character->TakeDamage(3);
-	}
-
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Red,
-		FString::Printf(TEXT("Tick State IDLE"))
-	);
-
-	if (IsKeyWasPressed(EKeys::U)) {
-		Character->TakeDamage(3);
 		return;
 	}
 
-	if (Character->GetInputPush() && Character->CanPush()) {
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("STATE TICK IDLE"))
+	// );
+
+	if (Character->GetInputPush() && Character->CanPush() && !Character->isShooting) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	if (Character->GetInputJump()) {
+	if ((Character->GetInputJump() || Character->GetInputJumpJoystick()) && !Character->isShooting) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
 	
-	if (Character->GetInputMove() != FVector2D::ZeroVector)
+	if (Character->GetInputMove() != FVector2D::ZeroVector && !Character->isShooting)
 	{
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			0.1f,
-			FColor::Red,
-			FString::Printf(TEXT("Pressed : %d"), GetStateID())
-		);
-
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
 
-	if (!Character->GetMovementComponent()->IsMovingOnGround() && Character->GetMovementComponent()->Velocity.Y < 0) {
+	if (!Character->GetMovementComponent()->IsMovingOnGround() && !Character->isShooting) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
 	}
 
 	if (Character->GetInputFly()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Fly);
 	}
-
 }

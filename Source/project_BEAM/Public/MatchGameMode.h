@@ -19,11 +19,13 @@ class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
+
 protected:
 	UPROPERTY()
 	TArray<ABeamCharacter*> CharactersInArena;
 	
 private:
+	
 	UBeamCharacterInputData* LoadInputDataFromConfig();
 
 	UInputMappingContext* LoadInputMappingContextFromConfig();
@@ -35,4 +37,56 @@ private:
 	TSubclassOf<ABeamCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
 	
 	void CreateAndInitPlayers() const;
+
+#pragma region MancheSystem
+
+public:
+	UFUNCTION()
+	void OnPlayerDeath(ABeamCharacter* pointeur);
+
+	UFUNCTION(BlueprintCallable)
+	bool GetMancheEnd() const;
+
+	void ResetLevel();
+
+private:
+	void AddEventsPlayers() const;
+
+	bool MancheEnd = false;
+
+	FTimerHandle TimerHandle;
+	
+
+
+
+#pragma endregion
+
+#pragma region SpawnPairs
+
+public:
+	void SetSelectedPair(int NewPair);
+
+	int GetSelectedPair() const;
+
+	void SetPairNumberMax(int NewMax);
+
+	int GetPairNumberMax() const;
+
+	void CheckSpawnPairs(TArray<AArenaPlayerStart*> PlayerStartsPoints);
+
+private:
+	TArray<int> listSpawnPairPossible;
+
+	int SelectedPair = 0;
+
+	int PairNumberMax = 0;
+
+	int SelectedPairChoose = 0;
+
+	void NewPair(int Max);
+
+	void CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoints);
+
+#pragma endregion
+
 };

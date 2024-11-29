@@ -9,7 +9,6 @@
 #include "Characters/BeamCharacterSettings.h"
 
 
-
 EBeamCharacterStateID UBeamCharacterStateFlying::GetStateID()
 {
 	return EBeamCharacterStateID::Fly;
@@ -59,12 +58,12 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Red,
-		FString::Printf(TEXT("Tick State FLY"))
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("STATE TICK FLY"))
+	// );
 
 	if (!canDash) {
 		timerDash += DeltaTime;
@@ -83,15 +82,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		}
 	}
 
-	if (Character->GetInputFly() && !firstFrame) {
-		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
-		//Character->GetCapsuleComponent()->SetSimulatePhysics(true);
-		//Character->GetCharacterMovement()->Gravity = true;
-
-		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
-		return;
-	}
-
+	
 	// Dash
 	if (Character->GetInputDash() && !Character->GetIsDashing() && canDash) {
 
@@ -112,20 +103,15 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			dashVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
 		}
 
-		if (dashVector == FVector::ZeroVector) {
+		if (dashVector == FVector::ZeroVector)
+		{
 			Character->SetIsDashing(false);
 			canDash = true;
 			canMove = true;
 			return;
 		}
 
-		UE_LOG(LogTemp, Warning, TEXT("DashVector : %f"), Character->GetCharacterSettings()->Fly_DashForce);
-
-		Character->GetCharacterMovement()->AddImpulse(dashVector * (Character->GetCharacterSettings()->Fly_DashForce * 100000.0));
-	}
-	else if (!Character->GetInputDash())
-	{
-		//Character->SetIsDashing(true);
+		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce );
 	}
 
 	if (canMove) {
@@ -137,10 +123,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			moveVector.Normalize();
 			Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
 		}
-	}
-
-	if (firstFrame) {
-		firstFrame = false;
 	}
 }
 

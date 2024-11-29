@@ -24,11 +24,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeState(EBeamCharacterStateID NewStateID);
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	UBeamCharacterState* GetState(EBeamCharacterStateID StateID);
 	UFUNCTION()
 	EBeamCharacterStateID const GetCurrentStateID() const;
 
+	UFUNCTION()
 	void RedoParams();
 
 protected: 

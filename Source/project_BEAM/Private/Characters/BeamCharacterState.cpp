@@ -45,16 +45,30 @@ void UBeamCharacterState::StateExit(EBeamCharacterStateID NextStateID)
 
 void UBeamCharacterState::StateTick(float DeltaTime)
 {
+	if (IsKeyWasPressed(EKeys::U) && Character) {
+		Character->PlayerTakeDamage(3);
+		
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			0.1f,
+			FColor::Blue,
+			FString::Printf(TEXT("Debug Take Damage"))
+		);
+	}
 }
 
 bool const UBeamCharacterState::IsKeyDown(FKey key) const {
 	if (Character == nullptr) return false;
+	if(Character->GetLocalViewingPlayerController() == nullptr) return false;
+	
 	return Character->GetLocalViewingPlayerController()->IsInputKeyDown(key);
 }
 
 bool const UBeamCharacterState::IsKeyWasPressed(FKey key) const
 {
 	if (Character == nullptr) return false;
+	if(Character->GetLocalViewingPlayerController() == nullptr) return false;
+	
 	return Character->GetLocalViewingPlayerController()->WasInputKeyJustPressed(key);
 }
 

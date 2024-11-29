@@ -8,7 +8,6 @@
 #include "GameFramework/Actor.h"
 #include <Kismet/GameplayStatics.h>
 #include <Camera/CameraFollowTarget.h>
-#include "Components/BoxComponent.h"
 #include <Camera/BeamCameraSettings.h>
 
 void UCameraWorldSubsystem::PostInitialize()
@@ -35,7 +34,6 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 	if (CameraMain == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("CameraMain not found"));
 		return;
-
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Camera FOUND !"));
@@ -50,7 +48,7 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 	}
 	else
 	{
-		// Si aucun parent n'est trouvé
+		// Si aucun parent n'est trouvï¿½
 		UE_LOG(LogTemp, Warning, TEXT("CameraMain has no parent."));
 	}
 
@@ -65,30 +63,23 @@ void UCameraWorldSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 	}
 
 	InitCameraZoomParameters();
-
 }
 
 void UCameraWorldSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (isShaking) {
+		timerShake += DeltaTime;
+		if (timerShake >= timerShakeMax) {
+			isShaking = false;
+			timerShake = 0;
+			cameraFollowMode = ECameraFollowMode::Normal;
+		}
+	}
+
 	TickUpdateCameraZoom(DeltaTime);
 	TickUpdateCameraPosition(DeltaTime);
-}
-
-void UCameraWorldSubsystem::AddFollowTarget(UObject* FollowTarget)
-{
-	if (FollowTarget)
-	{
-		FollowTargets.Add(FollowTarget);
-	}
-}
-
-void UCameraWorldSubsystem::RemoveFollowTarget(UObject* FollowTarget)
-{
-	if (FollowTarget)
-	{
-		FollowTargets.Remove(FollowTarget);
-	}
 }
 
 void UCameraWorldSubsystem::TickUpdateCameraPosition(float DeltaTime)
@@ -103,7 +94,32 @@ void UCameraWorldSubsystem::TickUpdateCameraPosition(float DeltaTime)
 		FVector posCamera = ArenaCamera->GetActorLocation();
 		ClampPositionIntoCameraBounds(NewCameraPosition);
 
-		ArenaCamera->SetActorLocation(FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z));
+		posToFollow = NewCameraPosition;
+
+		switch (cameraMode)
+		{
+		case ECameraMode::None:
+			break;
+		case ECameraMode::Follow:
+
+			switch (cameraFollowMode)
+			{
+			case ECameraFollowMode::Normal:
+				ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z), DeltaTime, cameraSpeed));
+				break;
+			case ECameraFollowMode::Shake:
+				ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, FVector(NewCameraPosition.X + FMath::RandRange(-shakeForce, shakeForce), posCamera.Y, NewCameraPosition.Z + FMath::RandRange(-shakeForce, shakeForce)), DeltaTime, cameraSpeed));
+				break;
+			default:
+				break;
+			}
+
+			break;
+		default:
+			break;
+		}
+
+		//ArenaCamera->SetActorLocation(FVector(NewCameraPosition.X, posCamera.Y, NewCameraPosition.Z));
 	}
 }
 
@@ -114,7 +130,7 @@ void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
 	if (ArenaCamera == nullptr) return;
 
 	float GreatestDistanceBetweenTargets = CalculateGreatestDistanceBetweenTargets();
-	UE_LOG(LogTemp, Warning, TEXT("Greatest Distance : %f"), GreatestDistanceBetweenTargets);
+	//UE_LOG(LogTemp, Warning, TEXT("Greatest Distance : %f"), GreatestDistanceBetweenTargets);
 
 	if (GreatestDistanceBetweenTargets < CameraZoomDistanceBetweenTargetsMin) {
 		GreatestDistanceBetweenTargets = CameraZoomDistanceBetweenTargetsMin;
@@ -128,26 +144,41 @@ void UCameraWorldSubsystem::TickUpdateCameraZoom(float DeltaTime)
 
 	FVector posCamera = ArenaCamera->GetActorLocation();
 
-	UE_LOG(LogTemp, Warning, TEXT("PERCENTAGE : %f"), PercentDistance);
+	//UE_LOG(LogTemp, Warning, TEXT("PERCENTAGE : %f"), PercentDistance);
 
 	float value = CameraZoomYMax * PercentDistance;
 
-	UE_LOG(LogTemp, Warning, TEXT("VALUE : %f"), value);
+	//UE_LOG(LogTemp, Warning, TEXT("VALUE : %f"), value);
 
 	float zoomValue = FMath::Clamp(value, CameraZoomYMin, CameraZoomYMax);
 
-	UE_LOG(LogTemp, Warning, TEXT("ZOOM VALUE : %f"), zoomValue);
+	//UE_LOG(LogTemp, Warning, TEXT("ZOOM VALUE : %f"), zoomValue);
 
 
 	FVector newPosition = FVector(posCamera.X, zoomValue, posCamera.Z);
 
-	UE_LOG(LogTemp, Warning, TEXT("POSITION NEW ZOOM : %s"), *newPosition.ToString());
+
+	//UE_LOG(LogTemp, Warning, TEXT("POSITION NEW ZOOM : %s"), *newPosition.ToString());
 
 	ArenaCamera->SetActorLocation(newPosition);
 
 	CameraMain->SetWorldLocation(FVector(0.0f, FMath::Lerp(CameraZoomYMin, CameraZoomYMax, PercentDistance), 0.0f));
 
 }
+
+void UCameraWorldSubsystem::AddFollowTarget(UObject* FollowTarget)
+{
+	if (FollowTarget)
+		FollowTargets.Add(FollowTarget);
+}
+
+void UCameraWorldSubsystem::RemoveFollowTarget(UObject* FollowTarget)
+{
+	if (FollowTarget)
+		FollowTargets.Remove(FollowTarget);
+}
+
+
 
 FVector UCameraWorldSubsystem::CalculateAveragePositionBetweenTargets()
 {
@@ -209,12 +240,12 @@ float UCameraWorldSubsystem::CalculateGreatestDistanceBetweenTargets()
 			if (FollowTargetInterface2 == nullptr) continue;
 			if (!FollowTargetInterface2->IsFollowable()) continue;
 
-			UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface: %s"), *FollowTargetInterface->GetFollowPosition().ToString());
-			UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface2: %s"), *FollowTargetInterface2->GetFollowPosition().ToString());
+			//UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface: %s"), *FollowTargetInterface->GetFollowPosition().ToString());
+			//UE_LOG(LogTemp, Error, TEXT("FollowTargetInterface2: %s"), *FollowTargetInterface2->GetFollowPosition().ToString());
 
 			float distance = FVector::Distance(FollowTargetInterface->GetFollowPosition(), FollowTargetInterface2->GetFollowPosition());
 
-			UE_LOG(LogTemp, Error, TEXT("Distance: %f"), distance);
+			//UE_LOG(LogTemp, Error, TEXT("Distance: %f"), distance);
 
 			if (distance > GreatestDistance)
 			{
@@ -366,6 +397,15 @@ void UCameraWorldSubsystem::InitCameraZoomParameters()
 	CameraZoomYMin = GetDefault<UBeamCameraSettings>()->CameraZoomYMin;
 	CameraZoomYMax = GetDefault<UBeamCameraSettings>()->CameraZoomYMax;
 
+}
+
+void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 100)
+{
+	timerShakeMax = Seconds;
+	timerShake = 0;
+	shakeForce = ForceShake;
+	isShaking = true;
+	cameraFollowMode = ECameraFollowMode::Shake;
 }
 
 
