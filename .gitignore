@@ -57,6 +57,8 @@ Binaries/*
 !Binaries/Win64
 Binaries/Win64/*
 !Binaries/Win64/UnrealEditor.modules
+!Binaries/Win64/UnrealEditor-EditorTools.dll
+!Binaries/Win64/UnrealEditor-EditorTools.pdb
 !Binaries/Win64/UnrealEditor-project_BEAM.dll
 !Binaries/Win64/project_BEAM.target
 
