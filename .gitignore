@@ -67,6 +67,14 @@ Plugins/*/Binaries/Win64/*
 !Plugins/*/Binaries/Win64/UnrealEditor.modules
 !Plugins/*/Binaries/Win64/UnrealEditor-LocalMultiplayer.dll
 
+# Wwise
+!Plugins/*/Binaries/Win64/UnrealEditor-AkAudio.dll
+!Plugins/*/Binaries/Win64/UnrealEditor-Wwise.dll
+!Plugins/*/Binaries/Win64/UnrealEditor-WwiseNiagara.dll
+!Plugins/*/Binaries/Win64/UnrealEditor-WwiseSoundEngine.dll
+!Plugins/*/Binaries/Win64/UnrealEditor-WwiseAuthoring.dll
+!Plugins/*/Binaries/Win64/UnrealEditor-WwiseLowLevelUtils.dll
+
 # Builds
 Build/*
 
