@@ -37,8 +37,8 @@ int UGM_BeamGameInstance::GetNumberPairAppeared()
 	return NumberPairAppeared;
 }
 
-BeamMatchSystem* UGM_BeamGameInstance::GetMancheSystem()
+TArray<int> UGM_BeamGameInstance::GetPlayersPoints() const
 {
-	return manche;
+	return manche->GetPlayersPoints();
 }
 

@@ -43,8 +43,6 @@ private:
 public:
 	UFUNCTION()
 	void OnPlayerDeath(ABeamCharacter* pointeur);
-	UFUNCTION(BlueprintCallable)
-	bool IsPlayer1Win() const;
 
 	UFUNCTION(BlueprintCallable)
 	bool GetMancheEnd() const;

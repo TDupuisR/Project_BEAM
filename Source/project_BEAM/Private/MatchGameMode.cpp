@@ -343,8 +343,6 @@ void AMatchGameMode::ResetLevel()
 	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }
 
-bool AMatchGameMode::IsPlayer1Win() const {return;}
-
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
 {
 	UBeamCharacterInputData* InputData = LoadInputDataFromConfig();
