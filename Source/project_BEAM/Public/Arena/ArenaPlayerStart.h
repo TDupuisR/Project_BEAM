@@ -18,4 +18,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	EArenaCharacterOrient StartOrient = EArenaCharacterOrient::Right;
+
+	UPROPERTY(EditAnywhere)
+	int SpawnPair = 0;
 };

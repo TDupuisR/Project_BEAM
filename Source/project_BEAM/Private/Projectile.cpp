@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Characters/BeamCharacter.h"
+#include <Camera/CameraWorldSubsystem.h>
 
 
 // Sets default values
@@ -17,52 +18,73 @@ AProjectile::AProjectile()
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	Capsule->SetCollisionProfileName(TEXT("OverlapAll"));
 	Capsule->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnOverlapBegin);
-	params.AddIgnoredActor(this);
 }
 
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	Capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
 	projectileComponent->ProjectileGravityScale = 0.f;
 	currentLifeSpan = 0.f;
+	
+	Capsule->IgnoreActorWhenMoving(this, true);
+	Capsule->IgnoreActorWhenMoving(GetOwner(), true);
 
 	InitProjectileSettings();
 }
 
-void AProjectile::InitialisePower(int power)
+void AProjectile::InitialisePower(int power, ABeamCharacter* character)
 {
 	ownPower = power;
 	projectileCurrentParam = powerParameters[power];
-
+	
+	Capsule->IgnoreActorWhenMoving(character, true);
+	actorParentName = character->GetName();
+	
 	InitParameters();
 	
-	//Set here: POWER, HEIGHT, WIDTH, SPEED, SIZE OF COLLIDER
+	Capsule->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+void AProjectile::ReInitialisePower(int power)
+{
+	ownPower = power;
+	projectileCurrentParam = powerParameters[power];
+	
+	InitParameters();
 }
 
 
 void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (actorParent == OverlappedComp->GetAttachParentActor()) return;
+	if (actorParentName == OtherActor->GetName()) return;
 	
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
+
+		FPlatformProcess::Sleep(0.05f);
+
+		GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(ownPower * 0.2,(ownPower^2) * 10);
+
 		 // disable collider to detected self
 		if(OtherActor->Implements<UProjectileInterface>())
 		{
 			IProjectileInterface* interface = Cast<IProjectileInterface>(OtherActor);
 			if (interface == nullptr) return;
 			
+
 			switch (interface->ProjectileGetType())
 			{
 			case EProjectileType::Player:
 				{
 					if (!OtherComp->ComponentTags.Contains("Player")) break;
 					
-					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
+					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
 					else return;
+
+					break;
 				};
 			
 			case EProjectileType::Bullet:
@@ -79,34 +101,37 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 						int newPower = ((otherPower +1) - (ownPower +1)) -1;
 						if (newPower < 0) newPower = 0;
 						
-						if (otherBullet != nullptr) otherBullet->FakeDestroy(newPower);
-						GetDestroyed();
+						if (otherBullet != nullptr) otherBullet->CallFakeDestroy(newPower);
+						CallDestroyed();
 					}
 					else if (otherPower < ownPower)
 					{
 						int newPower = ((ownPower +1) - (otherPower +1)) -1;
 						if (newPower < 0) newPower = 0;
 
-						if (otherBullet != nullptr) otherBullet->GetDestroyed();
-						FakeDestroy(newPower);
+						if (otherBullet != nullptr) otherBullet->CallDestroyed();
+						CallFakeDestroy(newPower);
 					}
 					else
 					{
-						if (otherBullet != nullptr) otherBullet->GetDestroyed();
-						GetDestroyed();
+						if (otherBullet != nullptr) otherBullet->CallDestroyed();
+						CallDestroyed();
 					}
+
+					break;
 				};
 
 			case EProjectileType::DestructWall:
 				{
-					if (interface->ProjectileContext(ownPower, GetActorLocation())) GetDestroyed();
-					else break;
+					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
+
+					break;
 				};
 			}
 		}
-		else
+		else //if actor doesn't implement interface
 		{
-			GetDestroyed();
+			CallDestroyed();
 		}
 	}
 }
@@ -117,14 +142,10 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	currentLifeSpan += DeltaTime * projectileCurrentParam.speed;
-	if (currentLifeSpan >= projectileCurrentParam.lifeSpan) GetDestroyed();
+	if (currentLifeSpan >= projectileCurrentParam.lifeSpan) CallDestroyed();
 }
 
 
-int AProjectile::GetPower()
-{
-	return ownPower;
-}
 
 EProjectileType AProjectile::ProjectileGetType()
 {
@@ -140,20 +161,16 @@ bool AProjectile::ProjectileContext(int power, FVector position) // Should not b
 	return false;
 }
 
-void AProjectile::GetDestroyed() // Destroy the projectile
+void AProjectile::CallDestroyed() // Destroy the projectile
 {
-	// Call an Explosion effect
+	DestructionEffect(ownPower);
 	this->Destroy();
 }
-void AProjectile::FakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
+void AProjectile::CallFakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {
-	// Call an Explosion effect
-	InitialisePower(power);
-}
-
-FProjectileParameters AProjectile::GetCurrentParam()
-{
-	return projectileCurrentParam;
+	DestructionEffect(power);
+	canAccess = true;
+	ReInitialisePower(power);
 }
 
 void AProjectile::InitProjectileSettings()
@@ -168,6 +185,7 @@ void AProjectile::InitProjectileSettings()
 }
 
 void AProjectile::InitParameters_Implementation() {}
+void AProjectile::DestructionEffect_Implementation(int power) {}
 
 
 

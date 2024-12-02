@@ -26,34 +26,30 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Vie max du personnage"))
 	int MaxLife;
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Vie pour aller � la phase 2"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Vie pour aller a la phase 2"))
 	int LifeToFly;
-
-
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Permet de ralentir les d�placements, valeur haute -> ralenti enorm�ment, valeur petite -> ralenti un peu"))
+	
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Permet de ralentir les deplacements, valeur haute -> ralenti enormement, valeur petite -> ralenti un peu"))
 	double BrakingFrictionFactor;
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va tr�s vite � sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller � la vitesse max"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va tres vite a sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller a la vitesse max"))
 	double MaxAcceleration;
-
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Permet de rendre comme une patinoire ou l'inverse"))
 	double GroundFriction;
-
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Pour jouer sur le fait de retomber plus vite"))
 	double GravityScale;
-
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "La masse du character :O"))
 	double Mass;
 
-
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "La valeur minimale pour que le minimum en velocity en Z soit de X pour stun avec la chute"))
+	float MinVelocityZStunFall;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Multiplier pour le stun avec la chute"))
+	float MultiplyerStunFall;
 
 #pragma endregion
 
 #pragma region Walk
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category="Walk", meta = (ToolTip = "La vitesse maximale que le character peut avoir en �tat de marche"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category="Walk", meta = (ToolTip = "La vitesse maximale que le character peut avoir en etat de marche"))
 	double Walk_VelocityMax;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Walk", meta = (ToolTip = "Permet de stopper net avec une grande valeur"))
@@ -88,10 +84,10 @@ public:
 
 #pragma region Flying
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Vitesse � laquelle il se d�place en flying"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Vitesse � laquelle il se deplace en flying"))
 	double Fly_MaxSpeed;
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Permet de ralentir les d�placements, valeur haute -> ralenti enorm�ment, valeur petite -> ralenti un peu"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Permet de ralentir les deplacements, valeur haute -> ralenti enormement, valeur petite -> ralenti un peu"))
 	double Fly_BrakingFrictionFactor;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Force du dash (faut mettre une tr�s grande force, genre 100000)"))
@@ -116,8 +112,10 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Temps de cooldown pour le push"))
 	float Push_Cooldown;
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Force pour le punch"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Force de Knockback des tirs"))
 	TArray<float> ChargesKnockbacks;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Force de Knockback des projectils recu"))
+	TArray<float> DamageKnockbacks;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "KnockBack", meta = (ToolTip = "Taille de la zone"))
 	FVector2D ZoneKnockback_Size;
@@ -142,17 +140,36 @@ public:
 	double TimeToWaitAfterProjection;
 
 #pragma endregion
-
+	
 #pragma region QTE
 public:
 	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "Temps maximal du QTE"))
 	float QTEMaxTime;
 
-	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux"));
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux (Phase 1)"));
 	TArray<float> QTETimeStamp;
+	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "fenetre de tir entre chaque niveaux (Phase 2)"));
+	float QTETimeStampPhase2;
 
 	UPROPERTY(Config, EditAnywhere, Category = "QTE", meta = (ToolTip = "temps d'attente après dernier chargement"));
 	float QTELastWait;
 	
 #pragma endregion
+
+#pragma region Aim
+
+public:
+	UPROPERTY(Config, EditAnywhere, Category = "Aim", meta = (ToolTip = "Cooldown entre chaque tir"))
+	float ShootCoolDown;
+	
+	UPROPERTY(Config, EditAnywhere, Category = "Aim", meta = (ToolTip = "Vitesse du curseur"));
+	float SpeedCursor;
+
+	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Radius pour le tir autour du joueur"));
+	float RadiusShoot;
+	UPROPERTY(Config, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
+	float AimVerticalOffset;
+
+#pragma endregion
+
 };

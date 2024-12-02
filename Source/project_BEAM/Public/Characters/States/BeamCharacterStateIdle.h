@@ -20,5 +20,4 @@ public:
 	virtual void StateExit(EBeamCharacterStateID NextStateID) override;
 
 	virtual void StateTick(float DeltaTime) override;
-
 };
