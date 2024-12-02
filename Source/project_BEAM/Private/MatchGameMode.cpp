@@ -161,6 +161,8 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 }
 
+bool AMatchGameMode::IsPlayer1Win() const {return;}
+
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
 {
 	UBeamCharacterInputData* InputData = LoadInputDataFromConfig();

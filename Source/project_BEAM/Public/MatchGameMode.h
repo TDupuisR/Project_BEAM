@@ -43,6 +43,8 @@ private:
 public:
 	UFUNCTION()
 	void OnPlayerDeath(ABeamCharacter* pointeur);
+	UFUNCTION(BlueprintCallable)
+	bool IsPlayer1Win() const;
 
 private:
 	void AddEventsPlayers() const;
