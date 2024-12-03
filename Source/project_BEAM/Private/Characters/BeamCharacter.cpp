@@ -427,7 +427,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
 	TArray<FHitResult> hitResults;
 	TArray<AActor*> ignoreActors;
-	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffset);
+	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1);
 	
 	UKismetSystemLibrary::CapsuleTraceMulti(
 		GetWorld(),
