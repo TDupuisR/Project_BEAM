@@ -43,7 +43,7 @@ bool ABeamCharacter::ProjectileContext(int power, FVector position)
 	FVector direction = GetActorLocation() - position;
 	direction.Normalize();
 
-	KnockBack(direction, GetCharacterSettings()->DamageKnockbacks[power], true); // Magic Number for the force, to dertemine how to tweak it
+	KnockBack(direction, GetCharacterSettings()->DamageKnockbacks[power], true);
 
 	return true;
 }
@@ -273,12 +273,12 @@ void ABeamCharacter::OnHit(
 void ABeamCharacter::PlayerTakeDamage(const int Damage)
 {
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		5.f,
-		FColor::Purple,
-		FString::Printf(TEXT("TAKE DAMAGE"))
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	5.f,
+	// 	FColor::Purple,
+	// 	FString::Printf(TEXT("TAKE DAMAGE"))
+	// );
 
 	if (!CanTakeDamage) return;
 
@@ -292,6 +292,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	}
 
 	if (Life > LifeToFly && Life-Damage <= LifeToFly) {
+		OnChangedPhase();
 		//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
 	}
 
@@ -315,6 +316,8 @@ bool ABeamCharacter::IsDead() const
 {
 	return Life <= 0;
 }
+
+void ABeamCharacter::OnChangedPhase_Implementation() {}
 
 void ABeamCharacter::OnDeath()
 {

@@ -196,6 +196,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsPhaseTwo() const {return Life <= LifeToFly;}
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Call Animation")
+	void OnChangedPhase();
 	UFUNCTION()
 	void OnDeath();
 
