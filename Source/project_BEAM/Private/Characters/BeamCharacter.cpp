@@ -285,14 +285,14 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
 
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->CinematicForSeconds(0.2f, GetActorLocation(), 5);
-
+	
 	if (HasShield()) {
 		SetShield(GetShield() - 1);
 		return;
 	}
 
 	if (Life > LifeToFly && Life-Damage <= LifeToFly) {
-		OnChangedPhase();
+		OnPhaseChange();
 		//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
 	}
 
@@ -307,6 +307,8 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 			Life = 0;
 		}
 	}
+
+	OnLifeChange();
 	CheckLife();
 
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
@@ -317,7 +319,9 @@ bool ABeamCharacter::IsDead() const
 	return Life <= 0;
 }
 
-void ABeamCharacter::OnChangedPhase_Implementation() {}
+void ABeamCharacter::OnLifeChange_Implementation() {}
+
+void ABeamCharacter::OnPhaseChange_Implementation() {}
 
 void ABeamCharacter::OnDeath()
 {
