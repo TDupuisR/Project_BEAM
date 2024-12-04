@@ -81,7 +81,7 @@ void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, int power)
 			spawnParams.Owner = Character->GetOwner();
 			spawnParams.Instigator = Character->GetInstigator();
 
-			spawnLocation += FVector(.0f, .0f, Character->GetCharacterSettings()->AimVerticalOffset); 
+			spawnLocation += FVector(.0f, .0f, Character->GetCharacterSettings()->AimVerticalOffsetPhase1); 
 			AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileActor, spawnLocation, newDir.ToOrientationRotator(), spawnParams);
 			if(projectile == nullptr) return;
 		

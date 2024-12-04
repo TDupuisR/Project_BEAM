@@ -193,9 +193,13 @@ public:
 	void PlayerTakeDamage(const int Damage = 1);
 	UFUNCTION()
 	void ResetLife() {Life = MaxLife;}
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	bool IsPhaseTwo() const {return Life <= LifeToFly;}
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Call Animation")
+	void OnLifeChange();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Call Animation")
+	void OnPhaseChange();
 	UFUNCTION()
 	void OnDeath();
 
