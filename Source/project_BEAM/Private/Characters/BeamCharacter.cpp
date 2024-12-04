@@ -316,6 +316,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 
 bool ABeamCharacter::IsDead() const
 {
+	if (this == nullptr) return true;
 	return Life <= 0;
 }
 
