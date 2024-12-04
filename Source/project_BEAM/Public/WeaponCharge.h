@@ -9,7 +9,7 @@
 class ABeamCharacter;
 class UPlayerAim;
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
 {
 	GENERATED_BODY()
@@ -17,18 +17,31 @@ class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UWeaponCharge();
-
+	
 	UFUNCTION(BlueprintCallable)
 	void StartWeaponCharge();
 	UFUNCTION(BlueprintCallable)
-	void CancelWeaponCharge();
+	void CancelWeaponCharge(bool noShoot);
+	UFUNCTION(BlueprintCallable)
+	void InitValues();
+	
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
 	UFUNCTION()
 	void InitAim(UPlayerAim* playerAim);
+	
 
-	bool GetIsQteActive() const;
-
+	UFUNCTION(BlueprintCallable)
+	float GetQteTimeStamp() const;
+	UFUNCTION(BlueprintCallable)
+	bool GetIsQteActive() const	{ return isQteActive;}
+	UFUNCTION(BlueprintCallable)
+	float GetQteTimeLeft() const { return qteTimeLeft;}
+	UFUNCTION(BlueprintCallable)
+	float GetQteMaxTime() const { return qteMaxTime;}
+	UFUNCTION(BlueprintCallable)
+	int GetQtePower() const { return power;}
+	
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<ABeamCharacter> Character;
 	UPROPERTY(BlueprintReadWrite)
@@ -37,22 +50,24 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	
 private:
+	UPROPERTY(EditAnywhere)
+	float qteMaxTime;
+	UPROPERTY(EditAnywhere)
+	float qteFinaleDelay;
+	UPROPERTY(EditAnywhere)
+	TArray<float> qteTimeStamp;
+	UPROPERTY(EditAnywhere)
+	float qteTimeStampPhase2;
 	UPROPERTY()
 	bool isQteActive = false;
 	UPROPERTY()
 	bool chargeWasPushed = false;
 	UPROPERTY()
-	float qteTimeLeft;
-	UPROPERTY(EditAnywhere)
-	float qteMaxTime = 5.f;
+	float qteTimeLeft = 0.f;
 	UPROPERTY()
 	int power = 0;
-	UPROPERTY(EditAnywhere)
-	float qteFinaleDelay = 3.f;
-	UPROPERTY(EditAnywhere)
-	TArray<float> qteTimeStamp = {2.f, 1.5f, 1.f};
 	
 public:
 	// Called every frame

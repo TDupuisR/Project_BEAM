@@ -9,7 +9,6 @@
 #include "Characters/BeamCharacterSettings.h"
 
 
-
 EBeamCharacterStateID UBeamCharacterStateFlying::GetStateID()
 {
 	return EBeamCharacterStateID::Fly;
@@ -59,12 +58,12 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		0.1f,
-		FColor::Blue,
-		FString::Printf(TEXT("STATE TICK FLY"))
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	0.1f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("STATE TICK FLY"))
+	// );
 
 	if (!canDash) {
 		timerDash += DeltaTime;
@@ -112,7 +111,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			return;
 		}
 
-		Character->GetCharacterMovement()->AddImpulse(dashVector * (Character->GetCharacterSettings()->Fly_DashForce * 100000 ));
+		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce );
 	}
 
 	if (canMove) {
@@ -125,7 +124,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
 		}
 	}
-	
 }
 
 void UBeamCharacterStateFlying::RedoParams()

@@ -5,26 +5,29 @@
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
 #include <Arena/ArenaCamera.h>
+#include "CameraMode.h"
+#include "CameraFollowMode.h"
 
 #include "CameraWorldSubsystem.generated.h"
+
 
 class UObject;
 class UCameraComponent;
 
 
 /**
- * 
+ *
  */
 UCLASS()
 class PROJECT_BEAM_API UCameraWorldSubsystem : public UTickableWorldSubsystem
 {
 	GENERATED_BODY()
-	
-public: 
+
+public:
 	virtual void PostInitialize() override;
 
 	virtual void OnWorldBeginPlay(UWorld& World) override;
-	
+
 	virtual void Tick(float DeltaTime) override;
 
 	virtual TStatId GetStatId() const override { return TStatId(); };
@@ -102,5 +105,114 @@ protected:
 
 #pragma endregion
 
+#pragma region CamereMode
+
+public:
+
+	/// GETTERS
+
+	UFUNCTION(BlueprintCallable)
+	float GetCameraSpeed() const {return cameraSpeed;}
+
+	UFUNCTION(BlueprintCallable)
+	float GetShakeForce() const {return shakeForce;}
+	
+	UFUNCTION(BlueprintCallable)
+	ECameraMode GetCameraMode() const {return cameraMode;}
+
+	UFUNCTION(BlueprintCallable)
+	ECameraFollowMode GetCameraFollowMode() const {return cameraFollowMode;}
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetPosToFollow() const {return posToFollow;}
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsShaking() const {return cameraFollowMode == ECameraFollowMode::Shake;}
+	
+	//FVector GetPosToFollow() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsTimer() const { return isTimer; };
+
+	// SETTERS
+
+	UFUNCTION(BlueprintCallable)
+	void SetShakeForce(float NewShakeForce) {shakeForce = NewShakeForce;}
+
+	UFUNCTION(BlueprintCallable)
+	void SetCameraSpeed(float NewCameraSpeed) {cameraSpeed = NewCameraSpeed;}
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeCameraMode(ECameraMode NewCameraMode) {cameraMode = NewCameraMode;}
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeCameraFollowMode(ECameraFollowMode NewCameraFollowMode) {cameraFollowMode = NewCameraFollowMode;}
+
+	UFUNCTION(BlueprintCallable)
+	void ShakeForSeconds(float Seconds, float ForceShake);
+
+	UFUNCTION(BlueprintCallable)
+	void ShakeCamera(float ForceShake, float speedCamera = 10);
+
+	UFUNCTION(BlueprintCallable)
+	void UnShakeCamera();
+
+	UFUNCTION(BlueprintCallable)
+	void CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed);
+
+private:
+
+	bool isTimer = false;
+
+	float timer = 0;
+
+	float timerMax = 0;
+
+	float cameraBaseSpeed = 10.f;
+
+	float cameraSpeed = 10.f;
+
+	float shakeForce = 10;
+
+	bool isReverse = false;
+
+	bool isReversing = false;
+
+	FVector posToFollow;
+	FRotator rotToFollow;
+
+	FVector posToFollowStart;
+
+	ECameraMode cameraMode = ECameraMode::Follow;
+
+	ECameraFollowMode cameraFollowMode = ECameraFollowMode::Normal;
+
+	FRotator rotCameraStart;
+
+#pragma endregion
+
+#pragma region State
+
+	void CameraFollowMode(float DeltaTime);
+
+	void CameraFreeMode(float DeltaTime);
+
+	void CameraCinematicMode(float DeltaTime);
+
+
+#pragma endregion
+
 
 };
+
+//enum class ECameraMode : uint8
+//{
+//	None,
+//	Follow,
+//};
+
+//enum class ECameraFollowMode : uint8
+//{
+//	Normal,
+//	Shake,
+//};

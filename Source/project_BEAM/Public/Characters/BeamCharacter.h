@@ -10,14 +10,15 @@
 #include "Camera/CameraFollowTarget.h"
 #include "GameFramework/Character.h"
 
-
 #include "BeamCharacter.generated.h"
 
 class UBeamCharacterStateMachine;
 class UBeamCharacterSettings;
+class UProjectileSettings;
 class UEnhancedInputComponent;
 class UBoxComponent;
 class UPlayerAim;
+class UWeaponCharge;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathEvent, ABeamCharacter*, pointeurCharacter);
@@ -30,6 +31,7 @@ class PROJECT_BEAM_API ABeamCharacter : public ACharacter, public IProjectileInt
 public:
 	// Sets default values for this character's properties
 	ABeamCharacter();
+	
 	virtual EProjectileType ProjectileGetType() override;
 	virtual bool ProjectileContext(int power, FVector position) override;
 	virtual AProjectile* GetProjectile() override;
@@ -51,9 +53,9 @@ public:
 
 public:
 	UFUNCTION()
-	float GetOrientX() const;
+	float GetOrientX() const {return OrientX;}
 	UFUNCTION()
-	void SetOrientX(float NewOrientX);
+	void SetOrientX(float NewOrientX) {OrientX = NewOrientX;}
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -62,7 +64,6 @@ protected:
 	void RotateMeshUsingOrientX() const;
 
 #pragma endregion
-
 
 # pragma region State Machine
 
@@ -90,66 +91,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReattributeCharacterSettings();
 
-	const UBeamCharacterSettings* GetCharacterSettings() const;
+	UFUNCTION()
+	const UBeamCharacterSettings* GetCharacterSettings() const {return CharacterSettings;}
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	const UBeamCharacterSettings* CharacterSettings;
-
-# pragma endregion
-
-# pragma region Character Input
-
-public:
-	UPROPERTY()
-	TObjectPtr<UInputMappingContext> InputMappingContext;
-
-	UPROPERTY()
-	TObjectPtr<UBeamCharacterInputData> InputData;
-
-	UFUNCTION() FVector2D GetInputMove() const;
-	UFUNCTION() bool GetInputJump() const;
-	UFUNCTION() bool GetInputDash() const;
-
-	UFUNCTION() bool GetInputCharge() const;
-	UFUNCTION() FVector2D GetInputAim() const;
-	UFUNCTION() bool GetInputShoot() const;
-
-	UFUNCTION() bool GetInputPush() const;
-
-	UFUNCTION() bool GetInputFly() const;
-
-protected:
-	UFUNCTION()
-	void SetupMappingContextIntoController() const;
-
-	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
-	UPROPERTY() bool InputJump = false;
-	UPROPERTY() bool InputDash = false;
-
-	UPROPERTY() bool InputCharge = false;
-	UPROPERTY() FVector2D InputAim = FVector2D::ZeroVector;
-	UPROPERTY() bool InputShoot = false;
-
-	UPROPERTY() bool InputPush = false;
-
-	UPROPERTY() bool InputFly = false;
-
-private:
-	UFUNCTION()
-	void BindInputActions(UEnhancedInputComponent* EnhancedInputComponent);
-
-	UFUNCTION() void OnInputMove(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputJump(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputDash(const FInputActionValue& InputActionValue);
-
-	UFUNCTION() void OnInputCharge(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputAim(const FInputActionValue& InputActionValue);
-	UFUNCTION() void OnInputShoot(const FInputActionValue& InputActionValue);
-
-	UFUNCTION() void OnInputPush(const FInputActionValue& InputActionValue);
-
-	UFUNCTION() void OnInputFly(const FInputActionValue& InputActionValue);
+	UPROPERTY(BlueprintReadOnly)
+	const UProjectileSettings* ProjectileSettings;
 
 # pragma endregion
 
@@ -157,7 +106,7 @@ private:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void KnockBack(FVector Direction, float Force);
+	void KnockBack(FVector Direction, float Force, bool projection = false);
 
 	UFUNCTION(BlueprintCallable)
 	void Bounce(FVector Normal);
@@ -171,28 +120,30 @@ public:
 	);
 
 	UFUNCTION(BlueprintCallable)
-	float GetBounciness() const;
+	float GetBounciness() const {return Bounciness;}
+	UFUNCTION(BlueprintCallable)
+	float GetMinSizeVelocity() const {return MinSizeVelocity;}
 
 	UFUNCTION(BlueprintCallable)
-	float GetMinSizeVelocity() const;
+	bool GetCanTakeDamage() const {return CanTakeDamage;}
 
 	UFUNCTION(BlueprintCallable)
-	bool GetCanTakeDamage() const;
+	void SetCanTakeDamage(bool NewCanTakeDamage) {CanTakeDamage = NewCanTakeDamage;}
 
 	UFUNCTION(BlueprintCallable)
-	void SetCanTakeDamage(bool NewCanTakeDamage);
+	bool GetCanTakeKnockback() {return CanTakeKnockBack;}
 
 	UFUNCTION(BlueprintCallable)
-	bool GetCanTakeKnockback();
+	void SetCanTakeKnockback(bool NewCanTakeKnockback) {CanTakeKnockBack = NewCanTakeKnockback;}
+
 
 	UFUNCTION(BlueprintCallable)
-	void SetCanTakeKnockback(bool NewCanTakeKnockback);
+	bool GetIsDashing() const {return IsDashing;}
+
 
 	UFUNCTION(BlueprintCallable)
-	bool GetIsDashing() const;
+	void SetIsDashing(bool NewIsDashing) {IsDashing = NewIsDashing;}
 
-	UFUNCTION(BlueprintCallable)
-	void SetIsDashing(bool NewIsDashing);
 
 private:
 
@@ -218,32 +169,47 @@ private:
 public:
 	// GETTERS
 	UFUNCTION(BlueprintCallable)
-	int const GetLife() const;
+	int GetLife() const {return Life;}
 	UFUNCTION(BlueprintCallable)
-	int const GetMaxLife() const;
+	int GetMaxLife() const {return MaxLife;}
 	UFUNCTION(BlueprintCallable)
-	int const GetLifeToFly() const;
+	int GetLifeToFly() const {return LifeToFly;}
+
+	UFUNCTION(BlueprintCallable)
+	bool IsDead() const;
 
 
 	// SETTERS
 	UFUNCTION()
-	void SetLife(const int NewLife);
+	void SetLife(const int NewLife) {Life = NewLife;}
 	UFUNCTION()
-	void const SetMaxLife(const int NewMaxLife);
+	void SetMaxLife(const int NewMaxLife) {MaxLife = NewMaxLife;}
 	UFUNCTION()
-	void const SetLifeToFly(const int NewLifeToFly);
+	void SetLifeToFly(const int NewLifeToFly) {LifeToFly = NewLifeToFly;}
 
-
+	
 	// OTHERS
 	UFUNCTION(BlueprintCallable)
-	void TakeDamage(const int Damage = 1);
+	void PlayerTakeDamage(const int Damage = 1);
 	UFUNCTION()
-	void const ResetLife();
-	UFUNCTION()
-	bool IsPhaseTwo() const;
+	void ResetLife() {Life = MaxLife;}
+	UFUNCTION(BlueprintCallable)
+	bool IsPhaseTwo() const {return Life <= LifeToFly;}
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Call Animation")
+	void OnLifeChange();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Call Animation")
+	void OnPhaseChange();
 	UFUNCTION()
 	void OnDeath();
+
+	UFUNCTION(BlueprintCallable)
+	bool HasShield() const {return Shield > 0;}
+	UFUNCTION()
+	void SetShield(int NewShield) {Shield = NewShield;}
+	UFUNCTION()
+	int GetShield() const {return Shield;}
+
 
 protected:
 	UFUNCTION()
@@ -256,16 +222,21 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	int LifeToFly;
 
+	UPROPERTY(BlueprintReadOnly)
+	int Shield = 0;
+
 # pragma endregion
+	
 # pragma region Push
 
 public:
 	UFUNCTION()
 	void Push();
 	UFUNCTION()
-	bool CanPush() const;
+	bool CanPush() const {return canPush;}
+
 	UFUNCTION()
-	void SetCanPush(bool NewCanPush);
+	void SetCanPush(bool NewCanPush) {canPush = NewCanPush;}
 
 private:
 	UPROPERTY()
@@ -275,9 +246,8 @@ private:
 
 	UPROPERTY()
 	UCapsuleComponent* capsuleCollision;
-
+	
 	bool canPush = true;
-
 	UPROPERTY()
 	float timerPush = 0.0f;
 	UPROPERTY()
@@ -302,13 +272,14 @@ public:
 
 	void Stun(float TimeToStun);
 
-	float GetStunTime() const;
+	float GetStunTime() const {return StunTime;}
 
-	void SetStunTime(float NewStunTime);
+	void SetStunTime(float NewStunTime) {StunTime = NewStunTime;}
 
-	void SetMultiplierStun(float NewMultiplierStun);
+	void SetMultiplierStun(float NewMultiplierStun) {MultiplierStun = NewMultiplierStun;}
 
-	float GetMultiplierStun();
+	float GetMultiplierStun() const {return MultiplierStun;}
+
 
 private:
 
@@ -320,20 +291,6 @@ private:
 
 # pragma endregion
 
-# pragma region Player Aim
-
-public:
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UPlayerAim> localPlayerAim;
-
-private:
-	UFUNCTION()
-	void creatAim();
-	UFUNCTION()
-	void playerAimInit();
-
-#pragma endregion
-
 #pragma region FollowTarget
 
 	virtual bool IsFollowable() override;
@@ -342,16 +299,145 @@ private:
 
 #pragma endregion
 
+#pragma region Shoot
+
+public:
+	UFUNCTION(BlueprintCallable)
+	UPlayerAim* GetPlayerAimComp() const {return playerAimComp;}
+
+	UFUNCTION(BlueprintCallable)
+	UWeaponCharge* GetWeaponComp() const {return weaponComp;}
+
+	UFUNCTION(BlueprintCallable)
+	bool TraceCheckBeforeProjectile(FVector endPosition, int power);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void InitQTE(ABeamCharacter* Character);
+
+	UFUNCTION(BlueprintCallable)
+	void ChangeStateWhenQte();
+
+	//bool isShooting = false;
+	
+private:
+	UFUNCTION()
+	void InitWeaponAndAim();
+
+
+	UPROPERTY()
+	TArray<float> shootRadius;
+	UPROPERTY()
+	TArray<float> shootHalfHeight;
+	
+	UPROPERTY()
+	UPlayerAim* playerAimComp;
+	UPROPERTY()
+	UWeaponCharge* weaponComp;
+
+#pragma endregion
+
+# pragma region Character Input
+
+public:
+	UPROPERTY()
+	TObjectPtr<UInputMappingContext> InputMappingContext;
+	UPROPERTY()
+	TObjectPtr<UBeamCharacterInputData> InputData;
+	
+
+	UFUNCTION() FVector2D GetInputMove() const {return InputMove;}
+	UFUNCTION() bool GetInputJump() const {return InputJump;}
+	UFUNCTION() bool GetInputJumpJoystick() const {return InputJumpJoystick;}
+	UFUNCTION() bool GetInputDash() const {return InputDash;}
+
+
+	UFUNCTION() bool GetInputCharge() const {return InputCharge;}
+	UFUNCTION(BlueprintCallable) FVector2D GetInputAim() const {return InputAim;}
+	UFUNCTION() bool GetInputShoot() const {return InputShoot;}
+
+	UFUNCTION() bool GetInputPush() const {return InputPush;}
+
+	UFUNCTION() bool GetInputFly() const {return InputFly;}
+
+
+protected:
+	UFUNCTION()
+	void SetupMappingContextIntoController() const;
+
+	UPROPERTY() FVector2D InputMove = FVector2D::ZeroVector;
+	UPROPERTY() bool InputJump = false;
+	UPROPERTY() bool InputJumpJoystick = false;
+	UPROPERTY() bool InputDash = false;
+
+	UPROPERTY() bool InputCharge = false;
+	UPROPERTY() FVector2D InputAim = FVector2D::ZeroVector;
+	UPROPERTY() bool InputShoot = false;
+
+	UPROPERTY() bool InputPush = false;
+
+	UPROPERTY() bool InputFly = false;
+
+private:
+	UFUNCTION()
+	void BindInputActions(UEnhancedInputComponent* EnhancedInputComponent);
+
+	UFUNCTION() void OnInputMove(const FInputActionValue& InputActionValue);
+	UFUNCTION() void OnInputJump(const FInputActionValue& InputActionValue);
+	UFUNCTION() void OnInputJumpJoystick(const FInputActionValue& InputActionValue);
+	UFUNCTION() void OnInputDash(const FInputActionValue& InputActionValue);
+
+	UFUNCTION() void OnInputCharge(const FInputActionValue& InputActionValue);
+	UFUNCTION() void OnInputAim(const FInputActionValue& InputActionValue);
+	UFUNCTION() void OnInputShoot(const FInputActionValue& InputActionValue);
+
+	UFUNCTION() void OnInputPush(const FInputActionValue& InputActionValue);
+
+	UFUNCTION() void OnInputFly(const FInputActionValue& InputActionValue);
+
+# pragma endregion
+	
+# pragma region Player Aim
+
+public:
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UPlayerAim> localPlayerAim;
+
+	UFUNCTION()
+	bool isShooting();
+
+private:
+
+
+	UPROPERTY()
+	UBoxComponent* boxAim;
+
+#pragma endregion
+
+#pragma region UI
+	public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void DisplayQte(ABeamCharacter* Character);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void HideQte(ABeamCharacter* Character);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void PassQte(ABeamCharacter* Character);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Widget QTE")
+	void FailQte(ABeamCharacter* Character);
+#pragma endregion
 
 #pragma region DeathEvent
-
-
 
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathEvent OnDeathEvent;
 
 
+#pragma endregion
+
+#pragma region VFX
+	public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Player VFX")
+	void GunBuildUp();
 #pragma endregion
 
 };

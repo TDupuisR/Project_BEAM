@@ -3,6 +3,9 @@
 
 #include "DestructibleWall.h"
 #include "ProjectileInterface.h"
+#include <Camera/CameraWorldSubsystem.h>
+
+#include "AsyncTreeDifferences.h"
 
 
 // Sets default values
@@ -23,9 +26,7 @@ AProjectile* ADestructibleWall::GetProjectile()
 bool ADestructibleWall::ProjectileContext(int power, FVector position)
 {
 	if (power < resistance)
-	{
 		return true;
-	}
 	else if (power == resistance)
 	{
 		GetDestroyed();
@@ -36,8 +37,7 @@ bool ADestructibleWall::ProjectileContext(int power, FVector position)
 		GetDestroyed();
 		return false;
 	}
-	
-	return false;
+	else return false;
 }
 
 // Called when the game starts or when spawned
@@ -51,6 +51,17 @@ void ADestructibleWall::BeginPlay()
 
 void ADestructibleWall::GetDestroyed()
 {
+	switch (resistance)
+	{
+	case 2 :{
+			GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 50);
+			break;
+	}
+	case 3 : {
+			GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
+			break;
+	}
+	}
 	//Play Animation
 	//Play Sound
 	this->Destroy();

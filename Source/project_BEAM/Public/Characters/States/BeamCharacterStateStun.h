@@ -6,9 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateStun.generated.h"
 
-/**
- * 
- */
+
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateStun : public UBeamCharacterState
 {
@@ -24,8 +22,7 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 
 private:
-	float stunTimer = 0.0f;
-
-	float timeToStun = 1.0f;
+	UPROPERTY() float stunTimer = 0.0f;
+	UPROPERTY() float timeToStun = 1.0f;
 
 };
