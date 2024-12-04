@@ -307,6 +307,8 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
 
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Black, FString::Printf(TEXT("uizahe %d %d"), PointsPlayers[0], PointsPlayers[1]));
+
 		BeamGameInstance->GetMancheSystem()->AddManche();
 
 		BeamGameInstance->DeployEvent();
@@ -347,6 +349,12 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 	uint8_t PlayerInstantiated = 0;
 
 	TArray<EAutoReceiveInput::Type> listInputTypes = {EAutoReceiveInput::Player0 ,EAutoReceiveInput::Player1};
+
+	std::vector<ABeamCharacter*> subCharactersInArena = {};
+
+	for (int i = 0; i < listInputTypes.Num(); i++) {
+		subCharactersInArena.push_back(nullptr);
+	}
 
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
 	{
@@ -391,13 +399,20 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		NewCharacter->SetOrientX(SpawnPoint->GetStartOrientX());
 		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
 
-		CharactersInArena.Add(NewCharacter);
+
+		subCharactersInArena[RandomNumber] = NewCharacter;
+		//CharactersInArena.Add(NewCharacter);
 
 		listInputTypes.RemoveAt(RandomNumber);
 
 		PlayerInstantiated++;
 
 	}
+
+	for (int i = 0; i < subCharactersInArena.size(); i++) {
+		CharactersInArena.Add(subCharactersInArena[i]);
+	}
+
 }
 
 

@@ -167,8 +167,10 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Radius pour le tir autour du joueur"));
 	float RadiusShoot;
-	UPROPERTY(Config, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
-	float AimVerticalOffset;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
+	float AimVerticalOffsetPhase1;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
+	float AimVerticalOffsetPhase2;
 
 #pragma endregion
 

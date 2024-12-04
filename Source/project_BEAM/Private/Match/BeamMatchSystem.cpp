@@ -146,8 +146,9 @@ void BeamMatchSystem::CheckMatch()
 bool BeamMatchSystem::IsMancheFinished()
 {
 	int PlayersAlive = 0;
+	int size = Characters.Num();
 
-	for (int i = 0; i < Characters.Num(); i++)
+	for (int i = 0; i < size; i++)
 	{
 		if (!Characters[i]->IsDead())
 		{

@@ -43,7 +43,7 @@ bool ABeamCharacter::ProjectileContext(int power, FVector position)
 	FVector direction = GetActorLocation() - position;
 	direction.Normalize();
 
-	KnockBack(direction, GetCharacterSettings()->DamageKnockbacks[power], true); // Magic Number for the force, to dertemine how to tweak it
+	KnockBack(direction, GetCharacterSettings()->DamageKnockbacks[power], true);
 
 	return true;
 }
@@ -273,25 +273,26 @@ void ABeamCharacter::OnHit(
 void ABeamCharacter::PlayerTakeDamage(const int Damage)
 {
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		5.f,
-		FColor::Purple,
-		FString::Printf(TEXT("TAKE DAMAGE"))
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	5.f,
+	// 	FColor::Purple,
+	// 	FString::Printf(TEXT("TAKE DAMAGE"))
+	// );
 
 	if (!CanTakeDamage) return;
 
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
 
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->CinematicForSeconds(0.2f, GetActorLocation(), 5);
-
+	
 	if (HasShield()) {
 		SetShield(GetShield() - 1);
 		return;
 	}
 
 	if (Life > LifeToFly && Life-Damage <= LifeToFly) {
+		OnPhaseChange();
 		//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
 	}
 
@@ -306,6 +307,8 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 			Life = 0;
 		}
 	}
+
+	OnLifeChange();
 	CheckLife();
 
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
@@ -313,8 +316,13 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 
 bool ABeamCharacter::IsDead() const
 {
+	if (this == nullptr) return true;
 	return Life <= 0;
 }
+
+void ABeamCharacter::OnLifeChange_Implementation() {}
+
+void ABeamCharacter::OnPhaseChange_Implementation() {}
 
 void ABeamCharacter::OnDeath()
 {
@@ -427,7 +435,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
 	TArray<FHitResult> hitResults;
 	TArray<AActor*> ignoreActors;
-	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffset);
+	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1);
 	
 	UKismetSystemLibrary::CapsuleTraceMulti(
 		GetWorld(),
