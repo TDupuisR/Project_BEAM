@@ -37,6 +37,11 @@ int UGM_BeamGameInstance::GetNumberPairAppeared()
 	return NumberPairAppeared;
 }
 
+void UGM_BeamGameInstance::ChangeMatchType(EMatchTypeID NewMatchType)
+{
+	manche->SetMatchType(NewMatchType);
+}
+
 BeamMatchSystem* UGM_BeamGameInstance::GetMancheSystem()
 {
 	return manche;

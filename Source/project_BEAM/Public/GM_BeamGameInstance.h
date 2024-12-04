@@ -41,6 +41,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int GetNumberPairAppeared();
 
+	UFUNCTION(BlueprintCallable)
+	void ChangeMatchType(EMatchTypeID NewMatchType);
+
 	//UPROPERTY()
 	BeamMatchSystem* GetMancheSystem();
 
