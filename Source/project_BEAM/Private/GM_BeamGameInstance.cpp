@@ -42,8 +42,8 @@ void UGM_BeamGameInstance::ChangeMatchType(EMatchTypeID NewMatchType)
 	manche->SetMatchType(NewMatchType);
 }
 
-BeamMatchSystem* UGM_BeamGameInstance::GetMancheSystem()
+TArray<int> UGM_BeamGameInstance::GetPlayersPoints() const
 {
-	return manche;
+	return manche->GetPlayersPoints();
 }
 

@@ -45,7 +45,9 @@ public:
 	void ChangeMatchType(EMatchTypeID NewMatchType);
 
 	//UPROPERTY()
-	BeamMatchSystem* GetMancheSystem();
+	TArray<int> GetPlayersPoints() const;
+
+	BeamMatchSystem* GetMancheSystem() const { return manche; };
 
 private:
 	UPROPERTY()

@@ -242,7 +242,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 	if (BeamGameInstance == nullptr) return;
 
 	if (MancheEnd) return;
-
+	
 	if (!BeamGameInstance->GetMancheSystem()->IsMancheFinished()) return;
 
 	MancheEnd = true;
@@ -280,6 +280,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 		// Here ->
+		OnUpdateScoreTextUI.Broadcast();
 		// Appeler ResetPlayerPoints() pour remettre les points � 0
 
 		BeamGameInstance->GetMancheSystem()->ResetPlayerPoints();
@@ -315,6 +316,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		if (BeamGameInstance->GetMancheSystem()->IsMatchFinished())
 		{
+			OnEndRoundUI.Broadcast();
 			// END OF THE GAME
 			// GO TO MENU
 			GEngine->AddOnScreenDebugMessage(
@@ -326,6 +328,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 			// Here ->
+			OnUpdateScoreTextUI.Broadcast();
 
 		}
 		else {
@@ -333,11 +336,6 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 		}
 
 	}
-}
-
-bool AMatchGameMode::GetMancheEnd() const
-{
-	return MancheEnd;
 }
 
 void AMatchGameMode::ResetLevel()
@@ -378,9 +376,7 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 			RandomNumber = FMath::RandRange(0, listInputTypes.Num()-1);
 			InputType = listInputTypes[RandomNumber];
 		}
-
 		
-
 		SpawnPoint->AutoReceiveInput = InputType;
 
 		GEngine->AddOnScreenDebugMessage(
@@ -437,4 +433,3 @@ UInputMappingContext* AMatchGameMode::LoadInputMappingContextFromConfig()
 	if (CharacterSettings == nullptr) return nullptr;
 	return CharacterSettings->InputMappingContext.LoadSynchronous();
 }
-
