@@ -280,6 +280,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 		// Here ->
+		OnUpdateScoreTextUI.Broadcast();
 		// Appeler ResetPlayerPoints() pour remettre les points � 0
 
 		BeamGameInstance->GetMancheSystem()->ResetPlayerPoints();
@@ -327,6 +328,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 			// Here ->
+			OnUpdateScoreTextUI.Broadcast();
 
 		}
 		else {

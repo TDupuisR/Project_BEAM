@@ -12,6 +12,7 @@ class UInputMappingContext;
 class ABeamCharacter;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEndRoundUI);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateScoreTextUI);
 
 UCLASS()
 class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
@@ -95,7 +96,8 @@ private:
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnEndRoundUI OnEndRoundUI;
-	
+	UPROPERTY(BlueprintAssignable)
+	FOnUpdateScoreTextUI OnUpdateScoreTextUI;
 #pragma endregion
 
 	
