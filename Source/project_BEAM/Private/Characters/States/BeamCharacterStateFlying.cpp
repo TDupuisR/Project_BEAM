@@ -9,7 +9,6 @@
 #include "Characters/BeamCharacterSettings.h"
 
 
-
 EBeamCharacterStateID UBeamCharacterStateFlying::GetStateID()
 {
 	return EBeamCharacterStateID::Fly;
@@ -125,7 +124,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
 		}
 	}
-	
 }
 
 void UBeamCharacterStateFlying::RedoParams()

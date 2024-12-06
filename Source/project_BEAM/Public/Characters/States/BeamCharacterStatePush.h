@@ -22,10 +22,8 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 
 private:
-	UPROPERTY()
-	float timerPush = 0.0f;
-	UPROPERTY(EditAnywhere)
-	float timeToWait = 0.2f;
+	UPROPERTY() float timerPush = 0.0f;
+	UPROPERTY(EditAnywhere) float timeToWait = 0.2f;
 
 
 };

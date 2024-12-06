@@ -4,15 +4,13 @@
 
 #include "LocalMutliplayerSubsystem.h"
 #include "Arena/ArenaPlayerStart.h"
-#include "Arena/ArenaCamera.h"
 #include "Characters/BeamCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Arena/ArenaSettings.h"
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
-#include "Blueprint/WidgetTree.h"
-#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "HAL/PlatformProcess.h"
+#include "Match/BeamMatchSystem.h"
 
 
 
@@ -30,13 +28,17 @@ void AMatchGameMode::BeginPlay()
 
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
 	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
+	BeamGameInstance->GetMancheSystem()->InitializeMatch(CharactersInArena.Num());
+	BeamGameInstance->GetMancheSystem()->SetCharacters(CharactersInArena);
 
-	if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] >= GetDefault<UArenaSettings>()->MancheDiffShield) {
+
+
+	/*if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] >= GetDefault<UArenaSettings>()->MancheDiffShield) {
 		CharactersInArena[1]->SetShield(1);
 	}
 	else if (BeamGameInstance->GetPlayersPoints()[0] - BeamGameInstance->GetPlayersPoints()[1] <= -GetDefault<UArenaSettings>()->MancheDiffShield) {
 		CharactersInArena[0]->SetShield(1);
-	}
+	}*/
 	
 	// TObjectPtr<AActor> camera = UGameplayStatics::GetActorOfClass(GetWorld(), AArenaCamera::StaticClass());
 	//
@@ -204,8 +206,6 @@ void AMatchGameMode::NewPair(int Max)
 
 	SetSelectedPair(listSpawnPairPossible[random]);
 
-	
-
 }
 
 void AMatchGameMode::CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoints)
@@ -226,12 +226,11 @@ void AMatchGameMode::CalculateNewPair(TArray<AArenaPlayerStart*> PlayerStartsPoi
 	NewPair(GetPairNumberMax());
 }
 
-void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
+void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 {
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
 	UGM_BeamGameInstance* BeamGameInstance = Cast<UGM_BeamGameInstance>(GameInstance);
 
-	MancheEnd = true;
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
@@ -242,27 +241,32 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 	if (BeamGameInstance == nullptr) return;
 
-	if (BeamGameInstance->GetMatchType() == EMatchTypeID::Free)
+	if (MancheEnd) return;
+	
+	if (!BeamGameInstance->GetMancheSystem()->IsMancheFinished()) return;
+
+	MancheEnd = true;
+	if (BeamGameInstance->GetMancheSystem()->GetMatchType() == EMatchTypeID::Free)
 	{
 
-		BeamGameInstance->AddPlayerPoints(0, 1);
-		BeamGameInstance->AddPlayerPoints(1, 1);
+		BeamGameInstance->GetMancheSystem()->AddPlayerPoints(0, 1);
+		BeamGameInstance->GetMancheSystem()->AddPlayerPoints(1, 1);
 
-		TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
+		TArray<int> PointsPlayers = BeamGameInstance->GetMancheSystem()->GetPlayersPoints();
 
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
 
-		if (CharactersInArena.Find(DeadPlayer) < 0) return;
-		BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
+		if (CharactersInArena.Find(pointeur) < 0) return;
+		BeamGameInstance->GetMancheSystem()->SetPlayerPoints(CharactersInArena.Find(pointeur), -1);
 
-		PointsPlayers = BeamGameInstance->GetPlayersPoints();
+		PointsPlayers = BeamGameInstance->GetMancheSystem()->GetPlayersPoints();
 
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1]);
 
 
-		BeamGameInstance->AddManche();
+		BeamGameInstance->GetMancheSystem()->AddManche();
 
 		BeamGameInstance->DeployEvent();
 
@@ -276,17 +280,19 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 		// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 		// Here ->
-		// Appeler ResetPlayerPoints() pour remettre les points à 0
+		OnUpdateScoreTextUI.Broadcast();
+		// Appeler ResetPlayerPoints() pour remettre les points ï¿½ 0
 
-		BeamGameInstance->ResetPlayerPoints();
+		BeamGameInstance->GetMancheSystem()->ResetPlayerPoints();
+		BeamGameInstance->GetMancheSystem()->SetManche(0);
 
 		// A enlever quand menu fin
-		//FPlatformProcess::Sleep(3.0f);
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 3.0f, false);
 
 		return;
 	}
-	else if (BeamGameInstance->GetMatchType() == EMatchTypeID::Deathmatch) {
+	else if (BeamGameInstance->GetMancheSystem()->GetMatchType() == EMatchTypeID::Deathmatch) {
+
 
 		GEngine->AddOnScreenDebugMessage(
 			-1,
@@ -295,41 +301,22 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 			FString::Printf(TEXT("MATCH TYPE GAMEMODE"))
 		);
 
-		BeamGameInstance->AddPlayerPoints(0, 1);
-		BeamGameInstance->AddPlayerPoints(1, 1);
+		BeamGameInstance->GetMancheSystem()->ChangePointWin();
 
-		TArray<int> PointsPlayers = BeamGameInstance->GetPlayersPoints();
+		TArray<int> PointsPlayers = BeamGameInstance->GetMancheSystem()->GetPlayersPoints();
 
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
 
-		if (CharactersInArena.Find(DeadPlayer) < 0) return;
-		BeamGameInstance->SetPlayerPoints(CharactersInArena.Find(DeadPlayer), -1);
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Black, FString::Printf(TEXT("uizahe %d %d"), PointsPlayers[0], PointsPlayers[1]));
 
-		PointsPlayers = BeamGameInstance->GetPlayersPoints();
-
-		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 A : %d"), PointsPlayers[0]);
-		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 A : %d"), PointsPlayers[1]);
-
-
-		BeamGameInstance->AddManche();
+		BeamGameInstance->GetMancheSystem()->AddManche();
 
 		BeamGameInstance->DeployEvent();
 
-		//TArray<UUserWidget*> FoundWidgets;
-		//UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, );
-
-		//for (UUserWidget* Widget : FoundWidgets)
-		//{
-		//	if (Widget->ComponentHasTag(FName("MyUniqueTag")))
-		//	{
-		//		// Found the widget with the specific tag
-		//		break;
-		//	}
-		//}
-
-		if (BeamGameInstance->GetPlayersPoints()[0] >= BeamGameInstance->GetMaxManche() || BeamGameInstance->GetPlayersPoints()[1] >= BeamGameInstance->GetMaxManche())
+		if (BeamGameInstance->GetMancheSystem()->IsMatchFinished())
 		{
+			OnEndRoundUI.Broadcast();
 			// END OF THE GAME
 			// GO TO MENU
 			GEngine->AddOnScreenDebugMessage(
@@ -341,26 +328,14 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* DeadPlayer)
 
 			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 			// Here ->
+			OnUpdateScoreTextUI.Broadcast();
 
 		}
 		else {
-			//FPlatformProcess::Sleep(3.0f);
 			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 3.0f, false);
-
-			//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		}
 
 	}
-
-	
-	
-
-
-}
-
-bool AMatchGameMode::GetMancheEnd() const
-{
-	return MancheEnd;
 }
 
 void AMatchGameMode::ResetLevel()
@@ -376,6 +351,14 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 	uint8_t PlayerInstantiated = 0;
 
 	TArray<EAutoReceiveInput::Type> listInputTypes = {EAutoReceiveInput::Player0 ,EAutoReceiveInput::Player1};
+
+	int playerNum = 0;
+
+	TArray<ABeamCharacter*> subCharactersInArena = {};
+
+	for (int i = 0; i < listInputTypes.Num(); i++) {
+		subCharactersInArena.Add(nullptr);
+	}
 
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
 	{
@@ -396,8 +379,15 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 			InputType = listInputTypes[RandomNumber];
 		}
 
+		switch (InputType) {
+		case EAutoReceiveInput::Player0:
+			playerNum = 0;
+			break;
+		case EAutoReceiveInput::Player1:
+			playerNum = 1;
+			break;
+		}
 		
-
 		SpawnPoint->AutoReceiveInput = InputType;
 
 		GEngine->AddOnScreenDebugMessage(
@@ -422,13 +412,22 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		NewCharacter->SetOrientX(SpawnPoint->GetStartOrientX());
 		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
 
-		CharactersInArena.Add(NewCharacter);
+		UE_LOG(LogTemp, Error, TEXT("CHARACTER NUM : %d"), playerNum);
+		subCharactersInArena[playerNum] = NewCharacter;
+		UE_LOG(LogTemp, Error, TEXT("NEW CHARACTER : %d"), NewCharacter);
+		//CharactersInArena.Add(NewCharacter);
 
 		listInputTypes.RemoveAt(RandomNumber);
 
 		PlayerInstantiated++;
 
 	}
+
+	for (int i = 0; i < subCharactersInArena.Num(); i++) {
+		UE_LOG(LogTemp, Error, TEXT("CHARACTER IN ARENA : %d"), subCharactersInArena[i]);
+		CharactersInArena.Add(subCharactersInArena[i]);
+	}
+
 }
 
 
@@ -447,4 +446,3 @@ UInputMappingContext* AMatchGameMode::LoadInputMappingContextFromConfig()
 	if (CharacterSettings == nullptr) return nullptr;
 	return CharacterSettings->InputMappingContext.LoadSynchronous();
 }
-

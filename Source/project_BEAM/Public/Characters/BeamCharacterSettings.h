@@ -26,14 +26,12 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Vie max du personnage"))
 	int MaxLife;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Vie pour aller � la phase 2"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Vie pour aller a la phase 2"))
 	int LifeToFly;
-
-
-
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Permet de ralentir les d�placements, valeur haute -> ralenti enorm�ment, valeur petite -> ralenti un peu"))
+	
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Permet de ralentir les deplacements, valeur haute -> ralenti enormement, valeur petite -> ralenti un peu"))
 	double BrakingFrictionFactor;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va tr�s vite � sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller � la vitesse max"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "L'acceleration, grande -> Va tres vite a sa vitesse max, petite -> va accelerer beaucoup plus lentement pour aller a la vitesse max"))
 	double MaxAcceleration;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Permet de rendre comme une patinoire ou l'inverse"))
 	double GroundFriction;
@@ -44,7 +42,6 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "La valeur minimale pour que le minimum en velocity en Z soit de X pour stun avec la chute"))
 	float MinVelocityZStunFall;
-
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Multiplier pour le stun avec la chute"))
 	float MultiplyerStunFall;
 
@@ -52,7 +49,7 @@ public:
 
 #pragma region Walk
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category="Walk", meta = (ToolTip = "La vitesse maximale que le character peut avoir en �tat de marche"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category="Walk", meta = (ToolTip = "La vitesse maximale que le character peut avoir en etat de marche"))
 	double Walk_VelocityMax;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Walk", meta = (ToolTip = "Permet de stopper net avec une grande valeur"))
@@ -65,7 +62,7 @@ public:
 	
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Pour le deplacement dans les airs"))
 	double Jump_VelocityMax;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Force � laquelle le joueur est projet�"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Force a laquelle le joueur est projet�"))
 	double Jump_Force;
 	
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Jump", meta = (ToolTip = "Sensibilite du saut via l'input joystick vers le haut"))
@@ -87,10 +84,10 @@ public:
 
 #pragma region Flying
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Vitesse � laquelle il se d�place en flying"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Vitesse � laquelle il se deplace en flying"))
 	double Fly_MaxSpeed;
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Permet de ralentir les d�placements, valeur haute -> ralenti enorm�ment, valeur petite -> ralenti un peu"))
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Permet de ralentir les deplacements, valeur haute -> ralenti enormement, valeur petite -> ralenti un peu"))
 	double Fly_BrakingFrictionFactor;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "Fly", meta = (ToolTip = "Force du dash (faut mettre une tr�s grande force, genre 100000)"))
@@ -170,8 +167,10 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = "General", meta = (ToolTip = "Radius pour le tir autour du joueur"));
 	float RadiusShoot;
-	UPROPERTY(Config, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
-	float AimVerticalOffset;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
+	float AimVerticalOffsetPhase1;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Aim", meta = (ToolTip = "Offset Vertical de la position du spawn du projectile"));
+	float AimVerticalOffsetPhase2;
 
 #pragma endregion
 

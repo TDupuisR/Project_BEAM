@@ -9,4 +9,6 @@ enum class ECameraMode : uint8
 {
 	None = 0,
 	Follow,
+	Free,
+	Cinematic,
 };

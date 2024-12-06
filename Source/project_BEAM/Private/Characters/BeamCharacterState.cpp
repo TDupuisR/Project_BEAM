@@ -45,6 +45,16 @@ void UBeamCharacterState::StateExit(EBeamCharacterStateID NextStateID)
 
 void UBeamCharacterState::StateTick(float DeltaTime)
 {
+	if (IsKeyWasPressed(EKeys::U) && Character) {
+		Character->PlayerTakeDamage(3);
+		
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			0.1f,
+			FColor::Blue,
+			FString::Printf(TEXT("Debug Take Damage"))
+		);
+	}
 }
 
 bool const UBeamCharacterState::IsKeyDown(FKey key) const {

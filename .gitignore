@@ -57,6 +57,7 @@ Binaries/*
 !Binaries/Win64
 Binaries/Win64/*
 !Binaries/Win64/UnrealEditor.modules
+!Binaries/Win64/UnrealEditor-EditorTools.dll
 !Binaries/Win64/UnrealEditor-project_BEAM.dll
 !Binaries/Win64/project_BEAM.target
 
@@ -66,6 +67,9 @@ Plugins/*/Binaries/*
 Plugins/*/Binaries/Win64/*
 !Plugins/*/Binaries/Win64/UnrealEditor.modules
 !Plugins/*/Binaries/Win64/UnrealEditor-LocalMultiplayer.dll
+
+# Wwise
+!Plugins/*/Binaries/Win64/*.dll
 
 # Builds
 Build/*
@@ -93,3 +97,10 @@ DerivedDataCache/*
 
 #Rider
 .idea/
+
+Binaries/*
+!Binaries/Win64
+Binaries/Win64/*
+!Binaries/Win64/UnrealEditor.modules
+!Binaries/Win64/UnrealEditor-project_BEAM.dll
+!Binaries/Win64/project_BEAM.target

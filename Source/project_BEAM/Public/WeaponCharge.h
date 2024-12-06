@@ -30,17 +30,17 @@ public:
 	UFUNCTION()
 	void InitAim(UPlayerAim* playerAim);
 	
-	UFUNCTION(BlueprintCallable)
-	bool GetIsQteActive() const;
-	UFUNCTION(BlueprintCallable)
-	float GetQteTimeLeft() const;
-	UFUNCTION(BlueprintCallable)
-	float GetQteMaxTime() const;
+
 	UFUNCTION(BlueprintCallable)
 	float GetQteTimeStamp() const;
 	UFUNCTION(BlueprintCallable)
-	int GetQtePower() const;
-	
+	bool GetIsQteActive() const	{ return isQteActive;}
+	UFUNCTION(BlueprintCallable)
+	float GetQteTimeLeft() const { return qteTimeLeft;}
+	UFUNCTION(BlueprintCallable)
+	float GetQteMaxTime() const { return qteMaxTime;}
+	UFUNCTION(BlueprintCallable)
+	int GetQtePower() const { return power;}
 	
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<ABeamCharacter> Character;
