@@ -46,6 +46,12 @@ public:
 
 	BeamMatchSystem* GetMancheSystem() const { return manche; };
 
+	UFUNCTION(BlueprintCallable)
+	bool IsMatchFinished() {return manche->IsMatchFinished();}
+
+	UFUNCTION(BlueprintCallable)
+	void ResetAll() {return manche->ResetAll();}
+
 private:
 	UPROPERTY()
 	int LastSpawnNumber = 0;
