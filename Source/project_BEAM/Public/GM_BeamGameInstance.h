@@ -44,7 +44,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ChangeMatchType(EMatchTypeID NewMatchType);
 
-	//UPROPERTY()
+	UFUNCTION(BlueprintCallable)
 	TArray<int> GetPlayersPoints() const;
 
 	BeamMatchSystem* GetMancheSystem() const { return manche; };
