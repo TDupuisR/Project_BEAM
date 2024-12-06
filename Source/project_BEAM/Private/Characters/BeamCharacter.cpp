@@ -314,6 +314,12 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 }
 
+void ABeamCharacter::ResetLife()
+{
+	Life = MaxLife; 
+	OnLifeChange();
+}
+
 bool ABeamCharacter::IsDead() const
 {
 	if (this == nullptr) return true;

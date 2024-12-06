@@ -9,4 +9,5 @@ enum class EMatchTypeID : uint8
 {
 	Deathmatch,
 	Free,
+	None,
 };
