@@ -63,9 +63,6 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
-
-		FPlatformProcess::Sleep(0.05f);
-
 		GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(ownPower * 0.2,(ownPower^2) * 10);
 
 		 // disable collider to detected self
