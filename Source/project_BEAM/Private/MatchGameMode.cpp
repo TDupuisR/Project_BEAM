@@ -326,9 +326,12 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 				FString::Printf(TEXT("------------- END GAME ------------"))
 			);
 
+			OnUpdateScoreTextUI.Broadcast();
+
+			//BeamGameInstance->GetMancheSystem()->ResetAll();
+			
 			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 			// Here ->
-			OnUpdateScoreTextUI.Broadcast();
 
 		}
 		else {
