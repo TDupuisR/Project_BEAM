@@ -242,7 +242,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 	if (BeamGameInstance == nullptr) return;
 
 	if (MancheEnd) return;
-
+	
 	if (!BeamGameInstance->GetMancheSystem()->IsMancheFinished()) return;
 
 	MancheEnd = true;
@@ -280,6 +280,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 		// Here ->
+		OnUpdateScoreTextUI.Broadcast();
 		// Appeler ResetPlayerPoints() pour remettre les points � 0
 
 		BeamGameInstance->GetMancheSystem()->ResetPlayerPoints();
@@ -315,6 +316,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		if (BeamGameInstance->GetMancheSystem()->IsMatchFinished())
 		{
+			OnEndRoundUI.Broadcast();
 			// END OF THE GAME
 			// GO TO MENU
 			GEngine->AddOnScreenDebugMessage(
@@ -326,6 +328,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 			// Here ->
+			OnUpdateScoreTextUI.Broadcast();
 
 		}
 		else {
@@ -333,11 +336,6 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 		}
 
 	}
-}
-
-bool AMatchGameMode::GetMancheEnd() const
-{
-	return MancheEnd;
 }
 
 void AMatchGameMode::ResetLevel()
@@ -354,10 +352,12 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 
 	TArray<EAutoReceiveInput::Type> listInputTypes = {EAutoReceiveInput::Player0 ,EAutoReceiveInput::Player1};
 
-	std::vector<ABeamCharacter*> subCharactersInArena = {};
+	int playerNum = 0;
+
+	TArray<ABeamCharacter*> subCharactersInArena = {};
 
 	for (int i = 0; i < listInputTypes.Num(); i++) {
-		subCharactersInArena.push_back(nullptr);
+		subCharactersInArena.Add(nullptr);
 	}
 
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
@@ -379,8 +379,15 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 			InputType = listInputTypes[RandomNumber];
 		}
 
+		switch (InputType) {
+		case EAutoReceiveInput::Player0:
+			playerNum = 0;
+			break;
+		case EAutoReceiveInput::Player1:
+			playerNum = 1;
+			break;
+		}
 		
-
 		SpawnPoint->AutoReceiveInput = InputType;
 
 		GEngine->AddOnScreenDebugMessage(
@@ -405,8 +412,9 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		NewCharacter->SetOrientX(SpawnPoint->GetStartOrientX());
 		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
 
-
-		subCharactersInArena[RandomNumber] = NewCharacter;
+		UE_LOG(LogTemp, Error, TEXT("CHARACTER NUM : %d"), playerNum);
+		subCharactersInArena[playerNum] = NewCharacter;
+		UE_LOG(LogTemp, Error, TEXT("NEW CHARACTER : %d"), NewCharacter);
 		//CharactersInArena.Add(NewCharacter);
 
 		listInputTypes.RemoveAt(RandomNumber);
@@ -415,7 +423,8 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 
 	}
 
-	for (int i = 0; i < subCharactersInArena.size(); i++) {
+	for (int i = 0; i < subCharactersInArena.Num(); i++) {
+		UE_LOG(LogTemp, Error, TEXT("CHARACTER IN ARENA : %d"), subCharactersInArena[i]);
 		CharactersInArena.Add(subCharactersInArena[i]);
 	}
 
@@ -437,4 +446,3 @@ UInputMappingContext* AMatchGameMode::LoadInputMappingContextFromConfig()
 	if (CharacterSettings == nullptr) return nullptr;
 	return CharacterSettings->InputMappingContext.LoadSynchronous();
 }
-

@@ -41,8 +41,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int GetNumberPairAppeared();
 
-	//UPROPERTY()
-	BeamMatchSystem* GetMancheSystem();
+	UFUNCTION(BlueprintCallable)
+	TArray<int> GetPlayersPoints() const;
+
+	BeamMatchSystem* GetMancheSystem() const { return manche; };
 
 private:
 	UPROPERTY()

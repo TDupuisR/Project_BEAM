@@ -11,6 +11,9 @@
 class UInputMappingContext;
 class ABeamCharacter;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEndRoundUI);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateScoreTextUI);
+
 UCLASS()
 class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
 {
@@ -45,7 +48,7 @@ public:
 	void OnPlayerDeath(ABeamCharacter* pointeur);
 
 	UFUNCTION(BlueprintCallable)
-	bool GetMancheEnd() const;
+	bool GetMancheEnd() const {return MancheEnd;}
 
 	void ResetLevel();
 
@@ -89,4 +92,13 @@ private:
 
 #pragma endregion
 
+#pragma region RoundsUIEvent
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnEndRoundUI OnEndRoundUI;
+	UPROPERTY(BlueprintAssignable)
+	FOnUpdateScoreTextUI OnUpdateScoreTextUI;
+#pragma endregion
+
+	
 };
