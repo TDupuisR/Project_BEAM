@@ -109,9 +109,22 @@ TSubclassOf<ABeamCharacter> AMatchGameMode::GetSmashCharacterClassFromInputType(
 void AMatchGameMode::CreateAndInitPlayers() const
 {
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+
+	if (GameInstance == nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("NULLPTR INIT 1"));
+	}
+
+
 	if (GameInstance == nullptr) return;
 
+
+
 	ULocalMultiplayerSubsystem* LocalMultiplayerSubsystem = GameInstance->GetSubsystem<ULocalMultiplayerSubsystem>();
+
+	if (LocalMultiplayerSubsystem == nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("NULLPTR INIT 2")));
+	}
+
 	if (LocalMultiplayerSubsystem == nullptr) return;
 
 	LocalMultiplayerSubsystem->CreateAndInitPlayers();
@@ -382,12 +395,16 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 			InputType = listInputTypes[RandomNumber];
 		}
 
+		//int o = 0;
+
 		switch (InputType) {
 		case EAutoReceiveInput::Player0:
 			playerNum = 0;
+			//o = 0;
 			break;
 		case EAutoReceiveInput::Player1:
 			playerNum = 1;
+			//o = 1;
 			break;
 		}
 		
@@ -428,6 +445,7 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 
 	for (int i = 0; i < subCharactersInArena.Num(); i++) {
 		UE_LOG(LogTemp, Error, TEXT("CHARACTER IN ARENA : %d"), subCharactersInArena[i]);
+		subCharactersInArena[i]->SetPlayerIndex(i);
 		CharactersInArena.Add(subCharactersInArena[i]);
 	}
 
