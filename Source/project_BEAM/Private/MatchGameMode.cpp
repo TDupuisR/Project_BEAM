@@ -54,6 +54,25 @@ void AMatchGameMode::BeginPlay()
 	// }
 }
 
+void AMatchGameMode::FreezePlayers()
+{
+	for (ABeamCharacter* Character : CharactersInArena)
+	{
+		if (Character == nullptr) continue;
+		Character->Freeze();
+	}
+
+}
+
+void AMatchGameMode::UnFreezePlayers()
+{
+	for (ABeamCharacter* Character : CharactersInArena)
+	{
+		if (Character == nullptr) continue;
+		Character->UnFreeze();
+	}
+}
+
 void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors)
 {
 	TArray<AActor*> FoundActors;

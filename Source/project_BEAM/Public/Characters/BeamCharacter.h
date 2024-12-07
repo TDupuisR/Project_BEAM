@@ -280,6 +280,14 @@ public:
 
 	float GetMultiplierStun() const {return MultiplierStun;}
 
+	UFUNCTION(BlueprintCallable)
+	void UnFreeze();
+
+	UFUNCTION(BlueprintCallable)
+	void Freeze();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsStunned();
 
 private:
 

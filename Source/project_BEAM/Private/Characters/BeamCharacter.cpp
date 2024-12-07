@@ -301,9 +301,8 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 		return;
 	}
 
-	if (Life > LifeToFly && Life-Damage <= LifeToFly) {
+	if (Life > LifeToFly && Life - Damage <= LifeToFly) {
 		OnPhaseChange();
-		//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 200);
 	}
 
 	if (Damage >= 4 && Life == MaxLife)
@@ -318,10 +317,11 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 		}
 	}
 
+	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
+
 	OnLifeChange();
 	CheckLife();
 
-	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 }
 
 void ABeamCharacter::ResetLife()
@@ -352,14 +352,14 @@ void ABeamCharacter::CheckLife()
 	if (StateMachine == nullptr) return;
 
 	if (Life > 0 && Life <= LifeToFly) {
-		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) {
+		/*if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Fly) {
 			StateMachine->ChangeState(EBeamCharacterStateID::Fly);
-		}
+		}*/
 	}
 	else if (Life > LifeToFly) {
-		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Idle) {
+		/*if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Idle) {
 			StateMachine->ChangeState(EBeamCharacterStateID::Idle);
-		}
+		}*/
 	}
 	else {
 		OnDeath();
@@ -435,6 +435,69 @@ void ABeamCharacter::Stun(float TimeToStun = 3.f)
 		StateMachine->ChangeState(EBeamCharacterStateID::Stun);
 
 }
+
+void ABeamCharacter::UnFreeze()
+{
+	if (StateMachine == nullptr) return;
+	
+	StateMachine->SetCanChangeState(true);
+	StateMachine->ChangeState(EBeamCharacterStateID::Idle); 
+	
+}
+
+void ABeamCharacter::Freeze()
+{
+	if (StateMachine == nullptr) return;
+
+	Stun(999);
+	StateMachine->SetCanChangeState(false);
+}
+
+bool ABeamCharacter::IsStunned()
+{
+
+	//EBeamCharacterStateID e = StateMachine->GetCurrentStateID();
+	//FString s;
+
+	//switch (e) {
+	//	case (EBeamCharacterStateID::Idle):
+	//	s = "Idle";
+	//	break;
+	//	case (EBeamCharacterStateID::Walk):
+	//	s = "Walk";
+	//	break;
+	//	case (EBeamCharacterStateID::Jump):
+	//		s = "Jump";
+	//		break;
+	//	case (EBeamCharacterStateID::Fall):
+	//		s = "Fall";
+	//		break;
+	//	case (EBeamCharacterStateID::Push):
+	//		s = "Push";
+	//		break;
+	//	case (EBeamCharacterStateID::Projection):
+	//		s = "Projection";
+	//		break;
+	//	case (EBeamCharacterStateID::Stun):
+	//		s = "Stun";
+	//		break;
+	//	case (EBeamCharacterStateID::Fly):
+	//		s = "Fly";
+	//		break;
+	//	case (EBeamCharacterStateID::Dead):
+	//		s = "Dead";
+	//		break;
+	//	default:
+	//		s = "None";
+	//		break;
+	//}
+	//
+
+	if (StateMachine == nullptr) return false;
+	//GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue, FString::Printf(TEXT("STATE STUNNED : %s"), *s) );
+	return StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Stun;
+}
+
 #pragma endregion
 
 #pragma region FollowTarget
@@ -467,14 +530,18 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		true
 	);
 	
-	for (FHitResult hitResult : hitResults)
+
+	for (FHitResult& hitResult : hitResults)
 	{
-		if (hitResult.GetActor()->Implements<UProjectileInterface>())
+
+		FHitResult* HitResultPtr = &hitResult;
+
+		if (HitResultPtr->GetActor()->Implements<UProjectileInterface>())
 		{
-			IProjectileInterface* interface = Cast<IProjectileInterface>(hitResult.GetActor());
+			IProjectileInterface* interface = Cast<IProjectileInterface>(HitResultPtr->GetActor());
 			if (interface->ProjectileGetType() == EProjectileType::DestructWall)
 			{
-				if (interface->ProjectileContext(power, hitResult.Location)) return false;
+				if (interface->ProjectileContext(power, HitResultPtr->Location)) return false;
 			}
 		}
 	}
@@ -484,6 +551,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 
 void ABeamCharacter::ChangeStateWhenQte()
 {
+	if (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Stun) return;
 	if (!IsPhaseTwo()) { StateMachine->ChangeState(EBeamCharacterStateID::Idle);}
 }
 

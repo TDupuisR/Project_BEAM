@@ -29,6 +29,8 @@ ABeamCharacter* UBeamCharacterStateMachine::GetCharacter() const
 
 void UBeamCharacterStateMachine::ChangeState(EBeamCharacterStateID NewStateID)
 {
+	if (!canChangeState) return;
+
 	UBeamCharacterState* NewState = GetState(NewStateID);
 
 	if (NewState == nullptr) return;
@@ -74,6 +76,16 @@ void UBeamCharacterStateMachine::RedoParams()
 {
 	if (CurrentState == nullptr) return;
 	CurrentState->RedoParams();
+}
+
+void UBeamCharacterStateMachine::SetCanChangeState(bool canChange)
+{
+	canChangeState = canChange;
+}
+
+bool UBeamCharacterStateMachine::GetCanChangeState() const
+{
+	return canChangeState;
 }
 
 void UBeamCharacterStateMachine::FindStates()
