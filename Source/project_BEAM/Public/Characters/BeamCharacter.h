@@ -440,4 +440,18 @@ public:
 	void GunBuildUp();
 #pragma endregion
 
+#pragma region Multiplayer
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerIndex(int NewPlayerIndex) { PlayerIndex = NewPlayerIndex; }
+	UFUNCTION(BlueprintCallable)
+	int GetPlayerIndex() const { return PlayerIndex; }
+
+private:
+	UPROPERTY()
+	int PlayerIndex = -1;
+
+#pragma endregion
+
 };

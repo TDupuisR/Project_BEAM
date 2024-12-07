@@ -78,6 +78,12 @@ void ABeamCharacter::Tick(float DeltaTime)
 	if (InputMove.X > .0f)SetOrientX(1.f);
 	if (InputMove.X < .0f)SetOrientX(-1.f);
 	
+	if (StateMachine != nullptr) {
+		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection) {
+			SetCanTakeKnockback(true);
+		}
+	}
+
 	// Check if he is shooting -> can't move if he is charging in phase 1
 	//if (GetComponentByClass<UplayerAimComp>() != nullptr) {
 
@@ -225,7 +231,11 @@ void ABeamCharacter::ReattributeCharacterSettings()
 void ABeamCharacter::KnockBack(FVector Direction, float Force, bool projection)
 {
 
-	if (!CanTakeKnockBack) return;
+	if (!GetCanTakeKnockback()) {
+		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("KNOCKBACK REFUSED")));
+	}
+
+	if (!GetCanTakeKnockback()) return;
 
 	GetCharacterMovement()->Launch(Direction * Force);
 	if (projection) StateMachine->ChangeState(EBeamCharacterStateID::Projection);
@@ -364,7 +374,7 @@ void ABeamCharacter::Push()
 	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
 
 	for (ABeamCharacter* player : PlayersInZone) {
-		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("WOWWWW")));
+		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("PUSH : %d"), player->GetPlayerIndex()));
 		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 		player->KnockBack(direction, CharacterSettings->Push_Force, true);
 		
