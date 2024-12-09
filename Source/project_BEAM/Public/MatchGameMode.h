@@ -13,6 +13,7 @@ class ABeamCharacter;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEndRoundUI);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateScoreTextUI);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEnableWinScreenUI);
 
 UCLASS()
 class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
@@ -104,6 +105,8 @@ public:
 	FOnEndRoundUI OnEndRoundUI;
 	UPROPERTY(BlueprintAssignable)
 	FOnUpdateScoreTextUI OnUpdateScoreTextUI;
+	UPROPERTY(BlueprintAssignable)
+	FOnEnableWinScreenUI OnEnableWinScreenUI;
 #pragma endregion
 
 	

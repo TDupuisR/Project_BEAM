@@ -312,6 +312,8 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 		// Here ->
+		UE_LOG(LogTemp, Error, TEXT("GAME END FREE"));
+		OnEnableWinScreenUI.Broadcast();
 		OnUpdateScoreTextUI.Broadcast();
 		// Appeler ResetPlayerPoints() pour remettre les points � 0
 
@@ -339,6 +341,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 1 B : %d"), PointsPlayers[0]);
 		UE_LOG(LogTemp, Error, TEXT("PLAYER POINT 2 B : %d"), PointsPlayers[1]);
+			
 
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Black, FString::Printf(TEXT("uizahe %d %d"), PointsPlayers[0], PointsPlayers[1]));
 
@@ -358,12 +361,14 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 				FString::Printf(TEXT("------------- END GAME ------------"))
 			);
 
-			OnUpdateScoreTextUI.Broadcast();
-
 			//BeamGameInstance->GetMancheSystem()->ResetAll();
 			
 			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 			// Here ->
+			UE_LOG(LogTemp, Error, TEXT("GAME END"));
+			
+			OnEnableWinScreenUI.Broadcast();
+			OnUpdateScoreTextUI.Broadcast();
 
 		}
 		else {
@@ -443,6 +448,7 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 			SmashCharacterClass,
 			SpawnPoint->GetTransform()
 			);
+		
 
 		if (NewCharacter == nullptr) continue;
 		NewCharacter->InputData = InputData;
@@ -463,6 +469,7 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 	}
 
 	for (int i = 0; i < subCharactersInArena.Num(); i++) {
+		if (subCharactersInArena[i] == nullptr) continue;
 		UE_LOG(LogTemp, Error, TEXT("CHARACTER IN ARENA : %d"), subCharactersInArena[i]);
 		subCharactersInArena[i]->SetPlayerIndex(i);
 		CharactersInArena.Add(subCharactersInArena[i]);
