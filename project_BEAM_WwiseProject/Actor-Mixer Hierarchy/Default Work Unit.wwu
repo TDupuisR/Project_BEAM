@@ -534,7 +534,7 @@
 								</RandomSequenceContainer>
 							</ChildrenList>
 						</Folder>
-						<Folder Name="Contact Bondaries" ID="{43919ED8-A5BB-4F4B-8C31-CCC5784AA00C}" ShortID="718843161">
+						<Folder Name="Boundary" ID="{43919ED8-A5BB-4F4B-8C31-CCC5784AA00C}" ShortID="718843161">
 							<ChildrenList>
 								<RandomSequenceContainer Name="MC_ContactBoundary_Random" ID="{A2885669-0A48-4B3E-9038-56DEE4BFDBD2}" ShortID="802007171">
 									<ReferenceList>
@@ -1881,6 +1881,101 @@
 								<ActiveSource Name="Music_E_Menu" ID="{B706F2AE-4BE9-457F-A4FE-E42B3E8032A6}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="Music_F_Full Track" ID="{E91B8B77-BF21-4604-81EE-20F985BE2421}" ShortID="137845019">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{DE8426EC-86C5-4758-A563-0BD91A6107DA}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Music_F_Full Track" ID="{F2D9793F-1CA5-40B9-83FB-7AC6B7B4A34E}">
+									<Language>SFX</Language>
+									<AudioFile>Music_F_Full Track.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="693557617"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Music_F_Full Track" ID="{F2D9793F-1CA5-40B9-83FB-7AC6B7B4A34E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Music_F_Step1" ID="{ADA55880-C857-4F25-9F4B-1B97F68E87B8}" ShortID="956954212">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{DE8426EC-86C5-4758-A563-0BD91A6107DA}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Music_F_Step1" ID="{741E9F3F-2541-429F-AF2A-030AB9C9A9C9}">
+									<PropertyList>
+										<Property Name="LoopBegin" Type="Real64" Value="25.0330862993024"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Music_F_Step1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="1062212448"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Music_F_Step1" ID="{741E9F3F-2541-429F-AF2A-030AB9C9A9C9}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Music_F_Step2" ID="{E32EC2E1-10F6-4E67-8E5B-BF3CAE781FEC}" ShortID="280982876">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{DE8426EC-86C5-4758-A563-0BD91A6107DA}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Music_F_Step2" ID="{A251C1E4-4226-423B-9B9D-FA27F60877BD}">
+									<Language>SFX</Language>
+									<AudioFile>Music_F_Step2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="2178810"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Music_F_Step2" ID="{A251C1E4-4226-423B-9B9D-FA27F60877BD}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Music_F_Step3" ID="{DD7EDE48-9C27-487B-B535-2AD5BEC0417F}" ShortID="53437939">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{DE8426EC-86C5-4758-A563-0BD91A6107DA}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Music_F_Step3" ID="{520445ED-2099-416D-8894-E7FC41C14937}">
+									<Language>SFX</Language>
+									<AudioFile>Music_F_Step3.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="914972366"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Music_F_Step3" ID="{520445ED-2099-416D-8894-E7FC41C14937}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="SFX" ID="{A942B501-3503-45C6-80AF-FEFAE0521572}" ShortID="405672481">
@@ -2835,7 +2930,7 @@
 						</Folder>
 						<Folder Name="MOUVEMENT" ID="{F6038367-4E39-4A4F-8D99-7A748A73DA81}" ShortID="832533191">
 							<ChildrenList>
-								<Sound Name="SFX_Mvt_Projection_V2" ID="{2BC598E1-78E0-4BB9-B663-7266101DADF9}" ShortID="265340564">
+								<RandomSequenceContainer Name="SFX_Mvt_Projection_Random" ID="{939B28AB-6C13-449E-9DCD-3FB438BA8E1F}" ShortID="517560729">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
@@ -2845,40 +2940,52 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="SFX_Mvt_Projection_V2" ID="{947922CD-8F91-4620-A3C2-9D309E24A29C}">
-											<Language>SFX</Language>
-											<AudioFile>SFX\MOUVEMENT\SFX_Mvt_Projection_V2.wav</AudioFile>
-											<MediaIDList>
-												<MediaID ID="933749775"/>
-											</MediaIDList>
-										</AudioFileSource>
+										<Sound Name="SFX_Mvt_Projection_V2" ID="{2BC598E1-78E0-4BB9-B663-7266101DADF9}" ShortID="265340564">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{DE8426EC-86C5-4758-A563-0BD91A6107DA}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Mvt_Projection_V2" ID="{947922CD-8F91-4620-A3C2-9D309E24A29C}">
+													<Language>SFX</Language>
+													<AudioFile>SFX\MOUVEMENT\SFX_Mvt_Projection_V2.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="933749775"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Mvt_Projection_V2" ID="{947922CD-8F91-4620-A3C2-9D309E24A29C}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="SFX_Mvt_Projection_V3" ID="{D6238AC8-AE9D-4EB8-B780-2F117E4A3D28}" ShortID="110645971">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{DE8426EC-86C5-4758-A563-0BD91A6107DA}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Mvt_Projection_V3" ID="{8B86E48D-A5F9-4413-9800-54306E94B427}">
+													<Language>SFX</Language>
+													<AudioFile>SFX\MOUVEMENT\SFX_Mvt_Projection_V3.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1041468699"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Mvt_Projection_V3" ID="{8B86E48D-A5F9-4413-9800-54306E94B427}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
 									</ChildrenList>
-									<ActiveSourceList>
-										<ActiveSource Name="SFX_Mvt_Projection_V2" ID="{947922CD-8F91-4620-A3C2-9D309E24A29C}" Platform="Linked"/>
-									</ActiveSourceList>
-								</Sound>
-								<Sound Name="SFX_Mvt_Projection_V3" ID="{D6238AC8-AE9D-4EB8-B780-2F117E4A3D28}" ShortID="110645971">
-									<ReferenceList>
-										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
-										</Reference>
-										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{DE8426EC-86C5-4758-A563-0BD91A6107DA}"/>
-										</Reference>
-									</ReferenceList>
-									<ChildrenList>
-										<AudioFileSource Name="SFX_Mvt_Projection_V3" ID="{8B86E48D-A5F9-4413-9800-54306E94B427}">
-											<Language>SFX</Language>
-											<AudioFile>SFX\MOUVEMENT\SFX_Mvt_Projection_V3.wav</AudioFile>
-											<MediaIDList>
-												<MediaID ID="1041468699"/>
-											</MediaIDList>
-										</AudioFileSource>
-									</ChildrenList>
-									<ActiveSourceList>
-										<ActiveSource Name="SFX_Mvt_Projection_V3" ID="{8B86E48D-A5F9-4413-9800-54306E94B427}" Platform="Linked"/>
-									</ActiveSourceList>
-								</Sound>
+								</RandomSequenceContainer>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="PUSH" ID="{95C1E16D-5CD1-4C6F-9019-406D866D0DE7}" ShortID="785380106">

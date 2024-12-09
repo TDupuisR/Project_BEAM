@@ -275,31 +275,131 @@
 				</Folder>
 				<Folder Name="MUSIC" ID="{A39F34F3-2F34-4F33-BC50-064A95CE939A}" ShortID="794501340">
 					<ChildrenList>
-						<Event Name="Stop_Music_E_Menu" ID="{7796BB6D-0CB9-489F-9EA8-81586886FA06}">
+						<Folder Name="Menu" ID="{47F12141-C637-49C4-9B1E-7D5093F581D1}" ShortID="379660731">
 							<ChildrenList>
-								<Action Name="" ID="{017A8D70-7AEC-4F51-8A22-615A52037306}" ShortID="41819020">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="2"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="Music_E_Menu" ID="{9034C61F-52BC-4912-A94A-317CA7707435}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
+								<Event Name="Stop_Music_E_Menu" ID="{7796BB6D-0CB9-489F-9EA8-81586886FA06}">
+									<ChildrenList>
+										<Action Name="" ID="{017A8D70-7AEC-4F51-8A22-615A52037306}" ShortID="41819020">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_E_Menu" ID="{9034C61F-52BC-4912-A94A-317CA7707435}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Play_Music_E_Menu" ID="{12C577E7-9BBF-40F2-8701-EECE17C95F72}">
+									<ChildrenList>
+										<Action Name="" ID="{32AE987B-214F-484A-B6FD-D6D1F96090B3}" ShortID="910651915">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_E_Menu" ID="{9034C61F-52BC-4912-A94A-317CA7707435}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
 							</ChildrenList>
-						</Event>
-						<Event Name="Play_Music_E_Menu" ID="{12C577E7-9BBF-40F2-8701-EECE17C95F72}">
+						</Folder>
+						<Folder Name="Step1" ID="{CFFA3C17-89E4-4D24-9FE3-E8AA4C0D520F}" ShortID="289803676">
 							<ChildrenList>
-								<Action Name="" ID="{32AE987B-214F-484A-B6FD-D6D1F96090B3}" ShortID="910651915">
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="Music_E_Menu" ID="{9034C61F-52BC-4912-A94A-317CA7707435}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
+								<Event Name="Play_Music_step_1" ID="{DE9BFF62-D6BB-45F5-A118-B0D03A917257}">
+									<ChildrenList>
+										<Action Name="" ID="{8B06710C-5FD2-4D74-BE36-7DEA59AAC0B3}" ShortID="329720366">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_step_1" ID="{61327358-5330-49D8-AAAB-75F3FDA92148}" WorkUnitID="{ECB9F611-BAF2-4465-B158-455396583878}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Stop_Music_step_1" ID="{EBD1482B-A13C-4E85-B866-6217B6A57D33}">
+									<ChildrenList>
+										<Action Name="" ID="{637B4203-AC78-4564-8966-54C66E3790DE}" ShortID="1019663213">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_step_1" ID="{61327358-5330-49D8-AAAB-75F3FDA92148}" WorkUnitID="{ECB9F611-BAF2-4465-B158-455396583878}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
 							</ChildrenList>
-						</Event>
+						</Folder>
+						<Folder Name="Step2" ID="{8FCB05DE-6255-48BD-894F-8D3DF5E9EE89}" ShortID="742366131">
+							<ChildrenList>
+								<Event Name="Stop_Music_step_2" ID="{4DD96FD4-28CF-4E66-8833-89603F016F1D}">
+									<ChildrenList>
+										<Action Name="" ID="{D078AE72-63F1-4A1D-ACA8-DD1F72F81845}" ShortID="630017121">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_step_2" ID="{C9B305F2-FEB4-4F37-9F57-9A56D70CA523}" WorkUnitID="{ECB9F611-BAF2-4465-B158-455396583878}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Play_Music_step_2" ID="{FAC799BE-0E16-4694-A9B2-1145A01FD543}">
+									<ChildrenList>
+										<Action Name="" ID="{D1D81A2B-27AF-442E-BACD-12F462D49F0C}" ShortID="823256623">
+											<PropertyList>
+												<Property Name="FadeInCurve" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_step_2" ID="{C9B305F2-FEB4-4F37-9F57-9A56D70CA523}" WorkUnitID="{ECB9F611-BAF2-4465-B158-455396583878}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+							</ChildrenList>
+						</Folder>
+						<Folder Name="Step3" ID="{6DDFF962-EAA9-44BD-BD35-8577C89E47B4}" ShortID="1007680028">
+							<ChildrenList>
+								<Event Name="Play_Music_step_3" ID="{42FDA490-FB40-4388-92F4-2034E45E238D}">
+									<ChildrenList>
+										<Action Name="" ID="{92FF9264-FE3A-4CEB-B02E-4F02FF2F051F}" ShortID="597661852">
+											<PropertyList>
+												<Property Name="FadeInCurve" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_step_3" ID="{891C2374-31B6-4849-85C1-4AC577B8DECB}" WorkUnitID="{ECB9F611-BAF2-4465-B158-455396583878}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Stop_Music_step_3" ID="{12D1D38C-6439-4575-9B16-74724597F080}">
+									<ChildrenList>
+										<Action Name="" ID="{041C38B0-3ACD-4B40-8D01-EBCB57E30A53}" ShortID="705751187">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Music_step_3" ID="{891C2374-31B6-4849-85C1-4AC577B8DECB}" WorkUnitID="{ECB9F611-BAF2-4465-B158-455396583878}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+							</ChildrenList>
+						</Folder>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="SFX" ID="{41D6684D-6E98-4065-B57E-18418DDD8434}" ShortID="23117205">
@@ -400,7 +500,21 @@
 								</Event>
 							</ChildrenList>
 						</Folder>
-						<Folder Name="Movement" ID="{B7998332-8AF9-4705-9E4C-F7CAFFAC4478}" ShortID="442361618"/>
+						<Folder Name="Movement" ID="{B7998332-8AF9-4705-9E4C-F7CAFFAC4478}" ShortID="442361618">
+							<ChildrenList>
+								<Event Name="Play_SFX_Mvt_Projection" ID="{9478730F-D52E-4868-A813-7677484B6133}">
+									<ChildrenList>
+										<Action Name="" ID="{D7CB5CE6-4531-400B-976F-440330206DCC}" ShortID="419234579">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="SFX_Mvt_Projection_Random" ID="{939B28AB-6C13-449E-9DCD-3FB438BA8E1F}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+							</ChildrenList>
+						</Folder>
 						<Folder Name="Destruction" ID="{C7F51CF5-04CB-410C-8E3E-E8EF6AC93837}" ShortID="584106757">
 							<ChildrenList>
 								<Event Name="Play_SFX_BlockDestroy_Metal" ID="{53B62B5B-5EB2-4BBA-ADF3-A6EAD9863F29}">
