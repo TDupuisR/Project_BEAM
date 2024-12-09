@@ -22,6 +22,11 @@ public:
 	float height_0;
 	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv0", meta = (ToolTip = "duree de vie du projectile"))
 	float lifespan_0;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv0", meta = (ToolTip = "Le shake max"))
+	float shakeForce_0;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv0", meta = (ToolTip = "La vitesse pour aller au shake max"))
+	float shakeSpeed_0;
+
 	
 	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv1", meta = (ToolTip = "vitesse du projectile"))
 	float speed_1;
@@ -31,6 +36,10 @@ public:
 	float height_1;
 	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv1", meta = (ToolTip = "duree de vie du projectile"))
 	float lifespan_1;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv1", meta = (ToolTip = "Le shake max"))
+	float shakeForce_1;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv1", meta = (ToolTip = "La vitesse pour aller au shake max"))
+	float shakeSpeed_1;
 
 	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv2", meta = (ToolTip = "vitesse du projectile"))
 	float speed_2;
@@ -40,6 +49,10 @@ public:
 	float height_2;
 	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv2", meta = (ToolTip = "duree de vie du projectile"))
 	float lifespan_2;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv2", meta = (ToolTip = "Le shake max"))
+	float shakeForce_2;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv2", meta = (ToolTip = "La vitesse pour aller au shake max"))
+	float shakeSpeed_2;
 
 	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv3", meta = (ToolTip = "vitesse du projectile"))
 	float speed_3;
@@ -49,5 +62,9 @@ public:
 	float height_3;
 	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv3", meta = (ToolTip = "duree de vie du projectile"))
 	float lifespan_3;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv3", meta = (ToolTip = "Le shake max"))
+	float shakeForce_3;
+	UPROPERTY(Config, EditAnywhere, Category = "Projectile Nv3", meta = (ToolTip = "La vitesse pour aller au shake max"))
+	float shakeSpeed_3;
 #pragma endregion
 };

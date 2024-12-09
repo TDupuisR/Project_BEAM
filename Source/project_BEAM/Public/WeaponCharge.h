@@ -8,6 +8,7 @@
 
 class ABeamCharacter;
 class UPlayerAim;
+class UProjectileSettings;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
@@ -68,6 +69,9 @@ private:
 	float qteTimeLeft = 0.f;
 	UPROPERTY()
 	int power = 0;
+
+	UPROPERTY()
+	const UProjectileSettings* projectileSettings;
 	
 public:
 	// Called every frame
