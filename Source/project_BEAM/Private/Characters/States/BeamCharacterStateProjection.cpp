@@ -18,8 +18,10 @@ void UBeamCharacterStateProjection::StateEnter(EBeamCharacterStateID PreviousSta
 	Super::StateEnter(PreviousStateID);
 	
 	Character->SetCanTakeDamage(false);
+	Character->SetCanTakeKnockback(true);
 	TimeToWait = Character->GetCharacterSettings()->TimeToWaitAfterProjection;
 	Timer = 0.f;
+	AfterProjection = false;
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
@@ -47,19 +49,22 @@ void UBeamCharacterStateProjection::StateExit(EBeamCharacterStateID NextStateID)
 void UBeamCharacterStateProjection::StateTick(float DeltaTime)
 {
 
-	// GEngine->AddOnScreenDebugMessage(
-	// 	-1,
-	// 	0.1f,
-	// 	FColor::Red,
-	// 	FString::Printf(TEXT("Tick State PROJECTION"))
-	// );
+	 GEngine->AddOnScreenDebugMessage(
+	 	-1,
+	 	0.1f,
+	 	FColor::Red,
+	 	FString::Printf(TEXT("Tick State PROJECTION"))
+	 );
 
 	if (AfterProjection) {
 		Timer += DeltaTime;
 		if (Timer >= TimeToWait) {
 
 			AfterProjection = false;
+			Character->SetCanTakeDamage(true);
+			Character->SetCanTakeKnockback(true);
 			Timer = 0.f;
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, TEXT("After Projection END"));
 			StateMachine->ChangeState(EBeamCharacterStateID::Idle);
 		}
 	}

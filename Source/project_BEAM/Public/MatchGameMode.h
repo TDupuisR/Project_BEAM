@@ -22,6 +22,12 @@ class PROJECT_BEAM_API AMatchGameMode : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable)
+	void FreezePlayers();
+
+	UFUNCTION(BlueprintCallable)
+	void UnFreezePlayers();
+
 
 protected:
 	UPROPERTY()
