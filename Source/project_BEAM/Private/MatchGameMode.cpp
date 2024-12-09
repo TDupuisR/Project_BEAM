@@ -72,6 +72,20 @@ void AMatchGameMode::UnFreezePlayers()
 	}
 }
 
+void AMatchGameMode::KnockBackAllPlayersFromPlayer(ABeamCharacter* characterFrom, float forceKnockback)
+{
+	for (ABeamCharacter* Character : CharactersInArena)
+	{
+		if (Character == nullptr) continue;
+		if (Character == characterFrom) continue;
+
+		FVector dir = -(characterFrom->GetActorLocation() - Character->GetActorLocation()).GetSafeNormal();
+
+		Character->KnockBack(dir, forceKnockback);
+	}
+
+}
+
 void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors)
 {
 	TArray<AActor*> FoundActors;
