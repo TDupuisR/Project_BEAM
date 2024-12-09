@@ -305,7 +305,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 		OnPhaseChange();
 	}
 
-	if (Damage >= 4 && Life == MaxLife)
+	if ((Life == MaxLife && Damage >= 4) || (Life > LifeToFly && Life - Damage <= 0))
 	{
 		Life = 1;
 	}
