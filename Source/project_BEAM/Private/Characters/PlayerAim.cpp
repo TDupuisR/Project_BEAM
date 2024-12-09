@@ -100,9 +100,19 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
+	if (Character->IsStunned()) {
+		//UE_LOG(LogTemp, Error, TEXT("IS STUNNED PLAYER"));
+		//GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue, TEXT("IS STUNNED"));
+		return;
+	}
+	/*else {
+		UE_LOG(LogTemp, Error, TEXT("IS NOT STUNNED PLAYER"));
+		GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue, TEXT("IS NOT STUNNED"));
+	}*/
+
 	aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
 
-	if(Character->GetInputShoot() && !wasShootTriggered) //check input and if it was recently pressed
+	if(Character->GetInputShoot() && !Character->IsStunned() && !wasShootTriggered) //check input and if it was recently pressed
 	{
 		wasShootTriggered = true;
 		if(shootDelay <= 0.f) Weapon->StartWeaponCharge(); //activate qte
