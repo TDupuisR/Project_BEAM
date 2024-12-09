@@ -32,6 +32,12 @@ public:
 	UFUNCTION()
 	void RedoParams();
 
+	UFUNCTION(BlueprintCallable)
+	void SetCanChangeState(bool canChange);
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCanChangeState() const;
+
 protected: 
 	UPROPERTY()
 	TObjectPtr<ABeamCharacter> Character;
@@ -47,4 +53,7 @@ protected:
 	void FindStates();
 	UFUNCTION()
 	void InitStates();
+
+	UPROPERTY()
+	bool canChangeState = true;
 };

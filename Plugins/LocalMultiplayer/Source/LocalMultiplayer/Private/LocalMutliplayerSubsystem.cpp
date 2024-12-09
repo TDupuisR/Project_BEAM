@@ -12,7 +12,7 @@ void ULocalMultiplayerSubsystem::CreateAndInitPlayers()
 	int NumberOfControllers = LocalMultiplayerSettings->NbMaxGamepads;
 	
 	//Création des PC gamepad
-	for(int i=0; i < LocalMultiplayerSettings->NbMaxGamepads; i++)
+	for (int i = 0; i < NumberOfControllers; i++)
 	{
 		GEngine->AddOnScreenDebugMessage(
 			-1,

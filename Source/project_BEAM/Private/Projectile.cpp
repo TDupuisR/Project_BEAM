@@ -63,9 +63,6 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	
 	if(OtherActor && OtherActor != this) //check if actor is not null
 	{
-
-		FPlatformProcess::Sleep(0.05f);
-
 		GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(ownPower * 0.2,(ownPower^2) * 10);
 
 		 // disable collider to detected self
@@ -164,7 +161,9 @@ bool AProjectile::ProjectileContext(int power, FVector position) // Should not b
 void AProjectile::CallDestroyed() // Destroy the projectile
 {
 	DestructionEffect(ownPower);
-	this->Destroy();
+	if (ownPower < 3) {
+		this->Destroy();
+	}
 }
 void AProjectile::CallFakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {
