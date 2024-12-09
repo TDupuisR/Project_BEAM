@@ -54,6 +54,25 @@ void AMatchGameMode::BeginPlay()
 	// }
 }
 
+void AMatchGameMode::FreezePlayers()
+{
+	for (ABeamCharacter* Character : CharactersInArena)
+	{
+		if (Character == nullptr) continue;
+		Character->Freeze();
+	}
+
+}
+
+void AMatchGameMode::UnFreezePlayers()
+{
+	for (ABeamCharacter* Character : CharactersInArena)
+	{
+		if (Character == nullptr) continue;
+		Character->UnFreeze();
+	}
+}
+
 void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors)
 {
 	TArray<AActor*> FoundActors;
@@ -109,9 +128,22 @@ TSubclassOf<ABeamCharacter> AMatchGameMode::GetSmashCharacterClassFromInputType(
 void AMatchGameMode::CreateAndInitPlayers() const
 {
 	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+
+	if (GameInstance == nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("NULLPTR INIT 1"));
+	}
+
+
 	if (GameInstance == nullptr) return;
 
+
+
 	ULocalMultiplayerSubsystem* LocalMultiplayerSubsystem = GameInstance->GetSubsystem<ULocalMultiplayerSubsystem>();
+
+	if (LocalMultiplayerSubsystem == nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("NULLPTR INIT 2")));
+	}
+
 	if (LocalMultiplayerSubsystem == nullptr) return;
 
 	LocalMultiplayerSubsystem->CreateAndInitPlayers();
@@ -326,9 +358,12 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 				FString::Printf(TEXT("------------- END GAME ------------"))
 			);
 
+			OnUpdateScoreTextUI.Broadcast();
+
+			//BeamGameInstance->GetMancheSystem()->ResetAll();
+			
 			// AFFICHE LE MENU DE FIN DE PARTIE (RECOMMENCE OU QUITTER)
 			// Here ->
-			OnUpdateScoreTextUI.Broadcast();
 
 		}
 		else {
@@ -352,10 +387,12 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 
 	TArray<EAutoReceiveInput::Type> listInputTypes = {EAutoReceiveInput::Player0 ,EAutoReceiveInput::Player1};
 
-	std::vector<ABeamCharacter*> subCharactersInArena = {};
+	int playerNum = 0;
+
+	TArray<ABeamCharacter*> subCharactersInArena = {};
 
 	for (int i = 0; i < listInputTypes.Num(); i++) {
-		subCharactersInArena.push_back(nullptr);
+		subCharactersInArena.Add(nullptr);
 	}
 
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
@@ -375,6 +412,19 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		if (listInputTypes.Num() > 0) {
 			RandomNumber = FMath::RandRange(0, listInputTypes.Num()-1);
 			InputType = listInputTypes[RandomNumber];
+		}
+
+		//int o = 0;
+
+		switch (InputType) {
+		case EAutoReceiveInput::Player0:
+			playerNum = 0;
+			//o = 0;
+			break;
+		case EAutoReceiveInput::Player1:
+			playerNum = 1;
+			//o = 1;
+			break;
 		}
 		
 		SpawnPoint->AutoReceiveInput = InputType;
@@ -401,8 +451,9 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		NewCharacter->SetOrientX(SpawnPoint->GetStartOrientX());
 		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
 
-
-		subCharactersInArena[RandomNumber] = NewCharacter;
+		UE_LOG(LogTemp, Error, TEXT("CHARACTER NUM : %d"), playerNum);
+		subCharactersInArena[playerNum] = NewCharacter;
+		UE_LOG(LogTemp, Error, TEXT("NEW CHARACTER : %d"), NewCharacter);
 		//CharactersInArena.Add(NewCharacter);
 
 		listInputTypes.RemoveAt(RandomNumber);
@@ -411,7 +462,9 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 
 	}
 
-	for (int i = 0; i < subCharactersInArena.size(); i++) {
+	for (int i = 0; i < subCharactersInArena.Num(); i++) {
+		UE_LOG(LogTemp, Error, TEXT("CHARACTER IN ARENA : %d"), subCharactersInArena[i]);
+		subCharactersInArena[i]->SetPlayerIndex(i);
 		CharactersInArena.Add(subCharactersInArena[i]);
 	}
 

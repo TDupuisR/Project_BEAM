@@ -191,8 +191,8 @@ public:
 	// OTHERS
 	UFUNCTION(BlueprintCallable)
 	void PlayerTakeDamage(const int Damage = 1);
-	UFUNCTION()
-	void ResetLife() {Life = MaxLife;}
+	UFUNCTION(BlueprintCallable)
+	void ResetLife();
 	UFUNCTION(BlueprintCallable)
 	bool IsPhaseTwo() const {return Life <= LifeToFly;}
 
@@ -280,6 +280,14 @@ public:
 
 	float GetMultiplierStun() const {return MultiplierStun;}
 
+	UFUNCTION(BlueprintCallable)
+	void UnFreeze();
+
+	UFUNCTION(BlueprintCallable)
+	void Freeze();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsStunned();
 
 private:
 
@@ -438,6 +446,20 @@ public:
 	public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Player VFX")
 	void GunBuildUp();
+#pragma endregion
+
+#pragma region Multiplayer
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerIndex(int NewPlayerIndex) { PlayerIndex = NewPlayerIndex; }
+	UFUNCTION(BlueprintCallable)
+	int GetPlayerIndex() const { return PlayerIndex; }
+
+private:
+	UPROPERTY()
+	int PlayerIndex = -1;
+
 #pragma endregion
 
 };
