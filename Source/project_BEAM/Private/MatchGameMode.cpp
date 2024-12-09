@@ -10,8 +10,7 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
 #include "HAL/PlatformProcess.h"
-#include "Match/BeamMatchSystem.h"
-
+#include "MatchSystemBeam.h"
 
 
 

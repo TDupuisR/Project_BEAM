@@ -2,13 +2,14 @@
 
 
 #include "GM_BeamGameInstance.h"
+#include "MatchSystemBeam.h"
 
 #include "Match/BeamMatchSystem.h"
 
 void UGM_BeamGameInstance::Init()
 {
 	Super::Init();
-	manche = new BeamMatchSystem();
+	matchSystem = NewObject<UMatchSystemBeam>(this);
 }
 
 void UGM_BeamGameInstance::DeployEvent()
@@ -39,11 +40,11 @@ int UGM_BeamGameInstance::GetNumberPairAppeared()
 
 void UGM_BeamGameInstance::ChangeMatchType(EMatchTypeID NewMatchType)
 {
-	manche->SetMatchType(NewMatchType);
+	matchSystem->SetMatchType(NewMatchType);
 }
 
 TArray<int> UGM_BeamGameInstance::GetPlayersPoints() const
 {
-	return manche->GetPlayersPoints();
+	return matchSystem->GetPlayersPoints();
 }
 
