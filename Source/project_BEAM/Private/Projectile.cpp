@@ -161,7 +161,9 @@ bool AProjectile::ProjectileContext(int power, FVector position) // Should not b
 void AProjectile::CallDestroyed() // Destroy the projectile
 {
 	DestructionEffect(ownPower);
-	this->Destroy();
+	if (ownPower < 3) {
+		this->Destroy();
+	}
 }
 void AProjectile::CallFakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {

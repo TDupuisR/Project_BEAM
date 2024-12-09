@@ -42,6 +42,9 @@ public:
 	int GetNumberPairAppeared();
 
 	UFUNCTION(BlueprintCallable)
+	void ChangeMatchType(EMatchTypeID NewMatchType);
+
+	UFUNCTION(BlueprintCallable)
 	TArray<int> GetPlayersPoints() const;
 
 	BeamMatchSystem* GetMancheSystem() const { return manche; };
