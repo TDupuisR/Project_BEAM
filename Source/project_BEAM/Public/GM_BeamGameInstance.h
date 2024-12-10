@@ -5,13 +5,13 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "MatchTypeID.h"
-#include <Match/BeamMatchSystem.h>
+//#include <Match/BeamMatchSystem.h>
+#include "MatchSystemBeam.h"
 
 #include "GM_BeamGameInstance.generated.h"
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChangePoints);
-
 
 
 UCLASS()
@@ -47,13 +47,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<int> GetPlayersPoints() const;
 
-	BeamMatchSystem* GetMancheSystem() const { return manche; };
+	TObjectPtr<UMatchSystemBeam> GetMancheSystem() const { return matchSystem; };
 
 	UFUNCTION(BlueprintCallable)
-	bool IsMatchFinished() {return manche->IsMatchFinished();}
+	bool IsMatchFinished() {return matchSystem->IsMatchFinished();}
 
 	UFUNCTION(BlueprintCallable)
-	void ResetAll() {return manche->ResetAll();}
+	void ResetAll() {return matchSystem->ResetAll();}
 
 private:
 	UPROPERTY()
@@ -61,6 +61,7 @@ private:
 	UPROPERTY()
 	int NumberPairAppeared = 0;
 
-	BeamMatchSystem* manche;
+	UPROPERTY()
+	TObjectPtr<UMatchSystemBeam> matchSystem;
 
 };

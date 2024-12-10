@@ -16,6 +16,9 @@ class PROJECT_BEAM_API UBeamCharacterSettings : public UDeveloperSettings
 	
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static const UBeamCharacterSettings* GetBeamCharacterSettings() { return GetDefault<UBeamCharacterSettings>(); }
+
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category="Inputs")
 	TSoftObjectPtr<UBeamCharacterInputData> InputData;
 
@@ -28,6 +31,10 @@ public:
 	int MaxLife;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Vie pour aller a la phase 2"))
 	int LifeToFly;
+
+	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Force du knockback quand passe en phase 2"))
+	float knockbackForce_cinematic;
+
 	
 	UPROPERTY(Config, EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ToolTip = "Permet de ralentir les deplacements, valeur haute -> ralenti enormement, valeur petite -> ralenti un peu"))
 	double BrakingFrictionFactor;

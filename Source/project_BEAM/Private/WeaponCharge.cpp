@@ -7,6 +7,7 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "Characters/PlayerAim.h"
 #include <Camera/CameraWorldSubsystem.h>
+#include "ProjectileSettings.h"
 
 
 // Sets default values for this component's properties
@@ -24,6 +25,8 @@ UWeaponCharge::UWeaponCharge()
 void UWeaponCharge::BeginPlay()
 {
 	Super::BeginPlay();
+
+	projectileSettings = GetDefault<UProjectileSettings>();
 }
 
 void UWeaponCharge::StartWeaponCharge()
@@ -113,9 +116,40 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 						//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
 						Character->PassQte(Character);
 						
-						float shakeForce = power == 3 ? 30 : power == 2 ? 20 : 2;
-						float shakeSpeed = power == 3 ? 20 : power == 2 ? 15 : 10;
+						float shakeForce = 2;
+						float shakeSpeed = 10;
 
+						switch (power)
+						{
+						case 0:
+							shakeForce = projectileSettings->shakeForce_0;
+							break;
+						case 1:
+							shakeForce = projectileSettings->shakeForce_1;
+							break;
+						case 2:
+							shakeForce = projectileSettings->shakeForce_2;
+							break;
+						case 3:
+							shakeForce = projectileSettings->shakeForce_3;
+							break;
+						}
+
+						switch (power)
+						{
+						case 0:
+							shakeSpeed = projectileSettings->shakeSpeed_0;
+							break;
+						case 1:
+							shakeSpeed = projectileSettings->shakeSpeed_1;
+							break;
+						case 2:
+							shakeSpeed = projectileSettings->shakeSpeed_2;
+							break;
+						case 3:
+							shakeSpeed = projectileSettings->shakeSpeed_3;
+							break;
+						}
 
 						GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeCamera(shakeForce, shakeSpeed);
 

@@ -10,8 +10,7 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "GM_BeamGameInstance.h"
 #include "HAL/PlatformProcess.h"
-#include "Match/BeamMatchSystem.h"
-
+#include "MatchSystemBeam.h"
 
 
 
@@ -71,6 +70,20 @@ void AMatchGameMode::UnFreezePlayers()
 		if (Character == nullptr) continue;
 		Character->UnFreeze();
 	}
+}
+
+void AMatchGameMode::KnockBackAllPlayersFromPlayer(ABeamCharacter* characterFrom, float forceKnockback)
+{
+	for (ABeamCharacter* Character : CharactersInArena)
+	{
+		if (Character == nullptr) continue;
+		if (Character == characterFrom) continue;
+
+		FVector dir = -(characterFrom->GetActorLocation() - Character->GetActorLocation()).GetSafeNormal();
+
+		Character->KnockBack(dir, forceKnockback);
+	}
+
 }
 
 void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors)

@@ -28,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UnFreezePlayers();
 
+	UFUNCTION(BlueprintCallable)
+	void KnockBackAllPlayersFromPlayer(ABeamCharacter* characterFrom, float forceKnockback);
+
 
 protected:
 	UPROPERTY()
