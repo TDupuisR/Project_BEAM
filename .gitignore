@@ -70,6 +70,7 @@ Plugins/*/Binaries/Win64/*
 
 # Wwise
 !Plugins/*/Binaries/Win64/*.dll
+!Plugins/WwiseSoundEngine/**/*.lib
 
 # Builds
 Build/*
