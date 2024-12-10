@@ -72,6 +72,9 @@ private:
 
 	UPROPERTY()
 	const UProjectileSettings* projectileSettings;
+
+	UFUNCTION()
+	void ShakeCameraWithPower();
 	
 public:
 	// Called every frame
