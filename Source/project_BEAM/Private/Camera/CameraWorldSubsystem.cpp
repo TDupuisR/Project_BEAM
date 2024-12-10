@@ -448,6 +448,18 @@ void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFoll
 
 
 
+void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFollow)
+{
+	cameraSpeed = CameraSpeed;
+	timer = 0;
+	posToFollow = PosToFollow;
+	cameraMode = ECameraMode::Follow;
+	cameraMode = ECameraMode::Cinematic;
+	isReverse = false;
+	isReversing = false;
+	canReverse = false;
+}
+
 void UCameraWorldSubsystem::Cinematic(float CameraSpeed, FVector PosToFollow)
 {
 	cameraSpeed = CameraSpeed;
@@ -458,6 +470,18 @@ void UCameraWorldSubsystem::Cinematic(float CameraSpeed, FVector PosToFollow)
 	isReverse = false;
 	isReversing = false;
 	canReverse = false;
+}
+
+void UCameraWorldSubsystem::CameraReverseCinematic(float CameraSpeed)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Black, TEXT("T"));
+	cameraSpeed = CameraSpeed;
+	timer = 0;
+	cameraMode = ECameraMode::Cinematic;
+	isReverse = true;
+	isReversing = true;
+	canReverse = false;
+	rotToFollow = rotCameraStart;
 }
 
 void UCameraWorldSubsystem::ReverseCinematic(float CameraSpeed)

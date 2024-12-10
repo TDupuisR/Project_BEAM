@@ -159,9 +159,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed);
+public:
+	UFUNCTION(BlueprintCallable)
+	void CameraCinematic(float CameraSpeed, FVector PosToFollow);
 
 	UFUNCTION(BlueprintCallable)
 	void Cinematic(float CameraSpeed, FVector PosToFollow);
+public:
+	UFUNCTION(BlueprintCallable)
+	void CameraReverseCinematic(float CameraSpeed);
 
 	UFUNCTION(BlueprintCallable)
 	void ReverseCinematic(float CameraSpeed);
