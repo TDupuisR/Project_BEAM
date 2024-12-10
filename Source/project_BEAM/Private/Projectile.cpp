@@ -168,12 +168,12 @@ void AProjectile::CallDestroyed() // Destroy the projectile
 		this->Destroy();
 	}
 
-	UAkGameplayStatics::PostEventAtLocation(
-		WwiseEventTest,
-		this->GetActorLocation(),
-		FRotator::ZeroRotator,
-		
-	);
+// 	UAkGameplayStatics::PostEventAtLocation(
+// 		WwiseEventTest,
+// 		this->GetActorLocation(),
+// 		FRotator::ZeroRotator,
+// 		
+// 	);
 }
 void AProjectile::CallFakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {
