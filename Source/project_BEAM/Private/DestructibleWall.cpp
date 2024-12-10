@@ -5,8 +5,6 @@
 #include "ProjectileInterface.h"
 #include <Camera/CameraWorldSubsystem.h>
 
-#include "AsyncTreeDifferences.h"
-
 
 // Sets default values
 ADestructibleWall::ADestructibleWall()
