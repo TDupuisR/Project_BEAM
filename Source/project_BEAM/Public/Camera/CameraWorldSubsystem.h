@@ -160,6 +160,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed);
 
+	UFUNCTION(BlueprintCallable)
+	void Cinematic(float CameraSpeed, FVector PosToFollow);
+
+	UFUNCTION(BlueprintCallable)
+	void ReverseCinematic(float CameraSpeed);
+
 private:
 
 	bool isTimer = false;
@@ -177,6 +183,8 @@ private:
 	bool isReverse = false;
 
 	bool isReversing = false;
+
+	bool canReverse = true;
 
 	FVector posToFollow;
 	FRotator rotToFollow;
