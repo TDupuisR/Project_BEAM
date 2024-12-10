@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3144731297	Play_UI_PauseMenu_Open			\Default Work Unit\UI\Play_UI_PauseMenu_Open	
+

@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	844599415	Play_MC_BounceP2_Random			\Default Work Unit\FOLEY\Bounce\Play_MC_BounceP2_Random	
+

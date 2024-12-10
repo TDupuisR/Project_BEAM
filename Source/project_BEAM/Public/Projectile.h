@@ -11,6 +11,7 @@
 #include "Projectile.generated.h"
 
 class AActor;
+class UAkAudioEvent;
 
 USTRUCT(BlueprintType)
 struct FProjectileParameters
@@ -100,5 +101,13 @@ protected:
 private:
 	UPROPERTY()
 	bool canAccess = true;
+
+#pragma region SoundDesign
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> WwiseEventTest;
+	
+#pragma endregion
 	
 };

@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "2334016683",
+    "Type": "Event",
+    "GUID": "{B7C4C2FA-741D-4F5C-8698-7063E16B10A5}",
+    "Language": "SFX",
+    "Hash": "{5B665549-5B82-70EB-7CE3-AFF9BCD896CF}",
+    "ObjectPath": "Play_SFX_Push_Contact",
+    "ShortName": "Play_SFX_Push_Contact",
+    "Path": "Event/Play_SFX_Push_Contact.bnk",
+    "Media": [
+     {
+      "Id": "1009771391",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\PUSH\\SFX_Push_Contact.wav",
+      "Path": "Media/1009771391.wem",
+      "CachePath": "83/{8310BBC2-E303-520C-693D-5DFDE7F19C43}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2334016683",
+      "Name": "Play_SFX_Push_Contact",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Push\\Play_SFX_Push_Contact",
+      "GUID": "{B7C4C2FA-741D-4F5C-8698-7063E16B10A5}",
+      "DurationType": "OneShot",
+      "DurationMin": "3.4",
+      "DurationMax": "3.4",
+      "MediaRefs": [
+       {
+        "Id": "1009771391"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{CE69C5EB-9077-3157-0EEF-9D17BA15B603}"
+ }
+}

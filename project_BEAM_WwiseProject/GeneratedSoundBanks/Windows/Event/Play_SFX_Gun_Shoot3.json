@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1952409355",
+    "Type": "Event",
+    "GUID": "{E7C6DFC3-55BA-4511-9A95-5E42821CA3BA}",
+    "Language": "SFX",
+    "Hash": "{4BA6E025-A175-19BE-6B3B-061532E0A508}",
+    "ObjectPath": "Play_SFX_Gun_Shoot3",
+    "ShortName": "Play_SFX_Gun_Shoot3",
+    "Path": "Event/Play_SFX_Gun_Shoot3.bnk",
+    "Media": [
+     {
+      "Id": "90248009",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\GUN\\SFX_Gun_Shoot3.wav",
+      "Path": "Media/90248009.wem",
+      "CachePath": "C2/{C241D1BA-1539-3A38-576F-8B10C4775890}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1952409355",
+      "Name": "Play_SFX_Gun_Shoot3",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Gun\\Play_SFX_Gun_Shoot3",
+      "GUID": "{E7C6DFC3-55BA-4511-9A95-5E42821CA3BA}",
+      "DurationType": "OneShot",
+      "DurationMin": "2.3333333",
+      "DurationMax": "2.3333333",
+      "MediaRefs": [
+       {
+        "Id": "90248009"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{8C4F66E5-8656-F257-5441-DC5D04B89193}"
+ }
+}

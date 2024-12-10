@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "4156170877",
+    "Type": "Event",
+    "GUID": "{31794AC4-B927-4F01-8E8B-EBB87F835F81}",
+    "Language": "SFX",
+    "Hash": "{AA13C23F-F70F-3273-E469-82791F1EC097}",
+    "ObjectPath": "Play_SFX_Push_Activation",
+    "ShortName": "Play_SFX_Push_Activation",
+    "Path": "Event/Play_SFX_Push_Activation.bnk",
+    "Media": [
+     {
+      "Id": "483872067",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\PUSH\\SFX_Push_Activation.wav",
+      "Path": "Media/483872067.wem",
+      "CachePath": "44/{446D0C6C-9D86-267A-288C-2A624992844F}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "4156170877",
+      "Name": "Play_SFX_Push_Activation",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Push\\Play_SFX_Push_Activation",
+      "GUID": "{31794AC4-B927-4F01-8E8B-EBB87F835F81}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.4107292",
+      "DurationMax": "1.4107292",
+      "MediaRefs": [
+       {
+        "Id": "483872067"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{C874F8B1-0661-BF99-4EE8-E132ABCD7052}"
+ }
+}
