@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "935342227",
+    "Type": "Event",
+    "GUID": "{895ABAE9-E9CA-4308-BD65-110779444BEE}",
+    "Language": "SFX",
+    "Hash": "{623D1151-39C1-6359-6E4D-C852006AD53E}",
+    "ObjectPath": "Play_SFX_QTE_FailLoadingGun",
+    "ShortName": "Play_SFX_QTE_FailLoadingGun",
+    "Path": "Event/Play_SFX_QTE_FailLoadingGun.bnk",
+    "Media": [
+     {
+      "Id": "404289254",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\QTE\\SFX_QTE_FailLoadingGun.wav",
+      "Path": "Media/404289254.wem",
+      "CachePath": "35/{35854D5F-ED9B-845C-94E4-B5D9CD97FCE7}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "935342227",
+      "Name": "Play_SFX_QTE_FailLoadingGun",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\QTE\\Play_SFX_QTE_FailLoadingGun",
+      "GUID": "{895ABAE9-E9CA-4308-BD65-110779444BEE}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.2",
+      "DurationMax": "1.2",
+      "MediaRefs": [
+       {
+        "Id": "404289254"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{27D6DF29-8022-578C-E5CF-7DA9AE7531C6}"
+ }
+}

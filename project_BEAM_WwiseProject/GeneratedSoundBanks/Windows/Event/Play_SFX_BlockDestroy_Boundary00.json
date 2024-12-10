@@ -1,0 +1,72 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "4038819018",
+    "Type": "Event",
+    "GUID": "{09ECA663-3E40-433B-95F5-6FEFBFC5C768}",
+    "Language": "SFX",
+    "Hash": "{B4D96025-1B98-B163-354C-2CBCB66BA734}",
+    "ObjectPath": "Play_SFX_BlockDestroy_Boundary00",
+    "ShortName": "Play_SFX_BlockDestroy_Boundary00",
+    "Path": "Event/Play_SFX_BlockDestroy_Boundary00.bnk",
+    "Media": [
+     {
+      "Id": "70817334",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX_BlockDestroy_Boundary00_01.wav",
+      "Path": "Media/70817334.wem",
+      "CachePath": "09/{09F4AF8F-D184-4AA8-5D93-0FBE76B478F5}.wem"
+     },
+     {
+      "Id": "142230540",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX_BlockDestroy_Boundary00_02.wav",
+      "Path": "Media/142230540.wem",
+      "CachePath": "36/{367E1112-77A9-609B-B370-AF1BA4FAAB79}.wem"
+     },
+     {
+      "Id": "658614914",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX_BlockDestroy_Boundary00_03.wav",
+      "Path": "Media/658614914.wem",
+      "CachePath": "88/{883DFC2C-9903-59F8-BC4F-37B722C95F71}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "4038819018",
+      "Name": "Play_SFX_BlockDestroy_Boundary00",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Destruction\\Play_SFX_BlockDestroy_Boundary00",
+      "GUID": "{09ECA663-3E40-433B-95F5-6FEFBFC5C768}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.499375",
+      "DurationMax": "0.53333336",
+      "MediaRefs": [
+       {
+        "Id": "70817334"
+       },
+       {
+        "Id": "142230540"
+       },
+       {
+        "Id": "658614914"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{7DCE35CC-D123-99FD-4D43-C7CF3EA0F12E}"
+ }
+}

@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1814844437	Play_MC_ContactBoundary			\Default Work Unit\FOLEY\Contact Boundaries\Play_MC_ContactBoundary	
+

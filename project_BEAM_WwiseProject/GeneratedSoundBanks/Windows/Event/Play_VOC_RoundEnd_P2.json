@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "3568353991",
+    "Type": "Event",
+    "GUID": "{B6C2B2C3-3AF7-4A0F-96F6-0A28EF5214BC}",
+    "Language": "SFX",
+    "Hash": "{92307729-0E14-C3F8-780A-E0D0FFB5F946}",
+    "ObjectPath": "Play_VOC_RoundEnd_P2",
+    "ShortName": "Play_VOC_RoundEnd_P2",
+    "Path": "Event/Play_VOC_RoundEnd_P2.bnk",
+    "Media": [
+     {
+      "Id": "721452971",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "VOICES\\VOC_RoundEnd_P2.wav",
+      "Path": "Media/721452971.wem",
+      "CachePath": "FE/{FEB49596-CAB9-1F9E-74AF-E44265B923E2}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3568353991",
+      "Name": "Play_VOC_RoundEnd_P2",
+      "ObjectPath": "\\Events\\Default Work Unit\\VOICES\\Play_VOC_RoundEnd_P2",
+      "GUID": "{B6C2B2C3-3AF7-4A0F-96F6-0A28EF5214BC}",
+      "DurationType": "OneShot",
+      "DurationMin": "2.6371655",
+      "DurationMax": "2.6371655",
+      "MediaRefs": [
+       {
+        "Id": "721452971"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{48C81903-CFDC-3886-DFA5-511593B73413}"
+ }
+}

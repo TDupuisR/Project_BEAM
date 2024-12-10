@@ -6,6 +6,9 @@
 #include "Characters/BeamCharacter.h"
 #include <Camera/CameraWorldSubsystem.h>
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
+
 
 // Sets default values
 AProjectile::AProjectile()
@@ -164,6 +167,13 @@ void AProjectile::CallDestroyed() // Destroy the projectile
 	if (ownPower < 3) {
 		this->Destroy();
 	}
+
+	UAkGameplayStatics::PostEventAtLocation(
+		WwiseEventTest,
+		this->GetActorLocation(),
+		FRotator::ZeroRotator,
+		
+	);
 }
 void AProjectile::CallFakeDestroy(int power) // Produce a destruction effect and reset the projectile parameters, does not destroy the Actor
 {

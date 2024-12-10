@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "2128150368",
+    "Type": "Event",
+    "GUID": "{B0546235-14AB-4C69-86F3-EBB7E0C90786}",
+    "Language": "SFX",
+    "Hash": "{B6918B56-ACA1-E93B-5578-EAFB648CCEA3}",
+    "ObjectPath": "Play_UI_WaitRoom_Start",
+    "ShortName": "Play_UI_WaitRoom_Start",
+    "Path": "Event/Play_UI_WaitRoom_Start.bnk",
+    "Media": [
+     {
+      "Id": "974609385",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "UI\\UI_WaitRoom_Start.wav",
+      "Path": "Media/974609385.wem",
+      "CachePath": "8D/{8D8C84A0-D022-F8CF-5CAE-603EA28D0D8B}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2128150368",
+      "Name": "Play_UI_WaitRoom_Start",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\Play_UI_WaitRoom_Start",
+      "GUID": "{B0546235-14AB-4C69-86F3-EBB7E0C90786}",
+      "DurationType": "OneShot",
+      "DurationMin": "2.1",
+      "DurationMax": "2.1",
+      "MediaRefs": [
+       {
+        "Id": "974609385"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{07192803-F580-99AB-44A9-976DE040E977}"
+ }
+}

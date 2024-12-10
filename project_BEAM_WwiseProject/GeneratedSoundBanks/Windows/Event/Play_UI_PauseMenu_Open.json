@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "3144731297",
+    "Type": "Event",
+    "GUID": "{128D21E7-51C3-4C40-9F53-7E46D955393F}",
+    "Language": "SFX",
+    "Hash": "{1F4D1FE2-857B-12F7-1BED-E3EB9E7DD27E}",
+    "ObjectPath": "Play_UI_PauseMenu_Open",
+    "ShortName": "Play_UI_PauseMenu_Open",
+    "Path": "Event/Play_UI_PauseMenu_Open.bnk",
+    "Media": [
+     {
+      "Id": "1026651877",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "UI\\UI_PauseMenu_Open.wav",
+      "Path": "Media/1026651877.wem",
+      "CachePath": "EB/{EB002EB4-F7A0-FDD4-C0B9-93C03520F80A}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3144731297",
+      "Name": "Play_UI_PauseMenu_Open",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\Play_UI_PauseMenu_Open",
+      "GUID": "{128D21E7-51C3-4C40-9F53-7E46D955393F}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.1886168",
+      "DurationMax": "1.1886168",
+      "MediaRefs": [
+       {
+        "Id": "1026651877"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{351BD309-ADF8-2FDD-1F80-710AE097E281}"
+ }
+}

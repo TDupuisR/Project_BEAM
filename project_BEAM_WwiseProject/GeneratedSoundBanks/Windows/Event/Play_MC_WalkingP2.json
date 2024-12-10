@@ -1,0 +1,46 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "3497195932",
+    "Type": "Event",
+    "GUID": "{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}",
+    "Language": "SFX",
+    "Hash": "{603A842E-4DE4-3A62-BCD7-84491A886C5D}",
+    "ObjectPath": "Play_MC_WalkingP2",
+    "ShortName": "Play_MC_WalkingP2",
+    "Path": "Event/Play_MC_WalkingP2.bnk",
+    "Media": [
+     {
+      "Id": "618594614",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FOLEY\\Walk\\MC_WalkingP2.wav",
+      "Path": "Media/618594614.wem",
+      "CachePath": "DD/{DD0DF611-F35A-D66C-882D-4D307940AFA2}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3497195932",
+      "Name": "Play_MC_WalkingP2",
+      "ObjectPath": "\\Events\\Default Work Unit\\FOLEY\\Walk\\Play_MC_WalkingP2",
+      "GUID": "{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "618594614"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{B3434699-CB8A-DB46-7F31-35A12FCB5CA8}"
+ }
+}

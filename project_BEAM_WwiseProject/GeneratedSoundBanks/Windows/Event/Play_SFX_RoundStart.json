@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "298821934",
+    "Type": "Event",
+    "GUID": "{30E13B56-C12A-4494-87FE-473B9EEC0919}",
+    "Language": "SFX",
+    "Hash": "{02F992B4-5F5E-BD65-09A6-0B067D6FF2A7}",
+    "ObjectPath": "Play_SFX_RoundStart",
+    "ShortName": "Play_SFX_RoundStart",
+    "Path": "Event/Play_SFX_RoundStart.bnk",
+    "Media": [
+     {
+      "Id": "401956940",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\SFX_RoundStart.wav",
+      "Path": "Media/401956940.wem",
+      "CachePath": "6F/{6F2AD94E-7A5A-F1C7-AD87-B1E03DFC1813}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "298821934",
+      "Name": "Play_SFX_RoundStart",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Play_SFX_RoundStart",
+      "GUID": "{30E13B56-C12A-4494-87FE-473B9EEC0919}",
+      "DurationType": "OneShot",
+      "DurationMin": "4.4",
+      "DurationMax": "4.4",
+      "MediaRefs": [
+       {
+        "Id": "401956940"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{1CB8F165-C24E-D1AF-9906-CA2AFFD339DE}"
+ }
+}

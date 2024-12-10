@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "3385831154",
+    "Type": "Event",
+    "GUID": "{7DADBED7-A0E2-49C2-8270-EE415880EAA6}",
+    "Language": "SFX",
+    "Hash": "{189D5A72-59C2-1778-C6BA-3F1CEC6A7680}",
+    "ObjectPath": "Stop_AMB_Futuristic_Town",
+    "ShortName": "Stop_AMB_Futuristic_Town",
+    "Path": "Event/Stop_AMB_Futuristic_Town.bnk",
+    "Events": [
+     {
+      "Id": "3385831154",
+      "Name": "Stop_AMB_Futuristic_Town",
+      "ObjectPath": "\\Events\\Default Work Unit\\AMB\\Stop_AMB_Futuristic_Town",
+      "GUID": "{7DADBED7-A0E2-49C2-8270-EE415880EAA6}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{3B69D91D-2A3D-F5A8-8627-5354CB95E641}"
+ }
+}

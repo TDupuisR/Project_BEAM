@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3022734957	Play_MC_Jump			\Default Work Unit\FOLEY\Jump\Play_MC_Jump	
+

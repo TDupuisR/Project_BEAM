@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	111576926	Play_SFX_QTE_WinLoading3			\Default Work Unit\SFX\QTE\Play_SFX_QTE_WinLoading3	
+
