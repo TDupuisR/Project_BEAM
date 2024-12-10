@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1808301862",
+    "Type": "Event",
+    "GUID": "{E43FE10D-9A2E-437B-852B-C66F2DE093B8}",
+    "Language": "SFX",
+    "Hash": "{B4BB9770-BA30-7090-4A38-9FE0C7C91B26}",
+    "ObjectPath": "Play_SFX_Hit_TackHitP4",
+    "ShortName": "Play_SFX_Hit_TackHitP4",
+    "Path": "Event/Play_SFX_Hit_TackHitP4.bnk",
+    "Media": [
+     {
+      "Id": "187150410",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\HIT\\SFX_Hit_TackHitP4.wav",
+      "Path": "Media/187150410.wem",
+      "CachePath": "18/{18A9FFDD-B732-A21A-396E-300C5AD5118D}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1808301862",
+      "Name": "Play_SFX_Hit_TackHitP4",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Hit\\Play_SFX_Hit_TackHitP4",
+      "GUID": "{E43FE10D-9A2E-437B-852B-C66F2DE093B8}",
+      "DurationType": "OneShot",
+      "DurationMin": "3.4835827",
+      "DurationMax": "3.4835827",
+      "MediaRefs": [
+       {
+        "Id": "187150410"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{D3EAE8FB-3267-7DDF-7AC1-68B84E5D5648}"
+ }
+}

@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2128150368	Play_UI_WaitRoom_Start			\Default Work Unit\UI\Play_UI_WaitRoom_Start	
+

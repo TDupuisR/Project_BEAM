@@ -1,0 +1,46 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "430371762",
+    "Type": "Event",
+    "GUID": "{42FDA490-FB40-4388-92F4-2034E45E238D}",
+    "Language": "SFX",
+    "Hash": "{C9270C76-7A49-3893-B49A-B8883037488C}",
+    "ObjectPath": "Play_Music_step_3",
+    "ShortName": "Play_Music_step_3",
+    "Path": "Event/Play_Music_step_3.bnk",
+    "Media": [
+     {
+      "Id": "598755899",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Music_F_Step3.wav",
+      "Path": "Media/598755899.wem",
+      "CachePath": "91/{91C9C4ED-2D17-99A2-CF66-D08FCB82A297}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "430371762",
+      "Name": "Play_Music_step_3",
+      "ObjectPath": "\\Events\\Default Work Unit\\MUSIC\\Step3\\Play_Music_step_3",
+      "GUID": "{42FDA490-FB40-4388-92F4-2034E45E238D}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "598755899"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{67F92F70-3A54-C305-70D5-4C5F9CAA9C71}"
+ }
+}

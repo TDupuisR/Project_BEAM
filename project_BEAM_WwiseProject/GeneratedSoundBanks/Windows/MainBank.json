@@ -8,7 +8,7 @@
    {
     "Id": "2880737896",
     "Type": "User",
-    "GUID": "{73AA2972-4DCC-4D1A-AD09-8CD69276F23C}",
+    "GUID": "{A4074AE8-9A96-4375-8286-432CCD3DD5B0}",
     "Language": "SFX",
     "Hash": "{5473A28E-1569-4DE9-14CD-5943A26DAC43}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\MainBank",
@@ -16,6 +16,6 @@
     "Path": "MainBank.bnk"
    }
   ],
-  "FileHash": "{F2CB7673-75E2-0911-8974-43D709ABD093}"
+  "FileHash": "{BD51ACAE-D9D2-551C-377A-63D78E88641A}"
  }
 }

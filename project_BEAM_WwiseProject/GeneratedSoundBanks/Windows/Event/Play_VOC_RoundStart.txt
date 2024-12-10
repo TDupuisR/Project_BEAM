@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	4174611549	Play_VOC_RoundStart			\Default Work Unit\VOICES\Play_VOC_RoundStart	
+

@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "111576924",
+    "Type": "Event",
+    "GUID": "{6BC19BD1-A4D1-4FEE-8437-8D349E25A48F}",
+    "Language": "SFX",
+    "Hash": "{ED0AB7E2-D0C9-4808-E05F-9D6A1FC11B36}",
+    "ObjectPath": "Play_SFX_QTE_WinLoading1",
+    "ShortName": "Play_SFX_QTE_WinLoading1",
+    "Path": "Event/Play_SFX_QTE_WinLoading1.bnk",
+    "Media": [
+     {
+      "Id": "302308896",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\QTE\\SFX_QTE_WinLoading1.wav",
+      "Path": "Media/302308896.wem",
+      "CachePath": "6B/{6B49C03E-06BD-3018-FF81-881EF9FBDB47}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "111576924",
+      "Name": "Play_SFX_QTE_WinLoading1",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\QTE\\Play_SFX_QTE_WinLoading1",
+      "GUID": "{6BC19BD1-A4D1-4FEE-8437-8D349E25A48F}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.8666667",
+      "DurationMax": "0.8666667",
+      "MediaRefs": [
+       {
+        "Id": "302308896"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{EA89727D-9F3D-1AA9-0B66-854B71B219FE}"
+ }
+}

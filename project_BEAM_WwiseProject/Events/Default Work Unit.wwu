@@ -282,6 +282,7 @@
 										<Action Name="" ID="{017A8D70-7AEC-4F51-8A22-615A52037306}" ShortID="41819020">
 											<PropertyList>
 												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">
@@ -294,6 +295,10 @@
 								<Event Name="Play_Music_E_Menu" ID="{12C577E7-9BBF-40F2-8701-EECE17C95F72}">
 									<ChildrenList>
 										<Action Name="" ID="{32AE987B-214F-484A-B6FD-D6D1F96090B3}" ShortID="910651915">
+											<PropertyList>
+												<Property Name="FadeInCurve" Type="int16" Value="0"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">
 													<ObjectRef Name="Music_E_Menu" ID="{9034C61F-52BC-4912-A94A-317CA7707435}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
@@ -309,6 +314,9 @@
 								<Event Name="Play_Music_step_1" ID="{DE9BFF62-D6BB-45F5-A118-B0D03A917257}">
 									<ChildrenList>
 										<Action Name="" ID="{8B06710C-5FD2-4D74-BE36-7DEA59AAC0B3}" ShortID="329720366">
+											<PropertyList>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">
 													<ObjectRef Name="Music_step_1" ID="{61327358-5330-49D8-AAAB-75F3FDA92148}" WorkUnitID="{ECB9F611-BAF2-4465-B158-455396583878}"/>
@@ -323,6 +331,7 @@
 											<PropertyList>
 												<Property Name="ActionType" Type="int16" Value="2"/>
 												<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">
@@ -342,6 +351,7 @@
 											<PropertyList>
 												<Property Name="ActionType" Type="int16" Value="2"/>
 												<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">
@@ -356,6 +366,7 @@
 										<Action Name="" ID="{D1D81A2B-27AF-442E-BACD-12F462D49F0C}" ShortID="823256623">
 											<PropertyList>
 												<Property Name="FadeInCurve" Type="int16" Value="1"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">
@@ -374,6 +385,7 @@
 										<Action Name="" ID="{92FF9264-FE3A-4CEB-B02E-4F02FF2F051F}" ShortID="597661852">
 											<PropertyList>
 												<Property Name="FadeInCurve" Type="int16" Value="1"/>
+												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">
@@ -389,6 +401,7 @@
 											<PropertyList>
 												<Property Name="ActionType" Type="int16" Value="2"/>
 												<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+												<Property Name="FadeTime" Type="Real64" Value="3"/>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Target">

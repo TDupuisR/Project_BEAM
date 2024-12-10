@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3135703418	Play_MC_DashP2_V2			\Default Work Unit\FOLEY\Dash\Play_MC_DashP2_V2	
+

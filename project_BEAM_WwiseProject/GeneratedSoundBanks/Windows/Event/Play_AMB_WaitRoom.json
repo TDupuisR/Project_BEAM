@@ -1,0 +1,46 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "3997673715",
+    "Type": "Event",
+    "GUID": "{E8B717EE-0EC4-4ACE-AD19-E8C0EA120E06}",
+    "Language": "SFX",
+    "Hash": "{74D61BBB-105F-D8E1-7446-21977675933B}",
+    "ObjectPath": "Play_AMB_WaitRoom",
+    "ShortName": "Play_AMB_WaitRoom",
+    "Path": "Event/Play_AMB_WaitRoom.bnk",
+    "Media": [
+     {
+      "Id": "1004850950",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "AMB\\AMB_WaitRoom.wav",
+      "Path": "Media/1004850950.wem",
+      "CachePath": "0E/{0E08F604-3A94-0E3D-66CD-A6219D3C183D}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3997673715",
+      "Name": "Play_AMB_WaitRoom",
+      "ObjectPath": "\\Events\\Default Work Unit\\AMB\\Play_AMB_WaitRoom",
+      "GUID": "{E8B717EE-0EC4-4ACE-AD19-E8C0EA120E06}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "1004850950"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{829C3251-3F9E-3422-4798-1E7632EB3169}"
+ }
+}

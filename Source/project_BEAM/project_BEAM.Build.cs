@@ -8,6 +8,6 @@ public class project_BEAM : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "LocalMultiplayer", "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[] { "LocalMultiplayer", "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "AkAudio" });
 	}
 }
