@@ -43,8 +43,7 @@ void UWeaponCharge::StartWeaponCharge()
 	
 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 
-	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeCamera(power + 1);
-
+	ShakeCameraWithPower();
 
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("QTE start")));
 }
@@ -89,6 +88,47 @@ float UWeaponCharge::GetQteTimeStamp() const
 	else return qteTimeStamp[power];
 }
 
+void UWeaponCharge::ShakeCameraWithPower()
+{
+	float shakeForce = 2;
+	float shakeSpeed = 10;
+
+	switch (power)
+	{
+	case 0:
+		shakeForce = projectileSettings->shakeForce_0;
+		break;
+	case 1:
+		shakeForce = projectileSettings->shakeForce_1;
+		break;
+	case 2:
+		shakeForce = projectileSettings->shakeForce_2;
+		break;
+	case 3:
+		shakeForce = projectileSettings->shakeForce_3;
+		break;
+	}
+
+	switch (power)
+	{
+	case 0:
+		shakeSpeed = projectileSettings->shakeSpeed_0;
+		break;
+	case 1:
+		shakeSpeed = projectileSettings->shakeSpeed_1;
+		break;
+	case 2:
+		shakeSpeed = projectileSettings->shakeSpeed_2;
+		break;
+	case 3:
+		shakeSpeed = projectileSettings->shakeSpeed_3;
+		break;
+	}
+
+	GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeCamera(shakeForce, shakeSpeed);
+
+}
+
 // Called every frame
 void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -116,43 +156,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 						//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
 						Character->PassQte(Character);
 						
-						float shakeForce = 2;
-						float shakeSpeed = 10;
-
-						switch (power)
-						{
-						case 0:
-							shakeForce = projectileSettings->shakeForce_0;
-							break;
-						case 1:
-							shakeForce = projectileSettings->shakeForce_1;
-							break;
-						case 2:
-							shakeForce = projectileSettings->shakeForce_2;
-							break;
-						case 3:
-							shakeForce = projectileSettings->shakeForce_3;
-							break;
-						}
-
-						switch (power)
-						{
-						case 0:
-							shakeSpeed = projectileSettings->shakeSpeed_0;
-							break;
-						case 1:
-							shakeSpeed = projectileSettings->shakeSpeed_1;
-							break;
-						case 2:
-							shakeSpeed = projectileSettings->shakeSpeed_2;
-							break;
-						case 3:
-							shakeSpeed = projectileSettings->shakeSpeed_3;
-							break;
-						}
-
-						GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeCamera(shakeForce, shakeSpeed);
-
+						ShakeCameraWithPower();
 					}
 					else // if QTE Fail
 					{
@@ -192,43 +196,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 						//GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Cyan, FString::Printf(TEXT("QTE success to power: %d "), power));
 						Character->PassQte(Character);
 
-						float shakeForce = 2;
-						float shakeSpeed = 10;
-
-						switch (power)
-						{
-						case 0:
-							shakeForce = projectileSettings->shakeForce_0;
-							break;
-						case 1:
-							shakeForce = projectileSettings->shakeForce_1;
-							break;
-						case 2:
-							shakeForce = projectileSettings->shakeForce_2;
-							break;
-						case 3:
-							shakeForce = projectileSettings->shakeForce_3;
-							break;
-						}
-
-						switch (power)
-						{
-						case 0:
-							shakeSpeed = projectileSettings->shakeSpeed_0;
-							break;
-						case 1:
-							shakeSpeed = projectileSettings->shakeSpeed_1;
-							break;
-						case 2:
-							shakeSpeed = projectileSettings->shakeSpeed_2;
-							break;
-						case 3:
-							shakeSpeed = projectileSettings->shakeSpeed_3;
-							break;
-						}
-
-						GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeCamera(shakeForce, shakeSpeed);
-
+						ShakeCameraWithPower();
 
 					}
 					else // if QTE Fail
