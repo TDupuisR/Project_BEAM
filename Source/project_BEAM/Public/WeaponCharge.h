@@ -9,6 +9,7 @@
 class ABeamCharacter;
 class UPlayerAim;
 class UProjectileSettings;
+class UAkAudioEvent;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class PROJECT_BEAM_API UWeaponCharge : public UActorComponent
@@ -51,7 +52,10 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> FailQTETimeOverSound;
+
 private:
 	UPROPERTY(EditAnywhere)
 	float qteMaxTime;

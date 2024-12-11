@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1927109637	Play_SFX_Mvt_Projection__Plus			\Default Work Unit\SFX\Movement\Play_SFX_Mvt_Projection__Plus	
+

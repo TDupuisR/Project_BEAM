@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1411353687	Play_SFX_Gun_Shoot0_Plus			\Default Work Unit\SFX\Gun\Play_SFX_Gun_Shoot0_Plus	
+

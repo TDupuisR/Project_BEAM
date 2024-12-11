@@ -438,7 +438,7 @@ void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFoll
 	timer = 0;
 	timerMax = Seconds;
 	posToFollow = PosToFollow;
-	cameraMode = ECameraMode::Follow;
+	//cameraMode = ECameraMode::Follow;
 	cameraMode = ECameraMode::Cinematic;
 	posToFollowStart = ArenaCamera->GetActorLocation();
 	isReverse = false;
@@ -453,7 +453,7 @@ void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFoll
 	cameraSpeed = CameraSpeed;
 	timer = 0;
 	posToFollow = PosToFollow;
-	cameraMode = ECameraMode::Follow;
+	//cameraMode = ECameraMode::Follow;
 	cameraMode = ECameraMode::Cinematic;
 	isReverse = false;
 	isReversing = false;
@@ -465,7 +465,7 @@ void UCameraWorldSubsystem::Cinematic(float CameraSpeed, FVector PosToFollow)
 	cameraSpeed = CameraSpeed;
 	timer = 0;
 	posToFollow = PosToFollow;
-	cameraMode = ECameraMode::Follow;
+	//cameraMode = ECameraMode::Follow;
 	cameraMode = ECameraMode::Cinematic;
 	isReverse = false;
 	isReversing = false;

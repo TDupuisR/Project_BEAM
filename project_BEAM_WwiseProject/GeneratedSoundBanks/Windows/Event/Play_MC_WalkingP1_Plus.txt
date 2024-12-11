@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	316869582	Play_MC_WalkingP1_Plus			\Default Work Unit\FOLEY\Walk\Play_MC_WalkingP1_Plus	
+

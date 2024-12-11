@@ -10,19 +10,37 @@
     "Type": "Event",
     "GUID": "{FAC799BE-0E16-4694-A9B2-1145A01FD543}",
     "Language": "SFX",
-    "Hash": "{97B07AC2-AFED-0A3E-D7AB-88D56E82B15B}",
+    "Hash": "{6DCDDA14-9921-AA1D-276C-467593E65269}",
     "ObjectPath": "Play_Music_step_2",
     "ShortName": "Play_Music_step_2",
     "Path": "Event/Play_Music_step_2.bnk",
     "Media": [
      {
-      "Id": "227594220",
+      "Id": "743034541",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Loose",
-      "ShortName": "Music_F_Step2.wav",
-      "Path": "Media/227594220.wem",
-      "CachePath": "DB/{DB59D8DC-87FC-B2EF-E33F-83026C43AF20}.wem"
+      "ShortName": "Music_F_Step2_LP.wav",
+      "Path": "Media/743034541.wem",
+      "CachePath": "10/{10BB9141-51E9-419B-883E-6507066862BA}.wem"
+     },
+     {
+      "Id": "919337049",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Music_F_Step2_OneShot.wav",
+      "Path": "Media/919337049.wem",
+      "CachePath": "72/{7292DE9C-B12A-A338-8BE1-7C4D276DBED7}.wem"
+     },
+     {
+      "Id": "1019066443",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Music_F_Transi.wav",
+      "Path": "Media/1019066443.wem",
+      "CachePath": "EC/{EC2D8F32-0B93-1BEA-F03F-1084933AA894}.wem"
      }
     ],
     "Events": [
@@ -31,18 +49,22 @@
       "Name": "Play_Music_step_2",
       "ObjectPath": "\\Events\\Default Work Unit\\MUSIC\\Step2\\Play_Music_step_2",
       "GUID": "{FAC799BE-0E16-4694-A9B2-1145A01FD543}",
-      "DurationType": "Mixed",
-      "DurationMin": "5",
-      "DurationMax": "Infinite",
+      "DurationType": "Infinite",
       "MediaRefs": [
        {
-        "Id": "227594220"
+        "Id": "743034541"
+       },
+       {
+        "Id": "919337049"
+       },
+       {
+        "Id": "1019066443"
        }
       ]
      }
     ]
    }
   ],
-  "FileHash": "{65B59AC7-7B3B-76AE-E882-067DBC7370E5}"
+  "FileHash": "{66F844F9-1D77-C916-DA02-FF2FB5A36841}"
  }
 }

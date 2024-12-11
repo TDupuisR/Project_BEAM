@@ -9,6 +9,8 @@
 #include <Camera/CameraWorldSubsystem.h>
 #include "ProjectileSettings.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
 
 // Sets default values for this component's properties
 UWeaponCharge::UWeaponCharge()
@@ -225,6 +227,15 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		{
 			CancelWeaponCharge(false);
 			chargeWasPushed = false;
+
+			const FOnAkPostEventCallback nullCallback;
+			UAkGameplayStatics::PostEvent(
+					FailQTETimeOverSound,
+					Character,
+					0,
+					nullCallback,
+					false
+			);
 		}
 	}
 }

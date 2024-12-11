@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2603707971	Play_MC_Slide_Plus			\Default Work Unit\FOLEY\Slide\Play_MC_Slide_Plus	
+

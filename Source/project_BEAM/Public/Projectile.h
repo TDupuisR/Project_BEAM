@@ -5,7 +5,7 @@
 #include "ProjectileSettings.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "CollisionQueryParams.h"
+
 #include "Engine/World.h"
 #include "Components/CapsuleComponent.h"
 #include "Projectile.generated.h"
