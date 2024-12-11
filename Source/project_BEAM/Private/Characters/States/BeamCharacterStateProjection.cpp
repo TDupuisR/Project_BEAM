@@ -29,6 +29,8 @@ void UBeamCharacterStateProjection::StateEnter(EBeamCharacterStateID PreviousSta
 		FColor::Blue,
 		FString::Printf(TEXT("Enter State %d"), GetStateID())
 	);
+
+	Character->ChangeColorToWhite();
 }
 
 void UBeamCharacterStateProjection::StateExit(EBeamCharacterStateID NextStateID)
@@ -44,6 +46,8 @@ void UBeamCharacterStateProjection::StateExit(EBeamCharacterStateID NextStateID)
 		FColor::Blue,
 		FString::Printf(TEXT("Exit State %d"), GetStateID())
 	);
+
+	Character->ChangeColorToNormal();
 }
 
 void UBeamCharacterStateProjection::StateTick(float DeltaTime)
