@@ -5,51 +5,12 @@
 			<ChildrenList>
 				<Folder Name="AMB" ID="{B7DF2A8D-19A2-4F76-B468-0985D62E9FCA}" ShortID="347534278">
 					<ChildrenList>
-						<Event Name="Play_AMB_Arena_Crowd" ID="{1C5C5E7A-AAB4-44F8-B886-C6EB1208A3FB}">
+						<Event Name="Play_AMB_Arena_Crowd_Loop" ID="{1C5C5E7A-AAB4-44F8-B886-C6EB1208A3FB}">
 							<ChildrenList>
 								<Action Name="" ID="{32855C47-5793-4825-81B5-5C9A27AFFCC7}" ShortID="663636641">
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="AMB_Arena_Crowd" ID="{734D0648-C759-4A0A-9164-851FE9D5E6FB}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-							</ChildrenList>
-						</Event>
-						<Event Name="Play_AMB_Arena_Exclamation" ID="{4A4FBFFA-824F-4459-9290-D63F0298C75F}">
-							<ChildrenList>
-								<Action Name="" ID="{BAB9D6AE-C3BC-4B2E-B952-35D4560C3B1D}" ShortID="41120818">
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="AMB_Arena_Exclamation_01" ID="{B38D0044-C7DE-4095-8057-1443357B5423}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-								<Action Name="" ID="{EFDCD7F8-F693-4E1B-8E27-E84A1A49282F}" ShortID="619519007">
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="AMB_Arena_Exclamation_02" ID="{647E34D1-2CD8-4A06-B609-3370441F3A84}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-								<Action Name="" ID="{D9CD78A3-60A3-4CD4-935A-1397E698C96E}" ShortID="1027633217">
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="AMB_Arena_Exclamation_03" ID="{027A5EA3-42FD-4B4F-8392-FAD7D40DD80D}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-								<Action Name="" ID="{5BD78DA3-2231-4904-BA13-E1C9D71BD8C0}" ShortID="798896600">
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="AMB_Arena_Exclamation_04" ID="{9CF53F8A-4C27-4063-ADBD-5FD2B0CC0E40}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-								<Action Name="" ID="{491533A4-278D-4EC8-972E-D0513647A54A}" ShortID="447320541">
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="AMB_Arena_Exclamation_05" ID="{AC19F03B-91C3-4828-BDB8-F202DCD42004}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -66,7 +27,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Stop_AMB_Arena_Crowd" ID="{C5DA5604-C90C-4439-83BA-FE4A48DA72D1}">
+						<Event Name="Stop_AMB_Arena_Crowd_Loop" ID="{C5DA5604-C90C-4439-83BA-FE4A48DA72D1}">
 							<ChildrenList>
 								<Action Name="" ID="{C1FB6D4C-BE21-4F36-B08B-4A955CBCC70F}" ShortID="22285533">
 									<PropertyList>
@@ -82,7 +43,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_AMB_Futuristic_Town" ID="{F9B5E967-292E-4FA7-BB41-F8B01C6AF833}">
+						<Event Name="Play_AMB_Futuristic_Town_Loop" ID="{F9B5E967-292E-4FA7-BB41-F8B01C6AF833}">
 							<ChildrenList>
 								<Action Name="" ID="{1349695F-C2B5-48EA-B56E-A8E2975BB012}" ShortID="591888971">
 									<ReferenceList>
@@ -93,7 +54,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Stop_AMB_Futuristic_Town" ID="{7DADBED7-A0E2-49C2-8270-EE415880EAA6}">
+						<Event Name="Stop_AMB_Futuristic_Town_Loop" ID="{7DADBED7-A0E2-49C2-8270-EE415880EAA6}">
 							<ChildrenList>
 								<Action Name="" ID="{8F970030-5245-4194-A5C7-4D10D3788988}" ShortID="386904326">
 									<PropertyList>
@@ -109,7 +70,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Stop_AMB_WaitRoom" ID="{AB30D5A1-07FA-4425-B1DA-5FE115BC1EFA}">
+						<Event Name="Stop_AMB_WaitRoom_Loop" ID="{AB30D5A1-07FA-4425-B1DA-5FE115BC1EFA}">
 							<ChildrenList>
 								<Action Name="" ID="{4DBD0FB3-7410-4D39-A34E-440E139BECCB}" ShortID="320672151">
 									<PropertyList>
@@ -125,12 +86,23 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_AMB_WaitRoom" ID="{E8B717EE-0EC4-4ACE-AD19-E8C0EA120E06}">
+						<Event Name="Play_AMB_WaitRoom_Loop" ID="{E8B717EE-0EC4-4ACE-AD19-E8C0EA120E06}">
 							<ChildrenList>
 								<Action Name="" ID="{4E8EEBC0-A9A7-474A-8C8F-DC1111FE96E6}" ShortID="467707898">
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="AMB_WaitRoom" ID="{7B969551-161D-4DC8-9ADD-41345CBACFB9}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_AMB_Arena_Exclamation_Plus" ID="{7F99C6F7-F51C-4692-BACB-017045E9CA29}">
+							<ChildrenList>
+								<Action Name="" ID="{A600BED3-90C4-421F-9E3B-2EEA3EC1E9C1}" ShortID="17919013">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="AMB_Arena_Exclamation_Random" ID="{B0B8317A-15A5-4389-8F6E-FDAEAE7562BC}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -142,7 +114,7 @@
 					<ChildrenList>
 						<Folder Name="Walk" ID="{3B3056BC-CEF1-489D-8128-DD02C4C3DFFA}" ShortID="441634554">
 							<ChildrenList>
-								<Event Name="Play_MC_WalkingP2" ID="{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}">
+								<Event Name="Play_MC_WalkingP2_Plus" ID="{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}">
 									<ChildrenList>
 										<Action Name="" ID="{9203FAAE-0B72-4910-AE59-93FE4E48BD33}" ShortID="420329469">
 											<ReferenceList>
@@ -153,7 +125,7 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="Play_MC_WalkingP1" ID="{B4D41988-E39B-4437-84E4-CDA2E102BD59}">
+								<Event Name="Play_MC_WalkingP1_Plus" ID="{B4D41988-E39B-4437-84E4-CDA2E102BD59}">
 									<ChildrenList>
 										<Action Name="" ID="{7717D2CB-81DF-4348-84B0-7BA99548AFBE}" ShortID="26853859">
 											<ReferenceList>
@@ -168,7 +140,7 @@
 						</Folder>
 						<Folder Name="Slide" ID="{B645D61B-E013-49A8-A1E1-28D2A35A6755}" ShortID="1016540942">
 							<ChildrenList>
-								<Event Name="Play_MC_Slide" ID="{35FEA141-D00A-4765-A5CD-BC0E617ECD2D}">
+								<Event Name="Play_MC_Slide_Plus" ID="{35FEA141-D00A-4765-A5CD-BC0E617ECD2D}">
 									<ChildrenList>
 										<Action Name="" ID="{D202DA91-78B0-4378-AE62-82706D4192D2}" ShortID="119863560">
 											<ReferenceList>
@@ -183,7 +155,7 @@
 						</Folder>
 						<Folder Name="Land" ID="{C5551C92-934E-494E-B462-1B4A2CFFB01B}" ShortID="30295329">
 							<ChildrenList>
-								<Event Name="Play_MC_Land" ID="{40B14DF2-E267-487E-8670-52ABBAD80292}">
+								<Event Name="Play_MC_Land_Plus" ID="{40B14DF2-E267-487E-8670-52ABBAD80292}">
 									<ChildrenList>
 										<Action Name="" ID="{A2E48F55-8C39-4B40-B3DC-996F6BE2D709}" ShortID="898856368">
 											<ReferenceList>
@@ -198,7 +170,7 @@
 						</Folder>
 						<Folder Name="Jump" ID="{5E7483F9-E3A2-4405-99D9-814A71D2712B}" ShortID="855858205">
 							<ChildrenList>
-								<Event Name="Play_MC_Jump" ID="{A0CE6AAD-0908-44F8-84CC-B2A47E068C20}">
+								<Event Name="Play_MC_Jump_Plus" ID="{A0CE6AAD-0908-44F8-84CC-B2A47E068C20}">
 									<ChildrenList>
 										<Action Name="" ID="{2FD66107-5648-4AA0-A004-59593D6656F7}" ShortID="803072964">
 											<ReferenceList>
@@ -213,7 +185,7 @@
 						</Folder>
 						<Folder Name="Dash" ID="{C559B4F7-BE98-4B47-ACDF-8F54E9763BD0}" ShortID="145689068">
 							<ChildrenList>
-								<Event Name="Play_MC_DashP2_V2" ID="{2ED731B0-8A7E-4B46-9EB6-4C8608C6C84C}">
+								<Event Name="Play_MC_DashP2_V2_Plus" ID="{2ED731B0-8A7E-4B46-9EB6-4C8608C6C84C}">
 									<ChildrenList>
 										<Action Name="" ID="{F8DB0C9A-2AF1-4CCD-A61E-A3472DC8CF00}" ShortID="303479702">
 											<ReferenceList>
@@ -228,7 +200,7 @@
 						</Folder>
 						<Folder Name="Contact Boundaries" ID="{E4A3A597-1693-43FF-ABCE-DF8E292351E3}" ShortID="164419006">
 							<ChildrenList>
-								<Event Name="Play_MC_ContactBoundary" ID="{378CDF8C-7387-402D-AF93-E5A44819EF30}">
+								<Event Name="Play_MC_ContactBoundary_Plus" ID="{378CDF8C-7387-402D-AF93-E5A44819EF30}">
 									<ChildrenList>
 										<Action Name="" ID="{E6D1A934-F1F8-409B-8BED-518DA8DFAC5B}" ShortID="442003280">
 											<ReferenceList>
@@ -243,7 +215,7 @@
 						</Folder>
 						<Folder Name="Change Phase" ID="{93219AA9-E0E5-4768-84BB-62756569933A}" ShortID="1001091064">
 							<ChildrenList>
-								<Event Name="Play_MC_ChangePhase_Random" ID="{A7D45B8A-941F-42E8-BBE4-3DF5545E3057}">
+								<Event Name="Play_MC_ChangePhase_Plus" ID="{A7D45B8A-941F-42E8-BBE4-3DF5545E3057}">
 									<ChildrenList>
 										<Action Name="" ID="{AE9C3562-193A-470A-829F-B907CD15820D}" ShortID="1023397482">
 											<ReferenceList>
@@ -258,7 +230,7 @@
 						</Folder>
 						<Folder Name="Bounce" ID="{DF60CA46-AA10-43F8-BAD8-C390844EC551}" ShortID="457372757">
 							<ChildrenList>
-								<Event Name="Play_MC_BounceP2_Random" ID="{0E588A7D-02D7-4695-8FDF-7A62E6A7F599}">
+								<Event Name="Play_MC_BounceP2_Plus" ID="{0E588A7D-02D7-4695-8FDF-7A62E6A7F599}">
 									<ChildrenList>
 										<Action Name="" ID="{ADD8059C-F174-455B-8F3E-287D1DB0EEA6}" ShortID="946090189">
 											<ReferenceList>
@@ -282,6 +254,7 @@
 										<Action Name="" ID="{017A8D70-7AEC-4F51-8A22-615A52037306}" ShortID="41819020">
 											<PropertyList>
 												<Property Name="ActionType" Type="int16" Value="2"/>
+												<Property Name="FadeOutCurve" Type="int16" Value="1"/>
 												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
@@ -296,7 +269,7 @@
 									<ChildrenList>
 										<Action Name="" ID="{32AE987B-214F-484A-B6FD-D6D1F96090B3}" ShortID="910651915">
 											<PropertyList>
-												<Property Name="FadeInCurve" Type="int16" Value="0"/>
+												<Property Name="FadeInCurve" Type="int16" Value="1"/>
 												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
@@ -315,6 +288,7 @@
 									<ChildrenList>
 										<Action Name="" ID="{8B06710C-5FD2-4D74-BE36-7DEA59AAC0B3}" ShortID="329720366">
 											<PropertyList>
+												<Property Name="FadeInCurve" Type="int16" Value="1"/>
 												<Property Name="FadeTime" Type="Real64" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
@@ -515,7 +489,7 @@
 						</Folder>
 						<Folder Name="Movement" ID="{B7998332-8AF9-4705-9E4C-F7CAFFAC4478}" ShortID="442361618">
 							<ChildrenList>
-								<Event Name="Play_SFX_Mvt_Projection" ID="{9478730F-D52E-4868-A813-7677484B6133}">
+								<Event Name="Play_SFX_Mvt_Projection__Plus" ID="{9478730F-D52E-4868-A813-7677484B6133}">
 									<ChildrenList>
 										<Action Name="" ID="{D7CB5CE6-4531-400B-976F-440330206DCC}" ShortID="419234579">
 											<ReferenceList>
@@ -530,7 +504,7 @@
 						</Folder>
 						<Folder Name="Destruction" ID="{C7F51CF5-04CB-410C-8E3E-E8EF6AC93837}" ShortID="584106757">
 							<ChildrenList>
-								<Event Name="Play_SFX_BlockDestroy_Metal" ID="{53B62B5B-5EB2-4BBA-ADF3-A6EAD9863F29}">
+								<Event Name="Play_SFX_BlockDestroy_Metal_Plus" ID="{53B62B5B-5EB2-4BBA-ADF3-A6EAD9863F29}">
 									<ChildrenList>
 										<Action Name="" ID="{A4A9D036-3067-476F-8051-8061E585AECB}" ShortID="461321965">
 											<ReferenceList>
@@ -541,7 +515,7 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="Play_SFX_BlockDestroy_Brique" ID="{0291D796-977F-489F-953D-AA4D86FCC0AC}">
+								<Event Name="Play_SFX_BlockDestroy_Brique_Plus" ID="{0291D796-977F-489F-953D-AA4D86FCC0AC}">
 									<ChildrenList>
 										<Action Name="" ID="{9AD77D01-EDF5-4079-A72B-6000ED086235}" ShortID="424693664">
 											<ReferenceList>
@@ -552,7 +526,7 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="Play_SFX_BlockDestroy_Boundary02" ID="{4F0DC06D-BB49-499B-B881-758570A736AE}">
+								<Event Name="Play_SFX_BlockDestroy_Boundary02_Plus" ID="{4F0DC06D-BB49-499B-B881-758570A736AE}">
 									<ChildrenList>
 										<Action Name="" ID="{A00CE2BC-88CE-45F2-9025-88778998CD64}" ShortID="1020560614">
 											<ReferenceList>
@@ -563,7 +537,7 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="Play_SFX_BlockDestroy_Boundary00" ID="{09ECA663-3E40-433B-95F5-6FEFBFC5C768}">
+								<Event Name="Play_SFX_BlockDestroy_Boundary00_Plus" ID="{09ECA663-3E40-433B-95F5-6FEFBFC5C768}">
 									<ChildrenList>
 										<Action Name="" ID="{2F79CCDD-6D1A-4BD9-B50A-6DDA474E2178}" ShortID="642405175">
 											<ReferenceList>
@@ -574,7 +548,7 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="Play_SFX_BlockDestroy_Boundary01" ID="{AED51F53-0832-46CA-8F3B-B0688C258599}">
+								<Event Name="Play_SFX_BlockDestroy_Boundary01_Plus" ID="{AED51F53-0832-46CA-8F3B-B0688C258599}">
 									<ChildrenList>
 										<Action Name="" ID="{25EF1A84-CE3D-4860-8F95-2A597BC78BF7}" ShortID="870667187">
 											<ReferenceList>
@@ -648,7 +622,7 @@
 						</Folder>
 						<Folder Name="Gun" ID="{769CF972-8B78-4CEC-89A1-F8F66BCB41AD}" ShortID="788083822">
 							<ChildrenList>
-								<Event Name="Play_SFX_Gun_Shoot1" ID="{0499ED16-9355-4F94-A5C4-986188284A16}">
+								<Event Name="Play_SFX_Gun_Shoot1_Plus" ID="{0499ED16-9355-4F94-A5C4-986188284A16}">
 									<ChildrenList>
 										<Action Name="" ID="{FEC223BC-42F3-4240-A560-D0A6AF1CA781}" ShortID="779636362">
 											<ReferenceList>
@@ -659,7 +633,7 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="Play_SFX_Gun_Shoot2" ID="{9119CA09-D1FA-4D4A-83EE-6DB6BE405B2F}">
+								<Event Name="Play_SFX_Gun_Shoot2_Plus" ID="{9119CA09-D1FA-4D4A-83EE-6DB6BE405B2F}">
 									<ChildrenList>
 										<Action Name="" ID="{F931D321-75DE-4435-8FEE-A01715E7DEC5}" ShortID="694206750">
 											<ReferenceList>
@@ -681,7 +655,7 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="Play_SFX_Gun_Shoot0" ID="{6648FD5E-8431-4F9C-9FE2-D701B8CF4626}">
+								<Event Name="Play_SFX_Gun_Shoot0_Plus" ID="{6648FD5E-8431-4F9C-9FE2-D701B8CF4626}">
 									<ChildrenList>
 										<Action Name="" ID="{13C11E39-2B13-46CE-9B82-03F88F9F6475}" ShortID="209453495">
 											<ReferenceList>
@@ -731,7 +705,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_UI_MainMenu_Button_Validation" ID="{8ED52A03-F235-455E-91FA-7811C408FD7C}">
+						<Event Name="Play_UI_MainMenu_Button_Validation_Plus" ID="{8ED52A03-F235-455E-91FA-7811C408FD7C}">
 							<ChildrenList>
 								<Action Name="" ID="{8300AD9C-8403-4D8D-A75E-820EAE87D6B3}" ShortID="236659485">
 									<ReferenceList>
@@ -742,7 +716,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_UI_MainMenu_Button_Back" ID="{022A71C8-E52A-491B-87E7-5AE87FC7AA72}">
+						<Event Name="Play_UI_MainMenu_Button_Back_Plus" ID="{022A71C8-E52A-491B-87E7-5AE87FC7AA72}">
 							<ChildrenList>
 								<Action Name="" ID="{4AD5C237-1F3A-4285-9798-A54259FEACCC}" ShortID="874419386">
 									<ReferenceList>
@@ -779,7 +753,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_VOC_RoundStart" ID="{87223A71-F95E-4982-8C7E-53618E772D5B}">
+						<Event Name="Play_VOC_RoundStart_Plus" ID="{87223A71-F95E-4982-8C7E-53618E772D5B}">
 							<ChildrenList>
 								<Action Name="" ID="{2C4123E1-2186-40BB-902C-168B49B95755}" ShortID="826880567">
 									<ReferenceList>
@@ -790,7 +764,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_VOC_RoundEnd" ID="{7A49D5F4-F008-49E9-B34F-6606C0C1FECB}">
+						<Event Name="Play_VOC_RoundEnd_Plus" ID="{7A49D5F4-F008-49E9-B34F-6606C0C1FECB}">
 							<ChildrenList>
 								<Action Name="" ID="{1950EE3D-BB0C-4E89-8667-1E56689BAED3}" ShortID="724347750">
 									<ReferenceList>
@@ -801,7 +775,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_VOC_Push_Woman" ID="{4F9C65DD-4B26-4BE3-89ED-77DC24E16D9D}">
+						<Event Name="Play_VOC_Push_Woman_Plus" ID="{4F9C65DD-4B26-4BE3-89ED-77DC24E16D9D}">
 							<ChildrenList>
 								<Action Name="" ID="{92CAC726-C328-47BC-9DF7-DAEC44C1AEDD}" ShortID="908612342">
 									<ReferenceList>
@@ -812,7 +786,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_VOC_Push_Man" ID="{4F11DE37-18C2-40C8-ADCB-FCBB3F02E8B7}">
+						<Event Name="Play_VOC_Push_Man_Plus" ID="{4F11DE37-18C2-40C8-ADCB-FCBB3F02E8B7}">
 							<ChildrenList>
 								<Action Name="" ID="{7D906C45-825D-466F-BBC5-94F2D53D0EC2}" ShortID="646846107">
 									<ReferenceList>
@@ -823,7 +797,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_VOC_Playerhit_Woman" ID="{65507F87-B9A3-450D-8E07-E2861A0234BF}">
+						<Event Name="Play_VOC_Playerhit_Woman_Plus" ID="{65507F87-B9A3-450D-8E07-E2861A0234BF}">
 							<ChildrenList>
 								<Action Name="" ID="{66DEC475-8A59-46C2-A3B5-03463BC1C44C}" ShortID="1027278652">
 									<ReferenceList>
@@ -834,7 +808,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_VOC_PlayerHit_Man" ID="{04084978-4A4C-4206-A8A5-2F5944782D91}">
+						<Event Name="Play_VOC_PlayerHit_Man_Plus" ID="{04084978-4A4C-4206-A8A5-2F5944782D91}">
 							<ChildrenList>
 								<Action Name="" ID="{1811F4A1-D40C-4E06-AB24-1052C47177C8}" ShortID="273512427">
 									<ReferenceList>
