@@ -25,12 +25,12 @@ bool ADestructibleWall::ProjectileContext(int power, FVector position)
 {
 	if (power < resistance)
 		return true;
-	else if (power == resistance)
-	{
-		GetDestroyed();
-		return true;
-	}
-	else if (power > resistance)
+	// else if (power == resistance)
+	// {
+	// 	GetDestroyed();
+	// 	return true;
+	// }
+	else if (power >= resistance)
 	{
 		GetDestroyed();
 		return false;

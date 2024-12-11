@@ -10,6 +10,8 @@
 
 #include "Characters/BeamCharacterSettings.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
 
 
 EBeamCharacterStateID UBeamCharacterStateJump::GetStateID()
@@ -32,6 +34,15 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 	}
 
 	FirstFrame = true;
+
+	const FOnAkPostEventCallback nullCallback;
+	UAkGameplayStatics::PostEvent(
+			JumpingSound,
+			Character,
+			0,
+			nullCallback,
+			false
+	);
 	
 	GEngine->AddOnScreenDebugMessage(
 		-1,

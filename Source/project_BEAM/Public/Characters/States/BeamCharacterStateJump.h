@@ -6,6 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateJump.generated.h"
 
+class UAkAudioEvent;
 
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateJump : public UBeamCharacterState
@@ -20,7 +21,10 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
-
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> JumpingSound;
+	
 private:
 	UPROPERTY() bool FirstFrame = true;
 

@@ -8,6 +8,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Characters/BeamCharacterSettings.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
+
 
 EBeamCharacterStateID UBeamCharacterStateFlying::GetStateID()
 {
@@ -90,6 +93,15 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		canDash = false;
 		canMove = false;
 
+		const FOnAkPostEventCallback nullCallback;
+		UAkGameplayStatics::PostEvent(
+				DashSound,
+				Character,
+				0,
+				nullCallback,
+				false
+		);
+		
 		GEngine->AddOnScreenDebugMessage(
 			-1,
 			2.0f,

@@ -8,6 +8,9 @@
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
+
 
 EBeamCharacterStateID UBeamCharacterStateFall::GetStateID()
 {
@@ -109,6 +112,15 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 		// 	FString::Printf(TEXT("%f"), ZVelocity)
 		// );	
 
+		const FOnAkPostEventCallback nullCallback;
+		UAkGameplayStatics::PostEvent(
+				LandingSound,
+				Character,
+				0,
+				nullCallback,
+				false
+		);
+		
 		if (Character->GetCharacterSettings()->MinVelocityZStunFall < FMath::Abs(ZVelocity)) {
 			Character->SetStunTime((Character->GetCharacterSettings()->MultiplyerStunFall / 1000) * FMath::Abs(ZVelocity));
 			StateMachine->ChangeState(EBeamCharacterStateID::Stun);

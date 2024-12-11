@@ -6,9 +6,6 @@
 #include "Characters/BeamCharacter.h"
 #include <Camera/CameraWorldSubsystem.h>
 
-#include "AkGameplayStatics.h"
-#include "AkGameplayTypes.h"
-
 
 // Sets default values
 AProjectile::AProjectile()
@@ -60,7 +57,7 @@ void AProjectile::ReInitialisePower(int power)
 
 
 void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                 UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (actorParentName == OtherActor->GetName()) return;
 	
@@ -83,6 +80,8 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 					
 					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
 					else return;
+
+					CallForSound(ownPower);
 
 					break;
 				};
@@ -195,6 +194,7 @@ void AProjectile::InitProjectileSettings()
 
 void AProjectile::InitParameters_Implementation() {}
 void AProjectile::DestructionEffect_Implementation(int power) {}
+void AProjectile::CallForSound_Implementation(int power) {}
 
 
 

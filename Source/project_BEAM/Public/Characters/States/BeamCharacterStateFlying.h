@@ -6,6 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateFlying.generated.h"
 
+class UAkAudioEvent;
 
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateFlying : public UBeamCharacterState
@@ -23,6 +24,10 @@ public:
 
 	virtual void RedoParams() override;
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> DashSound;
+	
 private:
 
 	UPROPERTY() bool canDash = true;

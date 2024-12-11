@@ -6,6 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateFall.generated.h"
 
+class UAkAudioEvent;
 
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateFall : public UBeamCharacterState
@@ -21,6 +22,10 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> LandingSound;
+	
 # pragma region Timer
 
 private:

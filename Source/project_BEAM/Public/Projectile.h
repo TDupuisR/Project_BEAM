@@ -78,6 +78,8 @@ protected:
 	void InitParameters();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
 	void DestructionEffect(int power);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
+	void CallForSound(int power);
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UProjectileMovementComponent* projectileComponent;
@@ -101,13 +103,5 @@ protected:
 private:
 	UPROPERTY()
 	bool canAccess = true;
-
-#pragma region SoundDesign
-
-protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<UAkAudioEvent> WwiseEventTest;
-	
-#pragma endregion
 	
 };
