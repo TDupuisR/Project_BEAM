@@ -371,6 +371,8 @@ void ABeamCharacter::CheckLife()
 
 void ABeamCharacter::Push()
 {
+	WhenPush();
+
 	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
 
 	for (ABeamCharacter* player : PlayersInZone) {
@@ -379,6 +381,7 @@ void ABeamCharacter::Push()
 		player->KnockBack(direction, CharacterSettings->Push_Force, true);
 		
 	}
+
 }
 
 void ABeamCharacter::SetupCollision()
@@ -793,3 +796,4 @@ void ABeamCharacter::InitQTE_Implementation(ABeamCharacter* Character) {}
 void ABeamCharacter::GunBuildUp_Implementation() {}
 #pragma endregion
 
+void ABeamCharacter::WhenPush_Implementation() {}

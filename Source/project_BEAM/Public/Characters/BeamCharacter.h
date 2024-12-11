@@ -289,6 +289,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsStunned();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Push Player")
+	void WhenPush();
+
 private:
 
 	UPROPERTY()
