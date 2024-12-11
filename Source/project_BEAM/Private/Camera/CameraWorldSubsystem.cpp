@@ -448,7 +448,7 @@ void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFoll
 
 
 
-void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow)
+void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow, bool canRotate)
 {
 	cameraSpeed = CameraSpeed;
 	timer = 0;
@@ -456,6 +456,7 @@ void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFoll
 	actorToFollow = InActorToFollow;
 	//cameraMode = ECameraMode::Follow;
 	cameraMode = ECameraMode::Cinematic;
+	changeRotation = canRotate;
 	isReverse = false;
 	isReversing = false;
 	canReverse = false;
@@ -559,6 +560,9 @@ void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
 
 	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + 200, posToFollow.Z + 100);
 
+	if (!changeRotation) {
+		posToGet = FVector(posToFollow.X, posToFollow.Y + 200, posToFollow.Z);
+	}
 
 	if (isReverse && isReversing) {
 		FVector NewCameraPosition = CalculateAveragePositionBetweenTargets();
@@ -580,8 +584,10 @@ void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
 	}
 
 	ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, posToGet, DeltaTime, cameraSpeed));
-	ArenaCamera->SetActorRotation(FMath::RInterpTo(ArenaCamera->GetActorRotation(), lookAtRotation, DeltaTime, cameraSpeed));
-
+	
+	if (changeRotation) {
+		ArenaCamera->SetActorRotation(FMath::RInterpTo(ArenaCamera->GetActorRotation(), lookAtRotation, DeltaTime, cameraSpeed));
+	}
 
 	if (
 		posCamera.X > posToGet.X - 10 && posCamera.X < posToGet.X + 10 &&
