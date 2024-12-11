@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	2062434753	Play_SFX_BlockDestroy_Metal			\Default Work Unit\SFX\Destruction\Play_SFX_BlockDestroy_Metal	
-

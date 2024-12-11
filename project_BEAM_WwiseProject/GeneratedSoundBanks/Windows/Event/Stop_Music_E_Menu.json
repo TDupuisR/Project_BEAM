@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{7796BB6D-0CB9-489F-9EA8-81586886FA06}",
     "Language": "SFX",
-    "Hash": "{D061F18F-BC88-F584-9E6F-AA30836D4B82}",
+    "Hash": "{415D76C6-6486-2124-3CAC-7BD28C7DB4D3}",
     "ObjectPath": "Stop_Music_E_Menu",
     "ShortName": "Stop_Music_E_Menu",
     "Path": "Event/Stop_Music_E_Menu.bnk",
@@ -28,6 +28,6 @@
     ]
    }
   ],
-  "FileHash": "{04AAE18B-32EF-2D9B-37BE-841D74241547}"
+  "FileHash": "{0BFF4C49-25FC-1007-7C01-A2030B60E759}"
  }
 }

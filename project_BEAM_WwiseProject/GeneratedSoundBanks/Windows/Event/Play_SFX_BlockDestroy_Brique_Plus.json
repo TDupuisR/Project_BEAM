@@ -1,0 +1,84 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "2618613071",
+    "Type": "Event",
+    "GUID": "{0291D796-977F-489F-953D-AA4D86FCC0AC}",
+    "Language": "SFX",
+    "Hash": "{FAC978F0-34B7-8778-1B25-35E407EB058F}",
+    "ObjectPath": "Play_SFX_BlockDestroy_Brique_Plus",
+    "ShortName": "Play_SFX_BlockDestroy_Brique_Plus",
+    "Path": "Event/Play_SFX_BlockDestroy_Brique_Plus.bnk",
+    "Media": [
+     {
+      "Id": "240233209",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\DESTRUCTION\\SFX_BlockDestroy_Brique_01.wav",
+      "Path": "Media/240233209.wem",
+      "CachePath": "A3/{A3290C11-5ABB-6650-85EC-64795FDF6929}.wem"
+     },
+     {
+      "Id": "530783146",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\DESTRUCTION\\SFX_BlockDestroy_Brique_03.wav",
+      "Path": "Media/530783146.wem",
+      "CachePath": "CB/{CBADEDA9-DC4C-6405-4A10-CBE4C0002E39}.wem"
+     },
+     {
+      "Id": "967526639",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\DESTRUCTION\\SFX_BlockDestroy_Brique_04.wav",
+      "Path": "Media/967526639.wem",
+      "CachePath": "23/{231D1C8F-D00C-DCEC-A957-C4F5618B061F}.wem"
+     },
+     {
+      "Id": "1029790289",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\DESTRUCTION\\SFX_BlockDestroy_Brique_02.wav",
+      "Path": "Media/1029790289.wem",
+      "CachePath": "AD/{ADD8E8C1-0290-6B47-7AE0-E4BDDA27A92A}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2618613071",
+      "Name": "Play_SFX_BlockDestroy_Brique_Plus",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Destruction\\Play_SFX_BlockDestroy_Brique_Plus",
+      "GUID": "{0291D796-977F-489F-953D-AA4D86FCC0AC}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.32510418",
+      "DurationMax": "0.4",
+      "MediaRefs": [
+       {
+        "Id": "240233209"
+       },
+       {
+        "Id": "530783146"
+       },
+       {
+        "Id": "967526639"
+       },
+       {
+        "Id": "1029790289"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{36BB8155-4C91-8FA4-EDD9-B40052FC1FB2}"
+ }
+}
