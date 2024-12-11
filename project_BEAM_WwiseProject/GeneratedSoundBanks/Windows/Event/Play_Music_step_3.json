@@ -10,19 +10,37 @@
     "Type": "Event",
     "GUID": "{42FDA490-FB40-4388-92F4-2034E45E238D}",
     "Language": "SFX",
-    "Hash": "{C9270C76-7A49-3893-B49A-B8883037488C}",
+    "Hash": "{D956D697-E8BD-1384-6EA2-5A2A311128C8}",
     "ObjectPath": "Play_Music_step_3",
     "ShortName": "Play_Music_step_3",
     "Path": "Event/Play_Music_step_3.bnk",
     "Media": [
      {
-      "Id": "598755899",
+      "Id": "469427099",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Loose",
-      "ShortName": "Music_F_Step3.wav",
-      "Path": "Media/598755899.wem",
-      "CachePath": "91/{91C9C4ED-2D17-99A2-CF66-D08FCB82A297}.wem"
+      "ShortName": "Music_F_Step3_OneShot.wav",
+      "Path": "Media/469427099.wem",
+      "CachePath": "13/{135376AE-6C79-A463-1595-94DCC5C76B97}.wem"
+     },
+     {
+      "Id": "878067805",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Music_F_Step3_LP.wav",
+      "Path": "Media/878067805.wem",
+      "CachePath": "8A/{8AD42C4F-7224-51C3-4B9F-2B97974391BC}.wem"
+     },
+     {
+      "Id": "1019066443",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Music_F_Transi.wav",
+      "Path": "Media/1019066443.wem",
+      "CachePath": "EC/{EC2D8F32-0B93-1BEA-F03F-1084933AA894}.wem"
      }
     ],
     "Events": [
@@ -34,13 +52,19 @@
       "DurationType": "Infinite",
       "MediaRefs": [
        {
-        "Id": "598755899"
+        "Id": "469427099"
+       },
+       {
+        "Id": "878067805"
+       },
+       {
+        "Id": "1019066443"
        }
       ]
      }
     ]
    }
   ],
-  "FileHash": "{67F92F70-3A54-C305-70D5-4C5F9CAA9C71}"
+  "FileHash": "{986717A7-6AFF-9BE5-66EF-18CF271CFB8A}"
  }
 }

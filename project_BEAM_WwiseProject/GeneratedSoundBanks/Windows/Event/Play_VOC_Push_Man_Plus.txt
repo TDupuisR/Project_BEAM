@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	4180818375	Play_VOC_Push_Man_Plus			\Default Work Unit\VOICES\Play_VOC_Push_Man_Plus	
+

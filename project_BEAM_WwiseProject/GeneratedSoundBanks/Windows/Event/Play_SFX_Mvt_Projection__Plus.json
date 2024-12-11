@@ -1,0 +1,60 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1927109637",
+    "Type": "Event",
+    "GUID": "{9478730F-D52E-4868-A813-7677484B6133}",
+    "Language": "SFX",
+    "Hash": "{3522CB49-9972-3ABB-A9F7-66A91D25C67F}",
+    "ObjectPath": "Play_SFX_Mvt_Projection__Plus",
+    "ShortName": "Play_SFX_Mvt_Projection__Plus",
+    "Path": "Event/Play_SFX_Mvt_Projection__Plus.bnk",
+    "Media": [
+     {
+      "Id": "933749775",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\MOUVEMENT\\SFX_Mvt_Projection_V2.wav",
+      "Path": "Media/933749775.wem",
+      "CachePath": "E9/{E925A1F9-1A05-9EDE-FCAC-F76034C61BD1}.wem"
+     },
+     {
+      "Id": "1041468699",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "SFX\\MOUVEMENT\\SFX_Mvt_Projection_V3.wav",
+      "Path": "Media/1041468699.wem",
+      "CachePath": "8E/{8E0B4803-362E-2BF7-0AFA-9C5FB7D068DF}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1927109637",
+      "Name": "Play_SFX_Mvt_Projection__Plus",
+      "ObjectPath": "\\Events\\Default Work Unit\\SFX\\Movement\\Play_SFX_Mvt_Projection__Plus",
+      "GUID": "{9478730F-D52E-4868-A813-7677484B6133}",
+      "DurationType": "OneShot",
+      "DurationMin": "3.2546875",
+      "DurationMax": "3.2846458",
+      "MediaRefs": [
+       {
+        "Id": "933749775"
+       },
+       {
+        "Id": "1041468699"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{9FDFDD4E-10DA-E2F1-180C-C52DED2CA545}"
+ }
+}
