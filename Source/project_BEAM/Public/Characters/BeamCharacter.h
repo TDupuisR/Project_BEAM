@@ -238,6 +238,9 @@ public:
 	UFUNCTION()
 	void SetCanPush(bool NewCanPush) {canPush = NewCanPush;}
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Push Player")
+	void WhenPush();
+
 private:
 	UPROPERTY()
 	UBoxComponent* boxCollision;
@@ -289,8 +292,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsStunned();
 
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Push Player")
-	void WhenPush();
+	void ChangeColorToWhite();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Push Player")
+	void ChangeColorToNormal();
 
 private:
 

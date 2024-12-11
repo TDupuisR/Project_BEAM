@@ -797,3 +797,5 @@ void ABeamCharacter::GunBuildUp_Implementation() {}
 #pragma endregion
 
 void ABeamCharacter::WhenPush_Implementation() {}
+void ABeamCharacter::ChangeColorToWhite_Implementation() {}
+void ABeamCharacter::ChangeColorToNormal_Implementation() {}
