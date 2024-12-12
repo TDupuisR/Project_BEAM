@@ -74,6 +74,7 @@ void UCameraWorldSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
 	if (CameraMain != nullptr)
 	{
 		switch (cameraMode)
@@ -83,13 +84,16 @@ void UCameraWorldSubsystem::Tick(float DeltaTime)
 		case ECameraMode::Follow:
 			CameraFollowMode(DeltaTime);
 			TickUpdateCameraZoom(DeltaTime);
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Black, TEXT("TICK FOLLOW"));
 			break;
 
 		case ECameraMode::Cinematic:
 			CameraCinematicMode(DeltaTime);
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Black, TEXT("TICK CINEMATIC"));
 			break;
 		case ECameraMode::Free:
 			CameraFreeMode(DeltaTime);
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Black, TEXT("TICK FREE"));
 			break;
 
 		default:
@@ -415,8 +419,11 @@ void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 10
 
 void UCameraWorldSubsystem::ShakeCamera(float ForceShake, float speedCamera)
 {
+	if (cameraMode != ECameraMode::Follow) return;
+
+
 	shakeForce = ForceShake;
-	cameraMode = ECameraMode::Follow;
+	//cameraMode = ECameraMode::Follow;
 	cameraFollowMode = ECameraFollowMode::Shake;
 	isTimer = false;
 	timer = 0;
@@ -425,7 +432,9 @@ void UCameraWorldSubsystem::ShakeCamera(float ForceShake, float speedCamera)
 
 void UCameraWorldSubsystem::UnShakeCamera()
 {
-	cameraMode = ECameraMode::Follow;
+
+	if (cameraFollowMode != ECameraFollowMode::Shake && cameraMode != ECameraMode::Follow) return;
+
 	cameraFollowMode = ECameraFollowMode::Normal;
 	isTimer = false;
 	timer = 0;
