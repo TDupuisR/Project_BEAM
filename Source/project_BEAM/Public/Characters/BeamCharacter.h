@@ -19,6 +19,7 @@ class UEnhancedInputComponent;
 class UBoxComponent;
 class UPlayerAim;
 class UWeaponCharge;
+class UAkAudioEvent;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathEvent, ABeamCharacter*, pointeurCharacter);
@@ -458,6 +459,15 @@ public:
 	void GunBuildUp();
 #pragma endregion
 
+#pragma region SFX
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> HitInvulnerabilitySound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TObjectPtr<UAkAudioEvent>> HitPowerSoundList;
+	
+#pragma endregion
+	
 #pragma region Multiplayer
 
 public:

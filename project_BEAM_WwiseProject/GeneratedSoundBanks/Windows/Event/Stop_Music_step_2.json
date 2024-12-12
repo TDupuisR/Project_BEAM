@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{4DD96FD4-28CF-4E66-8833-89603F016F1D}",
     "Language": "SFX",
-    "Hash": "{3635A371-FF5E-D4C8-2C5C-CEE0DF7D0732}",
+    "Hash": "{9EF98BCD-3424-0A4B-AE0E-309B36786BE7}",
     "ObjectPath": "Stop_Music_step_2",
     "ShortName": "Stop_Music_step_2",
     "Path": "Event/Stop_Music_step_2.bnk",
@@ -28,6 +28,6 @@
     ]
    }
   ],
-  "FileHash": "{79C102B0-2564-F707-3B7F-A9112EE6E482}"
+  "FileHash": "{A421E372-2414-E904-71BE-6BBF14DA1617}"
  }
 }

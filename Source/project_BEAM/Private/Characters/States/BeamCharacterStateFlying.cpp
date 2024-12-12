@@ -127,7 +127,7 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 	}
 
 	if (canMove) {
-		Character->SetOrientX(Character->GetInputMove().X);
+		//Character->SetOrientX(Character->GetInputMove().X);
 	
 		if (Character->GetInputMove() != FVector2D::ZeroVector)
 		{

@@ -1485,6 +1485,45 @@
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="RTPC">
+											<Reference>
+												<Local>
+													<RTPC Name="" ID="{883D3E95-A340-4E1A-8BCD-DA3F31066F40}" ShortID="568192924">
+														<PropertyList>
+															<Property Name="PropertyName" Type="string" Value="Pitch"/>
+														</PropertyList>
+														<ReferenceList>
+															<Reference Name="ControlInput">
+																<ObjectRef Name="Phase2Speed" ID="{ED0136F3-43D6-4A2C-B72E-BA673F44CAB0}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+															</Reference>
+															<Reference Name="Curve">
+																<Custom>
+																	<Curve Name="" ID="{B1C31944-78DA-42B4-9CCB-D4A42BD2BFFE}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="65537"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>-1000</XPos>
+																				<YPos>-1000</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>500</XPos>
+																				<YPos>500</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</Custom>
+															</Reference>
+														</ReferenceList>
+													</RTPC>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
 									<ActiveSourceList>
 										<ActiveSource Name="MC_WalkingP2" ID="{0EE541BC-0D60-4177-A32A-55C443E72629}" Platform="Linked"/>
 									</ActiveSourceList>
@@ -1889,6 +1928,45 @@
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<Reference>
+										<Local>
+											<RTPC Name="" ID="{0B79C294-CCF4-4565-9B66-17C709B6653C}" ShortID="250839641">
+												<PropertyList>
+													<Property Name="PropertyName" Type="string" Value="Volume"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="ControlInput">
+														<ObjectRef Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+													</Reference>
+													<Reference Name="Curve">
+														<Custom>
+															<Curve Name="" ID="{D415D33C-E3E6-4455-8901-782074675A8E}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>-200</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>100</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</Custom>
+													</Reference>
+												</ReferenceList>
+											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
 							<ActiveSourceList>
 								<ActiveSource Name="Music_E_Menu" ID="{B706F2AE-4BE9-457F-A4FE-E42B3E8032A6}" Platform="Linked"/>
 							</ActiveSourceList>
@@ -1940,6 +2018,45 @@
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<Reference>
+										<Local>
+											<RTPC Name="" ID="{3D21DC6E-3C57-44A3-BDCB-6FE73250B161}" ShortID="889680259">
+												<PropertyList>
+													<Property Name="PropertyName" Type="string" Value="Volume"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="ControlInput">
+														<ObjectRef Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+													</Reference>
+													<Reference Name="Curve">
+														<Custom>
+															<Curve Name="" ID="{114F4E84-E716-4F27-8C48-1724466EA616}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>-200</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>100</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</Custom>
+													</Reference>
+												</ReferenceList>
+											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
 							<ActiveSourceList>
 								<ActiveSource Name="Music_F_Step1" ID="{741E9F3F-2541-429F-AF2A-030AB9C9A9C9}" Platform="Linked"/>
 							</ActiveSourceList>
@@ -1962,6 +2079,45 @@
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<Reference>
+										<Local>
+											<RTPC Name="" ID="{B19CB786-0138-4227-8272-DAD9407BE7C4}" ShortID="535445601">
+												<PropertyList>
+													<Property Name="PropertyName" Type="string" Value="Volume"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="ControlInput">
+														<ObjectRef Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+													</Reference>
+													<Reference Name="Curve">
+														<Custom>
+															<Curve Name="" ID="{D9280CD3-97BF-4F55-A033-D57A6E021CB1}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>-200</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>100</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</Custom>
+													</Reference>
+												</ReferenceList>
+											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
 							<ActiveSourceList>
 								<ActiveSource Name="Music_F_Step2" ID="{A251C1E4-4226-423B-9B9D-FA27F60877BD}" Platform="Linked"/>
 							</ActiveSourceList>
@@ -1984,6 +2140,45 @@
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<Reference>
+										<Local>
+											<RTPC Name="" ID="{BAD00EF7-BE4B-4A65-8A77-D3CD30077947}" ShortID="265635340">
+												<PropertyList>
+													<Property Name="PropertyName" Type="string" Value="Volume"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="ControlInput">
+														<ObjectRef Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+													</Reference>
+													<Reference Name="Curve">
+														<Custom>
+															<Curve Name="" ID="{C72E9D63-C563-4BD4-9240-5002984EC1B6}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>-200</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>100</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</Custom>
+													</Reference>
+												</ReferenceList>
+											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
 							<ActiveSourceList>
 								<ActiveSource Name="Music_F_Step3" ID="{520445ED-2099-416D-8894-E7FC41C14937}" Platform="Linked"/>
 							</ActiveSourceList>

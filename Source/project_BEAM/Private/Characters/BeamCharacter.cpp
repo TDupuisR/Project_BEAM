@@ -19,6 +19,9 @@
 #include <Camera/CameraWorldSubsystem.h>
 #include "ProjectileSettings.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
+
 
 // Sets default values
 ABeamCharacter::ABeamCharacter()
@@ -289,15 +292,36 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	// 	FColor::Purple,
 	// 	FString::Printf(TEXT("TAKE DAMAGE"))
 	// );
-
-	if (!CanTakeDamage) return;
-
+	
+	const FOnAkPostEventCallback nullCallback;
+	
+	if (!CanTakeDamage)
+	{
+		UAkGameplayStatics::PostEvent(
+			HitInvulnerabilitySound,
+			this,
+			0,
+			nullCallback,
+			false
+		);
+		return;
+	}
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
 
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->CinematicForSeconds(0.2f, GetActorLocation(), 5);
+
+	if (Damage <= 0 || Damage > 4) return;
 	
 	if (HasShield()) {
 		SetShield(GetShield() - 1);
+
+		UAkGameplayStatics::PostEvent(
+			HitInvulnerabilitySound,
+			this,
+			0,
+			nullCallback,
+			false
+		);
 		return;
 	}
 
@@ -319,6 +343,14 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 
+	UAkGameplayStatics::PostEvent(
+		HitPowerSoundList[Damage-1],
+		this,
+		0,
+		nullCallback,
+		false
+	);
+	
 	OnLifeChange();
 	CheckLife();
 

@@ -81,8 +81,6 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
 					else return;
 
-					CallForSound(ownPower);
-
 					break;
 				};
 			
@@ -194,7 +192,6 @@ void AProjectile::InitProjectileSettings()
 
 void AProjectile::InitParameters_Implementation() {}
 void AProjectile::DestructionEffect_Implementation(int power) {}
-void AProjectile::CallForSound_Implementation(int power) {}
 
 
 
