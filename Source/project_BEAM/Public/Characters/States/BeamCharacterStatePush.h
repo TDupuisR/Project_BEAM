@@ -6,6 +6,7 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStatePush.generated.h"
 
+class UAkAudioEvent;
 
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStatePush : public UBeamCharacterState
@@ -21,6 +22,10 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> GotPushedSound;
+	
 private:
 	UPROPERTY() float timerPush = 0.0f;
 	UPROPERTY(EditAnywhere) float timeToWait = 0.2f;
