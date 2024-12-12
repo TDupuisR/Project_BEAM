@@ -630,6 +630,8 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 	return true;
 }
 
+void ABeamCharacter::ShotCallCharacter(int power) { ShotCallBP(power); }
+
 void ABeamCharacter::ChangeStateWhenQte()
 {
 	if (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Stun) return;
@@ -877,7 +879,7 @@ void ABeamCharacter::GunBuildUp_Implementation() {}
 void ABeamCharacter::WhenPush_Implementation() {}
 void ABeamCharacter::ChangeColorToWhite_Implementation() {}
 void ABeamCharacter::ChangeColorToNormal_Implementation() {}
-
+void ABeamCharacter::ShotCallBP_Implementation(int power){}
 
 void ABeamCharacter::OnHitWallProjection_Implementation(FVector locationHit) {}
 

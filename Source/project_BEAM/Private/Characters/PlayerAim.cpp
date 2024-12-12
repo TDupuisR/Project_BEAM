@@ -33,6 +33,7 @@ void UPlayerAim::InitWeapon(UWeaponCharge* playerWeapon)
 
 void UPlayerAim::ShotCall(int power)
 {
+	Character->ShotCallCharacter(power);
 	Shoot(aimPos, aimDir.GetSafeNormal(), power);
 }
 
