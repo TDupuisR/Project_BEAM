@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{7F99C6F7-F51C-4692-BACB-017045E9CA29}",
     "Language": "SFX",
-    "Hash": "{E0AC5DA6-420F-A441-1D36-2A29B6A76D12}",
+    "Hash": "{CD5DD26E-2960-C62A-D3A4-508D76987B24}",
     "ObjectPath": "Play_AMB_Arena_Exclamation_Plus",
     "ShortName": "Play_AMB_Arena_Exclamation_Plus",
     "Path": "Event/Play_AMB_Arena_Exclamation_Plus.bnk",
@@ -105,6 +105,6 @@
     ]
    }
   ],
-  "FileHash": "{DE83D34E-B46E-BEF1-9694-64E5E13E71D5}"
+  "FileHash": "{CC72D7C4-74E1-AE76-B9A6-D44D75743AE5}"
  }
 }

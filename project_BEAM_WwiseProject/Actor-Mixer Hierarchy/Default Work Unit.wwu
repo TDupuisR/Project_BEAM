@@ -399,6 +399,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<RandomSequenceContainer Name="AMB_Arena_Exclamation_Random" ID="{B0B8317A-15A5-4389-8F6E-FDAEAE7562BC}" ShortID="7935624">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>15</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A65C2440-A8D4-4556-831B-1464E3649DE5}"/>
