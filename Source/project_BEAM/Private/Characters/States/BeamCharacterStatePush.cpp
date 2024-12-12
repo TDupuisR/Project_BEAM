@@ -8,6 +8,8 @@
 #include "Characters/BeamCharacterSettings.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
 
 EBeamCharacterStateID UBeamCharacterStatePush::GetStateID()
 {
@@ -27,6 +29,15 @@ void UBeamCharacterStatePush::StateEnter(EBeamCharacterStateID PreviousStateID)
 
 	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
 
+	const FOnAkPostEventCallback nullCallback;
+	UAkGameplayStatics::PostEvent(
+			GotPushedSound,
+			Character,
+			0,
+			nullCallback,
+			false
+	);
+	
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
