@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{9119CA09-D1FA-4D4A-83EE-6DB6BE405B2F}",
     "Language": "SFX",
-    "Hash": "{DFD8310A-462F-5247-9646-909505F0BC6F}",
+    "Hash": "{49FE8708-08AB-65FA-A0DE-2D8973E6E419}",
     "ObjectPath": "Play_SFX_Gun_Shoot2_Plus",
     "ShortName": "Play_SFX_Gun_Shoot2_Plus",
     "Path": "Event/Play_SFX_Gun_Shoot2_Plus.bnk",
@@ -88,9 +88,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{08C3AD81-4ADD-D4C4-CF83-84206E2A2FEC}"
+  "FileHash": "{7E8AE4E5-BAF7-511D-1A47-CBC2C1F2C452}"
  }
 }

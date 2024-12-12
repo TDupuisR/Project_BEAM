@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{9478730F-D52E-4868-A813-7677484B6133}",
     "Language": "SFX",
-    "Hash": "{3522CB49-9972-3ABB-A9F7-66A91D25C67F}",
+    "Hash": "{3F8787AE-CCD6-F2D6-DFE1-564FA7A4A9F8}",
     "ObjectPath": "Play_SFX_Mvt_Projection__Plus",
     "ShortName": "Play_SFX_Mvt_Projection__Plus",
     "Path": "Event/Play_SFX_Mvt_Projection__Plus.bnk",
@@ -52,9 +52,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{9FDFDD4E-10DA-E2F1-180C-C52DED2CA545}"
+  "FileHash": "{4A16C9A8-9D26-16C0-FCEB-1915B3FAC65B}"
  }
 }

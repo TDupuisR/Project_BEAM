@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{7A49D5F4-F008-49E9-B34F-6606C0C1FECB}",
     "Language": "SFX",
-    "Hash": "{1AA57BAA-C13C-5E9C-DE2E-D844F94D69B1}",
+    "Hash": "{2D585804-4DD6-AF4F-1C15-2A2FA429718E}",
     "ObjectPath": "Play_VOC_RoundEnd_Plus",
     "ShortName": "Play_VOC_RoundEnd_Plus",
     "Path": "Event/Play_VOC_RoundEnd_Plus.bnk",
@@ -52,9 +52,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3190188375",
+      "Name": "Volume_Voices",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Voices",
+      "GUID": "{A30D2C1D-8F38-44BA-AD63-DA7281186AF3}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{A98F04C2-B855-A70F-EBB3-7CBA50E77F3B}"
+  "FileHash": "{17EF3089-8D40-5FDC-DA28-DF5C7AE21DE1}"
  }
 }

@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{53B62B5B-5EB2-4BBA-ADF3-A6EAD9863F29}",
     "Language": "SFX",
-    "Hash": "{6E5CD095-41D2-38CB-83EB-602285E93630}",
+    "Hash": "{DB2DD827-1C96-0AE1-D8B0-DF2664BED76D}",
     "ObjectPath": "Play_SFX_BlockDestroy_Metal_Plus",
     "ShortName": "Play_SFX_BlockDestroy_Metal_Plus",
     "Path": "Event/Play_SFX_BlockDestroy_Metal_Plus.bnk",
@@ -76,9 +76,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{7DB6D193-5B1D-D9B9-610E-25650D6B9B97}"
+  "FileHash": "{E4D2F0D1-8EE5-0E54-B12F-52F55961F885}"
  }
 }

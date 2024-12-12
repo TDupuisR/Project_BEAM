@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{7F99C6F7-F51C-4692-BACB-017045E9CA29}",
     "Language": "SFX",
-    "Hash": "{5A79274C-B063-15AA-3EDD-F10C4780C477}",
+    "Hash": "{CD5DD26E-2960-C62A-D3A4-508D76987B24}",
     "ObjectPath": "Play_AMB_Arena_Exclamation_Plus",
     "ShortName": "Play_AMB_Arena_Exclamation_Plus",
     "Path": "Event/Play_AMB_Arena_Exclamation_Plus.bnk",
@@ -88,9 +88,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "2486614534",
+      "Name": "Volume_Ambiant",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Ambiant",
+      "GUID": "{A3650AE9-9F97-4FB6-AC3F-C78A4FDFFA8C}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{EBB133CE-0693-B211-85B9-EA25BECAB86A}"
+  "FileHash": "{CC72D7C4-74E1-AE76-B9A6-D44D75743AE5}"
  }
 }

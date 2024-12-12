@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{2ED731B0-8A7E-4B46-9EB6-4C8608C6C84C}",
     "Language": "SFX",
-    "Hash": "{0D8D4834-13BF-B9E9-7316-FA5CCC3BF040}",
+    "Hash": "{71AF19D9-3E03-814D-973D-6E3D1D4A54D1}",
     "ObjectPath": "Play_MC_DashP2_V2_Plus",
     "ShortName": "Play_MC_DashP2_V2_Plus",
     "Path": "Event/Play_MC_DashP2_V2_Plus.bnk",
@@ -88,9 +88,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{9FDE9501-BC6D-6451-09C0-C1131EDC4919}"
+  "FileHash": "{AD39E6A7-190E-0F86-7D51-2386FA5A835F}"
  }
 }

@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{8ED52A03-F235-455E-91FA-7811C408FD7C}",
     "Language": "SFX",
-    "Hash": "{BB5E34D7-2504-BCB4-704A-2CC02A66E603}",
+    "Hash": "{49DCD2C1-C0E7-4DA0-7D39-7E5CCEBFD2EB}",
     "ObjectPath": "Play_UI_MainMenu_Button_Validation_Plus",
     "ShortName": "Play_UI_MainMenu_Button_Validation_Plus",
     "Path": "Event/Play_UI_MainMenu_Button_Validation_Plus.bnk",
@@ -64,9 +64,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{C26E274F-8F24-6A0D-49FA-4177A89B165F}"
+  "FileHash": "{0E75AAE0-260C-0843-A214-97C59CB01730}"
  }
 }

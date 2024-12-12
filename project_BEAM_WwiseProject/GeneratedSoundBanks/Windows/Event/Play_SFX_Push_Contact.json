@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{B7C4C2FA-741D-4F5C-8698-7063E16B10A5}",
     "Language": "SFX",
-    "Hash": "{5B665549-5B82-70EB-7CE3-AFF9BCD896CF}",
+    "Hash": "{C70FDCD6-DB0B-C09D-9BFF-790E07C24FCB}",
     "ObjectPath": "Play_SFX_Push_Contact",
     "ShortName": "Play_SFX_Push_Contact",
     "Path": "Event/Play_SFX_Push_Contact.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{CE69C5EB-9077-3157-0EEF-9D17BA15B603}"
+  "FileHash": "{B2E34ED5-681F-0403-E386-BE20A95D3CAD}"
  }
 }

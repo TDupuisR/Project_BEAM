@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{E7C6DFC3-55BA-4511-9A95-5E42821CA3BA}",
     "Language": "SFX",
-    "Hash": "{4BA6E025-A175-19BE-6B3B-061532E0A508}",
+    "Hash": "{A2401025-0E95-1B41-5799-C0B539E5541A}",
     "ObjectPath": "Play_SFX_Gun_Shoot3",
     "ShortName": "Play_SFX_Gun_Shoot3",
     "Path": "Event/Play_SFX_Gun_Shoot3.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{8C4F66E5-8656-F257-5441-DC5D04B89193}"
+  "FileHash": "{675B6792-FF84-F974-F3DB-9290A2820EAD}"
  }
 }
