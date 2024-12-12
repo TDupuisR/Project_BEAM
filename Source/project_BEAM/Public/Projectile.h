@@ -98,8 +98,17 @@ protected:
 	UPROPERTY()
 	float currentLifeSpan;
 
+	UFUNCTION(BlueprintCallable)
+	void SetCanDoDamage(bool newCanDoDamage) { canDoDamage = newCanDoDamage; }
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCanDoDamage() { return canDoDamage; }
+
 private:
 	UPROPERTY()
 	bool canAccess = true;
+
+	UPROPERTY()
+	bool canDoDamage = true;
 	
 };
