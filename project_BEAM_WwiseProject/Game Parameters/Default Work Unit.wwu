@@ -13,6 +13,12 @@
 				<GameParameter Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}"/>
 				<GameParameter Name="Volume_SFX" ID="{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"/>
 				<GameParameter Name="Volume_Voices" ID="{A30D2C1D-8F38-44BA-AD63-DA7281186AF3}"/>
+				<GameParameter Name="Volume_Ambiant" ID="{A3650AE9-9F97-4FB6-AC3F-C78A4FDFFA8C}"/>
+				<GameParameter Name="Volume_Main" ID="{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>
