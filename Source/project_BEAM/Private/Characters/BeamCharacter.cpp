@@ -408,9 +408,49 @@ void ABeamCharacter::Push()
 	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
 
 	for (ABeamCharacter* player : PlayersInZone) {
-		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("PUSH : %d"), player->GetPlayerIndex()));
-		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-		player->KnockBack(direction, CharacterSettings->Push_Force, true);
+
+		// Parameter for how far out the the line trace reaches
+		float Reach = 210.f;
+		
+		FVector start = GetActorLocation();
+		FVector dir = (player->GetActorLocation() - start).GetSafeNormal();
+		FVector LineTraceEnd = GetActorLocation() + dir * Reach;
+
+		DrawDebugLine(GetWorld(), GetActorLocation(), LineTraceEnd, FColor::Green, false, 1, 0, 5);
+
+		FHitResult Hit;
+		FCollisionQueryParams TraceParams(FName(TEXT("TraceTest")), true, this);  
+		TraceParams.AddIgnoredActor(this);
+
+
+		bool bHit = GetWorld()->LineTraceSingleByChannel(
+			OUT Hit,
+			start,
+			LineTraceEnd,
+			ECC_WorldDynamic,
+			TraceParams
+		);
+
+		if (bHit)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,
+				FString::Printf(TEXT("Hit Component: %s"), *Hit.GetComponent()->GetName()));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,
+				FString::Printf(TEXT("Hit Actor: %s"), *Hit.GetActor()->GetName()));
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,
+				FString::Printf(TEXT("NO HIT")));
+		}
+		
+
+		if (Cast<ABeamCharacter>(Hit.GetActor()) != nullptr && Cast<ABeamCharacter>(Hit.GetActor()) != this) {
+			GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("PUSH : %d"), player->GetPlayerIndex()));
+			FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+			player->KnockBack(direction, CharacterSettings->Push_Force, true);
+
+		}
+
 		
 	}
 
