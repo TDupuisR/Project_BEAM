@@ -78,10 +78,13 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 				{
 					if (!OtherComp->ComponentTags.Contains("Player")) break;
 					
-					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
-					else return;
+					if (!canDoDamage) break;
 
-					CallForSound(ownPower);
+					if (interface->ProjectileContext(ownPower, GetActorLocation())) { 
+						CallDestroyed(); 
+						SetCanDoDamage(false);
+					}
+					else return;
 
 					break;
 				};
@@ -194,7 +197,6 @@ void AProjectile::InitProjectileSettings()
 
 void AProjectile::InitParameters_Implementation() {}
 void AProjectile::DestructionEffect_Implementation(int power) {}
-void AProjectile::CallForSound_Implementation(int power) {}
 
 
 

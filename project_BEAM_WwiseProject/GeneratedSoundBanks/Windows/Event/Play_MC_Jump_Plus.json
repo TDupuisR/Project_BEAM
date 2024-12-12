@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{A0CE6AAD-0908-44F8-84CC-B2A47E068C20}",
     "Language": "SFX",
-    "Hash": "{AE2653C9-09A5-2DC9-B081-16AEC9B6C58C}",
+    "Hash": "{1B342813-2316-F669-772E-0A422C46219D}",
     "ObjectPath": "Play_MC_Jump_Plus",
     "ShortName": "Play_MC_Jump_Plus",
     "Path": "Event/Play_MC_Jump_Plus.bnk",
@@ -196,9 +196,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{A3342AD6-178B-34D8-F89E-0C82FDAF1844}"
+  "FileHash": "{2D6BC515-715D-3FF6-E65C-8D6EF9E74579}"
  }
 }

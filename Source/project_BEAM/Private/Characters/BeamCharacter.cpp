@@ -19,6 +19,9 @@
 #include <Camera/CameraWorldSubsystem.h>
 #include "ProjectileSettings.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
+
 
 // Sets default values
 ABeamCharacter::ABeamCharacter()
@@ -275,6 +278,9 @@ void ABeamCharacter::OnHit(
 	if (velocity.Size() < MinSizeVelocity) return;
 
 	Bounce(Hit.Normal);
+	
+	OnHitWallProjection(Hit.Location);
+	// EFFECT 
 
 }
 #pragma endregion
@@ -289,15 +295,36 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	// 	FColor::Purple,
 	// 	FString::Printf(TEXT("TAKE DAMAGE"))
 	// );
-
-	if (!CanTakeDamage) return;
-
+	
+	const FOnAkPostEventCallback nullCallback;
+	
+	if (!CanTakeDamage)
+	{
+		UAkGameplayStatics::PostEvent(
+			HitInvulnerabilitySound,
+			this,
+			0,
+			nullCallback,
+			false
+		);
+		return;
+	}
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->ShakeForSeconds(1, 100);
 
 	//GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->CinematicForSeconds(0.2f, GetActorLocation(), 5);
+
+	if (Damage <= 0 || Damage > 4) return;
 	
 	if (HasShield()) {
 		SetShield(GetShield() - 1);
+
+		UAkGameplayStatics::PostEvent(
+			HitInvulnerabilitySound,
+			this,
+			0,
+			nullCallback,
+			false
+		);
 		return;
 	}
 
@@ -318,6 +345,17 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	}
 
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
+
+	UAkGameplayStatics::PostEvent(
+		HitPowerSoundList[Damage-1],
+		this,
+		0,
+		nullCallback,
+		false
+	);
+	
+	// EFFECT HIT
+	OnHitBeam();
 
 	OnLifeChange();
 	CheckLife();
@@ -376,9 +414,49 @@ void ABeamCharacter::Push()
 	if (PlayersInZone.Num() == 0 || CharacterSettings == nullptr) return;
 
 	for (ABeamCharacter* player : PlayersInZone) {
-		GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("PUSH : %d"), player->GetPlayerIndex()));
-		FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-		player->KnockBack(direction, CharacterSettings->Push_Force, true);
+
+		// Parameter for how far out the the line trace reaches
+		float Reach = 210.f;
+		
+		FVector start = GetActorLocation();
+		FVector dir = (player->GetActorLocation() - start).GetSafeNormal();
+		FVector LineTraceEnd = GetActorLocation() + dir * Reach;
+
+		DrawDebugLine(GetWorld(), GetActorLocation(), LineTraceEnd, FColor::Green, false, 1, 0, 5);
+
+		FHitResult Hit;
+		FCollisionQueryParams TraceParams(FName(TEXT("TraceTest")), true, this);  
+		TraceParams.AddIgnoredActor(this);
+
+
+		bool bHit = GetWorld()->LineTraceSingleByChannel(
+			OUT Hit,
+			start,
+			LineTraceEnd,
+			ECC_WorldDynamic,
+			TraceParams
+		);
+
+		if (bHit)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,
+				FString::Printf(TEXT("Hit Component: %s"), *Hit.GetComponent()->GetName()));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,
+				FString::Printf(TEXT("Hit Actor: %s"), *Hit.GetActor()->GetName()));
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,
+				FString::Printf(TEXT("NO HIT")));
+		}
+		
+
+		if (Cast<ABeamCharacter>(Hit.GetActor()) != nullptr && Cast<ABeamCharacter>(Hit.GetActor()) != this) {
+			GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Emerald, FString::Printf(TEXT("PUSH : %d"), player->GetPlayerIndex()));
+			FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+			player->KnockBack(direction, CharacterSettings->Push_Force, true);
+
+		}
+
 		
 	}
 
@@ -551,6 +629,8 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 
 	return true;
 }
+
+void ABeamCharacter::ShotCallCharacter(int power) { ShotCallBP(power); }
 
 void ABeamCharacter::ChangeStateWhenQte()
 {
@@ -799,3 +879,8 @@ void ABeamCharacter::GunBuildUp_Implementation() {}
 void ABeamCharacter::WhenPush_Implementation() {}
 void ABeamCharacter::ChangeColorToWhite_Implementation() {}
 void ABeamCharacter::ChangeColorToNormal_Implementation() {}
+void ABeamCharacter::ShotCallBP_Implementation(int power){}
+
+void ABeamCharacter::OnHitWallProjection_Implementation(FVector locationHit) {}
+
+void ABeamCharacter::OnHitBeam_Implementation() {}

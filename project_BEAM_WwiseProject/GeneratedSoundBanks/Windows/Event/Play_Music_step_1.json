@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{DE9BFF62-D6BB-45F5-A118-B0D03A917257}",
     "Language": "SFX",
-    "Hash": "{E62F4526-6CF1-9311-E064-3974D1779852}",
+    "Hash": "{D6C73496-C65C-E709-97B4-2A36BE4A16E7}",
     "ObjectPath": "Play_Music_step_1",
     "ShortName": "Play_Music_step_1",
     "Path": "Event/Play_Music_step_1.bnk",
@@ -50,9 +50,17 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3891337659",
+      "Name": "Volume_Music",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Music",
+      "GUID": "{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}"
+     }
     ]
    }
   ],
-  "FileHash": "{DD8BE9AE-2B25-9D9B-1BFA-DD38C8CBA9A6}"
+  "FileHash": "{9D74BDCB-AC8D-23CB-B480-8C221F7EF780}"
  }
 }

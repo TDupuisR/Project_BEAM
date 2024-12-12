@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{128D21E7-51C3-4C40-9F53-7E46D955393F}",
     "Language": "SFX",
-    "Hash": "{1F4D1FE2-857B-12F7-1BED-E3EB9E7DD27E}",
+    "Hash": "{3893B5C8-2A6C-345E-7A26-75C59B9D331D}",
     "ObjectPath": "Play_UI_PauseMenu_Open",
     "ShortName": "Play_UI_PauseMenu_Open",
     "Path": "Event/Play_UI_PauseMenu_Open.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{351BD309-ADF8-2FDD-1F80-710AE097E281}"
+  "FileHash": "{085B6FBC-D3EA-9A80-4C2F-567668A6E8F0}"
  }
 }

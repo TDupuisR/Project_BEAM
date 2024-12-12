@@ -19,6 +19,7 @@ class UEnhancedInputComponent;
 class UBoxComponent;
 class UPlayerAim;
 class UWeaponCharge;
+class UAkAudioEvent;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathEvent, ABeamCharacter*, pointeurCharacter);
@@ -263,8 +264,18 @@ private:
 
 	UFUNCTION()
 	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+
+	
 	UFUNCTION()
 	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+public: 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Overlap Zone")
+	void OnHitWallProjection(FVector locationHit);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Overlap Zone")
+	void OnHitBeam();
 
 
 # pragma endregion
@@ -458,6 +469,22 @@ public:
 	void GunBuildUp();
 #pragma endregion
 
+#pragma region SFX
+
+public:
+	UFUNCTION()
+	void ShotCallCharacter(int power);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Shooting")
+	void ShotCallBP(int power);
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> HitInvulnerabilitySound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TObjectPtr<UAkAudioEvent>> HitPowerSoundList;
+	
+#pragma endregion
+	
 #pragma region Multiplayer
 
 public:

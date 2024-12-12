@@ -233,6 +233,45 @@
 							</ObjectLists>
 						</MusicSegment>
 					</ChildrenList>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{2100958C-54C3-4319-8C7A-B1B30CAC4606}" ShortID="710037942">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{D3530632-2EA0-407B-965C-807E5C72B646}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-200</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
 				</MusicPlaylistContainer>
 				<MusicPlaylistContainer Name="Music_step_2" ID="{C9B305F2-FEB4-4F37-9F57-9A56D70CA523}" ShortID="334620370">
 					<ReferenceList>
@@ -519,6 +558,45 @@
 							</ObjectLists>
 						</MusicSegment>
 					</ChildrenList>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{928004A4-E32D-4100-9E7C-AB579C3AF99C}" ShortID="75366218">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{6BFC9B2D-869E-412B-88F4-84E4CF336357}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-200</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
 				</MusicPlaylistContainer>
 				<MusicPlaylistContainer Name="Music_step_3" ID="{891C2374-31B6-4849-85C1-4AC577B8DECB}" ShortID="792878356">
 					<ReferenceList>
@@ -803,6 +881,45 @@
 							</ObjectLists>
 						</MusicSegment>
 					</ChildrenList>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{3E34EFB1-2CF9-4EE2-8779-FCFA7805E1DB}" ShortID="372509718">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Volume_Music" ID="{06EC6D23-5F8D-41F0-B6CA-43F24380AFE1}" WorkUnitID="{6FAF0351-C4F0-4DF1-AF59-0C88B2BEC101}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{2CD2B7D2-4AFB-4322-B450-A1A90B2BFE42}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-200</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
 				</MusicPlaylistContainer>
 			</ChildrenList>
 		</WorkUnit>

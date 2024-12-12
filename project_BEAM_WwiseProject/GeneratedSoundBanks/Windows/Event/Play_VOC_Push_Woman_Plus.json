@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{4F9C65DD-4B26-4BE3-89ED-77DC24E16D9D}",
     "Language": "SFX",
-    "Hash": "{AAFB79ED-F0B3-8A36-9BE4-9E69053FC169}",
+    "Hash": "{F353438D-9DC4-FFAC-9A64-D5109111A920}",
     "ObjectPath": "Play_VOC_Push_Woman_Plus",
     "ShortName": "Play_VOC_Push_Woman_Plus",
     "Path": "Event/Play_VOC_Push_Woman_Plus.bnk",
@@ -76,9 +76,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3190188375",
+      "Name": "Volume_Voices",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Voices",
+      "GUID": "{A30D2C1D-8F38-44BA-AD63-DA7281186AF3}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{A0C460C2-DCF0-803F-205B-214DA7D6A674}"
+  "FileHash": "{DB985F35-6391-951D-9750-6FE1F588FB90}"
  }
 }

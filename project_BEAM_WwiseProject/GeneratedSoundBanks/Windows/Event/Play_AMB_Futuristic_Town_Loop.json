@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{F9B5E967-292E-4FA7-BB41-F8B01C6AF833}",
     "Language": "SFX",
-    "Hash": "{54AF9DC3-46F9-0227-A30E-8C1F06544759}",
+    "Hash": "{A03EB802-040C-9705-DFF2-109369CDA3F7}",
     "ObjectPath": "Play_AMB_Futuristic_Town_Loop",
     "ShortName": "Play_AMB_Futuristic_Town_Loop",
     "Path": "Event/Play_AMB_Futuristic_Town_Loop.bnk",
@@ -38,9 +38,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "2486614534",
+      "Name": "Volume_Ambiant",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Ambiant",
+      "GUID": "{A3650AE9-9F97-4FB6-AC3F-C78A4FDFFA8C}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{B32B41D6-7563-4BCC-5453-8DDABE6422C4}"
+  "FileHash": "{F8048E5F-7D89-B9E5-30AF-626C43D8B834}"
  }
 }

@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{6BC19BD1-A4D1-4FEE-8437-8D349E25A48F}",
     "Language": "SFX",
-    "Hash": "{ED0AB7E2-D0C9-4808-E05F-9D6A1FC11B36}",
+    "Hash": "{3D8CA984-654D-A3DC-F64E-0D74838BB81E}",
     "ObjectPath": "Play_SFX_QTE_WinLoading1",
     "ShortName": "Play_SFX_QTE_WinLoading1",
     "Path": "Event/Play_SFX_QTE_WinLoading1.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{EA89727D-9F3D-1AA9-0B66-854B71B219FE}"
+  "FileHash": "{3C1F0350-E33B-46BF-B02F-6E9A3EE15E6C}"
  }
 }

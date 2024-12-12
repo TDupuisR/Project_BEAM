@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{04084978-4A4C-4206-A8A5-2F5944782D91}",
     "Language": "SFX",
-    "Hash": "{97B0550C-48A2-1D1F-2930-1C4B435476E6}",
+    "Hash": "{CE189A37-8670-7B8E-0056-C1E88808B562}",
     "ObjectPath": "Play_VOC_PlayerHit_Man_Plus",
     "ShortName": "Play_VOC_PlayerHit_Man_Plus",
     "Path": "Event/Play_VOC_PlayerHit_Man_Plus.bnk",
@@ -184,9 +184,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3190188375",
+      "Name": "Volume_Voices",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Voices",
+      "GUID": "{A30D2C1D-8F38-44BA-AD63-DA7281186AF3}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{D252E954-3AF3-571C-D563-256989D00107}"
+  "FileHash": "{F3DAC71B-DE5D-AFC1-033D-6549B952B9A2}"
  }
 }

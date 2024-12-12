@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{4F11DE37-18C2-40C8-ADCB-FCBB3F02E8B7}",
     "Language": "SFX",
-    "Hash": "{D40E938D-8B2A-988A-C411-00F3FF4BAB9A}",
+    "Hash": "{B5F97197-3AC7-151E-8BAA-F3DE66C95D61}",
     "ObjectPath": "Play_VOC_Push_Man_Plus",
     "ShortName": "Play_VOC_Push_Man_Plus",
     "Path": "Event/Play_VOC_Push_Man_Plus.bnk",
@@ -76,9 +76,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3190188375",
+      "Name": "Volume_Voices",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Voices",
+      "GUID": "{A30D2C1D-8F38-44BA-AD63-DA7281186AF3}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{6567863E-1E2E-F0AF-BD89-47A7F834AB8E}"
+  "FileHash": "{46A642B9-A2EC-7CE5-4D87-F330AD335D67}"
  }
 }

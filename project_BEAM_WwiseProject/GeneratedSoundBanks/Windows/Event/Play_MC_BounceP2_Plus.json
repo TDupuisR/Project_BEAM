@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{0E588A7D-02D7-4695-8FDF-7A62E6A7F599}",
     "Language": "SFX",
-    "Hash": "{F7B17529-6F40-C451-5108-7350500727E5}",
+    "Hash": "{0455C591-03C0-A594-E1C9-3533F659CE50}",
     "ObjectPath": "Play_MC_BounceP2_Plus",
     "ShortName": "Play_MC_BounceP2_Plus",
     "Path": "Event/Play_MC_BounceP2_Plus.bnk",
@@ -124,9 +124,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{D935A1B2-74BA-6A96-4CAD-7A4D88762BD7}"
+  "FileHash": "{C1583CDE-6F2C-DB6C-194A-972599655689}"
  }
 }

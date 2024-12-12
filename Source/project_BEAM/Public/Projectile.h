@@ -78,8 +78,6 @@ protected:
 	void InitParameters();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
 	void DestructionEffect(int power);
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Projectile")
-	void CallForSound(int power);
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UProjectileMovementComponent* projectileComponent;
@@ -100,8 +98,17 @@ protected:
 	UPROPERTY()
 	float currentLifeSpan;
 
+	UFUNCTION(BlueprintCallable)
+	void SetCanDoDamage(bool newCanDoDamage) { canDoDamage = newCanDoDamage; }
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCanDoDamage() { return canDoDamage; }
+
 private:
 	UPROPERTY()
 	bool canAccess = true;
+
+	UPROPERTY()
+	bool canDoDamage = true;
 	
 };

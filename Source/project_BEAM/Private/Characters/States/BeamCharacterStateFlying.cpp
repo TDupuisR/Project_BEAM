@@ -92,15 +92,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		Character->SetIsDashing(true);
 		canDash = false;
 		canMove = false;
-
-		const FOnAkPostEventCallback nullCallback;
-		UAkGameplayStatics::PostEvent(
-				DashSound,
-				Character,
-				0,
-				nullCallback,
-				false
-		);
 		
 		GEngine->AddOnScreenDebugMessage(
 			-1,
@@ -123,11 +114,20 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			return;
 		}
 
+		const FOnAkPostEventCallback nullCallback;
+		UAkGameplayStatics::PostEvent(
+				DashSound,
+				Character,
+				0,
+				nullCallback,
+				false
+		);
+		
 		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce );
 	}
 
 	if (canMove) {
-		Character->SetOrientX(Character->GetInputMove().X);
+		//Character->SetOrientX(Character->GetInputMove().X);
 	
 		if (Character->GetInputMove() != FVector2D::ZeroVector)
 		{

@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{1C5C5E7A-AAB4-44F8-B886-C6EB1208A3FB}",
     "Language": "SFX",
-    "Hash": "{6F96F59F-4AD5-A8AB-9408-A0C90076070A}",
+    "Hash": "{D8E73012-62A3-1DB7-CD21-24A4C6FB59B8}",
     "ObjectPath": "Play_AMB_Arena_Crowd_Loop",
     "ShortName": "Play_AMB_Arena_Crowd_Loop",
     "Path": "Event/Play_AMB_Arena_Crowd_Loop.bnk",
@@ -38,9 +38,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "2486614534",
+      "Name": "Volume_Ambiant",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Ambiant",
+      "GUID": "{A3650AE9-9F97-4FB6-AC3F-C78A4FDFFA8C}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{2182D56C-A457-DCAD-6357-9674AA33581C}"
+  "FileHash": "{C8A7F46F-D777-6C8E-59F7-D120FE762F8C}"
  }
 }

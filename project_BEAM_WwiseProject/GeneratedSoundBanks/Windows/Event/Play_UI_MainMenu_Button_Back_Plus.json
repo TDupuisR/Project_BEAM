@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{022A71C8-E52A-491B-87E7-5AE87FC7AA72}",
     "Language": "SFX",
-    "Hash": "{90CB7940-59FB-466C-6C84-BCC835F9B395}",
+    "Hash": "{AF3D460B-2C74-C5B2-DB11-A295A8C69E44}",
     "ObjectPath": "Play_UI_MainMenu_Button_Back_Plus",
     "ShortName": "Play_UI_MainMenu_Button_Back_Plus",
     "Path": "Event/Play_UI_MainMenu_Button_Back_Plus.bnk",
@@ -64,9 +64,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{D7324CF4-568C-1F76-E64C-626C8154D2D3}"
+  "FileHash": "{6F4833F3-B049-F1CE-E017-7D42C48C8A6F}"
  }
 }

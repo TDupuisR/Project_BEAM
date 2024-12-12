@@ -74,6 +74,7 @@ void UCameraWorldSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
 	if (CameraMain != nullptr)
 	{
 		switch (cameraMode)
@@ -83,13 +84,16 @@ void UCameraWorldSubsystem::Tick(float DeltaTime)
 		case ECameraMode::Follow:
 			CameraFollowMode(DeltaTime);
 			TickUpdateCameraZoom(DeltaTime);
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Black, TEXT("TICK FOLLOW"));
 			break;
 
 		case ECameraMode::Cinematic:
 			CameraCinematicMode(DeltaTime);
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Black, TEXT("TICK CINEMATIC"));
 			break;
 		case ECameraMode::Free:
 			CameraFreeMode(DeltaTime);
+			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Black, TEXT("TICK FREE"));
 			break;
 
 		default:
@@ -415,8 +419,11 @@ void UCameraWorldSubsystem::ShakeForSeconds(float Seconds, float ForceShake = 10
 
 void UCameraWorldSubsystem::ShakeCamera(float ForceShake, float speedCamera)
 {
+	if (cameraMode != ECameraMode::Follow) return;
+
+
 	shakeForce = ForceShake;
-	cameraMode = ECameraMode::Follow;
+	//cameraMode = ECameraMode::Follow;
 	cameraFollowMode = ECameraFollowMode::Shake;
 	isTimer = false;
 	timer = 0;
@@ -425,7 +432,9 @@ void UCameraWorldSubsystem::ShakeCamera(float ForceShake, float speedCamera)
 
 void UCameraWorldSubsystem::UnShakeCamera()
 {
-	cameraMode = ECameraMode::Follow;
+
+	if (cameraFollowMode != ECameraFollowMode::Shake && cameraMode != ECameraMode::Follow) return;
+
 	cameraFollowMode = ECameraFollowMode::Normal;
 	isTimer = false;
 	timer = 0;
@@ -448,7 +457,7 @@ void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFoll
 
 
 
-void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow)
+void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow, bool canRotate)
 {
 	cameraSpeed = CameraSpeed;
 	timer = 0;
@@ -456,6 +465,7 @@ void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFoll
 	actorToFollow = InActorToFollow;
 	//cameraMode = ECameraMode::Follow;
 	cameraMode = ECameraMode::Cinematic;
+	changeRotation = canRotate;
 	isReverse = false;
 	isReversing = false;
 	canReverse = false;
@@ -559,6 +569,9 @@ void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
 
 	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + 200, posToFollow.Z + 100);
 
+	if (!changeRotation) {
+		posToGet = FVector(posToFollow.X, posToFollow.Y + 200, posToFollow.Z);
+	}
 
 	if (isReverse && isReversing) {
 		FVector NewCameraPosition = CalculateAveragePositionBetweenTargets();
@@ -580,8 +593,10 @@ void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
 	}
 
 	ArenaCamera->SetActorLocation(FMath::VInterpTo(posCamera, posToGet, DeltaTime, cameraSpeed));
-	ArenaCamera->SetActorRotation(FMath::RInterpTo(ArenaCamera->GetActorRotation(), lookAtRotation, DeltaTime, cameraSpeed));
-
+	
+	if (changeRotation) {
+		ArenaCamera->SetActorRotation(FMath::RInterpTo(ArenaCamera->GetActorRotation(), lookAtRotation, DeltaTime, cameraSpeed));
+	}
 
 	if (
 		posCamera.X > posToGet.X - 10 && posCamera.X < posToGet.X + 10 &&

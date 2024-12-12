@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{87223A71-F95E-4982-8C7E-53618E772D5B}",
     "Language": "SFX",
-    "Hash": "{05D02033-4B59-B1D4-92D6-A05C80BB9D7D}",
+    "Hash": "{C20D9D4B-6804-48D5-1BA4-169C5FA8DFD1}",
     "ObjectPath": "Play_VOC_RoundStart_Plus",
     "ShortName": "Play_VOC_RoundStart_Plus",
     "Path": "Event/Play_VOC_RoundStart_Plus.bnk",
@@ -52,9 +52,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3190188375",
+      "Name": "Volume_Voices",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Voices",
+      "GUID": "{A30D2C1D-8F38-44BA-AD63-DA7281186AF3}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{27456BAB-4663-53F7-DE7D-C0EE1D8F9A8F}"
+  "FileHash": "{2020C5FE-3C49-83AF-6D43-FCFD129FCDE3}"
  }
 }
