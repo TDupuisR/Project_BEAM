@@ -278,6 +278,9 @@ void ABeamCharacter::OnHit(
 	if (velocity.Size() < MinSizeVelocity) return;
 
 	Bounce(Hit.Normal);
+	
+	OnHitWallProjection(Hit.Location);
+	// EFFECT 
 
 }
 #pragma endregion
@@ -351,6 +354,9 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 		false
 	);
 	
+	// EFFECT HIT
+	OnHitBeam();
+
 	OnLifeChange();
 	CheckLife();
 
@@ -874,3 +880,7 @@ void ABeamCharacter::WhenPush_Implementation() {}
 void ABeamCharacter::ChangeColorToWhite_Implementation() {}
 void ABeamCharacter::ChangeColorToNormal_Implementation() {}
 void ABeamCharacter::ShotCallBP_Implementation(int power){}
+
+void ABeamCharacter::OnHitWallProjection_Implementation(FVector locationHit) {}
+
+void ABeamCharacter::OnHitBeam_Implementation() {}
