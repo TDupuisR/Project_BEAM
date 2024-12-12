@@ -52,16 +52,16 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 	// 	FString::Printf(TEXT("Tick State %d"), GetStateID())
 	// );
 
-	if (IsKeyWasPressed(EKeys::O)) {
+	/*if (IsKeyWasPressed(EKeys::O)) {
 		Character->SetStunTime(5.f);
 		StateMachine->ChangeState(EBeamCharacterStateID::Stun);
-	}
+	}*/
 
-	if (Character->GetInputPush() && Character->CanPush()) {
+	if (Character->GetInputPush() && Character->CanPush() && !Character->isShooting()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
 
-	if (Character->GetInputJump()) {
+	if (Character->GetInputJump() && !Character->isShooting()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Jump);
 		return;
 	}
@@ -79,6 +79,13 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 		{
 			Character->SetOrientX(1);
 		}*/
+
+		if (Character->isShooting()) {
+			Character->GetCharacterMovement()->MaxWalkSpeed = Character->GetCharacterSettings()->Walk_VelocityMax / 6;
+		}
+		else {
+			Character->GetCharacterMovement()->MaxWalkSpeed = Character->GetCharacterSettings()->Walk_VelocityMax;
+		}
 		
 		float appliedForce = .0f;
 		

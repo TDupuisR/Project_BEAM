@@ -567,10 +567,10 @@ void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
 		UE_LOG(LogTemp, Warning, TEXT("POSITION ACTOR : %s"), *actorToFollow->GetActorLocation().ToString());
 	}
 
-	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + 200, posToFollow.Z + 100);
+	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + 250, posToFollow.Z + 100);
 
 	if (!changeRotation) {
-		posToGet = FVector(posToFollow.X, posToFollow.Y + 200, posToFollow.Z);
+		posToGet = FVector(posToFollow.X, posToFollow.Y + 250, posToFollow.Z);
 	}
 
 	if (isReverse && isReversing) {

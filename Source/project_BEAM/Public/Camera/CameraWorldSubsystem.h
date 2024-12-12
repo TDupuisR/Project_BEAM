@@ -172,6 +172,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReverseCinematic(float CameraSpeed);
 
+	UFUNCTION(BlueprintCallable)
+	void SetCanChangeState(bool canChange) { canChangeState = canChange; }
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCanChangeState() { return canChangeState; }
+
 private:
 
 	bool isTimer = false;
@@ -194,7 +200,10 @@ private:
 
 	bool changeRotation = false;
 
+	bool canChangeState = true;
+
 	FVector posToFollow;
+
 	AActor* actorToFollow;
 
 	FRotator rotToFollow;

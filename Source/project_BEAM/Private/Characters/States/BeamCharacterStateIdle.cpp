@@ -62,7 +62,8 @@ void UBeamCharacterStateIdle::StateTick(float DeltaTime)
 		return;
 	}
 	
-	if (Character->GetInputMove() != FVector2D::ZeroVector && !Character->isShooting())
+	//if (Character->GetInputMove() != FVector2D::ZeroVector && !Character->isShooting())
+	if (Character->GetInputMove() != FVector2D::ZeroVector)
 	{
 		StateMachine->ChangeState(EBeamCharacterStateID::Walk);
 	}
