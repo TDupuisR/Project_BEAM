@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{09ECA663-3E40-433B-95F5-6FEFBFC5C768}",
     "Language": "SFX",
-    "Hash": "{07B69359-5B88-8102-9CB9-4605CABF303C}",
+    "Hash": "{2DC42E45-8460-D64D-AFD2-5E6A30C31315}",
     "ObjectPath": "Play_SFX_BlockDestroy_Boundary00_Plus",
     "ShortName": "Play_SFX_BlockDestroy_Boundary00_Plus",
     "Path": "Event/Play_SFX_BlockDestroy_Boundary00_Plus.bnk",
@@ -64,9 +64,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{DC4A6D66-E1A5-E862-16B9-C4F4AB814E99}"
+  "FileHash": "{00AF8C2D-BDBA-15B5-60BB-93B386B19CF1}"
  }
 }

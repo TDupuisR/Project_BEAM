@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{E43FE10D-9A2E-437B-852B-C66F2DE093B8}",
     "Language": "SFX",
-    "Hash": "{B4BB9770-BA30-7090-4A38-9FE0C7C91B26}",
+    "Hash": "{7B3D39E4-03A2-2170-D584-92229518C465}",
     "ObjectPath": "Play_SFX_Hit_TackHitP4",
     "ShortName": "Play_SFX_Hit_TackHitP4",
     "Path": "Event/Play_SFX_Hit_TackHitP4.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{D3EAE8FB-3267-7DDF-7AC1-68B84E5D5648}"
+  "FileHash": "{B5EED1BC-28A3-04DA-9654-734A9630324A}"
  }
 }

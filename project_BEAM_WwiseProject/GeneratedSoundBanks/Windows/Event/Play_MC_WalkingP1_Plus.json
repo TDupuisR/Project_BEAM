@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{B4D41988-E39B-4437-84E4-CDA2E102BD59}",
     "Language": "SFX",
-    "Hash": "{5E07E337-0C12-E7D5-0E20-87A99FDBDC73}",
+    "Hash": "{E1E88C42-341D-1409-3E5C-D5DC492BD6C8}",
     "ObjectPath": "Play_MC_WalkingP1_Plus",
     "ShortName": "Play_MC_WalkingP1_Plus",
     "Path": "Event/Play_MC_WalkingP1_Plus.bnk",
@@ -184,9 +184,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{01572887-1284-53DE-A5A1-AA4A67F8C0E2}"
+  "FileHash": "{45F92EE8-609E-E937-EC05-824FDC4C2028}"
  }
 }

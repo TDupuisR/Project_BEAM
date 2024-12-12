@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{30E13B56-C12A-4494-87FE-473B9EEC0919}",
     "Language": "SFX",
-    "Hash": "{02F992B4-5F5E-BD65-09A6-0B067D6FF2A7}",
+    "Hash": "{A7A755AE-641E-A46B-4B0E-B11082F93876}",
     "ObjectPath": "Play_SFX_RoundStart",
     "ShortName": "Play_SFX_RoundStart",
     "Path": "Event/Play_SFX_RoundStart.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3190188375",
+      "Name": "Volume_Voices",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Voices",
+      "GUID": "{A30D2C1D-8F38-44BA-AD63-DA7281186AF3}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{1CB8F165-C24E-D1AF-9906-CA2AFFD339DE}"
+  "FileHash": "{2C155C53-B64A-CB03-E710-B7BFB21F73F3}"
  }
 }

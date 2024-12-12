@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{895ABAE9-E9CA-4308-BD65-110779444BEE}",
     "Language": "SFX",
-    "Hash": "{623D1151-39C1-6359-6E4D-C852006AD53E}",
+    "Hash": "{78164530-8168-FDF8-5D76-569D3B04A58D}",
     "ObjectPath": "Play_SFX_QTE_FailLoadingGun",
     "ShortName": "Play_SFX_QTE_FailLoadingGun",
     "Path": "Event/Play_SFX_QTE_FailLoadingGun.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{27D6DF29-8022-578C-E5CF-7DA9AE7531C6}"
+  "FileHash": "{E1886D11-485F-E9E1-B496-4D0C0B1FA3BF}"
  }
 }

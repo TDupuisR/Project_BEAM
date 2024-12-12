@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{31794AC4-B927-4F01-8E8B-EBB87F835F81}",
     "Language": "SFX",
-    "Hash": "{AA13C23F-F70F-3273-E469-82791F1EC097}",
+    "Hash": "{D4DB7376-19FA-DD28-8758-294692AFAB94}",
     "ObjectPath": "Play_SFX_Push_Activation",
     "ShortName": "Play_SFX_Push_Activation",
     "Path": "Event/Play_SFX_Push_Activation.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{C874F8B1-0661-BF99-4EE8-E132ABCD7052}"
+  "FileHash": "{7728EFA6-FBE0-AA9D-466A-CD3DD7F61472}"
  }
 }

@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{B0546235-14AB-4C69-86F3-EBB7E0C90786}",
     "Language": "SFX",
-    "Hash": "{B6918B56-ACA1-E93B-5578-EAFB648CCEA3}",
+    "Hash": "{ACD441FC-676C-3C31-9178-9D9B104C9B76}",
     "ObjectPath": "Play_UI_WaitRoom_Start",
     "ShortName": "Play_UI_WaitRoom_Start",
     "Path": "Event/Play_UI_WaitRoom_Start.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{07192803-F580-99AB-44A9-976DE040E977}"
+  "FileHash": "{BD541074-4527-30E8-CAA4-F69A45E071E4}"
  }
 }

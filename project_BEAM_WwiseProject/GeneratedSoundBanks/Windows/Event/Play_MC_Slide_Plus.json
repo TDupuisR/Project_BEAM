@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{35FEA141-D00A-4765-A5CD-BC0E617ECD2D}",
     "Language": "SFX",
-    "Hash": "{15C703B9-A450-8C41-79DD-F84A20F15375}",
+    "Hash": "{CD96F785-DA5D-5687-5129-169E4BA318A1}",
     "ObjectPath": "Play_MC_Slide_Plus",
     "ShortName": "Play_MC_Slide_Plus",
     "Path": "Event/Play_MC_Slide_Plus.bnk",
@@ -124,9 +124,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{F0EE14FF-AFE5-B440-56E0-6883E535BB70}"
+  "FileHash": "{29F280EF-9B7C-4916-A312-F19CCE1E0CAB}"
  }
 }

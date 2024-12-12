@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}",
     "Language": "SFX",
-    "Hash": "{BAD656B8-E992-F908-A816-8E47E1ED9060}",
+    "Hash": "{EE6A0FD8-F727-8AAE-2C6D-36DC749B66F1}",
     "ObjectPath": "Play_MC_WalkingP2_Plus",
     "ShortName": "Play_MC_WalkingP2_Plus",
     "Path": "Event/Play_MC_WalkingP2_Plus.bnk",
@@ -45,10 +45,22 @@
       "Name": "Phase2Speed",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\Phase2Speed",
       "GUID": "{ED0136F3-43D6-4A2C-B72E-BA673F44CAB0}"
+     },
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
      }
     ]
    }
   ],
-  "FileHash": "{D6300588-1B58-7B9C-3A57-B11742F9EE97}"
+  "FileHash": "{F94824CB-1A1E-3492-193E-4E2D26696A4D}"
  }
 }

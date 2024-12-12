@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{11779E8D-8794-88A7-C07D-1998A8025759}",
+    "Hash": "{CA892464-2EB0-8120-3F0E-7A611D9802FE}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -50,6 +50,12 @@
       "GUID": "{ED0136F3-43D6-4A2C-B72E-BA673F44CAB0}"
      },
      {
+      "Id": "2486614534",
+      "Name": "Volume_Ambiant",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Ambiant",
+      "GUID": "{A3650AE9-9F97-4FB6-AC3F-C78A4FDFFA8C}"
+     },
+     {
       "Id": "3190188375",
       "Name": "Volume_Voices",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Voices",
@@ -62,6 +68,12 @@
       "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
      },
      {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     },
+     {
       "Id": "3891337659",
       "Name": "Volume_Music",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Music",
@@ -70,6 +82,6 @@
     ]
    }
   ],
-  "FileHash": "{B8C82A68-39BF-0C6C-8DFC-D5B38A5541EE}"
+  "FileHash": "{3F774DFE-AAD9-0074-1F23-6B2D00E796CE}"
  }
 }

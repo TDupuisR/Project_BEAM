@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{B54ADCDE-33D8-49F2-8EDA-EE192CF1E0B2}",
     "Language": "SFX",
-    "Hash": "{D8236621-9161-6C56-A763-88832AAD4C5E}",
+    "Hash": "{D9EA6490-5217-DFC6-1466-1EF95DCA8B85}",
     "ObjectPath": "Play_AMB_Arena_GameOver",
     "ShortName": "Play_AMB_Arena_GameOver",
     "Path": "Event/Play_AMB_Arena_GameOver.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "2486614534",
+      "Name": "Volume_Ambiant",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Ambiant",
+      "GUID": "{A3650AE9-9F97-4FB6-AC3F-C78A4FDFFA8C}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{4D88690D-C8FD-A6C3-4F32-197E8E8580BF}"
+  "FileHash": "{C8BDB435-473D-3B6A-3EDA-DBFA6C22EF8E}"
  }
 }

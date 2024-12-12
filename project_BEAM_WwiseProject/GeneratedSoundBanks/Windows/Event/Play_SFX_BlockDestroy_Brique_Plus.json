@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{0291D796-977F-489F-953D-AA4D86FCC0AC}",
     "Language": "SFX",
-    "Hash": "{FAC978F0-34B7-8778-1B25-35E407EB058F}",
+    "Hash": "{5422A80E-24D7-58AF-EAC8-8C6A3076B505}",
     "ObjectPath": "Play_SFX_BlockDestroy_Brique_Plus",
     "ShortName": "Play_SFX_BlockDestroy_Brique_Plus",
     "Path": "Event/Play_SFX_BlockDestroy_Brique_Plus.bnk",
@@ -76,9 +76,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{36BB8155-4C91-8FA4-EDD9-B40052FC1FB2}"
+  "FileHash": "{81C59CFE-22BA-E77A-5D92-4E4774D7C305}"
  }
 }

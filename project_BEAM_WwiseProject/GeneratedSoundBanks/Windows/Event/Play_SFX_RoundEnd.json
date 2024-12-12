@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{A0F7A5FA-0A2B-48D8-8E73-7495EBE16A70}",
     "Language": "SFX",
-    "Hash": "{E591245A-146E-AE81-9C53-FB8443258467}",
+    "Hash": "{6211CD9A-6869-9E13-2698-A3513C303466}",
     "ObjectPath": "Play_SFX_RoundEnd",
     "ShortName": "Play_SFX_RoundEnd",
     "Path": "Event/Play_SFX_RoundEnd.bnk",
@@ -40,9 +40,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{0E005953-D3C8-2561-F04B-3F8950B089E0}"
+  "FileHash": "{A99899A6-FA78-296C-9508-96AD2CA685D8}"
  }
 }

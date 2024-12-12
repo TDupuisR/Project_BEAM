@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{378CDF8C-7387-402D-AF93-E5A44819EF30}",
     "Language": "SFX",
-    "Hash": "{05DF5A54-DAD8-F0B9-9650-06FB34FC502F}",
+    "Hash": "{45685746-D581-09DE-20F0-6D42A1574005}",
     "ObjectPath": "Play_MC_ContactBoundary_Plus",
     "ShortName": "Play_MC_ContactBoundary_Plus",
     "Path": "Event/Play_MC_ContactBoundary_Plus.bnk",
@@ -76,9 +76,23 @@
        }
       ]
      }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3673881719",
+      "Name": "Volume_SFX",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_SFX",
+      "GUID": "{928E56BB-9907-4B8F-90F5-6EA9DDE99453}"
+     },
+     {
+      "Id": "3747206233",
+      "Name": "Volume_Main",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Volume_Main",
+      "GUID": "{C6FA2EAF-61ED-4606-84B1-A474FF19B59B}"
+     }
     ]
    }
   ],
-  "FileHash": "{586AC58C-E4A2-5739-38EC-C3BD72E4AD74}"
+  "FileHash": "{6DB3DC6C-A263-0960-D6F0-D82E154F3921}"
  }
 }
