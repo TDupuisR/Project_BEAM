@@ -78,7 +78,12 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 				{
 					if (!OtherComp->ComponentTags.Contains("Player")) break;
 					
-					if (interface->ProjectileContext(ownPower, GetActorLocation())) CallDestroyed();
+					if (!canDoDamage) break;
+
+					if (interface->ProjectileContext(ownPower, GetActorLocation())) { 
+						CallDestroyed(); 
+						SetCanDoDamage(false);
+					}
 					else return;
 
 					break;
