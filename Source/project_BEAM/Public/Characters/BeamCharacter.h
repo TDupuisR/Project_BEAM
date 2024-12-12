@@ -264,8 +264,18 @@ private:
 
 	UFUNCTION()
 	void OnBeginOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+
+	
 	UFUNCTION()
 	void OnEndOverlapZone(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+public: 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Overlap Zone")
+	void OnHitWallProjection(FVector locationHit);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Overlap Zone")
+	void OnHitBeam();
 
 
 # pragma endregion
