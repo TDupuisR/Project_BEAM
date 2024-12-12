@@ -422,7 +422,7 @@ void ABeamCharacter::Push()
 		FVector dir = (player->GetActorLocation() - start).GetSafeNormal();
 		FVector LineTraceEnd = GetActorLocation() + dir * Reach;
 
-		DrawDebugLine(GetWorld(), GetActorLocation(), LineTraceEnd, FColor::Green, false, 1, 0, 5);
+		//DrawDebugLine(GetWorld(), GetActorLocation(), LineTraceEnd, FColor::Green, false, 1, 0, 5);
 
 		FHitResult Hit;
 		FCollisionQueryParams TraceParams(FName(TEXT("TraceTest")), true, this);  

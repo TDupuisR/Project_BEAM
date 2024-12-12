@@ -57,6 +57,11 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 
 	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
 
+	if (!Character->IsPhaseTwo()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Idle);
+		return;
+	}
+
 	if (Character->GetInputPush() && Character->CanPush()) {
 		StateMachine->ChangeState(EBeamCharacterStateID::Push);
 	}
