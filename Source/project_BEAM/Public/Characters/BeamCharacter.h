@@ -460,7 +460,14 @@ public:
 #pragma endregion
 
 #pragma region SFX
-	
+
+public:
+	UFUNCTION()
+	void ShotCallCharacter(int power);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Shooting")
+	void ShotCallBP(int power);
+
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UAkAudioEvent> HitInvulnerabilitySound;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
