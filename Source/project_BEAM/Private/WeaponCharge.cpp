@@ -227,6 +227,7 @@ void UWeaponCharge::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		{
 			CancelWeaponCharge(false);
 			chargeWasPushed = false;
+			GetWorld()->GetSubsystem<UCameraWorldSubsystem>()->UnShakeCamera();
 
 			const FOnAkPostEventCallback nullCallback;
 			UAkGameplayStatics::PostEvent(
