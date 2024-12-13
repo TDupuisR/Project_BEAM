@@ -98,12 +98,12 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		canDash = false;
 		canMove = false;
 		
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			2.0f,
-			FColor::Blue,
-			FString::Printf(TEXT("Dash %d"), GetStateID())
-		);
+		// GEngine->AddOnScreenDebugMessage(
+		// 	-1,
+		// 	2.0f,
+		// 	FColor::Blue,
+		// 	FString::Printf(TEXT("Dash %d"), GetStateID())
+		// );
 		
 		FVector dashVector = FVector::ZeroVector;
 		if (Character->GetInputMove() != FVector2D::ZeroVector)

@@ -53,12 +53,12 @@ void UBeamCharacterStateProjection::StateExit(EBeamCharacterStateID NextStateID)
 void UBeamCharacterStateProjection::StateTick(float DeltaTime)
 {
 
-	 GEngine->AddOnScreenDebugMessage(
-	 	-1,
-	 	0.1f,
-	 	FColor::Red,
-	 	FString::Printf(TEXT("Tick State PROJECTION"))
-	 );
+	 // GEngine->AddOnScreenDebugMessage(
+	 // 	-1,
+	 // 	0.1f,
+	 // 	FColor::Red,
+	 // 	FString::Printf(TEXT("Tick State PROJECTION"))
+	 // );
 
 	if (AfterProjection) {
 		Timer += DeltaTime;

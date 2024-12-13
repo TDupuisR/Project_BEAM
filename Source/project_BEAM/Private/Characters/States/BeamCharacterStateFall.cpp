@@ -23,12 +23,12 @@ void UBeamCharacterStateFall::StateEnter(EBeamCharacterStateID PreviousStateID)
 
 	ZVelocity = 0;
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Enter State %d"), GetStateID())
+	// );
 
 	if (PreviousStateID == EBeamCharacterStateID::Jump) {
 		canCoyote = false;
@@ -50,12 +50,12 @@ void UBeamCharacterStateFall::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Exit State %d"), GetStateID())
+	// );
 }
 
 void UBeamCharacterStateFall::StateTick(float DeltaTime)
