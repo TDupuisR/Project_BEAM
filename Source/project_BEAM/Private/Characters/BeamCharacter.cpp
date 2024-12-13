@@ -596,13 +596,12 @@ FVector ABeamCharacter::GetFollowPosition() {return GetActorLocation();}
 
 bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
-	endPosition = endPosition + (endPosition.Normalize() * shootHalfHeight[power]) ;
+	endPosition = endPosition + (endPosition.GetSafeNormal() * shootHalfHeight[power]) ;
 	
 	TArray<FHitResult> hitResults;
 	TArray<AActor*> ignoreActors;
 	ignoreActors.Add(this);
-	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1);
-	if (shootRadius[power] > 34.f) start = start + (endPosition.Normalize() * (shootRadius[power] - 34.f));
+	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) + (endPosition.GetSafeNormal() * (shootRadius[power] - 34.f));
 	
 	UKismetSystemLibrary::SphereTraceMulti(
 		GetWorld(),
@@ -616,10 +615,10 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		hitResults,
 		true
 	);
-	
 
 	for (FHitResult& hitResult : hitResults)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, FString::Printf(TEXT("RayCast Touch :")) + hitResult.GetActor()->GetActorNameOrLabel());
 		FHitResult* HitResultPtr = &hitResult;
 
 		if (HitResultPtr->GetActor()->Implements<UProjectileInterface>())

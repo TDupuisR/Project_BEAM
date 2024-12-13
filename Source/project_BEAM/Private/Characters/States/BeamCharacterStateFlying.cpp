@@ -118,15 +118,17 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			canMove = true;
 			return;
 		}
-
-		const FOnAkPostEventCallback nullCallback;
-		UAkGameplayStatics::PostEvent(
-				DashSound,
-				Character,
-				0,
-				nullCallback,
-				false
-		);
+		else
+		{
+			const FOnAkPostEventCallback nullCallback;
+			UAkGameplayStatics::PostEvent(
+					DashSound,
+					Character,
+					0,
+					nullCallback,
+					false
+			);
+		}
 		
 		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce );
 	}
