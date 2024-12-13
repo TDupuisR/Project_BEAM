@@ -95,28 +95,37 @@ void AProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 					
 					TObjectPtr<AProjectile> otherBullet = interface->GetProjectile();
 					if (otherBullet == nullptr) break;
+
+					if (projectileToIgnore == otherBullet || otherBullet->GetIgnoreProjectile() == this) break;
 					
 					int otherPower = otherBullet->GetPower();
 					
-					if (otherPower > ownPower)
+					if (otherPower > ownPower && otherPower >= 3)
 					{
-						int newPower = ((otherPower +1) - (ownPower +1)) -1;
-						if (newPower < 0) newPower = 0;
-						
-						if (otherBullet != nullptr) otherBullet->CallFakeDestroy(newPower);
+						if (otherBullet != nullptr)
+						{
+							otherBullet->SetIgnoreProjectile(this);
+						}
+						projectileToIgnore = otherBullet;
 						CallDestroyed();
 					}
-					else if (otherPower < ownPower)
+					else if (otherPower < ownPower && ownPower >= 3)
 					{
-						int newPower = ((ownPower +1) - (otherPower +1)) -1;
-						if (newPower < 0) newPower = 0;
-
-						if (otherBullet != nullptr) otherBullet->CallDestroyed();
-						CallFakeDestroy(newPower);
+						if (otherBullet != nullptr)
+						{
+							otherBullet->SetIgnoreProjectile(this);
+							otherBullet->CallDestroyed();
+						}
+						projectileToIgnore = otherBullet;
 					}
 					else
 					{
-						if (otherBullet != nullptr) otherBullet->CallDestroyed();
+						if (otherBullet != nullptr)
+						{
+							otherBullet->SetIgnoreProjectile(this);
+							otherBullet->CallDestroyed();
+						}
+						projectileToIgnore = otherBullet;
 						CallDestroyed();
 					}
 

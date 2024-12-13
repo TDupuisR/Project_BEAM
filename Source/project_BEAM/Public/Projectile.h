@@ -100,9 +100,13 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void SetCanDoDamage(bool newCanDoDamage) { canDoDamage = newCanDoDamage; }
+	UFUNCTION(BlueprintCallable)
+	void SetIgnoreProjectile(AProjectile* projectile) { projectileToIgnore = projectile; }
 
 	UFUNCTION(BlueprintCallable)
 	bool GetCanDoDamage() { return canDoDamage; }
+	UFUNCTION(BlueprintCallable)
+	AProjectile* GetIgnoreProjectile() { return projectileToIgnore; }
 
 private:
 	UPROPERTY()
@@ -110,5 +114,7 @@ private:
 
 	UPROPERTY()
 	bool canDoDamage = true;
+	UPROPERTY()
+	TObjectPtr<AProjectile> projectileToIgnore;
 	
 };

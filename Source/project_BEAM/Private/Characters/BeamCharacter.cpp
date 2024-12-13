@@ -13,6 +13,7 @@
 #include "Characters/BeamCharacterStateID.h"
 #include "Components/BoxComponent.h"
 #include "ProjectileInterface.h"
+#include "Projectile.h"
 #include "Components/CapsuleComponent.h"
 #include "WeaponCharge.h"
 
@@ -595,16 +596,19 @@ FVector ABeamCharacter::GetFollowPosition() {return GetActorLocation();}
 
 bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
+	endPosition = endPosition + (endPosition.Normalize() * shootHalfHeight[power]) ;
+	
 	TArray<FHitResult> hitResults;
 	TArray<AActor*> ignoreActors;
+	ignoreActors.Add(this);
 	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1);
+	if (shootRadius[power] > 34.f) start = start + (endPosition.Normalize() * (shootRadius[power] - 34.f));
 	
-	UKismetSystemLibrary::CapsuleTraceMulti(
+	UKismetSystemLibrary::SphereTraceMulti(
 		GetWorld(),
 		start,
 		endPosition,
 		shootRadius[power],
-		shootHalfHeight[power],
 		TraceTypeQuery1,
 		false,
 		ignoreActors,
@@ -616,15 +620,59 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 
 	for (FHitResult& hitResult : hitResults)
 	{
-
 		FHitResult* HitResultPtr = &hitResult;
 
 		if (HitResultPtr->GetActor()->Implements<UProjectileInterface>())
 		{
 			IProjectileInterface* interface = Cast<IProjectileInterface>(HitResultPtr->GetActor());
-			if (interface->ProjectileGetType() == EProjectileType::DestructWall)
+			switch (interface->ProjectileGetType())
 			{
-				if (interface->ProjectileContext(power, HitResultPtr->Location)) return false;
+			case EProjectileType::DestructWall:
+				{
+					if (interface->ProjectileContext(power, HitResultPtr->Location))
+					{
+						ShotDestroyVFX();
+						return false;
+					}
+
+					break;
+				}
+			case EProjectileType::Player:
+				{
+					if (HitResultPtr->Component->ComponentTags.Contains("Player")) break;
+
+					if (interface->ProjectileContext(power, HitResultPtr->Location))
+					{
+						ShotDestroyVFX();
+						return false;
+					}
+					
+					break;
+				}
+				case EProjectileType::Bullet:
+				{
+					TObjectPtr<AProjectile> otherBullet = interface->GetProjectile();
+					if(otherBullet == nullptr) break;
+
+					int otherPower = otherBullet->GetPower();
+
+					if (otherPower > power && otherPower >= 3)
+					{
+						ShotDestroyVFX();
+						return false;
+					}
+					else if (otherPower < power && power >= 3)
+					{
+						if (otherBullet != nullptr) otherBullet->CallDestroyed();
+						return true;
+					}
+					else
+					{
+						if (otherBullet != nullptr) otherBullet->CallDestroyed();
+						ShotDestroyVFX();
+						return false;
+					}
+				}
 			}
 		}
 	}
@@ -881,7 +929,9 @@ void ABeamCharacter::GunBuildUp_Implementation() {}
 void ABeamCharacter::WhenPush_Implementation() {}
 void ABeamCharacter::ChangeColorToWhite_Implementation() {}
 void ABeamCharacter::ChangeColorToNormal_Implementation() {}
+
 void ABeamCharacter::ShotCallBP_Implementation(int power){}
+void ABeamCharacter::ShotDestroyVFX_Implementation(){}
 
 void ABeamCharacter::OnHitWallProjection_Implementation(FVector locationHit) {}
 
