@@ -25,12 +25,12 @@ void UBeamCharacterStateFlying::StateEnter(EBeamCharacterStateID PreviousStateID
 
 	Character->GetCharacterMovement()->BrakingFrictionFactor = Character->GetCharacterSettings()->Fly_BrakingFrictionFactor;
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Enter State %d"), GetStateID())
+	// );
 
 	Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Flying);
 }
@@ -41,12 +41,12 @@ void UBeamCharacterStateFlying::StateExit(EBeamCharacterStateID NextStateID)
 
 	Character->GetCharacterMovement()->BrakingFrictionFactor = Character->GetCharacterSettings()->BrakingFrictionFactor;
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Exit State %d"), GetStateID())
+	// );
 
 	firstFrame = true;
 }

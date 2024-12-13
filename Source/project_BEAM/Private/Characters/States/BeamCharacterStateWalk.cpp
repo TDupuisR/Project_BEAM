@@ -66,6 +66,10 @@ void UBeamCharacterStateWalk::StateTick(float DeltaTime)
 		return;
 	}
 
+	if (!Character->GetMovementComponent()->IsMovingOnGround() && !Character->isShooting()) {
+		StateMachine->ChangeState(EBeamCharacterStateID::Fall);
+	}
+
 	if (Character->GetInputMove().X == 0)
 	{
 		StateMachine->ChangeState(EBeamCharacterStateID::Idle);

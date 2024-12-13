@@ -38,24 +38,24 @@ void UBeamCharacterStatePush::StateEnter(EBeamCharacterStateID PreviousStateID)
 			false
 	);
 	
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Enter State %d"), GetStateID())
+	// );
 }
 
 void UBeamCharacterStatePush::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Exit State %d"), GetStateID())
+	// );
 
 	if (!Character->IsPhaseTwo()) {
 		Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);

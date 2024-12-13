@@ -23,12 +23,12 @@ void UBeamCharacterStateProjection::StateEnter(EBeamCharacterStateID PreviousSta
 	Timer = 0.f;
 	AfterProjection = false;
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Blue,
-		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("Enter State %d"), GetStateID())
+	// );
 
 	Character->ChangeColorToWhite();
 }
@@ -40,12 +40,12 @@ void UBeamCharacterStateProjection::StateExit(EBeamCharacterStateID NextStateID)
 	Character->SetCanTakeDamage(true);
 	Character->SetCanTakeKnockback(true);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Blue,
-		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("Exit State %d"), GetStateID())
+	// );
 
 	Character->ChangeColorToNormal();
 }

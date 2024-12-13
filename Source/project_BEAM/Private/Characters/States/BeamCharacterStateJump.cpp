@@ -44,24 +44,24 @@ void UBeamCharacterStateJump::StateEnter(EBeamCharacterStateID PreviousStateID)
 			false
 	);
 	
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Blue,
-		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("Enter State %d"), GetStateID())
+	// );
 }
 
 void UBeamCharacterStateJump::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Blue,
-		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Blue,
+	// 	FString::Printf(TEXT("Exit State %d"), GetStateID())
+	// );
 }
 
 void UBeamCharacterStateJump::StateTick(float DeltaTime)

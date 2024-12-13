@@ -17,24 +17,24 @@ void UBeamCharacterStateIdle::StateEnter(EBeamCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Enter State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Enter State %d"), GetStateID())
+	// );
 }
 
 void UBeamCharacterStateIdle::StateExit(EBeamCharacterStateID NextStateID)
 {
 	Super::StateExit(NextStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Red,
-		FString::Printf(TEXT("Exit State %d"), GetStateID())
-	);
+	// GEngine->AddOnScreenDebugMessage(
+	// 	-1,
+	// 	3.f,
+	// 	FColor::Red,
+	// 	FString::Printf(TEXT("Exit State %d"), GetStateID())
+	// );
 }
 
 void UBeamCharacterStateIdle::StateTick(float DeltaTime)

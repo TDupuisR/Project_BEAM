@@ -103,7 +103,7 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 	}
 
 
-	if (Character->GetMovementComponent()->IsMovingOnGround() || Character->GetMovementComponent()->Velocity.Z >= 0) {
+	if (Character->GetMovementComponent()->IsMovingOnGround()) {
 
 		// GEngine->AddOnScreenDebugMessage(
 		// 	-1,
