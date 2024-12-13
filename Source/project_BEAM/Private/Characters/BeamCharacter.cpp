@@ -328,9 +328,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 		return;
 	}
 
-	if (Life > LifeToFly && Life - Damage <= LifeToFly) {
-		OnPhaseChange();
-	}
+	int lastLife = Life;
 
 	if ((Life == MaxLife && Damage >= 4) || (Life > LifeToFly && Life - Damage <= 0))
 	{
@@ -342,6 +340,10 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 		if (Life <= 0) {
 			Life = 0;
 		}
+	}
+
+	if (lastLife > LifeToFly && lastLife - Damage <= LifeToFly) {
+		OnPhaseChange();
 	}
 
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
