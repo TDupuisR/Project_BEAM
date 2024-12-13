@@ -143,6 +143,18 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
 		}
 	}
+
+	if (Character->GetInputAim() != FVector2D::ZeroVector)
+	{
+		if (Character->GetInputMove().X < 0 && Character->GetInputAim().X > 0)
+		{
+			Character->SetOrientX(1);
+		}
+		else if (Character->GetInputMove().X > 0 && Character->GetInputAim().X < 0)
+		{
+			Character->SetOrientX(-1);
+		}
+	}
 }
 
 void UBeamCharacterStateFlying::RedoParams()
