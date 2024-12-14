@@ -368,7 +368,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 void ABeamCharacter::ResetLife()
 {
 	Life = MaxLife; 
-	OnLifeChange();
+	//OnLifeChange();
 }
 
 bool ABeamCharacter::IsDead() const
@@ -596,7 +596,7 @@ FVector ABeamCharacter::GetFollowPosition() {return GetActorLocation();}
 
 bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
-	endPosition = endPosition + (endPosition.GetSafeNormal() * shootHalfHeight[power]) ;
+	endPosition = endPosition + (endPosition.GetSafeNormal() * shootHalfHeight[power]) + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) ;
 	
 	TArray<FHitResult> hitResults;
 	TArray<AActor*> ignoreActors;
@@ -613,12 +613,14 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		ignoreActors,
 		EDrawDebugTrace::None,
 		hitResults,
-		true
+		true,
+		FLinearColor::Red,
+		FLinearColor::Green,
+		15.f
 	);
 
 	for (FHitResult& hitResult : hitResults)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, FString::Printf(TEXT("RayCast Touch :")) + hitResult.GetActor()->GetActorNameOrLabel());
 		FHitResult* HitResultPtr = &hitResult;
 
 		if (HitResultPtr->GetActor()->Implements<UProjectileInterface>())
