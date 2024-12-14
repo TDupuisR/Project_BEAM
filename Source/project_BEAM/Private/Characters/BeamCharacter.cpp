@@ -346,7 +346,7 @@ void ABeamCharacter::PlayerTakeDamage(const int Damage)
 	if (lastLife > LifeToFly && lastLife - Damage <= LifeToFly) {
 		OnPhaseChange();
 	}
-
+	
 	StateMachine->ChangeState(EBeamCharacterStateID::Projection);
 
 	UAkGameplayStatics::PostEvent(
