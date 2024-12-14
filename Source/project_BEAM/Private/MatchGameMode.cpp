@@ -380,7 +380,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 		}
 		else {
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 3.0f, false);
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 7.0f, false);
 		}
 
 	}

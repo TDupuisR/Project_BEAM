@@ -79,6 +79,7 @@ void UMatchSystemBeam::ChangePointWin()
 		if (!Characters[i]->IsDead())
 		{
 			AddPlayerPoints(i, 1);
+			LastIndexPlayerWin = i;
 		}
 	}
 }
@@ -133,6 +134,10 @@ void UMatchSystemBeam::SetCharacters(TArray<ABeamCharacter*> NewCharacters)
 
 void UMatchSystemBeam::CheckMatch()
 {
+}
+
+int UMatchSystemBeam::GetLastIndexPlayerWin() {
+	return LastIndexPlayerWin;
 }
 
 bool UMatchSystemBeam::IsMancheFinished()

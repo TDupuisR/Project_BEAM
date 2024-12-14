@@ -93,6 +93,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsMancheFinished();
 
+	UFUNCTION(BlueprintCallable)
+	int GetLastIndexPlayerWin();
+
 private:
 	UPROPERTY()
 	int Manche = 0;
@@ -105,6 +108,9 @@ private:
 
 	UPROPERTY()
 	TArray<ABeamCharacter*> Characters = {};
+
+	UPROPERTY()
+	int LastIndexPlayerWin = 0;
 
 	UPROPERTY()
 	EMatchTypeID MatchType = EMatchTypeID::Deathmatch;

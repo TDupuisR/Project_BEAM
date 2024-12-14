@@ -47,7 +47,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<int> GetPlayersPoints() const;
 
-	TObjectPtr<UMatchSystemBeam> GetMancheSystem() const { return matchSystem; };
+	UFUNCTION(BlueprintCallable)
+	UMatchSystemBeam* GetMancheSystem() const { return matchSystem; };
 
 	UFUNCTION(BlueprintCallable)
 	bool IsMatchFinished() {return matchSystem->IsMatchFinished();}
