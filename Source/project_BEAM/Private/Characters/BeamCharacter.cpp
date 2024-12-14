@@ -72,6 +72,8 @@ void ABeamCharacter::BeginPlay()
 	InitWeaponAndAim();
 
 	StartLocation = this->GetActorLocation();
+	SetOrientX(1.f);
+	RotateMeshUsingOrientX();
 }
 
 // Called every frame
@@ -79,8 +81,19 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (InputMove.X > .0f)SetOrientX(1.f);
-	if (InputMove.X < .0f)SetOrientX(-1.f);
+	if (!isFreeze)
+	{
+		if (InputMove.X > .0f && GetOrientX() < .0f)
+		{
+			SetOrientX(1.f);
+			RotateMeshUsingOrientX();
+		}
+		if (InputMove.X < .0f && GetOrientX() > .0f)
+		{
+			SetOrientX(-1.f);
+			RotateMeshUsingOrientX();
+		}
+	}
 	
 	if (StateMachine != nullptr) {
 		if (StateMachine->GetCurrentStateID() != EBeamCharacterStateID::Projection) {
@@ -92,7 +105,6 @@ void ABeamCharacter::Tick(float DeltaTime)
 	//if (GetComponentByClass<UplayerAimComp>() != nullptr) {
 
 	TickStateMachine(DeltaTime);
-	RotateMeshUsingOrientX();
 
 	TickPush(DeltaTime);
 
@@ -523,7 +535,8 @@ void ABeamCharacter::Stun(float TimeToStun = 3.f)
 void ABeamCharacter::UnFreeze()
 {
 	if (StateMachine == nullptr) return;
-	
+
+	isFreeze = false;
 	StateMachine->SetCanChangeState(true);
 	StateMachine->ChangeState(EBeamCharacterStateID::Idle); 
 	
@@ -533,6 +546,7 @@ void ABeamCharacter::Freeze()
 {
 	if (StateMachine == nullptr) return;
 
+	isFreeze = true;
 	Stun(999);
 	StateMachine->SetCanChangeState(false);
 }

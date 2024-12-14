@@ -283,20 +283,18 @@ public:
 # pragma region Stun
 
 public:
-
 	void Stun(float TimeToStun);
-
+	
 	float GetStunTime() const {return StunTime;}
-
 	void SetStunTime(float NewStunTime) {StunTime = NewStunTime;}
 
 	void SetMultiplierStun(float NewMultiplierStun) {MultiplierStun = NewMultiplierStun;}
-
 	float GetMultiplierStun() const {return MultiplierStun;}
-
+	
+	UFUNCTION(BlueprintCallable)
+	bool GetIsFreeze() { return isFreeze; }
 	UFUNCTION(BlueprintCallable)
 	void UnFreeze();
-
 	UFUNCTION(BlueprintCallable)
 	void Freeze();
 
@@ -313,8 +311,9 @@ public:
 private:
 
 	UPROPERTY()
+	bool isFreeze = false;
+	UPROPERTY()
 	float StunTime = 1.f;
-
 	UPROPERTY()
 	float MultiplierStun = 0.f;
 
