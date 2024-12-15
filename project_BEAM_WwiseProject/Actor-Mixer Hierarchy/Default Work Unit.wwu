@@ -302,6 +302,11 @@
 						<Sound Name="AMB_WaitRoom" ID="{7B969551-161D-4DC8-9ADD-41345CBACFB9}" ShortID="751877386">
 							<PropertyList>
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">

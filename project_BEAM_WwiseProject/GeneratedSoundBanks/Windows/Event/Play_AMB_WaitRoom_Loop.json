@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{E8B717EE-0EC4-4ACE-AD19-E8C0EA120E06}",
     "Language": "SFX",
-    "Hash": "{73B9C9DF-5794-C78B-F949-7819FA9E4265}",
+    "Hash": "{93FF4BD0-1238-B5B4-DE3F-517013FD9331}",
     "ObjectPath": "Play_AMB_WaitRoom_Loop",
     "ShortName": "Play_AMB_WaitRoom_Loop",
     "Path": "Event/Play_AMB_WaitRoom_Loop.bnk",
@@ -55,6 +55,6 @@
     ]
    }
   ],
-  "FileHash": "{4F2E3017-B216-4A34-F45F-E41A2E90A93A}"
+  "FileHash": "{B1A8A511-E5C7-B4BE-E8E3-6334C06BABBA}"
  }
 }

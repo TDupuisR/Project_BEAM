@@ -48,3 +48,27 @@ TArray<int> UGM_BeamGameInstance::GetPlayersPoints() const
 	return matchSystem->GetPlayersPoints();
 }
 
+void UGM_BeamGameInstance::SetControllerToSkin(int playerController, int SkinIndex)
+{
+	if (controllerToSkin.Contains(playerController))
+		controllerToSkin.Emplace(playerController, SkinIndex);
+	else controllerToSkin.Add(playerController, SkinIndex);
+}
+int UGM_BeamGameInstance::GetControllerToSkin(int playerController)
+{
+	TestBP();
+	OnBeginLoading.Broadcast();
+	if (!controllerToSkin.Contains(playerController)) return -1;
+	return *controllerToSkin.Find(playerController);
+}
+
+void UGM_BeamGameInstance::TestBP_Implementation()
+{
+	UE_LOG(LogTemp, Warning, TEXT("C++ Default Implementation"));
+
+	if (HasAnyFlags(RF_ClassDefaultObject) == false)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OnTestBP Blueprint event should be executed now!"));
+	}
+}
+
