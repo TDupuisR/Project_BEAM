@@ -71,4 +71,3 @@ void UGM_BeamGameInstance::TestBP_Implementation()
 		UE_LOG(LogTemp, Warning, TEXT("OnTestBP Blueprint event should be executed now!"));
 	}
 }
-

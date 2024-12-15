@@ -291,6 +291,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 	if (!BeamGameInstance->GetMancheSystem()->IsMancheFinished()) return;
 
 	MancheEnd = true;
+	WhenMatchEnd();
 	if (BeamGameInstance->GetMancheSystem()->GetMatchType() == EMatchTypeID::Free)
 	{
 
@@ -385,6 +386,7 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 
 	}
 }
+
 
 void AMatchGameMode::ResetLevel()
 {
@@ -499,3 +501,5 @@ UInputMappingContext* AMatchGameMode::LoadInputMappingContextFromConfig()
 	if (CharacterSettings == nullptr) return nullptr;
 	return CharacterSettings->InputMappingContext.LoadSynchronous();
 }
+
+void AMatchGameMode::WhenMatchEnd_Implementation() {}
