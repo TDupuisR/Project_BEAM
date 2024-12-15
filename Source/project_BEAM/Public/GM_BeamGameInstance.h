@@ -12,9 +12,9 @@
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChangePoints);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBeginLoading);
 
-
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class PROJECT_BEAM_API UGM_BeamGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
@@ -25,6 +25,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnChangePoints OnChangePoints;
+	UPROPERTY(BlueprintAssignable)
+	FOnBeginLoading OnBeginLoading;
 
 	UFUNCTION(BlueprintCallable)
 	void DeployEvent();
@@ -55,6 +57,18 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ResetAll() {return matchSystem->ResetAll();}
+
+	UFUNCTION(BlueprintCallable)
+	void SetControllerToSkin(int playerController, int SkinIndex);
+	UFUNCTION(BlueprintCallable)
+	int GetControllerToSkin(int playerController);
+
+protected:
+	UPROPERTY()
+	TMap<int, int> controllerToSkin;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GameInstance")
+	void TestBP();
 
 private:
 	UPROPERTY()
