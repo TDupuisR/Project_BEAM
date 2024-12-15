@@ -610,7 +610,7 @@ FVector ABeamCharacter::GetFollowPosition() {return GetActorLocation();}
 
 bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
-	endPosition = endPosition + (endPosition.GetSafeNormal() * shootHalfHeight[power]) + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) ;
+	endPosition = endPosition + (endPosition.GetSafeNormal() * (2* shootHalfHeight[power])) + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) ;
 	
 	TArray<FHitResult> hitResults;
 	TArray<AActor*> ignoreActors;
@@ -625,7 +625,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		TraceTypeQuery1,
 		false,
 		ignoreActors,
-		EDrawDebugTrace::None,
+		EDrawDebugTrace::ForDuration,
 		hitResults,
 		true,
 		FLinearColor::Red,
@@ -633,6 +633,23 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		15.f
 	);
 
+	//Pré-tri pour verifier tout les actor valides
+	hitResults.RemoveAll([](const FHitResult& hit)
+	{
+		return hit.GetActor() == nullptr;
+	});
+
+	//Tri Croissant de la distance separant les au BeamCharacter
+	FVector characterLocation = GetActorLocation();
+	hitResults.Sort([&characterLocation](const FHitResult& A, const FHitResult& B)
+	{
+		const float DistanceA = FVector::DistSquared(A.GetActor()->GetActorLocation(), characterLocation);
+		const float DistanceB = FVector::DistSquared(B.GetActor()->GetActorLocation(), characterLocation);
+
+		return DistanceA < DistanceB;
+	});
+
+	
 	for (FHitResult& hitResult : hitResults)
 	{
 		FHitResult* HitResultPtr = &hitResult;
@@ -654,7 +671,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 				}
 			case EProjectileType::Player:
 				{
-					if (HitResultPtr->Component->ComponentTags.Contains("Player")) break;
+					if (!HitResultPtr->Component->ComponentTags.Contains("Player")) break;
 
 					if (interface->ProjectileContext(power, HitResultPtr->Location))
 					{
@@ -664,7 +681,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 					
 					break;
 				}
-				case EProjectileType::Bullet:
+			case EProjectileType::Bullet:
 				{
 					TObjectPtr<AProjectile> otherBullet = interface->GetProjectile();
 					if(otherBullet == nullptr) break;
