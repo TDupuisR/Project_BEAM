@@ -58,6 +58,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool GetMancheEnd() const {return MancheEnd;}
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GameInstance")
+	void WhenMatchEnd();
 
 	void ResetLevel();
 
