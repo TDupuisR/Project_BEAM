@@ -111,6 +111,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Bounce(FVector Normal);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> BouncingSound;
 
 	UFUNCTION(BlueprintCallable)
 	void OnHit(UPrimitiveComponent* HitComponent,  // The component that was hit

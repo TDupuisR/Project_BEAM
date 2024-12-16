@@ -6,14 +6,14 @@
   "SoundBankVersion": "154",
   "SoundBanks": [
    {
-    "Id": "4237929499",
+    "Id": "3497195932",
     "Type": "Event",
     "GUID": "{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}",
     "Language": "SFX",
-    "Hash": "{EE6A0FD8-F727-8AAE-2C6D-36DC749B66F1}",
-    "ObjectPath": "Play_MC_WalkingP2_Plus",
-    "ShortName": "Play_MC_WalkingP2_Plus",
-    "Path": "Event/Play_MC_WalkingP2_Plus.bnk",
+    "Hash": "{47AF9CFF-4668-0F23-F49B-E9B40415B9BD}",
+    "ObjectPath": "Play_MC_WalkingP2",
+    "ShortName": "Play_MC_WalkingP2",
+    "Path": "Event/Play_MC_WalkingP2.bnk",
     "Media": [
      {
       "Id": "618594614",
@@ -27,9 +27,9 @@
     ],
     "Events": [
      {
-      "Id": "4237929499",
-      "Name": "Play_MC_WalkingP2_Plus",
-      "ObjectPath": "\\Events\\Default Work Unit\\FOLEY\\Walk\\Play_MC_WalkingP2_Plus",
+      "Id": "3497195932",
+      "Name": "Play_MC_WalkingP2",
+      "ObjectPath": "\\Events\\Default Work Unit\\FOLEY\\Walk\\Play_MC_WalkingP2",
       "GUID": "{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}",
       "DurationType": "Infinite",
       "MediaRefs": [
@@ -61,6 +61,6 @@
     ]
    }
   ],
-  "FileHash": "{F94824CB-1A1E-3492-193E-4E2D26696A4D}"
+  "FileHash": "{F9E7E1AC-B9D0-E8D2-BFC7-F824B4E80F3A}"
  }
 }

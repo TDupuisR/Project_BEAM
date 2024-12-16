@@ -114,7 +114,7 @@
 					<ChildrenList>
 						<Folder Name="Walk" ID="{3B3056BC-CEF1-489D-8128-DD02C4C3DFFA}" ShortID="441634554">
 							<ChildrenList>
-								<Event Name="Play_MC_WalkingP2_Plus" ID="{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}">
+								<Event Name="Play_MC_WalkingP2" ID="{E7249ABE-EEDB-4F4A-90A9-6092E0EABE9B}">
 									<ChildrenList>
 										<Action Name="" ID="{9203FAAE-0B72-4910-AE59-93FE4E48BD33}" ShortID="420329469">
 											<ReferenceList>
@@ -131,6 +131,20 @@
 											<ReferenceList>
 												<Reference Name="Target">
 													<ObjectRef Name="MC_WalkingP1_Random" ID="{890E0CFF-D42A-4249-8982-F7716951718D}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="Stop_MC_WalkingP2" ID="{5D7EE3D9-05B7-487B-AAE3-5855D55F9F75}">
+									<ChildrenList>
+										<Action Name="" ID="{0811ECB1-49B5-4602-A328-647408474F42}" ShortID="537017738">
+											<PropertyList>
+												<Property Name="ActionType" Type="int16" Value="2"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="MC_WalkingP2" ID="{3F27D090-1E83-4FA2-AF69-1F86004B49BA}" WorkUnitID="{F31B314B-6DA5-4BB8-8033-B8C5FCD9CC44}"/>
 												</Reference>
 											</ReferenceList>
 										</Action>
