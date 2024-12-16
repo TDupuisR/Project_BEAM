@@ -88,6 +88,9 @@ public:
 	void SetCharacters(TArray<ABeamCharacter*> NewCharacters);
 
 	UFUNCTION(BlueprintCallable)
+	TArray<ABeamCharacter*> GetCharacters() { return Characters; }
+
+	UFUNCTION(BlueprintCallable)
 	void CheckMatch();
 
 	UFUNCTION(BlueprintCallable)

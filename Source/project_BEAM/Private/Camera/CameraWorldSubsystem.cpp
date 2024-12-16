@@ -457,10 +457,11 @@ void UCameraWorldSubsystem::CinematicForSeconds(float Seconds, FVector PosToFoll
 
 
 
-void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow, bool canRotate)
+void UCameraWorldSubsystem::CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow, bool canRotate, float yDistance)
 {
 	cameraSpeed = CameraSpeed;
 	timer = 0;
+	distanceY = yDistance;
 	posToFollow = PosToFollow;
 	actorToFollow = InActorToFollow;
 	//cameraMode = ECameraMode::Follow;
@@ -567,10 +568,10 @@ void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
 		UE_LOG(LogTemp, Warning, TEXT("POSITION ACTOR : %s"), *actorToFollow->GetActorLocation().ToString());
 	}
 
-	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + 250, posToFollow.Z + 100);
+	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + distanceY, posToFollow.Z + 100);
 
 	if (!changeRotation) {
-		posToGet = FVector(posToFollow.X, posToFollow.Y + 250, posToFollow.Z);
+		posToGet = FVector(posToFollow.X, posToFollow.Y + distanceY, posToFollow.Z);
 	}
 
 	if (isReverse && isReversing) {

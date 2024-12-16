@@ -161,7 +161,7 @@ public:
 	void CinematicForSeconds(float Seconds, FVector PosToFollow, float CameraSpeed);
 public:
 	UFUNCTION(BlueprintCallable)
-	void CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow, bool canRotate);
+	void CameraCinematic(float CameraSpeed, FVector PosToFollow, AActor* InActorToFollow, bool canRotate, float yDistance = 250);
 
 	UFUNCTION(BlueprintCallable)
 	void Cinematic(float CameraSpeed, FVector PosToFollow);
@@ -191,6 +191,8 @@ private:
 	float cameraSpeed = 10.f;
 
 	float shakeForce = 10;
+
+	float distanceY = 250;
 
 	bool isReverse = false;
 
