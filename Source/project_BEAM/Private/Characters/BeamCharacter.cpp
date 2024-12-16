@@ -648,12 +648,12 @@ FVector ABeamCharacter::GetFollowPosition() {return GetActorLocation();}
 
 bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
-	endPosition = endPosition + (endPosition.GetSafeNormal() * (2* shootHalfHeight[power])) + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) ;
+	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) + ((endPosition - GetActorLocation()).GetSafeNormal() * (shootRadius[power] - 34.f));
+	endPosition = endPosition + ((endPosition - GetActorLocation()).GetSafeNormal() * (2* shootHalfHeight[power])) + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) ;
 	
 	TArray<FHitResult> hitResults;
 	TArray<AActor*> ignoreActors;
 	ignoreActors.Add(this);
-	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) + (endPosition.GetSafeNormal() * (shootRadius[power] - 34.f));
 	
 	UKismetSystemLibrary::SphereTraceMulti(
 		GetWorld(),
@@ -663,7 +663,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		TraceTypeQuery1,
 		false,
 		ignoreActors,
-		EDrawDebugTrace::None,
+		EDrawDebugTrace::ForDuration,
 		hitResults,
 		true,
 		FLinearColor::Red,
