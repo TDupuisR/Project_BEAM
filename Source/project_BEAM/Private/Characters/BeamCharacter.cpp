@@ -286,6 +286,14 @@ void ABeamCharacter::Bounce(FVector Normal)
 
 	KnockBack(newVector, Force);
 
+	const FOnAkPostEventCallback nullCallback;
+	UAkGameplayStatics::PostEvent(
+			BouncingSound,
+			this,
+			0,
+			nullCallback,
+			false
+	);
 }
 
 void ABeamCharacter::OnHit(

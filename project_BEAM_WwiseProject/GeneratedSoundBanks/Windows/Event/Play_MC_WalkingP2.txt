@@ -1,5 +1,5 @@
 Event	ID	Name			Wwise Object Path	Notes
-	4237929499	Play_MC_WalkingP2_Plus			\Default Work Unit\FOLEY\Walk\Play_MC_WalkingP2_Plus	
+	3497195932	Play_MC_WalkingP2			\Default Work Unit\FOLEY\Walk\Play_MC_WalkingP2	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	2217470369	Phase2Speed			\Default Work Unit\Phase2Speed	
