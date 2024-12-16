@@ -23,6 +23,7 @@ void UBeamCharacterStateProjection::StateEnter(EBeamCharacterStateID PreviousSta
 	Character->SetCanTakeKnockback(true);
 	TimeToWait = Character->GetCharacterSettings()->TimeToWaitAfterProjection;
 	Timer = 0.f;
+	TimeLeft = 0.f;
 	AfterProjection = false;
 
 	// GEngine->AddOnScreenDebugMessage(
@@ -71,6 +72,9 @@ void UBeamCharacterStateProjection::StateTick(float DeltaTime)
 	 // 	FString::Printf(TEXT("Tick State PROJECTION"))
 	 // );
 
+	TimeLeft += DeltaTime;
+	if (TimeLeft >= TimeLeftMax && !AfterProjection) AfterProjection = true; 
+	
 	if (AfterProjection) {
 		Timer += DeltaTime;
 		if (Timer >= TimeToWait) {

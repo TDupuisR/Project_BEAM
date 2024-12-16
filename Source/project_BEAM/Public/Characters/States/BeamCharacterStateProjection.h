@@ -30,6 +30,9 @@ private:
 	UPROPERTY() float TimeToWait = 0.4f;
 	UPROPERTY() float Timer = 0.f;
 
+	UPROPERTY() float TimeLeft = 0.f;
+	UPROPERTY() float TimeLeftMax = 5.f;
+
 	UPROPERTY() bool AfterProjection = false;
 
 };
