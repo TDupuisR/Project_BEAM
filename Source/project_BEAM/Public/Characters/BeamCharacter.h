@@ -461,6 +461,14 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathEvent OnDeathEvent;
 
+	UFUNCTION(BlueprintCallable)
+	void SetCantDie(bool newValue) { cantDie = newValue; }
+
+protected:
+	UPROPERTY(BlueprintReadWrite)
+	bool cantDie;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Shooting")
+	void CallNoDie();
 
 #pragma endregion
 

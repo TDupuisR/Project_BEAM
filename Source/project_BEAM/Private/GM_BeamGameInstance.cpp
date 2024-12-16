@@ -10,6 +10,8 @@ void UGM_BeamGameInstance::Init()
 {
 	Super::Init();
 	matchSystem = NewObject<UMatchSystemBeam>(this);
+	controllerToSkin.Add(0, 0);
+	controllerToSkin.Add(1, 1);
 }
 
 void UGM_BeamGameInstance::DeployEvent()

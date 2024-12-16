@@ -83,15 +83,31 @@ void ABeamCharacter::Tick(float DeltaTime)
 
 	if (!isFreeze)
 	{
-		if (InputMove.X > .0f && GetOrientX() < .0f)
+		if (!IsPhaseTwo())
 		{
-			SetOrientX(1.f);
-			RotateMeshUsingOrientX();
+			if (InputMove.X > .0f && GetOrientX() < .0f)
+			{
+				SetOrientX(1.f);
+				RotateMeshUsingOrientX();
+			}
+			else if (InputMove.X < .0f && GetOrientX() > .0f)
+			{
+				SetOrientX(-1.f);
+				RotateMeshUsingOrientX();
+			}
 		}
-		if (InputMove.X < .0f && GetOrientX() > .0f)
+		else
 		{
-			SetOrientX(-1.f);
-			RotateMeshUsingOrientX();
+			if ((GetPlayerAimComp()->GetAimPos() - GetActorLocation()).X > .0f  && GetOrientX() < .0f)
+			{
+				SetOrientX(1.f);
+				RotateMeshUsingOrientX();
+			}
+			else if ((GetPlayerAimComp()->GetAimPos() - GetActorLocation()).X < .0f  && GetOrientX() > .0f)
+			{
+				SetOrientX(-1.f);
+				RotateMeshUsingOrientX();
+			}
 		}
 	}
 	
@@ -395,8 +411,12 @@ void ABeamCharacter::OnPhaseChange_Implementation() {}
 
 void ABeamCharacter::OnDeath()
 {
-	StateMachine->ChangeState(EBeamCharacterStateID::Dead);
-	OnDeathEvent.Broadcast(this);
+	if (!cantDie)
+	{
+		StateMachine->ChangeState(EBeamCharacterStateID::Dead);
+		OnDeathEvent.Broadcast(this);
+	}
+	else CallNoDie();
 }
 
 void ABeamCharacter::CheckLife()
@@ -625,7 +645,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		TraceTypeQuery1,
 		false,
 		ignoreActors,
-		EDrawDebugTrace::ForDuration,
+		EDrawDebugTrace::None,
 		hitResults,
 		true,
 		FLinearColor::Red,
@@ -711,6 +731,8 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 
 	return true;
 }
+
+void ABeamCharacter::CallNoDie_Implementation() {}
 
 void ABeamCharacter::ShotCallCharacter(int power) { ShotCallBP(power); }
 

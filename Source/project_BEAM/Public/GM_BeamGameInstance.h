@@ -66,6 +66,9 @@ public:
 protected:
 	UPROPERTY()
 	TMap<int, int> controllerToSkin;
+	
+	UPROPERTY(Blueprintable)
+	TObjectPtr<UMatchSystemBeam> matchSystem;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "GameInstance")
 	void TestBP();
@@ -75,8 +78,5 @@ private:
 	int LastSpawnNumber = 0;
 	UPROPERTY()
 	int NumberPairAppeared = 0;
-
-	UPROPERTY()
-	TObjectPtr<UMatchSystemBeam> matchSystem;
 
 };

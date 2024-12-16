@@ -67,6 +67,7 @@ Plugins/*/Binaries/*
 Plugins/*/Binaries/Win64/*
 !Plugins/*/Binaries/Win64/UnrealEditor.modules
 !Plugins/*/Binaries/Win64/UnrealEditor-LocalMultiplayer.dll
+!Plugins/*/Binaries/Win64/UnrealEditor-FCTween.dll
 
 # Wwise
 !Plugins/*/Binaries/Win64/*.dll

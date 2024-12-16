@@ -133,7 +133,8 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 		Character->GetCharacterMovement()->AddImpulse(dashVector * Character->GetCharacterSettings()->Fly_DashForce );
 	}
 
-	if (canMove) {
+	if (canMove)
+	{
 		//Character->SetOrientX(Character->GetInputMove().X);
 	
 		if (Character->GetInputMove() != FVector2D::ZeroVector)
@@ -141,18 +142,6 @@ void UBeamCharacterStateFlying::StateTick(float DeltaTime)
 			FVector moveVector = FVector(Character->GetInputMove().X,0,Character->GetInputMove().Y);
 			moveVector.Normalize();
 			Character->AddMovementInput(moveVector, Character->GetInputMove().Length());
-		}
-	}
-
-	if (Character->GetInputAim() != FVector2D::ZeroVector)
-	{
-		if (Character->GetInputMove().X < 0 && Character->GetInputAim().X > 0)
-		{
-			Character->SetOrientX(1);
-		}
-		else if (Character->GetInputMove().X > 0 && Character->GetInputAim().X < 0)
-		{
-			Character->SetOrientX(-1);
 		}
 	}
 }

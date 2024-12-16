@@ -291,7 +291,6 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 	if (!BeamGameInstance->GetMancheSystem()->IsMancheFinished()) return;
 
 	MancheEnd = true;
-	WhenMatchEnd();
 	if (BeamGameInstance->GetMancheSystem()->GetMatchType() == EMatchTypeID::Free)
 	{
 
@@ -380,11 +379,13 @@ void AMatchGameMode::OnPlayerDeath(ABeamCharacter* pointeur)
 			// Here ->
 
 		}
-		else {
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 7.0f, false);
-		}
+		// else {
+		// 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMatchGameMode::ResetLevel, 7.0f, false);
+		// }
 
 	}
+	
+	WhenMatchEnd();
 }
 
 
