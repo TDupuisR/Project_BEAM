@@ -74,6 +74,8 @@ void ABeamCharacter::BeginPlay()
 	StartLocation = this->GetActorLocation();
 	SetOrientX(1.f);
 	RotateMeshUsingOrientX();
+
+	SetLife(MaxLife);
 }
 
 // Called every frame
