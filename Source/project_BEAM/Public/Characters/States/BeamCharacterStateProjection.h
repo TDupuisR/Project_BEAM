@@ -6,6 +6,8 @@
 #include "Characters/BeamCharacterState.h"
 #include "BeamCharacterStateProjection.generated.h"
 
+class UAkAudioEvent;
+
 UCLASS(ClassGroup = (BeamCharacterState), meta = (BlueprintSpawnableComponent))
 class PROJECT_BEAM_API UBeamCharacterStateProjection : public UBeamCharacterState
 {
@@ -20,7 +22,10 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
-
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> ProjectionSound;
+	
 private:
 	UPROPERTY() float TimeToWait = 0.4f;
 	UPROPERTY() float Timer = 0.f;

@@ -493,6 +493,8 @@ protected:
 	TObjectPtr<UAkAudioEvent> HitInvulnerabilitySound;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UAkAudioEvent>> HitPowerSoundList;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAkAudioEvent> PushContactSound;
 	
 #pragma endregion
 	
