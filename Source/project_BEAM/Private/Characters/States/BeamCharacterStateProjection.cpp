@@ -7,6 +7,8 @@
 #include "Characters/BeamCharacterStateMachine.h"
 #include "Characters/BeamCharacterSettings.h"
 
+#include "AkGameplayStatics.h"
+#include "AkGameplayTypes.h"
 
 EBeamCharacterStateID UBeamCharacterStateProjection::GetStateID()
 {
@@ -30,6 +32,15 @@ void UBeamCharacterStateProjection::StateEnter(EBeamCharacterStateID PreviousSta
 	// 	FString::Printf(TEXT("Enter State %d"), GetStateID())
 	// );
 
+	const FOnAkPostEventCallback nullCallback;
+	UAkGameplayStatics::PostEvent(
+			ProjectionSound,
+			Character,
+			0,
+			nullCallback,
+			false
+	);
+	
 	Character->ChangeColorToWhite();
 }
 
