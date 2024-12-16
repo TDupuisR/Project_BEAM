@@ -286,6 +286,14 @@ void ABeamCharacter::Bounce(FVector Normal)
 
 	KnockBack(newVector, Force);
 
+	const FOnAkPostEventCallback nullCallback;
+	UAkGameplayStatics::PostEvent(
+			BouncingSound,
+			this,
+			0,
+			nullCallback,
+			false
+	);
 }
 
 void ABeamCharacter::OnHit(
@@ -490,6 +498,14 @@ void ABeamCharacter::Push()
 			FVector direction = (player->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 			player->KnockBack(direction, CharacterSettings->Push_Force, true);
 
+			const FOnAkPostEventCallback nullCallback;
+			UAkGameplayStatics::PostEvent(
+					PushContactSound,
+					this,
+					0,
+					nullCallback,
+					false
+			);
 		}
 
 		
