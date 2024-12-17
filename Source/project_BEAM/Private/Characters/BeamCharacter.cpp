@@ -663,7 +663,7 @@ bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 		TraceTypeQuery1,
 		false,
 		ignoreActors,
-		EDrawDebugTrace::ForDuration,
+		EDrawDebugTrace::None,
 		hitResults,
 		true,
 		FLinearColor::Red,
