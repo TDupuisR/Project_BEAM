@@ -50,6 +50,12 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
+	void DisableInputsPlayer() { SetActorTickEnabled(false); }
+	
+	UFUNCTION(BlueprintCallable)
+	void ActivateInputsPlayer() { SetActorTickEnabled(true); }
+
 #pragma region Orient
 
 public:
@@ -332,6 +338,12 @@ private:
 #pragma region Shoot
 
 public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Shoot")
+	void OnChargeReady();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsChargeReady();
+
 	UFUNCTION(BlueprintCallable)
 	UPlayerAim* GetPlayerAimComp() const {return playerAimComp;}
 
@@ -434,7 +446,7 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UPlayerAim> localPlayerAim;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	bool isShooting();
 
 private:

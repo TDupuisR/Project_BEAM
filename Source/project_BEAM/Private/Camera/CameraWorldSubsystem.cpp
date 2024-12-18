@@ -561,11 +561,11 @@ void UCameraWorldSubsystem::CameraCinematicMode(float DeltaTime)
 		lookAtRotation = rotToFollow;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("TICK CAMERA MODE"));
+	//UE_LOG(LogTemp, Warning, TEXT("TICK CAMERA MODE"));
 
 	if (actorToFollow != nullptr) {
 		posToFollow = actorToFollow->GetActorLocation();
-		UE_LOG(LogTemp, Warning, TEXT("POSITION ACTOR : %s"), *actorToFollow->GetActorLocation().ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("POSITION ACTOR : %s"), *actorToFollow->GetActorLocation().ToString());
 	}
 
 	FVector posToGet = FVector(posToFollow.X, posToFollow.Y + distanceY, posToFollow.Z + 100);

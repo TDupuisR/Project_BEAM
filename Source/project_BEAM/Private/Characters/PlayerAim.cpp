@@ -163,6 +163,11 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	if (!Weapon->GetIsQteActive() && isAimWhileCharge) isAimWhileCharge = false;
 
 	
-	if (shootDelay > .0f) shootDelay -= GetWorld()->GetDeltaSeconds();
+	if (shootDelay > .0f) { 
+		shootDelay -= GetWorld()->GetDeltaSeconds(); 
+		if (shootDelay <= .0f && Character != nullptr) {
+			Character->OnChargeReady();
+		}
+	}
 }
 

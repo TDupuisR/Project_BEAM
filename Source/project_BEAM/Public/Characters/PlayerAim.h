@@ -45,6 +45,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FVector GetAimPos() {return aimPos;}
+
+	UFUNCTION(BlueprintCallable)
+	bool IsReady() { return shootDelay <= .0f;  }
 	
 protected:
 	// Called when the game starts

@@ -83,6 +83,7 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
 	if (!isFreeze)
 	{
 		if (!IsPhaseTwo())
@@ -646,6 +647,13 @@ FVector ABeamCharacter::GetFollowPosition() {return GetActorLocation();}
 
 #pragma region Shoot
 
+bool ABeamCharacter::IsChargeReady()
+{
+	if (playerAimComp == nullptr) return false;
+
+	return playerAimComp->IsReady();
+}
+
 bool ABeamCharacter::TraceCheckBeforeProjectile(FVector endPosition, int power)
 {
 	FVector start = GetActorLocation() + FVector(.0f, .0f, GetCharacterSettings()->AimVerticalOffsetPhase1) + ((endPosition - GetActorLocation()).GetSafeNormal() * (shootRadius[power] - 34.f));
@@ -1008,3 +1016,5 @@ void ABeamCharacter::ShotDestroyVFX_Implementation(){}
 void ABeamCharacter::OnHitWallProjection_Implementation(FVector locationHit) {}
 
 void ABeamCharacter::OnHitBeam_Implementation() {}
+
+void ABeamCharacter::OnChargeReady_Implementation() {}
