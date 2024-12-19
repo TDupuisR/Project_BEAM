@@ -181,6 +181,9 @@ void ABeamCharacter::RotateMeshUsingOrientX() const
 	Rotation.Yaw = -90.f * OrientX;
 	GetMesh()->SetRelativeRotation(Rotation);
 }
+
+
+
 #pragma endregion
 
 #pragma region State Machine

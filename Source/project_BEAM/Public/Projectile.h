@@ -45,7 +45,7 @@ public:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UCapsuleComponent* Capsule;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	FString actorParentName;
 	
 	virtual EProjectileType ProjectileGetType() override;

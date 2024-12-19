@@ -101,6 +101,8 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
+	aimPosDuplicate = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
+
 	if (Character->IsStunned()) {
 		//UE_LOG(LogTemp, Error, TEXT("IS STUNNED PLAYER"));
 		//GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue, TEXT("IS STUNNED"));

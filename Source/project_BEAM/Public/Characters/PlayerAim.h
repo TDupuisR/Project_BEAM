@@ -67,6 +67,10 @@ protected:
 	TSubclassOf<class AProjectile> ProjectileActor;
 	UPROPERTY(BlueprintReadOnly)
 	FVector aimPos;
+
+	UPROPERTY(BlueprintReadOnly)
+	FVector aimPosDuplicate;
+
 	UPROPERTY()
 	FVector2D aimDir;
 	UPROPERTY()

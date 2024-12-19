@@ -203,4 +203,13 @@ public:
 
 #pragma endregion
 
+#pragma region TimeStop
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "TimeStop", meta = (ToolTip = "Speed de l'interpolation du timestop quand un tir est pres du joueur"));
+	float TimeStop_Speed;
+
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "TimeStop", meta = (ToolTip = "Valeur minimale pour le timestop quand un tir est pres du joueur"));
+	float TimeStop_min;
+
+#pragma endregion
+
 };

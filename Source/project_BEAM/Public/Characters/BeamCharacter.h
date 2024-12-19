@@ -64,6 +64,9 @@ public:
 	UFUNCTION()
 	void SetOrientX(float NewOrientX) {OrientX = NewOrientX;}
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FRotator GetRotationMesh() const { return GetMesh()->GetRelativeRotation(); }
+
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	float OrientX = 1.f;
