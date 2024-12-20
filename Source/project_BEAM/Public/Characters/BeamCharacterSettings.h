@@ -189,17 +189,27 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "taille du vfx à la charge 0"));
 	float Charge0_Size;
 
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "couleur du vfx à la charge 0"));
+	FColor Charge0_Color;
+
+
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "SpawnRate du vfx à la charge 1"));
 	float Charge1_SpawnRate;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "taille du vfx à la charge 1"));
 	float Charge1_Size;
 
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "couleur du vfx à la charge 1"));
+	FColor Charge1_Color;
+
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "SpawnRate du vfx à la charge 2"));
 	float Charge2_SpawnRate;
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "taille du vfx à la charge 2"));
 	float Charge2_Size;
+
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Charge", meta = (ToolTip = "couleur du vfx à la charge 2"));
+	FColor Charge2_Color;
 
 #pragma endregion
 

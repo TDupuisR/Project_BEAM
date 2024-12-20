@@ -83,6 +83,12 @@ void ABeamCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
+
+	if (StateMachine->GetCurrentStateID() == EBeamCharacterStateID::Dead) { 
+		
+		return; 
+	}
 
 	if (!isFreeze)
 	{
@@ -428,6 +434,7 @@ void ABeamCharacter::OnDeath()
 	if (!cantDie)
 	{
 		StateMachine->ChangeState(EBeamCharacterStateID::Dead);
+		StateMachine->SetCanChangeState(false);
 		OnDeathEvent.Broadcast(this);
 	}
 	else CallNoDie();
@@ -1023,3 +1030,5 @@ void ABeamCharacter::OnHitBeam_Implementation() {}
 void ABeamCharacter::OnChargeReady_Implementation() {}
 
 void ABeamCharacter::OnLanding_Implementation() {}
+
+void ABeamCharacter::OnJump_Implementation() {}

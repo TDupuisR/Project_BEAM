@@ -532,4 +532,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Landing")
 	void OnLanding();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Jumping")
+	void OnJump();
+
 };
