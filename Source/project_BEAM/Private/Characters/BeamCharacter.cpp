@@ -1021,3 +1021,5 @@ void ABeamCharacter::OnHitWallProjection_Implementation(FVector locationHit) {}
 void ABeamCharacter::OnHitBeam_Implementation() {}
 
 void ABeamCharacter::OnChargeReady_Implementation() {}
+
+void ABeamCharacter::OnLanding_Implementation() {}

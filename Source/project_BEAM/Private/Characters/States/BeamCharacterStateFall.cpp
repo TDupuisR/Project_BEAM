@@ -120,6 +120,8 @@ void UBeamCharacterStateFall::StateTick(float DeltaTime)
 				nullCallback,
 				false
 		);
+
+		Character->OnLanding();
 		
 		if (Character->GetCharacterSettings()->MinVelocityZStunFall < FMath::Abs(ZVelocity)) {
 			Character->SetStunTime((Character->GetCharacterSettings()->MultiplyerStunFall / 1000) * FMath::Abs(ZVelocity));

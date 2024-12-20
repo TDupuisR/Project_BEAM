@@ -527,4 +527,9 @@ private:
 
 #pragma endregion
 
+
+public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Landing")
+	void OnLanding();
+
 };
