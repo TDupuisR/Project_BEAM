@@ -37,25 +37,22 @@ void UPlayerAim::ShotCall(int power)
 	Shoot(aimPos, aimDir.GetSafeNormal(), power);
 }
 
-FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed = 10)
+FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos, const float DeltaTime, float interpSpeed = -1.f)
 {	
 
-	if (interpSpeed == 10) {
+	if (interpSpeed == -1.f) {
 		interpSpeed = Character->GetCharacterSettings()->SpeedCursor;
 	}
-
+	
 	FVector2D DirNormal = dir.GetSafeNormal();
-
+	
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("DirNormal : %s"), *DirNormal.ToString()));
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("DirNormal : %d"), DirNormal.Length()));
-
+	
 	FVector TargetPos = FVector(playerPos.X + DirNormal.X * Radius, playerPos.Y, playerPos.Z + DirNormal.Y * Radius);
-
-	FVector newPos = FMath::VInterpTo(aimPos, TargetPos, DeltaTime, interpSpeed);
-
-	return newPos;
-
-
+	
+	//return FMath::VInterpTo(aimPos, TargetPos, DeltaTime, interpSpeed);
+	return TargetPos;
 }
 
 void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, int power)
@@ -113,7 +110,7 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 		GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue, TEXT("IS NOT STUNNED"));
 	}*/
 
-	aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
+	//aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
 
 	if(Character->GetInputShoot() && !Character->IsStunned() && !wasShootTriggered) //check input and if it was recently pressed
 	{
