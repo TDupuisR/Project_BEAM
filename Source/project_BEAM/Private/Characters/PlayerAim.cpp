@@ -49,7 +49,7 @@ FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos,
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("DirNormal : %s"), *DirNormal.ToString()));
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("DirNormal : %d"), DirNormal.Length()));
 	
-	FVector TargetPos = FVector((playerPos.X + Character->GetVelocity().X) + DirNormal.X * Radius, playerPos.Y, (playerPos.Z + Character->GetVelocity().Z) + DirNormal.Y * Radius);
+	FVector TargetPos = FVector((playerPos.X + DeltaTime * Character->GetVelocity().X) + DirNormal.X * Radius, playerPos.Y, (playerPos.Z + DeltaTime * Character->GetVelocity().Z) + DirNormal.Y * Radius);
 	
 	return FMath::VInterpTo(aimPos, TargetPos, DeltaTime, interpSpeed);
 	//return TargetPos;
