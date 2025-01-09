@@ -26,6 +26,8 @@ public:
 
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
+	UFUNCTION(BlueprintCallable)
+	void InitAimPos();
 	UFUNCTION()
 	void InitWeapon(UWeaponCharge* playerWeapon);
 
@@ -45,6 +47,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FVector GetAimPos() {return aimPos;}
+	UFUNCTION(BlueprintCallable)
+	FVector2D GetAimDir() {return aimDir;}
+	UFUNCTION(BlueprintCallable)
+	FVector2D GetAimDirRadius() {return aimDir * Radius;}
 
 	UFUNCTION(BlueprintCallable)
 	bool IsReady() { return shootDelay <= .0f;  }
