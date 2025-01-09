@@ -24,6 +24,12 @@ void UPlayerAim::InitCharacter(ABeamCharacter* playerCharacter)
 	shootDelayInit = Character->GetCharacterSettings()->ShootCoolDown;
 }
 
+void UPlayerAim::InitAimPos()
+{
+	aimDir = FVector2D(1.f, 0.f);
+	aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), .0f, -1.f);
+}
+
 void UPlayerAim::InitWeapon(UWeaponCharge* playerWeapon)
 {
 	if (playerWeapon == nullptr) return;
@@ -50,9 +56,10 @@ FVector UPlayerAim::AimCursorPos(const FVector2D& dir, const FVector& playerPos,
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("DirNormal : %d"), DirNormal.Length()));
 	
 	FVector TargetPos = FVector((playerPos.X + DeltaTime * Character->GetVelocity().X) + DirNormal.X * Radius, playerPos.Y, (playerPos.Z + DeltaTime * Character->GetVelocity().Z) + DirNormal.Y * Radius);
+
+	if (DeltaTime == .0f) return TargetPos;
 	
 	return FMath::VInterpTo(aimPos, TargetPos, DeltaTime, interpSpeed);
-	//return TargetPos;
 }
 
 void UPlayerAim::Shoot(FVector spawnLocation, FVector2D direction, int power)

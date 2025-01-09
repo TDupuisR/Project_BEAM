@@ -26,6 +26,8 @@ public:
 
 	UFUNCTION()
 	void InitCharacter(ABeamCharacter* playerCharacter);
+	UFUNCTION(BlueprintCallable)
+	void InitAimPos();
 	UFUNCTION()
 	void InitWeapon(UWeaponCharge* playerWeapon);
 
