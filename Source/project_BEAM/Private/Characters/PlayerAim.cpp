@@ -166,6 +166,11 @@ void UPlayerAim::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 		
 		aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
 	}
+	else if (!isAimWhileCharge)
+	{
+		aimPos = AimCursorPos(aimDir, Character->GetActorLocation(), DeltaTime);
+	}
+	
 	if (!Weapon->GetIsQteActive() && isAimWhileCharge) isAimWhileCharge = false;
 
 	
